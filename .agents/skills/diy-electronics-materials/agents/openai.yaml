@@ -1,0 +1,4 @@
+interface:
+  display_name: "个人电子物料库 / Electronics Materials"
+  short_description: "查购买记录与盘点数量 / Query purchases and stocktakes"
+  default_prompt: "使用 $diy-electronics-materials 查询我买过的器件和盘点状态。 Use $diy-electronics-materials to query my purchases and stocktake status."

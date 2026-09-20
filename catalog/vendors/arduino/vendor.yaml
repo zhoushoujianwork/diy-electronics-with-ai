@@ -1,0 +1,5 @@
+schema_version: 1
+id: arduino
+name: Arduino
+website: https://www.arduino.cc/
+last_reviewed: 2026-09-20

@@ -1,0 +1,13 @@
+menu "EV engine sound"
+config EV_BOARD_CONFIRMED
+    bool "Enable the selected ESP32-S3 board pin profile"
+    default n
+    help
+        Board sdkconfig defaults enable this only after EV_BOARD selects a
+        matching board_config.h. Otherwise audio GPIOs stay untouched while
+        synthesis, serial controls and diagnostics still run.
+config EV_TIMEOUT_MS
+    int "Control link timeout in milliseconds"
+    range 500 10000
+    default 2000
+endmenu

@@ -1,0 +1,21 @@
+schema_version: 1
+id: thing-plus-family
+vendor_id: sparkfun
+name: SparkFun Thing Plus family
+family: Thing Plus
+category: development-board
+lifecycle: unknown
+summary: SparkFun development-board family offered across several processor and wireless platforms.
+sources:
+  - id: official-product-page
+    type: product-page
+    title: SparkFun Thing Plus
+    publisher: SparkFun Electronics
+    url: https://www.sparkfun.com/thing-plus
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Select an exact Thing Plus model before using pin, radio, memory, or power specifications.
+

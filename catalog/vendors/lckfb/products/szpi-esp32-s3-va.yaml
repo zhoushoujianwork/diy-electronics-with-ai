@@ -1,0 +1,67 @@
+schema_version: 1
+id: szpi-esp32-s3-va
+vendor_id: lckfb
+name: LCKFB Shi Zhan Pai ESP32-S3 VA
+family: Shi Zhan Pai ESP32-S3
+model: LCKFB-SZPI-ESP32-S3-VA
+category: development-board
+lifecycle: active
+summary: LCKFB ESP32-S3 development board with a 2-inch touch display, audio input and output, and a six-axis IMU.
+board_profile: boards/lckfb-szpi-esp32-s3-va/
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-S3-WROOM-1-N16R8
+    architecture: Xtensa LX7
+    cores: 2
+    max_frequency_hz: 240000000
+    source_refs: [official-docs]
+  memory:
+    flash_bytes: 16777216
+    psram_bytes: 8388608
+    source_refs: [official-docs]
+  wireless:
+    - type: wi-fi
+      standard: 2.4 GHz 802.11 b/g/n
+      source_refs: [official-docs]
+    - type: bluetooth
+      standard: Bluetooth 5 LE
+      source_refs: [official-docs]
+  display:
+    technology: IPS TFT LCD with capacitive touch
+    width_px: 320
+    height_px: 240
+    diagonal_in: 2.0
+    controller: ST7789
+    source_refs: [official-docs]
+  connectors:
+    - type: USB Type-C
+      count: 1
+      source_refs: [official-docs]
+  power:
+    input_voltage_nominal_v: 5
+    logic_voltage_v: 3.3
+    source_refs: [official-docs]
+software:
+  toolchains: [ESP-IDF]
+  frameworks: []
+  source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: LCKFB Shi Zhan Pai ESP32-S3 documentation
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/szpi-esp32s3/
+    accessed_on: 2026-09-21
+    official: true
+  - id: official-project
+    type: product-page
+    title: LCKFB Shi Zhan Pai ESP32-S3 project page
+    publisher: LCKFB
+    url: https://lckfb.com/project/detail/lckfb-szpi-esp32s3
+    accessed_on: 2026-09-21
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Repository-specific pin assignments and hardware evidence are maintained in the linked board profile.

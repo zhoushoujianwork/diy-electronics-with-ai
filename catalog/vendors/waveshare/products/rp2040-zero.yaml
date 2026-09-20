@@ -1,0 +1,25 @@
+schema_version: 1
+id: rp2040-zero
+vendor_id: waveshare
+name: RP2040-Zero
+family: RP2040 development boards
+model: RP2040-Zero
+category: development-board
+lifecycle: unknown
+summary: Compact Waveshare development board based on the Raspberry Pi RP2040 microcontroller.
+specifications:
+  processor:
+    manufacturer: Raspberry Pi
+    model: RP2040
+    source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: RP2040-Zero
+    publisher: Waveshare
+    url: https://www.waveshare.com/wiki/RP2040-Zero
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+

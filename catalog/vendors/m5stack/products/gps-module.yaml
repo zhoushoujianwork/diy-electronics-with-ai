@@ -1,0 +1,40 @@
+schema_version: 1
+id: gps-module
+vendor_id: m5stack
+name: M5Stack GPS Module
+family: Module
+category: positioning-module
+lifecycle: unknown
+summary: Stackable positioning module for compatible M5Stack hosts.
+specifications:
+  processor:
+    manufacturer: u-blox
+    model: NEO-M8N
+    source_refs: [official-docs]
+  interfaces:
+    - type: UART
+      count: 1
+      notes: Uses UART2 on GPIO16/GPIO17 on documented compatible Core hosts; default baud rate is 9600 bit/s.
+      source_refs: [official-docs]
+  power:
+    input_voltage_min_v: 2.7
+    input_voltage_max_v: 3.6
+    source_refs: [official-docs]
+  mechanical:
+    width_mm: 54
+    height_mm: 54
+    depth_mm: 13
+    weight_g: 43
+    source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: GPS Module documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/module/gps
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Host compatibility, voltage, pin routing, and module revision require model-specific review.

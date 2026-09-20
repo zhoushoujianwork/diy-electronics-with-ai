@@ -1,0 +1,23 @@
+schema: 1
+id: ev-engine-sound
+name: EV Engine Sound
+kind: project
+status: hardware-verified
+summary: ESP32 real-time procedural engine sound and mechanical animation
+owners:
+  - human-ai-lab
+toolchains:
+  - cmake
+  - esp-idf-5.5
+boards:
+  - m5stack-sticks3-k150
+  - lckfb-szpi-esp32-s3-va
+  - legacy-esp32s3
+modules:
+  - procedural-audio
+  - lvgl-ui
+validation:
+  build: passed
+  hardware: partial
+notes:
+  - Exact board-level validation details are in docs/validation.md.

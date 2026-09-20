@@ -1,0 +1,6 @@
+interface:
+  display_name: "电子产品目录 / Electronics Catalog"
+  short_description: "核验并维护厂商产品资料 / Verify vendor product facts"
+  default_prompt: "使用 $diy-electronics-catalog 核验这个产品并更新目录。 Use $diy-electronics-catalog to verify this product and update the catalog."
+policy:
+  allow_implicit_invocation: true

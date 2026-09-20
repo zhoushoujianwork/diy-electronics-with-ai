@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhoushoujianwork/ai-diy-electronics-lab/catalog/schema/product.schema.json",
+  "title": "AI DIY Electronics Lab product record",
+  "$defs": {
+    "sourceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}
+    },
+    "sourcedObject": {
+      "type": "object",
+      "required": ["source_refs"],
+      "properties": {"source_refs": {"$ref": "#/$defs/sourceRefs"}}
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "path", "summary"],
+      "properties": {
+        "kind": {
+          "enum": ["build-log", "test-report", "serial-log", "photo", "video", "measurement", "note"]
+        },
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+        "summary": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "type": "object",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "validation": {"properties": {"level": {"enum": ["build-verified", "hardware-verified"]}}}
+        }
+      },
+      "then": {
+        "properties": {
+          "validation": {"required": ["checked_on", "firmware_commit", "build_target", "evidence"]}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "validation": {"properties": {"level": {"const": "hardware-verified"}}}
+        }
+      },
+      "then": {
+        "properties": {
+          "validation": {
+            "required": ["exact_revision", "power_arrangement", "duration_seconds", "pass_criteria"]
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "id", "vendor_id", "name", "family", "category", "lifecycle",
+    "summary", "sources", "validation"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "vendor_id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "name": {"type": "string", "minLength": 1},
+    "family": {"type": "string", "minLength": 1},
+    "model": {"type": "string", "minLength": 1},
+    "sku": {"type": "string", "minLength": 1},
+    "revision": {"type": "string", "minLength": 1},
+    "category": {
+      "enum": [
+        "development-board", "system-on-module", "single-board-computer", "microcontroller-module",
+        "sensor-module", "communication-module", "display-module", "audio-module",
+        "positioning-module", "power-module", "actuator-module", "accessory"
+      ]
+    },
+    "lifecycle": {"enum": ["active", "not-recommended-for-new-designs", "discontinued", "unknown"]},
+    "summary": {"type": "string", "minLength": 1},
+    "board_profile": {"type": "string", "pattern": "^boards/"},
+    "specifications": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "processor": {
+          "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+          "additionalProperties": false,
+          "properties": {
+            "manufacturer": {"type": "string", "minLength": 1},
+            "model": {"type": "string", "minLength": 1},
+            "architecture": {"type": "string", "minLength": 1},
+            "cores": {"type": "integer", "minimum": 1},
+            "max_frequency_hz": {"type": "integer", "minimum": 1},
+            "source_refs": {"$ref": "#/$defs/sourceRefs"}
+          }
+        },
+        "memory": {
+          "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+          "additionalProperties": false,
+          "properties": {
+            "flash_bytes": {"type": "integer", "minimum": 0},
+            "ram_bytes": {"type": "integer", "minimum": 0},
+            "psram_bytes": {"type": "integer", "minimum": 0},
+            "storage_notes": {"type": "string", "minLength": 1},
+            "source_refs": {"$ref": "#/$defs/sourceRefs"}
+          }
+        },
+        "wireless": {
+          "type": "array",
+          "items": {
+            "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+            "additionalProperties": false,
+            "required": ["type"],
+            "properties": {
+              "type": {"enum": ["wi-fi", "bluetooth", "thread", "zigbee", "lora", "cellular", "nfc", "other"]},
+              "standard": {"type": "string", "minLength": 1},
+              "chipset": {"type": "string", "minLength": 1},
+              "source_refs": {"$ref": "#/$defs/sourceRefs"}
+            }
+          }
+        },
+        "display": {
+          "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+          "additionalProperties": false,
+          "properties": {
+            "technology": {"type": "string", "minLength": 1},
+            "width_px": {"type": "integer", "minimum": 1},
+            "height_px": {"type": "integer", "minimum": 1},
+            "diagonal_in": {"type": "number", "exclusiveMinimum": 0},
+            "controller": {"type": "string", "minLength": 1},
+            "source_refs": {"$ref": "#/$defs/sourceRefs"}
+          }
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+            "additionalProperties": false,
+            "required": ["type"],
+            "properties": {
+              "type": {"type": "string", "minLength": 1},
+              "count": {"type": "integer", "minimum": 1},
+              "notes": {"type": "string", "minLength": 1},
+              "source_refs": {"$ref": "#/$defs/sourceRefs"}
+            }
+          }
+        },
+        "connectors": {
+          "type": "array",
+          "items": {
+            "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+            "additionalProperties": false,
+            "required": ["type"],
+            "properties": {
+              "type": {"type": "string", "minLength": 1},
+              "count": {"type": "integer", "minimum": 1},
+              "notes": {"type": "string", "minLength": 1},
+              "source_refs": {"$ref": "#/$defs/sourceRefs"}
+            }
+          }
+        },
+        "power": {
+          "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+          "additionalProperties": false,
+          "properties": {
+            "input_voltage_min_v": {"type": "number", "minimum": 0},
+            "input_voltage_max_v": {"type": "number", "minimum": 0},
+            "input_voltage_nominal_v": {"type": "number", "minimum": 0},
+            "logic_voltage_v": {"type": "number", "exclusiveMinimum": 0},
+            "peak_current_a": {"type": "number", "minimum": 0},
+            "source_refs": {"$ref": "#/$defs/sourceRefs"}
+          }
+        },
+        "mechanical": {
+          "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+          "additionalProperties": false,
+          "properties": {
+            "width_mm": {"type": "number", "exclusiveMinimum": 0},
+            "height_mm": {"type": "number", "exclusiveMinimum": 0},
+            "depth_mm": {"type": "number", "exclusiveMinimum": 0},
+            "weight_g": {"type": "number", "exclusiveMinimum": 0},
+            "source_refs": {"$ref": "#/$defs/sourceRefs"}
+          }
+        }
+      }
+    },
+    "software": {
+      "allOf": [{"$ref": "#/$defs/sourcedObject"}],
+      "additionalProperties": false,
+      "properties": {
+        "toolchains": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "frameworks": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "title", "publisher", "url", "accessed_on", "official"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "type": {"enum": ["product-page", "documentation", "datasheet", "schematic", "repository", "certification"]},
+          "title": {"type": "string", "minLength": 1},
+          "publisher": {"type": "string", "minLength": 1},
+          "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+          "accessed_on": {"type": "string", "format": "date"},
+          "official": {"const": true},
+          "license": {"type": "string", "minLength": 1},
+          "notes": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level"],
+      "properties": {
+        "level": {"enum": ["cataloged", "build-verified", "hardware-verified"]},
+        "checked_on": {"type": "string", "format": "date"},
+        "firmware_commit": {"type": "string", "minLength": 7},
+        "build_target": {"type": "string", "minLength": 1},
+        "exact_revision": {"type": "string", "minLength": 1},
+        "power_arrangement": {"type": "string", "minLength": 1},
+        "duration_seconds": {"type": "integer", "minimum": 1},
+        "pass_criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "notes": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  }
+}

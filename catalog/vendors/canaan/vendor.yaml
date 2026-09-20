@@ -1,0 +1,12 @@
+schema_version: 1
+id: canaan
+name: Canaan
+website: https://www.kendryte.com/
+documentation: https://github.com/kendryte/k230_docs
+aliases:
+  - Canaan Creative
+  - Kendryte
+  - CanMV
+last_reviewed: 2026-09-21
+notes:
+  - Kendryte is Canaan's AI SoC brand; CanMV is the MicroPython-oriented software platform used by supported boards.

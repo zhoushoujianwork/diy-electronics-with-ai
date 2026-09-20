@@ -1,0 +1,46 @@
+schema_version: 1
+id: m5stickc
+vendor_id: m5stack
+name: M5StickC Plus2
+family: M5StickC
+model: M5StickC Plus2
+category: development-board
+lifecycle: unknown
+summary: Pocket-sized M5Stack controller with an integrated display and battery.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-PICO-V3-02
+    cores: 2
+    max_frequency_hz: 240000000
+    source_refs: [official-docs]
+  memory:
+    flash_bytes: 8388608
+    psram_bytes: 2097152
+    source_refs: [official-docs]
+  wireless:
+    - type: wi-fi
+      source_refs: [official-docs]
+  display:
+    technology: TFT LCD
+    width_px: 135
+    height_px: 240
+    diagonal_in: 1.14
+    controller: ST7789V2
+    source_refs: [official-docs]
+software:
+  toolchains: [Arduino]
+  frameworks: [UIFlow]
+  source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: M5StickC PLUS2 documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/core/M5StickC%20Plus2
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Other M5StickC-family models differ; confirm the exact revision before using a pin map.

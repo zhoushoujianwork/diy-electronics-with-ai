@@ -1,0 +1,21 @@
+schema_version: 1
+id: feather-family
+vendor_id: adafruit
+name: Adafruit Feather family
+family: Feather
+category: development-board
+lifecycle: unknown
+summary: Adafruit development-board form-factor family with model-specific processors and features.
+sources:
+  - id: official-guide
+    type: documentation
+    title: Introducing Adafruit Feather
+    publisher: Adafruit Industries
+    url: https://learn.adafruit.com/adafruit-feather
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Treat shared form factor as a discovery aid, not proof of identical pins or electrical behavior.
+

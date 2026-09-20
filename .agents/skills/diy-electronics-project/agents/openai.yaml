@@ -1,0 +1,6 @@
+interface:
+  display_name: "电子项目工程 / Electronics Projects"
+  short_description: "建设可复现 Demo、固件和验证 / Build reproducible projects"
+  default_prompt: "使用 $diy-electronics-project 把这项硬件工作整理成可复现项目。 Use $diy-electronics-project to turn this hardware work into a reproducible project."
+policy:
+  allow_implicit_invocation: true

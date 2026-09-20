@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhoushoujianwork/ai-diy-electronics-lab/catalog/schema/vendor.schema.json",
+  "title": "AI DIY Electronics Lab vendor record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "name", "website", "last_reviewed"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "name": {"type": "string", "minLength": 1},
+    "website": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "documentation": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "aliases": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "last_reviewed": {"type": "string", "format": "date"},
+    "notes": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

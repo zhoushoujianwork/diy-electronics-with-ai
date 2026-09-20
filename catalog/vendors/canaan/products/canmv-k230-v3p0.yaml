@@ -1,0 +1,59 @@
+schema_version: 1
+id: canmv-k230-v3p0
+vendor_id: canaan
+name: Canaan CanMV K230 V3.0
+family: CanMV K230
+model: CanMV K230 V3.0
+revision: "3.0"
+category: development-board
+lifecycle: unknown
+summary: Canaan K230 development-board target supported by the official CanMV MicroPython firmware.
+specifications:
+  processor:
+    manufacturer: Canaan
+    model: K230
+    architecture: Dual 64-bit RISC-V C908
+    cores: 2
+    max_frequency_hz: 1600000000
+    source_refs: [k230-datasheet, canmv-board-target]
+software:
+  toolchains:
+    - CanMV firmware
+    - nncase
+  frameworks:
+    - MicroPython
+  source_refs: [canmv-readme, nncase-guide]
+sources:
+  - id: canmv-board-target
+    type: repository
+    title: CanMV K230 V3.0 board configuration for CanMV v1.8
+    publisher: Canaan
+    url: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/port/boards/k230_canmv_v3p0/mpconfigboard.h
+    accessed_on: 2026-09-21
+    official: true
+  - id: canmv-readme
+    type: repository
+    title: CanMV K230 firmware repository README
+    publisher: Canaan
+    url: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/README.md
+    accessed_on: 2026-09-21
+    official: true
+  - id: k230-datasheet
+    type: datasheet
+    title: K230 Product Full Datasheet
+    publisher: Canaan
+    url: https://github.com/kendryte/k230_docs/blob/f8e30213963e0ed5cf995c3cd4701218a45e4793/en/00_hardware/K230_datasheet.md
+    accessed_on: 2026-09-21
+    official: true
+  - id: nncase-guide
+    type: documentation
+    title: K230 nncase Development Guide
+    publisher: Canaan
+    url: https://github.com/kendryte/k230_docs/blob/f8e30213963e0ed5cf995c3cd4701218a45e4793/en/01_software/board/ai/K230_nncase_Development_Guide.md
+    accessed_on: 2026-09-21
+    official: true
+validation:
+  level: cataloged
+notes:
+  - The K230 has one core rated up to 800 MHz and one core rated up to 1.6 GHz; max_frequency_hz records the SoC maximum rather than a shared per-core clock.
+  - The official board target identifies the K230 MCU and the CanMV K230 V3.0 board name, but does not establish this board's LPDDR capacity, connector exposure, pin map, dimensions, or power limits; those facts are intentionally omitted.

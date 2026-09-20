@@ -1,0 +1,2 @@
+# For compile validation only. Verify PCB pinout before flashing this build.
+CONFIG_EV_BOARD_CONFIRMED=y

@@ -1,0 +1,6 @@
+interface:
+  display_name: "电子知识贡献 / Electronics Contribution"
+  short_description: "整理提交、分支和 PR / Prepare commits, branches, and PRs"
+  default_prompt: "使用 $diy-electronics-contribute 校验并提交本次更新。 Use $diy-electronics-contribute to validate and commit this update."
+policy:
+  allow_implicit_invocation: true

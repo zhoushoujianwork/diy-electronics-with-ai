@@ -1,0 +1,8 @@
+schema_version: 1
+id: m5stack
+name: M5Stack
+website: https://m5stack.com/
+documentation: https://docs.m5stack.com/en/start
+last_reviewed: 2026-09-21
+notes:
+  - English and Simplified Chinese documentation routes are described in README.md.

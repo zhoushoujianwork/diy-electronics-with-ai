@@ -1,0 +1,21 @@
+schema_version: 1
+id: esp32-s3-series
+vendor_id: espressif
+name: ESP32-S3 series
+family: ESP32-S3
+category: microcontroller-module
+lifecycle: unknown
+summary: Espressif Wi-Fi and Bluetooth LE system-on-chip family.
+sources:
+  - id: official-product-page
+    type: product-page
+    title: ESP32-S3 product family
+    publisher: Espressif Systems
+    url: https://www.espressif.com/en/products/socs/esp32-s3
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Use the exact chip or module datasheet for package, memory, pin, and electrical details.
+

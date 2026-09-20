@@ -1,0 +1,19 @@
+schema_version: 1
+id: raspberry-pi-computers
+vendor_id: raspberry-pi
+name: Raspberry Pi computers
+family: Raspberry Pi computers
+category: single-board-computer
+lifecycle: unknown
+summary: Raspberry Pi single-board computer family; capabilities vary by generation and model.
+sources:
+  - id: official-docs
+    type: documentation
+    title: Raspberry Pi computer documentation
+    publisher: Raspberry Pi
+    url: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+

@@ -1,0 +1,2 @@
+# Select the historical ESP32-S3 development board profile.
+CONFIG_EV_BOARD_CONFIRMED=y

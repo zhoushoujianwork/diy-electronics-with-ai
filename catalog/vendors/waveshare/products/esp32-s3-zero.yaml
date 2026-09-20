@@ -1,0 +1,25 @@
+schema_version: 1
+id: esp32-s3-zero
+vendor_id: waveshare
+name: ESP32-S3-Zero
+family: ESP32-S3 development boards
+model: ESP32-S3-Zero
+category: development-board
+lifecycle: unknown
+summary: Compact Waveshare development board based on the Espressif ESP32-S3.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-S3
+    source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: ESP32-S3-Zero
+    publisher: Waveshare
+    url: https://www.waveshare.com/wiki/ESP32-S3-Zero
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+

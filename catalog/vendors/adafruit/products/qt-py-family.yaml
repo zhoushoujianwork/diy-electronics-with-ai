@@ -1,0 +1,21 @@
+schema_version: 1
+id: qt-py-family
+vendor_id: adafruit
+name: Adafruit QT Py family
+family: QT Py
+category: development-board
+lifecycle: unknown
+summary: Small Adafruit development-board family available with multiple microcontrollers.
+sources:
+  - id: official-guide
+    type: documentation
+    title: Adafruit QT Py guide
+    publisher: Adafruit Industries
+    url: https://learn.adafruit.com/adafruit-qt-py
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Processor, memory, radio, and pin capabilities vary by QT Py model.
+

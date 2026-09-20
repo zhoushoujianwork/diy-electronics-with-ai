@@ -1,0 +1,22 @@
+schema_version: 1
+id: maixcam
+vendor_id: sipeed
+name: MaixCAM
+family: MaixCAM
+model: MaixCAM
+category: development-board
+lifecycle: unknown
+summary: Sipeed development platform intended for camera and on-device AI applications.
+sources:
+  - id: official-docs
+    type: documentation
+    title: MaixCAM hardware documentation
+    publisher: Sipeed
+    url: https://wiki.sipeed.com/hardware/en/maixcam/index.html
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Use the documentation for the exact MaixCAM variant before relying on interfaces or accelerator details.
+

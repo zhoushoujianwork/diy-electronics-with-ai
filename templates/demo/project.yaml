@@ -1,0 +1,14 @@
+schema: 1
+id: replace-me
+name: Replace me
+kind: demo
+status: idea
+summary: Replace with one testable claim
+owners:
+  - human-ai-lab
+toolchains: []
+boards: []
+modules: []
+validation:
+  build: pending
+  hardware: pending

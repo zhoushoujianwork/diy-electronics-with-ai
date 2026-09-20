@@ -1,0 +1,6 @@
+interface:
+  display_name: "电子知识查询 / Electronics Lookup"
+  short_description: "查询板卡、模块和验证经验 / Look up verified hardware knowledge"
+  default_prompt: "使用 $diy-electronics-lookup 查询这个硬件的资料与验证边界。 Use $diy-electronics-lookup to find its documentation and validation boundaries."
+policy:
+  allow_implicit_invocation: true

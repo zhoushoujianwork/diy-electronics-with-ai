@@ -1,0 +1,27 @@
+schema_version: 1
+id: t-deck
+vendor_id: lilygo
+name: T-Deck
+family: T-Deck
+model: T-Deck
+category: development-board
+lifecycle: unknown
+summary: LILYGO ESP32-S3 handheld development platform with integrated input and display hardware.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-S3
+    source_refs: [official-repository]
+sources:
+  - id: official-repository
+    type: repository
+    title: T-Deck hardware and examples
+    publisher: LILYGO
+    url: https://github.com/Xinyuan-LilyGO/T-Deck
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Confirm the exact board revision before using repository pin definitions.
+

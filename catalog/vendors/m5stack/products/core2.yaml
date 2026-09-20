@@ -1,0 +1,59 @@
+schema_version: 1
+id: core2
+vendor_id: m5stack
+name: M5Stack Core2
+family: Core
+model: Core2
+category: development-board
+lifecycle: unknown
+summary: M5Stack Core-series controller with an integrated touch display.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-D0WDQ6-V3
+    cores: 2
+    max_frequency_hz: 240000000
+    source_refs: [official-docs]
+  memory:
+    flash_bytes: 16777216
+    ram_bytes: 532480
+    psram_bytes: 8388608
+    source_refs: [official-docs]
+  wireless:
+    - type: wi-fi
+      source_refs: [official-docs]
+    - type: bluetooth
+      source_refs: [official-docs]
+  display:
+    technology: capacitive touch LCD
+    diagonal_in: 2.0
+    source_refs: [official-docs]
+  connectors:
+    - type: USB Type-C
+      count: 1
+      source_refs: [official-docs]
+    - type: microSD card slot
+      count: 1
+      source_refs: [official-docs]
+    - type: M-Bus
+      count: 1
+      source_refs: [official-docs]
+  power:
+    input_voltage_nominal_v: 5
+    source_refs: [official-docs]
+software:
+  toolchains: [Arduino]
+  frameworks: [UIFlow, MicroPython]
+  source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: Core2 documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/core/Core2
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Exact peripherals and revisions should be taken from the linked model documentation.

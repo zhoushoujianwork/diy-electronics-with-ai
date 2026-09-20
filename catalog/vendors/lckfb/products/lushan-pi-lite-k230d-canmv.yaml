@@ -1,0 +1,94 @@
+schema_version: 1
+id: lushan-pi-lite-k230d-canmv
+vendor_id: lckfb
+name: LCKFB Lushan Pi Lite K230D CanMV
+family: Lushan Pi K230
+model: Lushan Pi Lite K230D CanMV
+category: development-board
+lifecycle: active
+summary: LCKFB K230D development board with 128 MB SiP LPDDR4, CanMV support, camera and display interfaces, Wi-Fi, amplified speaker output, and a PWM fan connector.
+specifications:
+  processor:
+    manufacturer: Canaan
+    model: K230D
+    architecture: Dual 64-bit RISC-V C908
+    cores: 2
+    max_frequency_hz: 1600000000
+    source_refs: [comparison]
+  memory:
+    ram_bytes: 134217728
+    storage_notes: LPDDR4 integrated in the SiP; TF card storage is supported, with an optional unpopulated SD NAND footprint.
+    source_refs: [comparison]
+  wireless:
+    - type: wi-fi
+      standard: 2.4 GHz IEEE 802.11 b/g/n
+      chipset: RTL8189FTV
+      source_refs: [comparison]
+  interfaces:
+    - type: MIPI DSI
+      count: 1
+      notes: Four-lane display interface; the documented default display option is a 3.1-inch touch screen.
+      source_refs: [comparison]
+    - type: MIPI CSI
+      count: 3
+      notes: Three two-lane camera interfaces with latching vertical connectors.
+      source_refs: [comparison]
+    - type: Audio codec
+      count: 1
+      notes: On-board microphone and HT6872 amplifier for direct 4-ohm speaker drive.
+      source_refs: [comparison]
+    - type: PWM fan output
+      count: 1
+      notes: Documented for a 5 V fan or other low-power load.
+      source_refs: [comparison]
+  connectors:
+    - type: USB Type-C
+      count: 1
+      notes: Power, data, and firmware flashing; this model does not provide a USB Type-A host connector.
+      source_refs: [comparison]
+    - type: TF card socket
+      count: 1
+      source_refs: [comparison]
+  power:
+    input_voltage_nominal_v: 5
+    source_refs: [comparison]
+  mechanical:
+    width_mm: 70
+    height_mm: 45
+    source_refs: [comparison]
+software:
+  toolchains:
+    - CanMV firmware
+    - CanMV IDE
+  frameworks:
+    - MicroPython
+  source_refs: [documentation, firmware]
+sources:
+  - id: documentation
+    type: documentation
+    title: LCKFB Lushan Pi K230 CanMV documentation
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/lushan-pi-k230/
+    accessed_on: 2026-09-21
+    official: true
+  - id: comparison
+    type: documentation
+    title: LCKFB Lushan Pi K230 and Lite K230D selection guide
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/lushan-pi-k230/k230vsk230d.html
+    accessed_on: 2026-09-21
+    official: true
+  - id: firmware
+    type: documentation
+    title: LCKFB Lushan Pi CanMV K230 firmware guide
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/lushan-pi-k230/open-source-hardware/canmv-k230-firmware.html
+    accessed_on: 2026-09-21
+    official: true
+validation:
+  level: cataloged
+notes:
+  - The official selection guide rates the KPU at 6 TOPS INT8 and distinguishes this 128 MB K230D board from the 1 GB K230 board.
+  - The official documentation contains a Lite V1.1 hardware-validation resource, but the product overview does not make V1.1 a universal revision label; this record therefore omits revision.
+  - The documentation also lists a separate 8-24 V DC input; input_voltage_nominal_v records only the USB Type-C 5 V input because the catalog schema cannot represent two disjoint input ranges without implying that intermediate voltages are valid on USB.
+  - Connector orientation and individual GPIO assignments are intentionally omitted from the catalog; verify the exact schematic revision before wiring.

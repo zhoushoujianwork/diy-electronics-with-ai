@@ -1,0 +1,27 @@
+schema_version: 1
+id: t-display-s3
+vendor_id: lilygo
+name: T-Display-S3
+family: T-Display
+model: T-Display-S3
+category: development-board
+lifecycle: unknown
+summary: LILYGO ESP32-S3 development board with an integrated color display.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-S3
+    source_refs: [official-repository]
+sources:
+  - id: official-repository
+    type: repository
+    title: T-Display-S3 hardware and examples
+    publisher: LILYGO
+    url: https://github.com/Xinyuan-LilyGO/T-Display-S3
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Confirm the exact board revision and display variant before using pin assignments.
+

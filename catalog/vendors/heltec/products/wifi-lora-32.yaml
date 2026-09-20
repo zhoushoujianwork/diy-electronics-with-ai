@@ -1,0 +1,21 @@
+schema_version: 1
+id: wifi-lora-32
+vendor_id: heltec
+name: WiFi LoRa 32 family
+family: WiFi LoRa 32
+category: development-board
+lifecycle: unknown
+summary: Heltec development-board family combining an ESP32-class controller, LoRa radio, and display.
+sources:
+  - id: official-docs
+    type: documentation
+    title: WiFi LoRa 32 documentation
+    publisher: Heltec Automation
+    url: https://docs.heltec.org/en/node/esp32/wifi_lora_32/index.html
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - MCU, radio, display, antenna path, and pin assignments differ across revisions.
+

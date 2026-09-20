@@ -1,0 +1,52 @@
+schema_version: 1
+id: hat-pir-u054
+vendor_id: m5stack
+name: M5Stack Hat PIR U054
+family: HAT
+model: Hat PIR
+sku: U054
+category: sensor-module
+lifecycle: active
+summary: Passive infrared motion sensor HAT for compatible M5StickC-family hosts, with a digital GPIO output.
+specifications:
+  interfaces:
+    - type: GPIO digital output
+      count: 1
+      notes: Output is routed to GPIO36 on the documented StickC host; high indicates a detected infrared trigger.
+      source_refs: [official-docs, official-docs-zh]
+  power:
+    input_voltage_nominal_v: 3.3
+    logic_voltage_v: 3.3
+    source_refs: [official-docs, official-docs-zh]
+software:
+  toolchains: [Arduino]
+  frameworks: [UIFlow]
+  source_refs: [official-docs, official-docs-zh]
+sources:
+  - id: official-docs
+    type: documentation
+    title: Hat PIR documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/hat/hat-pir
+    accessed_on: 2026-09-21
+    official: true
+  - id: official-docs-zh
+    type: documentation
+    title: Hat PIR 中文文档
+    publisher: M5Stack
+    url: https://docs.m5stack.com/zh_CN/hat/hat-pir
+    accessed_on: 2026-09-21
+    official: true
+  - id: official-schematic
+    type: schematic
+    title: M5Stack Hat PIR schematic
+    publisher: M5Stack
+    url: https://github.com/m5stack/M5-Schematic/blob/master/Hat/StickHat_PIR.pdf
+    accessed_on: 2026-09-21
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Official nominal detection distance is 500 cm, sensing angle is less than 100 degrees, and trigger hold time is 2 seconds.
+  - Official static-current figure is less than 60 microamperes and the stated operating-temperature range is -20 to 80 degrees Celsius.
+  - Compatibility and the actual GPIO must be checked against the exact host model before connection.

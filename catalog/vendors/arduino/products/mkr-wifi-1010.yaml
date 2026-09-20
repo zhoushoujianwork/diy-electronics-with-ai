@@ -1,0 +1,20 @@
+schema_version: 1
+id: mkr-wifi-1010
+vendor_id: arduino
+name: Arduino MKR WiFi 1010
+family: MKR
+model: MKR WiFi 1010
+category: development-board
+lifecycle: unknown
+summary: Arduino MKR-family development board with integrated Wi-Fi and Bluetooth connectivity.
+sources:
+  - id: official-docs
+    type: documentation
+    title: Arduino MKR WiFi 1010
+    publisher: Arduino
+    url: https://docs.arduino.cc/hardware/mkr-wifi-1010/
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+

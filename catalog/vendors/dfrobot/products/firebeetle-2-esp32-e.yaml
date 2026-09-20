@@ -1,0 +1,21 @@
+schema_version: 1
+id: firebeetle-2-esp32-e
+vendor_id: dfrobot
+name: FireBeetle 2 ESP32-E
+family: FireBeetle 2
+model: FireBeetle 2 ESP32-E
+sku: DFR0654
+category: development-board
+lifecycle: unknown
+summary: DFRobot FireBeetle 2 development board built around an ESP32-E module.
+sources:
+  - id: official-docs
+    type: documentation
+    title: FireBeetle Board ESP32-E (SKU DFR0654)
+    publisher: DFRobot
+    url: https://wiki.dfrobot.com/FireBeetle_Board_ESP32_E_SKU_DFR0654
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+

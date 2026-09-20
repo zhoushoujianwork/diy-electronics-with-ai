@@ -1,0 +1,57 @@
+schema_version: 1
+id: sticks3-k150
+vendor_id: m5stack
+name: M5Stack StickS3 K150
+family: StickS3
+model: StickS3
+sku: K150
+category: development-board
+lifecycle: active
+summary: Compact M5Stack ESP32-S3 controller with an integrated display, audio codec, buttons, battery, and speaker.
+board_profile: boards/m5stack-sticks3-k150/
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-S3-PICO-1-N8R8
+    architecture: Xtensa LX7
+    cores: 2
+    max_frequency_hz: 240000000
+    source_refs: [official-docs]
+  memory:
+    flash_bytes: 8388608
+    psram_bytes: 8388608
+    source_refs: [official-docs]
+  wireless:
+    - type: wi-fi
+      standard: 2.4 GHz Wi-Fi
+      source_refs: [official-docs]
+  display:
+    technology: TFT LCD
+    width_px: 135
+    height_px: 240
+    controller: ST7789P3
+    source_refs: [official-docs]
+  connectors:
+    - type: USB Type-C
+      count: 1
+      source_refs: [official-docs]
+  power:
+    input_voltage_nominal_v: 5
+    logic_voltage_v: 3.3
+    source_refs: [official-docs]
+software:
+  toolchains: [ESP-IDF, Arduino]
+  frameworks: [M5Unified, M5GFX]
+  source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: StickS3 documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/core/StickS3
+    accessed_on: 2026-09-21
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Repository-specific pin assignments and hardware evidence are maintained in the linked board profile.

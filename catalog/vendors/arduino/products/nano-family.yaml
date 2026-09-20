@@ -1,0 +1,21 @@
+schema_version: 1
+id: nano-family
+vendor_id: arduino
+name: Arduino Nano family
+family: Nano
+category: development-board
+lifecycle: unknown
+summary: Compact Arduino development-board family spanning several processor and connectivity options.
+sources:
+  - id: official-docs
+    type: documentation
+    title: Arduino Nano family
+    publisher: Arduino
+    url: https://docs.arduino.cc/hardware/nano/
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Model names that share the Nano form factor can differ substantially in voltage and pin behavior.
+

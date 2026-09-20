@@ -1,0 +1,21 @@
+schema_version: 1
+id: xiao-series
+vendor_id: seeed-studio
+name: Seeed Studio XIAO series
+family: XIAO
+category: development-board
+lifecycle: unknown
+summary: Compact development-board family spanning multiple microcontroller and wireless platforms.
+sources:
+  - id: official-docs
+    type: documentation
+    title: Seeed Studio XIAO Series Introduction
+    publisher: Seeed Studio
+    url: https://wiki.seeedstudio.com/SeeedStudio_XIAO_Series_Introduction/
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Processor, radio, pin functions, and power behavior are model-specific.
+

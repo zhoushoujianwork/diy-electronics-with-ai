@@ -1,0 +1,30 @@
+schema_version: 1
+id: atoms3
+vendor_id: m5stack
+name: M5Stack AtomS3
+family: Atom
+model: AtomS3
+category: development-board
+lifecycle: unknown
+summary: Compact M5Stack Atom-series ESP32-S3 controller with an integrated display.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-S3
+    source_refs: [official-docs]
+  wireless:
+    - type: wi-fi
+      source_refs: [official-docs]
+    - type: bluetooth
+      standard: Bluetooth LE
+      source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: AtomS3 documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/core/AtomS3
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged

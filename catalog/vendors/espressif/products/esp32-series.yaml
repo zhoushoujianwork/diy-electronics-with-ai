@@ -1,0 +1,21 @@
+schema_version: 1
+id: esp32-series
+vendor_id: espressif
+name: ESP32 series
+family: ESP32
+category: microcontroller-module
+lifecycle: unknown
+summary: Espressif family of Wi-Fi and Bluetooth system-on-chips and modules.
+sources:
+  - id: official-product-page
+    type: product-page
+    title: ESP32 product family
+    publisher: Espressif Systems
+    url: https://www.espressif.com/en/products/socs/esp32
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Capabilities vary by chip, module, package, and revision; use an exact record for electrical design.
+

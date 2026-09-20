@@ -1,0 +1,20 @@
+schema_version: 1
+id: wio-terminal
+vendor_id: seeed-studio
+name: Wio Terminal
+family: Wio
+model: Wio Terminal
+category: development-board
+lifecycle: unknown
+summary: Seeed Studio development platform with an integrated display and onboard interfaces.
+sources:
+  - id: official-docs
+    type: documentation
+    title: Wio Terminal Getting Started
+    publisher: Seeed Studio
+    url: https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+

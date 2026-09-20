@@ -1,0 +1,21 @@
+schema_version: 1
+id: pico-series
+vendor_id: raspberry-pi
+name: Raspberry Pi Pico series
+family: Pico
+category: development-board
+lifecycle: unknown
+summary: Raspberry Pi microcontroller-board family based on RP-series microcontrollers.
+sources:
+  - id: official-docs
+    type: documentation
+    title: Pico-series microcontrollers
+    publisher: Raspberry Pi
+    url: https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html
+    accessed_on: 2026-09-20
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Wireless capability, memory, connectors, and other specifications depend on the exact Pico model.
+
