@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/zhoushoujianwork/ai-diy-electronics-lab/catalog/schema/product.schema.json",
-  "title": "AI DIY Electronics Lab product record",
+  "$id": "https://github.com/zhoushoujianwork/diy-electronics-with-ai/catalog/schema/product.schema.json",
+  "title": "DIY Electronics with AI product record",
   "$defs": {
     "sourceRefs": {
       "type": "array",

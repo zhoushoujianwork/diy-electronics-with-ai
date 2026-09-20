@@ -1,11 +1,11 @@
-# AI DIY Electronics Lab
+# DIY Electronics with AI
 
-一个由人和 AI 协作建设的开放电子工程实验室。这里保存可以复现的硬件 Demo、完整项目、
-可复用驱动、接线依据、测试证据和踩坑记录，让其他电子爱好者可以直接复用，而不只看到
-一段脱离硬件环境的示例代码。
+一个 AI-native、harness-friendly 的开放电子工程实验室：人负责目标、判断和真实世界验证，
+AI Agent 负责检索、整理、实现、检查与协作编排。这里保存可复现的硬件 Demo、完整项目、
+可复用驱动、接线依据、测试证据和去标识化工程经验，让其他电子爱好者和 Agent 都能直接复用，
+而不只看到一段脱离硬件环境的示例代码。
 
-项目身份和 GitHub 仓库名称均为 **AI DIY Electronics Lab**。部分既有本地 checkout 可能仍
-保留历史目录名 `ev-engine-sound`，这不会影响构建或远端协作。
+项目身份为 **DIY Electronics with AI**，GitHub 仓库名为 `diy-electronics-with-ai`。
 
 ## 内容入口
 
@@ -45,6 +45,17 @@ ESP-IDF 固件、三种板级配置和实机验证记录。
 其他项目中的 Agent 就能分别查询知识、维护产品目录、建设硬件项目，并把验证后的成果通过
 Commit 或 PR 贡献回同一个 Git 仓库。显式调用使用 `$diy...`，不是用于搜索文件的 `@diy...`；
 中文速查、安装和跨项目流程见 [`docs/AGENT_SKILL.md`](docs/AGENT_SKILL.md)。
+
+这里把“AI-native”当作一种工程组织方式，而不是给传统仓库附加一个聊天入口：
+
+- 任务边界、目录职责、安全规则和验证要求以 Agent 可直接读取的文件表达。
+- 公开事实、工程经验、项目实现和 Git 贡献由不同 Skill 分工，便于 harness 组合与审计。
+- 每个结论都尽量附带来源、验证等级或可复现步骤，Agent 不以推测补齐硬件事实。
+- 私有资料留在仓库之外；只沉淀公开可核验资料和去标识化、可迁移的工程经验。
+- 兼容入口只是适配层，规范源保持唯一，使不同 Agent harness 能在同一套约束下协作。
+
+因此，这个仓库也可作为一种开放范式：把电子工程知识、真实硬件验证和 Agent 工作流放在
+同一个可版本化、可审查、可复现的协作系统里。
 
 详细约定见 [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md) 和
 [`docs/AI_COLLABORATION.md`](docs/AI_COLLABORATION.md)。同类开源项目与许可证边界的调研见

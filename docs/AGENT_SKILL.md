@@ -1,6 +1,6 @@
 # Install the repository's Agent Skills
 
-AI DIY Electronics Lab provides several focused user-level Agent Skills. Installation uses symbolic links, so
+DIY Electronics with AI provides several focused user-level Agent Skills. Installation uses symbolic links, so
 an Agent working from another project can search this checkout and contribute verified electronics knowledge
 back to the same Git repository. New Skill directories are discovered automatically by the installer.
 
@@ -23,8 +23,8 @@ back to the same Git repository. New Skill directories are discovered automatica
 ## Install
 
 ```sh
-git clone https://github.com/zhoushoujianwork/ai-diy-electronics-lab.git
-cd ai-diy-electronics-lab
+git clone https://github.com/zhoushoujianwork/diy-electronics-with-ai.git
+cd diy-electronics-with-ai
 ./scripts/install-agent-skill.sh
 ```
 

@@ -1,11 +1,11 @@
 ---
 name: diy-electronics-lookup
-description: "查询 AI DIY Electronics Lab 中可复用的电子工程知识，用于选型、接线、对比和排障；默认只读。 Query reusable electronics knowledge for component selection, wiring, comparison, and troubleshooting; read-only by default."
+description: "查询 DIY Electronics with AI 中可复用的电子工程知识，用于选型、接线、对比和排障；默认只读。 Query reusable electronics knowledge for component selection, wiring, comparison, and troubleshooting; read-only by default."
 ---
 
 # Electronics Lab Lookup
 
-Use AI DIY Electronics Lab as an evidence-backed knowledge source from any project. Resolve its checkout with
+Use DIY Electronics with AI as an evidence-backed knowledge source from any project. Resolve its checkout with
 `scripts/repo-root.sh`, then read the repository `AGENTS.md` before using its content.
 
 Search the narrowest relevant location:

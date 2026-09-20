@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/zhoushoujianwork/ai-diy-electronics-lab/catalog/schema/vendor.schema.json",
-  "title": "AI DIY Electronics Lab vendor record",
+  "$id": "https://github.com/zhoushoujianwork/diy-electronics-with-ai/catalog/schema/vendor.schema.json",
+  "title": "DIY Electronics with AI vendor record",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "id", "name", "website", "last_reviewed"],

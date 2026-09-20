@@ -1,4 +1,4 @@
-# AI DIY Electronics Lab collaboration rules
+# DIY Electronics with AI collaboration rules
 
 These rules apply to the whole repository unless a deeper `AGENTS.md` overrides them.
 

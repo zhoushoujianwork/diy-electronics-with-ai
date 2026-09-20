@@ -18,7 +18,7 @@ usage() {
   cat <<'EOF'
 Usage: scripts/install-agent-skill.sh [--target agents|codex|claude|all] [--dry-run]
 
-Install all AI DIY Electronics Lab skills using user-level symbolic links.
+Install all DIY Electronics with AI skills using user-level symbolic links.
 
   agents  ~/.agents/skills (default, portable Agent Skills location)
   codex   ${CODEX_HOME:-~/.codex}/skills
