@@ -6,23 +6,18 @@ keeps the live engine state visible while a control is being touched.
 ## Main page
 
 - Top controls: `START` / `STOP`, live RPM/state and a `SET` page button.
-- Two horizontal, centre-snapping carousels switch directly among all 18 engine
-  profiles and five exhaust styles. Cards can be swiped or tapped; no dropdown
-  is used. Exhaust cards include distinct miniature silhouettes: the Akrapovič
-  style uses a dark tapered can with a red tip, the tin-can style uses a tall
-  silver banded body, and the no-muffler style is shown as a narrow open pipe.
-- The centre is an Engine Simulator-inspired mechanical cutaway rather than an
-  arc gauge. A retained RGB565 LVGL canvas renders cylinders, valves, pistons, connecting
-  rods, crank pins and ignition for inline, V and flat layouts. Cylinder phase
-  comes from each profile's actual firing order; inline four therefore moves as
-  symmetric 1/4 and 2/3 pairs. Mechanical speed is RPM-linked slow motion to
-  avoid aliasing; the top lamp uses real firing activity. The slow-motion chamber
-  flash follows compression TDC, so the flame and piston stay in phase.
-  A 3.5:1 rod/crank ratio preserves connecting-rod length throughout the stroke;
-  dual piston rings, moving intake/exhaust valves, cylinder numbers and chamber
-  colours make power/exhaust/intake/compression visible. V banks use 45, 60, 72
-  or 90 degrees and expand into adjacent pairs instead of overlapping cylinders.
-  These are schematic cutaways, not manufacturer-specific CAD geometry.
+- `ENGINE · TAP NEXT` and `EXHAUST · TAP NEXT` are large, independent cycle
+  buttons. Each click advances exactly one item and wraps at the end; there are
+  no swipe gestures, momentum, dropdowns or hidden lists.
+- The centre is a retained RGB565 pixel-art motorcycle. Wheel spokes rotate at
+  an RPM-linked slow-motion rate, the engine block shows up to six cylinder bars
+  and flashes the latest firing cylinder, and running engines emit pixel smoke.
+  It is a stylised status view, not manufacturer-specific CAD geometry.
+- The selected exhaust is drawn directly on the motorcycle. Stock uses a long
+  grey silencer, Akrapovič style a dark tapered can with a red tip, Yoshimura
+  style a gold can with contrasting bands, `TIN CAN` an intentionally oversized
+  red drinks can with silver rolled rims and a white mark, and `NO MUFFLER` a
+  narrow open pipe. This makes the joke and the selection visible without text.
 - `REDLINE` is a main-page slider from idle + 500 RPM through 16000 RPM.
 - `HOLD THROTTLE`: the only throttle control on screen. Pressing starts the
   engine and applies 100% throttle; releasing always returns to zero throttle.
@@ -32,17 +27,15 @@ keeps the live engine state visible while a control is being touched.
 
 ## Rendering and touch timing
 
-- Touch and display timers use 16 ms; the mechanical update target is 33 ms.
+- Touch and display timers use 16 ms; the motorcycle update target is 33 ms.
   These are scheduling targets, not claims of measured 60/30 FPS.
-- The carousel uses 6 px drag recognition, momentum and a 240 ms ease-out snap.
-  While scrolling, mechanical raster updates pause to prioritize the moving cards;
-  audio continues and the mechanism resumes at the current simulated phase.
-- Text, styles and slider values are updated only when changed. The mechanism
+- Cycle-button callbacks log the old and new selection before dispatching the
+  action. Text, styles and slider values are updated only when changed. The motorcycle
   stops invalidating when parked and does not redraw behind the settings page.
-- A 55040-byte static RGB565 canvas replaces hundreds of per-frame draw tasks.
+- A 69120-byte static RGB565 canvas avoids heap allocation in the render loop.
   Two 40-line DMA buffers transfer the result without putting frame data on a stack.
 - `UI_READBACK` includes render count, maximum render/update times, raster frame
-  count (`draw_passes`) and scrolling state for device-side verification.
+  count (`draw_passes`) and the `cycle_buttons` selector mode for verification.
 
 ## Sound transitions
 
@@ -63,7 +56,7 @@ labels, not measured replicas or manufacturer-endorsed sound maps.
 
 - `OUTPUT VOLUME -/+`: software output gain in 5% steps, from 0% to 100%.
 - Exhaust selection lives on the main page so it remains visible beside the
-  engine selector and can be changed while the mechanism is running.
+  engine selector and can be changed while the motorcycle is running.
 - Values update live and apply immediately. Changing engine type restores that
   type's default redline. `BACK` returns to the main page.
 
@@ -83,7 +76,7 @@ All touch callbacks emit a `TOUCH` log followed by an `UI_ACTION` result. UI
 control disables the remote-link timeout, while a later serial command returns
 control to the two-second serial watchdog. The LVGL refresh timer only reads a
 locked state snapshot; it never touches the audio engine directly. A profile
-change also emits `UI_SYNC` with the selected profile and mechanical layout.
+change also emits `UI_SYNC mode=cycle_buttons` with both selected values.
 
 ## Hardware path
 

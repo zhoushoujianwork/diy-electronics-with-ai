@@ -9,7 +9,6 @@
 #include "board_audio.h"
 #include "board_config.h"
 #include "engine_voice.h"
-#include "engine_canvas.h"
 #include "esp_timer.h"
 #include "driver/ledc.h"
 #include "driver/spi_master.h"
@@ -33,8 +32,8 @@ static esp_lcd_touch_handle_t touch;
 static lv_display_t *display;
 static lv_indev_t *touch_indev;
 static lv_obj_t *main_page,*settings_page;
-static lv_obj_t *profile_strip,*profile_cards[EV_PROFILES],*engine_visual;
-static lv_obj_t *exhaust_strip,*exhaust_cards[EV_EXHAUSTS];
+static lv_obj_t *engine_visual;
+static lv_obj_t *engine_value_label,*exhaust_value_label;
 static lv_obj_t *rpm_label,*state_label,*pulse_led,*start_button,*start_label;
 static lv_obj_t *redline_slider,*redline_value_label,*rev_button,*volume_value_label;
 static board_ui_action_cb_t action_callback;
@@ -45,11 +44,9 @@ static bool last_pulse;
 static unsigned displayed_profile=EV_PROFILES;
 static unsigned displayed_exhaust=EV_EXHAUSTS;
 static float crank_phase;
-static bool displayed_running;
 static bool redline_dragging;
 static bool ready;
-static bool carousel_scrolling,carousel_syncing;
-static bool exhaust_scrolling,exhaust_syncing,settings_visible;
+static bool settings_visible;
 static uint32_t draw_count,refresh_max_us,last_refresh_tick;
 static uint32_t render_count,render_max_us;
 static int64_t render_started;
@@ -91,150 +88,151 @@ static lv_obj_t *button_with_label(lv_obj_t *parent,const char *text,
     return button;
 }
 
-_Alignas(4) static uint16_t engine_pixels[320*86];
-static void draw_engine_frame(void) {
-    ev_canvas_render(engine_pixels,320,86,displayed_profile,crank_phase/(2*TWO_PI),displayed_running);
+enum { BIKE_W=320, BIKE_H=108 };
+_Alignas(4) static uint16_t engine_pixels[BIKE_W*BIKE_H];
+
+static uint16_t rgb565(uint32_t rgb) {
+    return (uint16_t)((((rgb>>16)&0xf8)<<8)|(((rgb>>8)&0xfc)<<3)|((rgb&0xf8)>>3));
+}
+
+static void px_rect(int x,int y,int w,int h,uint32_t color) {
+    if(x<0) { w+=x; x=0; }
+    if(y<0) { h+=y; y=0; }
+    if(x+w>BIKE_W) w=BIKE_W-x;
+    if(y+h>BIKE_H) h=BIKE_H-y;
+    if(w<=0 || h<=0) return;
+    uint16_t c=rgb565(color);
+    for(int py=y;py<y+h;py++)
+        for(int px=x;px<x+w;px++) engine_pixels[py*BIKE_W+px]=c;
+}
+
+static void px_line(int x0,int y0,int x1,int y1,int thick,uint32_t color) {
+    int dx=abs(x1-x0),sx=x0<x1?1:-1,dy=-abs(y1-y0),sy=y0<y1?1:-1,err=dx+dy;
+    for(;;) {
+        px_rect(x0-thick/2,y0-thick/2,thick,thick,color);
+        if(x0==x1 && y0==y1) break;
+        int e2=2*err;
+        if(e2>=dy) { err+=dy; x0+=sx; }
+        if(e2<=dx) { err+=dx; y0+=sy; }
+    }
+}
+
+static void px_ring(int cx,int cy,int outer,int inner,uint32_t color) {
+    int oo=outer*outer,ii=inner*inner;
+    for(int y=-outer;y<=outer;y++) for(int x=-outer;x<=outer;x++) {
+        int d=x*x+y*y;
+        if(d<=oo && d>=ii) px_rect(cx+x,cy+y,1,1,color);
+    }
+}
+
+static void draw_exhaust(unsigned exhaust,bool running,float phase) {
+    px_line(155,73,122,68,4,0x8A929B);
+    if(exhaust==0) {
+        px_rect(80,60,41,12,0x68727D); px_rect(76,63,7,6,0xAAB2BA);
+        px_rect(84,62,30,2,0x9CA5AE);
+    } else if(exhaust==1) {
+        for(int y=0;y<12;y++) px_rect(79+y/3,58+y,42-y/2,1,0x292D32);
+        px_rect(76,60,7,8,0xD64535); px_rect(91,59,3,10,0x5B6269);
+    } else if(exhaust==2) {
+        px_rect(80,58,39,14,0x9C7135); px_rect(76,61,7,8,0xD9AA4E);
+        px_rect(88,59,4,12,0xE1B85D); px_rect(111,60,5,10,0x5A4124);
+    } else if(exhaust==3) {
+        /* Deliberately unmistakable red drinks can with silver rolled rims. */
+        px_rect(78,54,38,22,0xD83038); px_rect(78,54,38,3,0xD9DEE2);
+        px_rect(78,73,38,3,0xD9DEE2); px_rect(88,57,5,16,0xF6F6EF);
+        px_rect(99,61,10,3,0xF6F6EF); px_rect(103,58,3,9,0xF6F6EF);
+        px_rect(74,59,6,12,0xA9AFB5);
+    } else {
+        px_line(122,68,73,66,5,0x6D747B); px_rect(69,63,7,7,0xE27B35);
+    }
+    if(running) {
+        int drift=(int)(phase*18)%18;
+        px_rect(62-drift,59,5,5,0x53606C);
+        px_rect(49-drift/2,53,3,3,0x34414D);
+    }
+}
+
+static void draw_motorcycle(const board_ui_state_t *state) {
+    static const uint32_t tank_colors[]={0xB94936,0x2E7C74,0x4F6FA8,0x8B5AA5,0xB17A32,0x8A394C};
+    uint32_t tank_color=tank_colors[state->profile%(sizeof(tank_colors)/sizeof(tank_colors[0]))];
+    px_rect(0,0,BIKE_W,BIKE_H,0x080D14);
+    for(int x=0;x<BIKE_W;x+=16) px_rect(x,94,8,2,0x172330);
+    px_rect(0,98,BIKE_W,3,0x263544);
+    for(int x=4;x<BIKE_W;x+=28) px_rect(x,103,15,2,0x151F29);
+
+    const int rear_x=72,front_x=246,wheel_y=76;
+    px_ring(rear_x,wheel_y,27,21,0x74808B);
+    px_ring(front_x,wheel_y,27,21,0x74808B);
+    px_ring(rear_x,wheel_y,6,3,0xD9A45D);
+    px_ring(front_x,wheel_y,6,3,0xD9A45D);
+    float a=crank_phase;
+    for(int i=0;i<4;i++) {
+        float angle=a+i*1.570796327f;
+        px_line(rear_x+(int)(7*cosf(angle)),wheel_y+(int)(7*sinf(angle)),
+                rear_x+(int)(19*cosf(angle)),wheel_y+(int)(19*sinf(angle)),2,0x3D4B58);
+        px_line(front_x+(int)(7*cosf(angle)),wheel_y+(int)(7*sinf(angle)),
+                front_x+(int)(19*cosf(angle)),wheel_y+(int)(19*sinf(angle)),2,0x3D4B58);
+    }
+
+    px_line(82,74,132,43,5,0xD88A3D);
+    px_line(132,43,166,75,5,0xD88A3D);
+    px_line(166,75,82,74,5,0xD88A3D);
+    px_line(166,75,218,50,5,0xD88A3D);
+    px_line(218,50,242,75,4,0x9BA6B0);
+    px_line(218,50,224,30,4,0x9BA6B0);
+    px_line(215,30,237,28,3,0xAAB5BF);
+
+    px_rect(102,34,48,7,0x252D36);
+    px_rect(109,31,35,3,0x6D7780);
+    for(int y=0;y<16;y++) px_rect(132+y/3,41+y,51-y,1,tank_color);
+    px_rect(143,44,28,3,0xE27650);
+    px_rect(217,42,15,9,0xD9A45D);
+    px_rect(230,44,9,5,0xF2D27A);
+
+    unsigned cylinders=ev_profiles[state->profile].cylinders;
+    uint32_t engine_color=state->running?0xE5A24F:0x77828C;
+    px_rect(132,57,39,25,0x252E38);
+    px_rect(136,61,31,17,engine_color);
+    unsigned bars=cylinders>6?6:cylinders;
+    for(unsigned i=0;i<bars;i++) {
+        int x=138+(int)i*5;
+        int pulse=(state->running && i==state->last_cylinder%bars)?4:0;
+        px_rect(x,63-pulse,3,12+pulse,0x101820);
+    }
+    px_rect(128,80,49,4,0x8A949E);
+    draw_exhaust(state->exhaust,state->running,fmodf(crank_phase/TWO_PI,1));
     draw_count++;
     lv_obj_invalidate(engine_visual);
 }
 
-static void style_profile_cards(unsigned selected) {
-    for(unsigned i=0;i<EV_PROFILES;i++) {
-        bool active=i==selected;
-        lv_obj_set_style_bg_opa(profile_cards[i],active?LV_OPA_COVER:LV_OPA_TRANSP,LV_PART_MAIN);
-        lv_obj_set_style_bg_color(profile_cards[i],lv_color_hex(active?0x10231F:0x0B1017),LV_PART_MAIN);
-        lv_obj_set_style_border_width(profile_cards[i],active?1:0,LV_PART_MAIN);
-        lv_obj_set_style_border_color(profile_cards[i],lv_color_hex(0x2B6455),LV_PART_MAIN);
-        lv_obj_set_style_text_color(profile_cards[i],lv_color_hex(active?0x2DE2A6:0x718092),LV_PART_MAIN);
-    }
-}
-
-static void sync_profile_carousel(unsigned profile) {
-    if(profile>=EV_PROFILES) profile=0;
+static void sync_selector_labels(const board_ui_state_t *state) {
+    unsigned profile=state->profile<EV_PROFILES?state->profile:0;
+    unsigned exhaust=state->exhaust<EV_EXHAUSTS?state->exhaust:0;
     displayed_profile=profile;
-    style_profile_cards(profile);
-    carousel_syncing=true;
-    lv_obj_scroll_to_view(profile_cards[profile],LV_ANIM_OFF);
-    carousel_syncing=false;
-    draw_engine_frame();
-    ESP_LOGI(TAG,"UI_SYNC mode=swipe cylinders=%u layout=%s profile=%s",
-             ev_profiles[profile].cylinders,ev_profiles[profile].ui_name,
-             ev_profiles[profile].name);
-}
-
-static void select_profile(unsigned profile,const char *source) {
-    if(profile>=EV_PROFILES || profile==displayed_profile) return;
-    displayed_profile=profile;
-    style_profile_cards(profile);
-    ESP_LOGI(TAG,"TOUCH action=profile_%s value=%s cylinders=%u layout=%s",
-             source,ev_profiles[profile].name,ev_profiles[profile].cylinders,
-             ev_profiles[profile].ui_name);
-    if(action_callback) action_callback(BOARD_UI_PROFILE,(int)profile,callback_context);
-    lv_obj_invalidate(engine_visual);
-}
-
-static void profile_card_event(lv_event_t *event) {
-    if(lv_event_get_code(event)!=LV_EVENT_CLICKED) return;
-    unsigned profile=(unsigned)(uintptr_t)lv_event_get_user_data(event);
-    if(profile>=EV_PROFILES) return;
-    lv_obj_scroll_to_view(profile_cards[profile],LV_ANIM_ON);
-    select_profile(profile,"tap");
-}
-
-static void profile_strip_event(lv_event_t *event) {
-    if(lv_event_get_code(event)==LV_EVENT_SCROLL_BEGIN) {
-        carousel_scrolling=true;
-        lv_anim_t *animation=lv_event_get_param(event);
-        if(animation) {
-            lv_anim_set_duration(animation,240);
-            lv_anim_set_path_cb(animation,lv_anim_path_ease_out);
-        }
-        return;
-    }
-    if(lv_event_get_code(event)!=LV_EVENT_SCROLL_END) return;
-    carousel_scrolling=false;
-    if(carousel_syncing) return;
-    lv_area_t strip_area;
-    lv_obj_get_coords(profile_strip,&strip_area);
-    int center=(strip_area.x1+strip_area.x2)/2;
-    unsigned best=displayed_profile<EV_PROFILES?displayed_profile:0;
-    int best_distance=INT32_MAX;
-    for(unsigned i=0;i<EV_PROFILES;i++) {
-        lv_area_t card_area;
-        lv_obj_get_coords(profile_cards[i],&card_area);
-        int card_center=(card_area.x1+card_area.x2)/2;
-        int distance=abs(card_center-center);
-        if(distance<best_distance) { best_distance=distance; best=i; }
-    }
-    select_profile(best,"swipe");
-    /* Also rebuild a stopped engine after an animated card tap: the state
-     * snapshot may already have consumed the profile change during scrolling. */
-    draw_engine_frame();
-}
-
-static void style_exhaust_cards(unsigned selected) {
-    for(unsigned i=0;i<EV_EXHAUSTS;i++) {
-        bool active=i==selected;
-        lv_obj_set_style_bg_opa(exhaust_cards[i],active?LV_OPA_COVER:LV_OPA_TRANSP,LV_PART_MAIN);
-        lv_obj_set_style_bg_color(exhaust_cards[i],lv_color_hex(active?0x231B12:0x0B1017),LV_PART_MAIN);
-        lv_obj_set_style_border_width(exhaust_cards[i],active?1:0,LV_PART_MAIN);
-        lv_obj_set_style_border_color(exhaust_cards[i],lv_color_hex(0x9A6838),LV_PART_MAIN);
-        lv_obj_set_style_text_color(exhaust_cards[i],lv_color_hex(active?0xFFB86A:0x718092),LV_PART_MAIN);
-    }
-}
-
-static void sync_exhaust_carousel(unsigned exhaust) {
-    if(exhaust>=EV_EXHAUSTS) exhaust=0;
     displayed_exhaust=exhaust;
-    style_exhaust_cards(exhaust);
-    exhaust_syncing=true;
-    lv_obj_scroll_to_view(exhaust_cards[exhaust],LV_ANIM_OFF);
-    exhaust_syncing=false;
-    ESP_LOGI(TAG,"UI_SYNC mode=exhaust_swipe exhaust=%s",ev_exhausts[exhaust].name);
+    lv_label_set_text_fmt(engine_value_label,"%uC  %s  >",
+                          ev_profiles[profile].cylinders,ev_profiles[profile].ui_name);
+    lv_label_set_text_fmt(exhaust_value_label,"%s  >",ev_exhausts[exhaust].ui_name);
+    ESP_LOGI(TAG,"UI_SYNC mode=cycle_buttons profile=%s exhaust=%s",
+             ev_profiles[profile].name,ev_exhausts[exhaust].name);
 }
 
-static void select_exhaust(unsigned exhaust,const char *source) {
-    if(exhaust>=EV_EXHAUSTS || exhaust==displayed_exhaust) return;
-    displayed_exhaust=exhaust;
-    style_exhaust_cards(exhaust);
-    ESP_LOGI(TAG,"TOUCH action=exhaust_%s value=%s",source,ev_exhausts[exhaust].name);
-    if(action_callback) action_callback(BOARD_UI_EXHAUST,(int)exhaust,callback_context);
+static void profile_next_event(lv_event_t *event) {
+    if(lv_event_get_code(event)!=LV_EVENT_CLICKED || !have_previous_state) return;
+    unsigned current=previous_state.profile<EV_PROFILES?previous_state.profile:0;
+    unsigned next=(current+1)%EV_PROFILES;
+    ESP_LOGI(TAG,"TOUCH action=profile_next from=%s to=%s",
+             ev_profiles[current].name,ev_profiles[next].name);
+    if(action_callback) action_callback(BOARD_UI_PROFILE,(int)next,callback_context);
 }
 
-static void exhaust_card_event(lv_event_t *event) {
-    if(lv_event_get_code(event)!=LV_EVENT_CLICKED) return;
-    unsigned exhaust=(unsigned)(uintptr_t)lv_event_get_user_data(event);
-    if(exhaust>=EV_EXHAUSTS) return;
-    lv_obj_scroll_to_view(exhaust_cards[exhaust],LV_ANIM_ON);
-    select_exhaust(exhaust,"tap");
-}
-
-static void exhaust_strip_event(lv_event_t *event) {
-    if(lv_event_get_code(event)==LV_EVENT_SCROLL_BEGIN) {
-        exhaust_scrolling=true;
-        lv_anim_t *animation=lv_event_get_param(event);
-        if(animation) {
-            lv_anim_set_duration(animation,220);
-            lv_anim_set_path_cb(animation,lv_anim_path_ease_out);
-        }
-        return;
-    }
-    if(lv_event_get_code(event)!=LV_EVENT_SCROLL_END) return;
-    exhaust_scrolling=false;
-    if(exhaust_syncing) return;
-    lv_area_t strip_area;
-    lv_obj_get_coords(exhaust_strip,&strip_area);
-    int center=(strip_area.x1+strip_area.x2)/2;
-    unsigned best=displayed_exhaust<EV_EXHAUSTS?displayed_exhaust:0;
-    int best_distance=INT32_MAX;
-    for(unsigned i=0;i<EV_EXHAUSTS;i++) {
-        lv_area_t card_area;
-        lv_obj_get_coords(exhaust_cards[i],&card_area);
-        int card_center=(card_area.x1+card_area.x2)/2;
-        int distance=abs(card_center-center);
-        if(distance<best_distance) { best_distance=distance; best=i; }
-    }
-    select_exhaust(best,"swipe");
+static void exhaust_next_event(lv_event_t *event) {
+    if(lv_event_get_code(event)!=LV_EVENT_CLICKED || !have_previous_state) return;
+    unsigned current=previous_state.exhaust<EV_EXHAUSTS?previous_state.exhaust:0;
+    unsigned next=(current+1)%EV_EXHAUSTS;
+    ESP_LOGI(TAG,"TOUCH action=exhaust_next from=%s to=%s",
+             ev_exhausts[current].name,ev_exhausts[next].name);
+    if(action_callback) action_callback(BOARD_UI_EXHAUST,(int)next,callback_context);
 }
 
 static void engine_event(lv_event_t *event) {
@@ -308,10 +306,8 @@ static void refresh_timer(lv_timer_t *timer) {
     float speed=state.rpm>1?.5f+2.5f*sqrtf(ratio):0;
     visual_speed+=(speed-visual_speed)*fminf(1,dt*7);
     crank_phase=fmodf(crank_phase+visual_speed*TWO_PI*dt,2*TWO_PI);
-    displayed_running=state.running;
-
-    if(state.profile!=displayed_profile && !carousel_scrolling) sync_profile_carousel(state.profile);
-    if(state.exhaust!=displayed_exhaust && !exhaust_scrolling) sync_exhaust_carousel(state.exhaust);
+    if(state.profile!=displayed_profile || state.exhaust!=displayed_exhaust)
+        sync_selector_labels(&state);
     /* Static text/style updates only on change; UI input keeps its own 16 ms timer. */
     int rpm=(int)lroundf(state.rpm/10)*10;
     int previous_rpm=(int)lroundf(previous_state.rpm/10)*10;
@@ -353,11 +349,9 @@ static void refresh_timer(lv_timer_t *timer) {
         lv_obj_set_style_bg_opa(pulse_led,fired?LV_OPA_COVER:LV_OPA_30,LV_PART_MAIN);
     last_pulse=fired;
     last_firings=state.firings;
-    /* During a swipe, give the small carousel region the entire redraw budget.
-     * The mechanism resumes at the current phase when it settles. */
-    if(!settings_visible && !carousel_scrolling && !exhaust_scrolling &&
-       (moving || changed || state.profile!=previous_state.profile || state.running!=previous_state.running))
-        draw_engine_frame();
+    if(!settings_visible && (moving || changed || state.profile!=previous_state.profile ||
+       state.exhaust!=previous_state.exhaust || state.running!=previous_state.running))
+        draw_motorcycle(&state);
     previous_state=state; have_previous_state=true;
     uint32_t elapsed=(uint32_t)(esp_timer_get_time()-begin);
     if(elapsed>refresh_max_us) refresh_max_us=elapsed;
@@ -376,30 +370,28 @@ static lv_obj_t *create_page(lv_obj_t *screen) {
     return page;
 }
 
-static void create_exhaust_mark(lv_obj_t *card,unsigned exhaust) {
-    static const uint32_t body_colors[EV_EXHAUSTS]={0x78828D,0x3A3E43,0x9C7135,0xA9AFB5,0x6D747B};
-    static const uint32_t accent_colors[EV_EXHAUSTS]={0xAAB2BA,0xD64535,0xD9AA4E,0x6C737A,0xE27B35};
-    static const int widths[EV_EXHAUSTS]={22,24,21,18,27};
-    static const int heights[EV_EXHAUSTS]={8,7,9,13,4};
-    lv_obj_t *body=lv_obj_create(card);
-    lv_obj_set_pos(body,5,14-heights[exhaust]/2);
-    lv_obj_set_size(body,widths[exhaust],heights[exhaust]);
-    lv_obj_set_style_bg_color(body,lv_color_hex(body_colors[exhaust]),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(body,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_border_width(body,exhaust==3?2:0,LV_PART_MAIN);
-    lv_obj_set_style_border_color(body,lv_color_hex(0xD5D9DC),LV_PART_MAIN);
-    lv_obj_set_style_radius(body,exhaust==3?2:LV_RADIUS_CIRCLE,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(body,0,LV_PART_MAIN);
-    lv_obj_clear_flag(body,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
-    lv_obj_t *tip=lv_obj_create(card);
-    lv_obj_set_pos(tip,5+widths[exhaust]-3,14-heights[exhaust]/2);
-    lv_obj_set_size(tip,6,heights[exhaust]);
-    lv_obj_set_style_bg_color(tip,lv_color_hex(accent_colors[exhaust]),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(tip,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_border_width(tip,0,LV_PART_MAIN);
-    lv_obj_set_style_radius(tip,LV_RADIUS_CIRCLE,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(tip,0,LV_PART_MAIN);
-    lv_obj_clear_flag(tip,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
+static lv_obj_t *create_cycle_selector(lv_obj_t *parent,int x,const char *title,
+                                       uint32_t accent,lv_obj_t **value_label,
+                                       lv_event_cb_t event_cb) {
+    lv_obj_t *button=lv_button_create(parent);
+    lv_obj_set_pos(button,x,139);
+    lv_obj_set_size(button,151,39);
+    style_button(button,0x111923,5);
+    lv_obj_set_style_border_color(button,lv_color_hex(accent),LV_PART_MAIN);
+    lv_obj_t *caption=lv_label_create(button);
+    lv_label_set_text(caption,title);
+    lv_obj_set_pos(caption,8,3);
+    lv_obj_set_style_text_font(caption,&lv_font_montserrat_12,LV_PART_MAIN);
+    lv_obj_set_style_text_color(caption,lv_color_hex(0x718092),LV_PART_MAIN);
+    *value_label=lv_label_create(button);
+    lv_label_set_text(*value_label,"--  >");
+    lv_obj_set_pos(*value_label,8,19);
+    lv_obj_set_width(*value_label,136);
+    lv_label_set_long_mode(*value_label,LV_LABEL_LONG_CLIP);
+    lv_obj_set_style_text_font(*value_label,&lv_font_montserrat_12,LV_PART_MAIN);
+    lv_obj_set_style_text_color(*value_label,lv_color_hex(accent),LV_PART_MAIN);
+    lv_obj_add_event_cb(button,event_cb,LV_EVENT_CLICKED,NULL);
+    return button;
 }
 
 static void create_ui(void) {
@@ -446,90 +438,10 @@ static void create_ui(void) {
     lv_obj_t *settings_button=button_with_label(main_page,"SET",269,3,43,23);
     lv_obj_add_event_cb(settings_button,page_event,LV_EVENT_CLICKED,(void *)(uintptr_t)true);
 
-    profile_strip=lv_obj_create(main_page);
-    lv_obj_set_pos(profile_strip,0,28);
-    lv_obj_set_size(profile_strip,320,32);
-    lv_obj_set_style_bg_color(profile_strip,lv_color_hex(0x0B1017),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(profile_strip,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_border_width(profile_strip,1,LV_PART_MAIN);
-    lv_obj_set_style_border_side(profile_strip,LV_BORDER_SIDE_TOP|LV_BORDER_SIDE_BOTTOM,LV_PART_MAIN);
-    lv_obj_set_style_border_color(profile_strip,lv_color_hex(0x263141),LV_PART_MAIN);
-    lv_obj_set_style_radius(profile_strip,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_left(profile_strip,104,LV_PART_MAIN);
-    lv_obj_set_style_pad_right(profile_strip,104,LV_PART_MAIN);
-    lv_obj_set_style_pad_top(profile_strip,2,LV_PART_MAIN);
-    lv_obj_set_style_pad_bottom(profile_strip,2,LV_PART_MAIN);
-    lv_obj_set_style_pad_column(profile_strip,6,LV_PART_MAIN);
-    lv_obj_set_flex_flow(profile_strip,LV_FLEX_FLOW_ROW);
-    lv_obj_set_scroll_dir(profile_strip,LV_DIR_HOR);
-    lv_obj_set_scroll_snap_x(profile_strip,LV_SCROLL_SNAP_CENTER);
-    lv_obj_set_scrollbar_mode(profile_strip,LV_SCROLLBAR_MODE_OFF);
-    lv_obj_clear_flag(profile_strip,LV_OBJ_FLAG_SCROLL_ELASTIC);
-    lv_obj_add_flag(profile_strip,LV_OBJ_FLAG_SCROLL_MOMENTUM);
-    lv_obj_add_event_cb(profile_strip,profile_strip_event,LV_EVENT_ALL,NULL);
-    for(unsigned i=0;i<EV_PROFILES;i++) {
-        profile_cards[i]=lv_button_create(profile_strip);
-        lv_obj_set_size(profile_cards[i],112,26);
-        lv_obj_clear_flag(profile_cards[i],LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_add_flag(profile_cards[i],LV_OBJ_FLAG_SNAPPABLE);
-        lv_obj_set_style_radius(profile_cards[i],7,LV_PART_MAIN);
-        lv_obj_set_style_pad_all(profile_cards[i],0,LV_PART_MAIN);
-        lv_obj_set_style_shadow_width(profile_cards[i],0,LV_PART_MAIN);
-        lv_obj_t *label=lv_label_create(profile_cards[i]);
-        lv_label_set_text_fmt(label,"%uC  %s",ev_profiles[i].cylinders,ev_profiles[i].ui_name);
-        lv_obj_set_width(label,108);
-        lv_obj_set_style_text_font(label,&lv_font_montserrat_12,LV_PART_MAIN);
-        lv_label_set_long_mode(label,LV_LABEL_LONG_CLIP);
-        lv_obj_set_style_text_align(label,LV_TEXT_ALIGN_CENTER,LV_PART_MAIN);
-        lv_obj_center(label);
-        lv_obj_add_event_cb(profile_cards[i],profile_card_event,LV_EVENT_CLICKED,
-                            (void *)(uintptr_t)i);
-    }
-
-    exhaust_strip=lv_obj_create(main_page);
-    lv_obj_set_pos(exhaust_strip,0,60);
-    lv_obj_set_size(exhaust_strip,320,34);
-    lv_obj_set_style_bg_color(exhaust_strip,lv_color_hex(0x0D1117),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(exhaust_strip,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_border_width(exhaust_strip,1,LV_PART_MAIN);
-    lv_obj_set_style_border_side(exhaust_strip,LV_BORDER_SIDE_BOTTOM,LV_PART_MAIN);
-    lv_obj_set_style_border_color(exhaust_strip,lv_color_hex(0x3D3023),LV_PART_MAIN);
-    lv_obj_set_style_radius(exhaust_strip,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_left(exhaust_strip,101,LV_PART_MAIN);
-    lv_obj_set_style_pad_right(exhaust_strip,101,LV_PART_MAIN);
-    lv_obj_set_style_pad_top(exhaust_strip,2,LV_PART_MAIN);
-    lv_obj_set_style_pad_bottom(exhaust_strip,2,LV_PART_MAIN);
-    lv_obj_set_style_pad_column(exhaust_strip,6,LV_PART_MAIN);
-    lv_obj_set_flex_flow(exhaust_strip,LV_FLEX_FLOW_ROW);
-    lv_obj_set_scroll_dir(exhaust_strip,LV_DIR_HOR);
-    lv_obj_set_scroll_snap_x(exhaust_strip,LV_SCROLL_SNAP_CENTER);
-    lv_obj_set_scrollbar_mode(exhaust_strip,LV_SCROLLBAR_MODE_OFF);
-    lv_obj_clear_flag(exhaust_strip,LV_OBJ_FLAG_SCROLL_ELASTIC);
-    lv_obj_add_flag(exhaust_strip,LV_OBJ_FLAG_SCROLL_MOMENTUM);
-    lv_obj_add_event_cb(exhaust_strip,exhaust_strip_event,LV_EVENT_ALL,NULL);
-    for(unsigned i=0;i<EV_EXHAUSTS;i++) {
-        exhaust_cards[i]=lv_button_create(exhaust_strip);
-        lv_obj_set_size(exhaust_cards[i],118,28);
-        lv_obj_clear_flag(exhaust_cards[i],LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_add_flag(exhaust_cards[i],LV_OBJ_FLAG_SNAPPABLE);
-        lv_obj_set_style_radius(exhaust_cards[i],7,LV_PART_MAIN);
-        lv_obj_set_style_pad_all(exhaust_cards[i],0,LV_PART_MAIN);
-        lv_obj_set_style_shadow_width(exhaust_cards[i],0,LV_PART_MAIN);
-        create_exhaust_mark(exhaust_cards[i],i);
-        lv_obj_t *label=lv_label_create(exhaust_cards[i]);
-        lv_label_set_text(label,ev_exhausts[i].ui_name);
-        lv_obj_set_pos(label,36,7);
-        lv_obj_set_width(label,78);
-        lv_obj_set_style_text_font(label,&lv_font_montserrat_12,LV_PART_MAIN);
-        lv_label_set_long_mode(label,LV_LABEL_LONG_CLIP);
-        lv_obj_add_event_cb(exhaust_cards[i],exhaust_card_event,LV_EVENT_CLICKED,
-                            (void *)(uintptr_t)i);
-    }
-
     engine_visual=lv_canvas_create(main_page);
-    lv_canvas_set_buffer(engine_visual,engine_pixels,320,86,LV_COLOR_FORMAT_RGB565);
-    lv_obj_set_pos(engine_visual,0,94);
-    lv_obj_set_size(engine_visual,320,86);
+    lv_canvas_set_buffer(engine_visual,engine_pixels,BIKE_W,BIKE_H,LV_COLOR_FORMAT_RGB565);
+    lv_obj_set_pos(engine_visual,0,28);
+    lv_obj_set_size(engine_visual,BIKE_W,BIKE_H);
     lv_obj_set_style_bg_color(engine_visual,lv_color_hex(0x090D12),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(engine_visual,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(engine_visual,0,LV_PART_MAIN);
@@ -537,12 +449,17 @@ static void create_ui(void) {
     lv_obj_set_style_pad_all(engine_visual,0,LV_PART_MAIN);
     lv_obj_clear_flag(engine_visual,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
 
+    create_cycle_selector(main_page,6,"ENGINE · TAP NEXT",0x2DE2A6,
+                          &engine_value_label,profile_next_event);
+    create_cycle_selector(main_page,163,"EXHAUST · TAP NEXT",0xFFB86A,
+                          &exhaust_value_label,exhaust_next_event);
+
     phase_label=lv_label_create(main_page);
     lv_label_set_text(phase_label,"OFF / SLOW");
     lv_obj_set_style_text_font(phase_label,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_pos(phase_label,9,166);
+    lv_obj_set_pos(phase_label,9,117);
     load_bar=lv_bar_create(main_page);
-    lv_obj_set_pos(load_bar,148,170);
+    lv_obj_set_pos(load_bar,148,123);
     lv_obj_set_size(load_bar,161,5);
     lv_bar_set_range(load_bar,0,100);
     lv_obj_set_style_bg_color(load_bar,lv_color_hex(0x243241),LV_PART_MAIN);
@@ -594,10 +511,6 @@ static void create_ui(void) {
     lv_obj_set_style_text_font(volume_value_label,&lv_font_montserrat_28,LV_PART_MAIN);
     lv_obj_set_style_text_color(volume_value_label,lv_color_hex(0x2DE2A6),LV_PART_MAIN);
 
-    lv_obj_update_layout(profile_strip);
-    sync_profile_carousel(0);
-    lv_obj_update_layout(exhaust_strip);
-    sync_exhaust_carousel(0);
     lv_timer_create(refresh_timer,33,NULL);
 }
 
@@ -724,7 +637,7 @@ esp_err_t board_ui_init(i2c_master_bus_handle_t shared_i2c,
     lvgl_port_unlock();
     ESP_RETURN_ON_ERROR(init_backlight(),TAG,"backlight");
     ready=true;
-    ESP_LOGI(TAG,"UI_READY panel=ST7789 320x240 touch=FT6336 lvgl_stack=10240 animation=slider_crank refresh_ms=16 motion_ms=33 selector=swipe");
+    ESP_LOGI(TAG,"UI_READY panel=ST7789 320x240 touch=FT6336 lvgl_stack=10240 animation=pixel_motorcycle refresh_ms=16 motion_ms=33 selector=cycle_buttons");
     return ESP_OK;
 }
 
@@ -738,11 +651,10 @@ esp_err_t board_ui_report(void) {
     ESP_RETURN_ON_FALSE(lvgl_port_lock(1000),ESP_ERR_TIMEOUT,TAG,"UI readback lock");
     unsigned profile=displayed_profile<EV_PROFILES?displayed_profile:0;
     unsigned draws=draw_count,renders=render_count,render_us=render_max_us,refresh_us=refresh_max_us;
-    bool scrolling=carousel_scrolling || exhaust_scrolling;
     unsigned exhaust=displayed_exhaust<EV_EXHAUSTS?displayed_exhaust:0;
     lvgl_port_unlock();
-    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=slider_crank profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u scrolling=%d",
+    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=pixel_motorcycle profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u selector=cycle_buttons",
              board_ui_stack_high_water_mark(),ev_profiles[profile].name,ev_exhausts[exhaust].name,
-             renders,render_us,refresh_us,draws,scrolling);
+             renders,render_us,refresh_us,draws);
     return ESP_OK;
 }
