@@ -17,7 +17,7 @@ if(EV_BOARD STREQUAL "lichuang_szp")
 endif()
 
 idf_component_register(
-    SRCS "main.c" "../../core/engine_voice.c" "../../core/commands.c" "../../core/engine_canvas.c" "../../core/stick_controls.c"
+    SRCS "main.c" "../../core/engine_voice.c" "../../core/commands.c" "../../core/engine_canvas.c" "../../core/motorcycle_canvas.c" "../../core/stick_controls.c"
          "${EV_BOARD_DIR}/board_audio.c" "${EV_BOARD_DIR}/board_ui.c"
     INCLUDE_DIRS "." "../../core" "${EV_BOARD_DIR}"
     REQUIRES ${EV_REQUIRES})

@@ -9,6 +9,7 @@
 #include "board_audio.h"
 #include "board_config.h"
 #include "engine_voice.h"
+#include "motorcycle_canvas.h"
 #include "esp_timer.h"
 #include "driver/ledc.h"
 #include "driver/spi_master.h"
@@ -91,116 +92,17 @@ static lv_obj_t *button_with_label(lv_obj_t *parent,const char *text,
 enum { BIKE_W=320, BIKE_H=108 };
 _Alignas(4) static uint16_t engine_pixels[BIKE_W*BIKE_H];
 
-static uint16_t rgb565(uint32_t rgb) {
-    return (uint16_t)((((rgb>>16)&0xf8)<<8)|(((rgb>>8)&0xfc)<<3)|((rgb&0xf8)>>3));
-}
-
-static void px_rect(int x,int y,int w,int h,uint32_t color) {
-    if(x<0) { w+=x; x=0; }
-    if(y<0) { h+=y; y=0; }
-    if(x+w>BIKE_W) w=BIKE_W-x;
-    if(y+h>BIKE_H) h=BIKE_H-y;
-    if(w<=0 || h<=0) return;
-    uint16_t c=rgb565(color);
-    for(int py=y;py<y+h;py++)
-        for(int px=x;px<x+w;px++) engine_pixels[py*BIKE_W+px]=c;
-}
-
-static void px_line(int x0,int y0,int x1,int y1,int thick,uint32_t color) {
-    int dx=abs(x1-x0),sx=x0<x1?1:-1,dy=-abs(y1-y0),sy=y0<y1?1:-1,err=dx+dy;
-    for(;;) {
-        px_rect(x0-thick/2,y0-thick/2,thick,thick,color);
-        if(x0==x1 && y0==y1) break;
-        int e2=2*err;
-        if(e2>=dy) { err+=dy; x0+=sx; }
-        if(e2<=dx) { err+=dx; y0+=sy; }
-    }
-}
-
-static void px_ring(int cx,int cy,int outer,int inner,uint32_t color) {
-    int oo=outer*outer,ii=inner*inner;
-    for(int y=-outer;y<=outer;y++) for(int x=-outer;x<=outer;x++) {
-        int d=x*x+y*y;
-        if(d<=oo && d>=ii) px_rect(cx+x,cy+y,1,1,color);
-    }
-}
-
-static void draw_exhaust(unsigned exhaust,bool running,float phase) {
-    px_line(155,73,122,68,4,0x8A929B);
-    if(exhaust==0) {
-        px_rect(80,60,41,12,0x68727D); px_rect(76,63,7,6,0xAAB2BA);
-        px_rect(84,62,30,2,0x9CA5AE);
-    } else if(exhaust==1) {
-        for(int y=0;y<12;y++) px_rect(79+y/3,58+y,42-y/2,1,0x292D32);
-        px_rect(76,60,7,8,0xD64535); px_rect(91,59,3,10,0x5B6269);
-    } else if(exhaust==2) {
-        px_rect(80,58,39,14,0x9C7135); px_rect(76,61,7,8,0xD9AA4E);
-        px_rect(88,59,4,12,0xE1B85D); px_rect(111,60,5,10,0x5A4124);
-    } else if(exhaust==3) {
-        /* Deliberately unmistakable red drinks can with silver rolled rims. */
-        px_rect(78,54,38,22,0xD83038); px_rect(78,54,38,3,0xD9DEE2);
-        px_rect(78,73,38,3,0xD9DEE2); px_rect(88,57,5,16,0xF6F6EF);
-        px_rect(99,61,10,3,0xF6F6EF); px_rect(103,58,3,9,0xF6F6EF);
-        px_rect(74,59,6,12,0xA9AFB5);
-    } else {
-        px_line(122,68,73,66,5,0x6D747B); px_rect(69,63,7,7,0xE27B35);
-    }
-    if(running) {
-        int drift=(int)(phase*18)%18;
-        px_rect(62-drift,59,5,5,0x53606C);
-        px_rect(49-drift/2,53,3,3,0x34414D);
-    }
-}
-
 static void draw_motorcycle(const board_ui_state_t *state) {
-    static const uint32_t tank_colors[]={0xB94936,0x2E7C74,0x4F6FA8,0x8B5AA5,0xB17A32,0x8A394C};
-    uint32_t tank_color=tank_colors[state->profile%(sizeof(tank_colors)/sizeof(tank_colors[0]))];
-    px_rect(0,0,BIKE_W,BIKE_H,0x080D14);
-    for(int x=0;x<BIKE_W;x+=16) px_rect(x,94,8,2,0x172330);
-    px_rect(0,98,BIKE_W,3,0x263544);
-    for(int x=4;x<BIKE_W;x+=28) px_rect(x,103,15,2,0x151F29);
-
-    const int rear_x=72,front_x=246,wheel_y=76;
-    px_ring(rear_x,wheel_y,27,21,0x74808B);
-    px_ring(front_x,wheel_y,27,21,0x74808B);
-    px_ring(rear_x,wheel_y,6,3,0xD9A45D);
-    px_ring(front_x,wheel_y,6,3,0xD9A45D);
-    float a=crank_phase;
-    for(int i=0;i<4;i++) {
-        float angle=a+i*1.570796327f;
-        px_line(rear_x+(int)(7*cosf(angle)),wheel_y+(int)(7*sinf(angle)),
-                rear_x+(int)(19*cosf(angle)),wheel_y+(int)(19*sinf(angle)),2,0x3D4B58);
-        px_line(front_x+(int)(7*cosf(angle)),wheel_y+(int)(7*sinf(angle)),
-                front_x+(int)(19*cosf(angle)),wheel_y+(int)(19*sinf(angle)),2,0x3D4B58);
-    }
-
-    px_line(82,74,132,43,5,0xD88A3D);
-    px_line(132,43,166,75,5,0xD88A3D);
-    px_line(166,75,82,74,5,0xD88A3D);
-    px_line(166,75,218,50,5,0xD88A3D);
-    px_line(218,50,242,75,4,0x9BA6B0);
-    px_line(218,50,224,30,4,0x9BA6B0);
-    px_line(215,30,237,28,3,0xAAB5BF);
-
-    px_rect(102,34,48,7,0x252D36);
-    px_rect(109,31,35,3,0x6D7780);
-    for(int y=0;y<16;y++) px_rect(132+y/3,41+y,51-y,1,tank_color);
-    px_rect(143,44,28,3,0xE27650);
-    px_rect(217,42,15,9,0xD9A45D);
-    px_rect(230,44,9,5,0xF2D27A);
-
-    unsigned cylinders=ev_profiles[state->profile].cylinders;
-    uint32_t engine_color=state->running?0xE5A24F:0x77828C;
-    px_rect(132,57,39,25,0x252E38);
-    px_rect(136,61,31,17,engine_color);
-    unsigned bars=cylinders>6?6:cylinders;
-    for(unsigned i=0;i<bars;i++) {
-        int x=138+(int)i*5;
-        int pulse=(state->running && i==state->last_cylinder%bars)?4:0;
-        px_rect(x,63-pulse,3,12+pulse,0x101820);
-    }
-    px_rect(128,80,49,4,0x8A949E);
-    draw_exhaust(state->exhaust,state->running,fmodf(crank_phase/TWO_PI,1));
+    unsigned profile=state->profile<EV_PROFILES?state->profile:0;
+    ev_motorcycle_state_t visual={
+        .profile=profile,
+        .cylinders=ev_profiles[profile].cylinders,
+        .exhaust=state->exhaust<EV_EXHAUSTS?state->exhaust:0,
+        .last_cylinder=state->last_cylinder,
+        .running=state->running,
+        .phase=fmodf(crank_phase/TWO_PI,1.f)
+    };
+    ev_motorcycle_render(engine_pixels,&visual);
     draw_count++;
     lv_obj_invalidate(engine_visual);
 }

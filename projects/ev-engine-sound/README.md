@@ -59,6 +59,28 @@ build/render_voice v12 straight build/v12-straight.wav
 
 每个 WAV 包含启动、渐进给油、高转、收油和停机过程，使用与固件相同的合成核心。
 
+## 电脑预览像素机车
+
+像素机车使用与立创实战派固件相同的 320×108、RGB565、无堆分配渲染器。无需连接
+开发板即可生成五种排气的 3 倍整数缩放预览：
+
+```sh
+cmake --build build --target render_motorcycle
+mkdir -p build/ui-preview
+build/render_motorcycle build/ui-preview
+```
+
+输出为 `motorcycle-stock.ppm`、`motorcycle-akrapovic.ppm`、
+`motorcycle-yoshimura.ppm`、`motorcycle-tin_can.ppm` 和
+`motorcycle-straight.ppm`。整数缩放不使用插值，屏幕上的每个像素都能直接检查。
+仓库还提供可直接用浏览器打开的 [`docs/ui-preview.html`](docs/ui-preview.html)：它按
+320×240 实际布局显示首页，并允许点击发动机与排气按钮验证单步循环切换。
+
+五种排气预览（从左到右、从上到下依次为原厂、Akrapovič 风格、Yoshimura 风格、
+可乐罐和完全移除消声器）：
+
+![五种像素排气对比](docs/assets/motorcycle-exhaust-preview.png)
+
 ## 构建 StickS3 固件
 
 项目使用 ESP-IDF 5.5。在 `firmware/` 目录执行：

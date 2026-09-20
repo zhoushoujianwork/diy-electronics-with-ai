@@ -12,12 +12,17 @@ keeps the live engine state visible while a control is being touched.
 - The centre is a retained RGB565 pixel-art motorcycle. Wheel spokes rotate at
   an RPM-linked slow-motion rate, the engine block shows up to six cylinder bars
   and flashes the latest firing cylinder, and running engines emit pixel smoke.
-  It is a stylised status view, not manufacturer-specific CAD geometry.
+  The production renderer now includes twin mirrors, instrument glow, headlamp,
+  stitched stepped seat, tail light, sculpted tank and EV badge, frame highlights,
+  front brake disc and caliper, rear sprocket and chain, foot controls, engine
+  fins and cases. It is stylised status art, not manufacturer-specific geometry.
 - The selected exhaust is drawn directly on the motorcycle. Stock uses a long
   grey silencer, Akrapovič style a dark tapered can with a red tip, Yoshimura
-  style a gold can with contrasting bands, `TIN CAN` an intentionally oversized
-  red drinks can with silver rolled rims and a white mark, and `NO MUFFLER` a
-  narrow open pipe. This makes the joke and the selection visible without text.
+  style a brushed-gold can with contrasting bands, `TIN CAN` an intentionally
+  oversized red drinks can with silver rolled rims, pull tab, bubbles and a
+  generic `COLA` wordmark, and `NO MUFFLER` a narrow heat-tinted open pipe.
+  Small `AKRA`, `YOSH`, `OEM` and `OPEN` pixel marks make every selection readable;
+  they are descriptive non-official artwork rather than copied brand assets.
 - `REDLINE` is a main-page slider from idle + 500 RPM through 16000 RPM.
 - `HOLD THROTTLE`: the only throttle control on screen. Pressing starts the
   engine and applies 100% throttle; releasing always returns to zero throttle.
