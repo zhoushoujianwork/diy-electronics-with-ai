@@ -20,7 +20,7 @@ unsigned ev_stick_poll(ev_stick_controls_t *s,uint32_t now,bool a,bool b) {
     if(pressed[1]) { s->b_since=now; s->long_b=false; }
     if(s->down[1] && !s->long_b && (uint32_t)(now-s->b_since)>=700) {
         s->long_b=true;
-        s->page=(ev_stick_page_t)((s->page+1)%3);
+        s->page=(ev_stick_page_t)((s->page+1)%EV_STICK_PAGE_COUNT);
         events|=EV_KEY_PAGE|EV_KEY_REV_OFF; s->rev=false;
     }
     if(released[1] && !s->long_b) events|=s->page==EV_STICK_MAIN?EV_KEY_NEXT:EV_KEY_PLUS;

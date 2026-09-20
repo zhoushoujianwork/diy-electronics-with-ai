@@ -24,6 +24,11 @@ int ev_command(ev_control_t *c, const char *line) {
             next.profile=p;
             next.rpm=0;
             next.redline_rpm=0;
+        } else if (!strcmp(cmd,"exhaust")) {
+            unsigned x;
+            for (x=0;x<EV_EXHAUSTS;x++) if (!strcmp(arg,ev_exhausts[x].name)) break;
+            if (x==EV_EXHAUSTS) return -1;
+            next.exhaust=x;
         } else if (!strcmp(cmd,"gear")) {
             if(!strcmp(arg,"N") || !strcmp(arg,"n")) next.gear=0;
             else {

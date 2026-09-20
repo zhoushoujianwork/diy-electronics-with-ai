@@ -12,6 +12,7 @@
 #define EV_BLOCK 256
 #define EV_MAX_CYLINDERS 12
 #define EV_PROFILES 18
+#define EV_EXHAUSTS 5
 #define EV_GEARS 6
 #define EV_MAX_RPM 16000
 
@@ -25,6 +26,15 @@ typedef struct {
 } ev_profile_t;
 extern const ev_profile_t ev_profiles[EV_PROFILES];
 
+typedef struct {
+    const char *name;
+    const char *ui_name;
+    float resonance_scale, resonance_decay;
+    float resonator_mix, pulse_mix, noise_mix, induction_mix;
+    float filter_idle, filter_load, drive, overrun_mix;
+} ev_exhaust_t;
+extern const ev_exhaust_t ev_exhausts[EV_EXHAUSTS];
+
 typedef enum {
     EV_PHASE_OFF, EV_PHASE_STARTING, EV_PHASE_IDLE, EV_PHASE_ACCEL,
     EV_PHASE_HOLD, EV_PHASE_COAST, EV_PHASE_STOPPING
@@ -34,6 +44,7 @@ const char *ev_phase_name(ev_phase_t phase);
 typedef struct {
     bool running;
     unsigned profile;
+    unsigned exhaust;
     float throttle; /* 0..1 */
     float volume;   /* 0..1 */
     float rpm;      /* 0 = throttle model, otherwise requested RPM */

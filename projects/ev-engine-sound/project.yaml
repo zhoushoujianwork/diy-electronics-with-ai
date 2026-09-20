@@ -15,6 +15,7 @@ boards:
   - legacy-esp32s3
 modules:
   - procedural-audio
+  - selectable-exhaust-voicing
   - lvgl-ui
 validation:
   build: passed

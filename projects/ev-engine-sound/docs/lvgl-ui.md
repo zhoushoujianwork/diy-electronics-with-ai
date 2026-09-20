@@ -50,9 +50,17 @@ exhaust/noise emphasis adds a restrained overrun tail. Gain uses 45 ms attack /
 75 ms release. All these time constants are sample-rate independent and tested
 at both 16 kHz and 32 kHz. The sounds remain procedural, not recorded samples.
 
+The engine profile and exhaust voicing are separate controls. Five exhaust
+presets change resonance frequency/decay, pulse and noise balance, low-pass
+response, drive and overrun emphasis without adding samples or heap work to the
+audio loop. `AKRAPOVIC STYLE` and `YOSHIMURA STYLE` are unofficial descriptive
+labels, not measured replicas or manufacturer-endorsed sound maps.
+
 ## Settings page
 
 - `OUTPUT VOLUME -/+`: software output gain in 5% steps, from 0% to 100%.
+- `EXHAUST STYLE </>`: switches among `STOCK`, `AKRAPOVIC STYLE`,
+  `YOSHIMURA STYLE`, `TIN CAN` and `NO MUFFLER` while the engine is running.
 - Values update live and apply immediately. Changing engine type restores that
   type's default redline. `BACK` returns to the main page.
 

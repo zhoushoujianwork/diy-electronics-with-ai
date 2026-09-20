@@ -40,6 +40,16 @@ const ev_profile_t ev_profiles[EV_PROFILES] = {
                                                                          {0,6,1,7,2,8,3,9,4,10,5,11},650,8500,265}
 };
 
+/* Procedural voicing presets: no recordings or manufacturer sound maps are
+ * used. Trademarked names describe an unofficial, stylised tuning direction. */
+const ev_exhaust_t ev_exhausts[EV_EXHAUSTS] = {
+    {"stock",      "STOCK",          1.00f,.985f,.60f,.30f,.18f,.025f,.12f,.25f,1.50f,.10f},
+    {"akrapovic",  "AKRAPOVIC STYLE", .82f,.987f,.72f,.26f,.13f,.020f,.10f,.22f,1.70f,.14f},
+    {"yoshimura",  "YOSHIMURA STYLE",1.12f,.982f,.56f,.34f,.22f,.035f,.16f,.31f,1.90f,.16f},
+    {"tin_can",    "TIN CAN",        2.25f,.976f,.38f,.46f,.30f,.045f,.25f,.40f,2.20f,.22f},
+    {"straight",   "NO MUFFLER",      .68f,.990f,.90f,.42f,.25f,.040f,.20f,.38f,2.80f,.32f},
+};
+
 static float clamp(float x, float lo, float hi) {
     return isfinite(x) ? fminf(hi, fmaxf(lo, x)) : lo;
 }
@@ -56,8 +66,10 @@ float ev_redline(const ev_control_t *control) {
 }
 
 static void resonance(ev_engine_t *e) {
-    const float r = .985f;
-    e->resonator_a = 2*r*cosf(6.283185307f * ev_profiles[e->control.profile].resonance_hz / EV_RATE);
+    const ev_exhaust_t *x=&ev_exhausts[e->control.exhaust];
+    const float r = x->resonance_decay;
+    e->resonator_a = 2*r*cosf(6.283185307f *
+        ev_profiles[e->control.profile].resonance_hz*x->resonance_scale / EV_RATE);
     e->resonator_b = r*r;
 }
 
@@ -71,6 +83,7 @@ void ev_init(ev_engine_t *e) {
 void ev_set_control(ev_engine_t *e, const ev_control_t *c) {
     ev_control_t next = *c;
     if (next.profile >= EV_PROFILES) next.profile = 0;
+    if (next.exhaust >= EV_EXHAUSTS) next.exhaust = 0;
     next.throttle = clamp(next.throttle, 0, 1);
     next.volume = clamp(next.volume, 0, 1);
     if(next.gear>EV_GEARS) next.gear=EV_GEARS;
@@ -78,7 +91,7 @@ void ev_set_control(ev_engine_t *e, const ev_control_t *c) {
         next.redline_rpm=clamp(next.redline_rpm,
                                ev_profiles[next.profile].idle_rpm+500.0f,EV_MAX_RPM);
     next.rpm = clamp(next.rpm, 0, ev_redline(&next));
-    if (next.profile != e->control.profile) {
+    if (next.profile != e->control.profile || next.exhaust != e->control.exhaust) {
         /* Reset incompatible resonance state under a fresh gain ramp. */
         e->gain = e->envelope = e->resonator1 = e->resonator2 = 0;
         e->lowpass = e->dc_x = e->dc_y = e->cycle = 0;
@@ -96,6 +109,7 @@ const char *ev_phase_name(ev_phase_t phase) {
 
 void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
     const ev_profile_t *p = &ev_profiles[e->control.profile];
+    const ev_exhaust_t *x = &ev_exhausts[e->control.exhaust];
     const float redline=ev_redline(&e->control);
     const float dt=1.0f/EV_RATE;
     for (size_t i=0; i<count; ++i) {
@@ -155,15 +169,16 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
         if(e->starter_phase>=1) e->starter_phase-=1;
         float starter=(1.0f-fabsf(4.0f*e->starter_phase-2.0f))*.035f;
         float starter_mix=e->control.running && e->control.rpm==0?4*ignition*(1-ignition):0;
-        float induction=noise*e->load*e->load*.025f;
-        float raw = res*(.6f+e->overrun*.10f) +
-            e->envelope*(.3f+noise*(.18f+e->overrun*.08f)) + induction + starter*starter_mix;
-        e->lowpass += (.12f + .25f*e->load)*(raw-e->lowpass);
+        float induction=noise*e->load*e->load*x->induction_mix;
+        float raw = res*(x->resonator_mix+e->overrun*x->overrun_mix) +
+            e->envelope*(x->pulse_mix+noise*(x->noise_mix+e->overrun*.08f)) +
+            induction + starter*starter_mix;
+        e->lowpass += (x->filter_idle+x->filter_load*e->load)*(raw-e->lowpass);
         /* DC blocker, then soft saturation and gain ramp. No heap in render. */
         float y = e->lowpass - e->dc_x + .995f*e->dc_y;
         e->dc_x = e->lowpass;
         e->dc_y = y;
-        y *= 1.5f + e->load*1.5f;
+        y *= x->drive + e->load*1.5f;
         y = y/(1+fabsf(y));
         pcm[i] = (int16_t)(clamp(y*e->gain, -1, 1)*30000);
         ++e->frames;

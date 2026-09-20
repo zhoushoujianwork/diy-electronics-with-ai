@@ -36,6 +36,7 @@ static lv_obj_t *main_page,*settings_page;
 static lv_obj_t *profile_strip,*profile_cards[EV_PROFILES],*engine_visual;
 static lv_obj_t *rpm_label,*state_label,*pulse_led,*start_button,*start_label;
 static lv_obj_t *redline_slider,*redline_value_label,*rev_button,*volume_value_label;
+static lv_obj_t *exhaust_value_label;
 static board_ui_action_cb_t action_callback;
 static board_ui_state_cb_t state_callback;
 static void *callback_context;
@@ -182,6 +183,15 @@ static void volume_event(lv_event_t *event) {
     if(action_callback) action_callback(BOARD_UI_VOLUME_DELTA,delta,callback_context);
 }
 
+static void exhaust_event(lv_event_t *event) {
+    if(lv_event_get_code(event)!=LV_EVENT_CLICKED) return;
+    int delta=(int)(intptr_t)lv_event_get_user_data(event);
+    unsigned current=previous_state.exhaust<EV_EXHAUSTS?previous_state.exhaust:0;
+    unsigned next=(unsigned)((current+EV_EXHAUSTS+delta)%EV_EXHAUSTS);
+    ESP_LOGI(TAG,"TOUCH action=exhaust value=%s",ev_exhausts[next].name);
+    if(action_callback) action_callback(BOARD_UI_EXHAUST,(int)next,callback_context);
+}
+
 static void redline_event(lv_event_t *event) {
     lv_event_code_t code=lv_event_get_code(event);
     if(code==LV_EVENT_PRESSED) redline_dragging=true;
@@ -265,6 +275,10 @@ static void refresh_timer(lv_timer_t *timer) {
     if(changed || load!=(int)(previous_state.load*100)) lv_bar_set_value(load_bar,load,LV_ANIM_OFF);
     if(changed || state.volume!=previous_state.volume)
         lv_label_set_text_fmt(volume_value_label,"%d%%",(int)lroundf(state.volume*100));
+    if(changed || state.exhaust!=previous_state.exhaust) {
+        unsigned exhaust=state.exhaust<EV_EXHAUSTS?state.exhaust:0;
+        lv_label_set_text(exhaust_value_label,ev_exhausts[exhaust].ui_name);
+    }
     unsigned minimum=(unsigned)ev_profiles[state.profile].idle_rpm+500;
     if(changed || state.profile!=previous_state.profile)
         lv_slider_set_range(redline_slider,(int32_t)minimum,EV_MAX_RPM);
@@ -458,6 +472,23 @@ static void create_ui(void) {
     lv_obj_set_style_text_align(volume_value_label,LV_TEXT_ALIGN_CENTER,LV_PART_MAIN);
     lv_obj_set_style_text_font(volume_value_label,&lv_font_montserrat_28,LV_PART_MAIN);
     lv_obj_set_style_text_color(volume_value_label,lv_color_hex(0x2DE2A6),LV_PART_MAIN);
+
+    lv_obj_t *exhaust_title=lv_label_create(settings_page);
+    lv_label_set_text(exhaust_title,"EXHAUST STYLE");
+    lv_obj_set_pos(exhaust_title,15,154);
+    lv_obj_set_style_text_color(exhaust_title,lv_color_hex(0x79879A),LV_PART_MAIN);
+    lv_obj_t *exhaust_minus=button_with_label(settings_page,"<",15,180,48,44);
+    lv_obj_t *exhaust_plus=button_with_label(settings_page,">",257,180,48,44);
+    lv_obj_add_event_cb(exhaust_minus,exhaust_event,LV_EVENT_CLICKED,(void *)(intptr_t)-1);
+    lv_obj_add_event_cb(exhaust_plus,exhaust_event,LV_EVENT_CLICKED,(void *)(intptr_t)1);
+    exhaust_value_label=lv_label_create(settings_page);
+    lv_label_set_text(exhaust_value_label,ev_exhausts[0].ui_name);
+    lv_obj_set_pos(exhaust_value_label,68,190);
+    lv_obj_set_width(exhaust_value_label,184);
+    lv_label_set_long_mode(exhaust_value_label,LV_LABEL_LONG_CLIP);
+    lv_obj_set_style_text_align(exhaust_value_label,LV_TEXT_ALIGN_CENTER,LV_PART_MAIN);
+    lv_obj_set_style_text_font(exhaust_value_label,&lv_font_montserrat_14,LV_PART_MAIN);
+    lv_obj_set_style_text_color(exhaust_value_label,lv_color_hex(0x2DE2A6),LV_PART_MAIN);
 
     lv_obj_update_layout(profile_strip);
     sync_profile_carousel(0);

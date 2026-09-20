@@ -22,7 +22,7 @@ static void controls(void) {
     assert(!ev_stick_poll(&s,300,false,true));
     assert(!ev_stick_poll(&s,330,false,true));
     assert(ev_stick_poll(&s,1030,false,true)==(EV_KEY_PAGE|EV_KEY_REV_OFF));
-    assert(s.page==EV_STICK_VOLUME);
+    assert(s.page==EV_STICK_EXHAUST);
     assert(!ev_stick_poll(&s,1100,false,false));
     assert(!ev_stick_poll(&s,1130,false,false)); /* no plus after long hold */
     assert(!ev_stick_poll(&s,1200,true,false));
@@ -59,11 +59,11 @@ static void controls(void) {
     assert(ev_stick_poll(&s,25,true,false)==EV_KEY_REV_ON);
     /* All menu pages cycle without leaking plus/profile actions. */
     s=(ev_stick_controls_t){0};
-    for(unsigned i=0;i<3;i++) {
+    for(unsigned i=0;i<EV_STICK_PAGE_COUNT;i++) {
         unsigned t=i*1000;
         ev_stick_poll(&s,t,false,true); ev_stick_poll(&s,t+30,false,true);
         assert(ev_stick_poll(&s,t+730,false,true)==(EV_KEY_PAGE|EV_KEY_REV_OFF));
-        assert(s.page==(ev_stick_page_t)((i+1)%3));
+        assert(s.page==(ev_stick_page_t)((i+1)%EV_STICK_PAGE_COUNT));
         ev_stick_poll(&s,t+800,false,false);
         assert(!ev_stick_poll(&s,t+830,false,false));
     }

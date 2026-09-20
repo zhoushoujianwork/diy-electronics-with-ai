@@ -6,6 +6,10 @@
 气缸、活塞、连杆、曲轴和逐缸点火动画。声音包含启动、怠速、给油、收油、限转和
 音量渐变，不依赖音频采样文件、网络或云服务。
 
+发动机与排气可独立选择。当前提供原厂、Akrapovič 风格、Yoshimura 风格、可乐罐和
+直通（完全移除消声器）5 种程序化排气音色。品牌风格名称仅描述非官方调音方向；项目
+没有使用厂商录音、声纹数据或官方授权素材，也不宣称复刻具体产品。
+
 目前提供 18 种发动机配置，覆盖 1/2/3/4/5/6/8/10/12 缸，包括 270° 双缸、
 T-Plane 三缸、直列发动机、V 型发动机、水平对置六缸、平面与十字曲轴 V8、V10
 和 V12，最高模拟转速 16000 RPM。
@@ -47,9 +51,10 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build -j 4
 ctest --test-dir build --output-on-failure
 
-build/render_voice inline4 build/inline4.wav
-build/render_voice twin270 build/twin270.wav
-build/render_voice v12 build/v12.wav
+build/render_voice inline4 stock build/inline4-stock.wav
+build/render_voice twin270 akrapovic build/twin270-akrapovic.wav
+build/render_voice twin270 tin_can build/twin270-tin-can.wav
+build/render_voice v12 straight build/v12-straight.wav
 ```
 
 每个 WAV 包含启动、渐进给油、高转、收油和停机过程，使用与固件相同的合成核心。
@@ -81,6 +86,7 @@ python tools/console.py /dev/cu.YOUR_DEVICE --log build/serial.log
 
 ```text
 profile v12
+exhaust yoshimura
 volume 60
 redline 14000
 start
@@ -89,6 +95,9 @@ rpm 4000
 status
 stop
 ```
+
+排气参数名为 `stock`、`akrapovic`、`yoshimura`、`tin_can`、`straight`。立创实战派
+可在 `SET` → `EXHAUST STYLE` 直接切换；StickS3 长按 B 可轮换到排气设置页。
 
 完整的板级引脚、交互说明和验证记录见：
 

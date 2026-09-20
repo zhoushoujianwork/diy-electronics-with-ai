@@ -36,7 +36,7 @@ int main(void) {
     int16_t pcm[EV_BLOCK];
     ev_render(&e,pcm,EV_BLOCK);
     for(unsigned i=0;i<EV_BLOCK;i++) assert(pcm[i]==0);
-    const char *bad[]={"", "volume nan", "rpm inf", "volume 101", "throttle -1", "start garbage", "profile nope", "gear 7", "gear -1", "gear 2x", "redline 16001", "redline 100", "rpm 3000x", "rpm 15000", "stop extra words"};
+    const char *bad[]={"", "volume nan", "rpm inf", "volume 101", "throttle -1", "start garbage", "profile nope", "exhaust nope", "gear 7", "gear -1", "gear 2x", "redline 16001", "redline 100", "rpm 3000x", "rpm 15000", "stop extra words"};
     ev_control_t old=e.control;
     for(unsigned i=0;i<sizeof(bad)/sizeof(bad[0]);i++) {
         assert(ev_command(&e.control,bad[i])==-1);
@@ -48,11 +48,34 @@ int main(void) {
     assert(ev_command(&e.control,"gear 6")==0 && e.control.gear==6);
     assert(ev_command(&e.control,"profile triple270")==0 &&
            e.control.profile==profile_index("triple270"));
+    assert(ev_command(&e.control,"exhaust straight")==0 && e.control.exhaust==4);
     assert(ev_command(&e.control,"redline 15000")==0 && ev_redline(&e.control)==15000);
     e.control.running=true; e.control.throttle=1; e.control.rpm=0; e.control.gear=1;
     ev_set_control(&e,&e.control); seconds(&e,10);
     assert(e.rpm>14000 && e.rpm<=15005);
     assert(ev_command(&e.control,"redline default")==0 && ev_redline(&e.control)==11500);
+    uint32_t exhaust_hashes[EV_EXHAUSTS]={0};
+    for(unsigned x=0;x<EV_EXHAUSTS;x++) {
+        assert(ev_exhausts[x].name && ev_exhausts[x].ui_name);
+        ev_init(&e);
+        ev_control_t c={.running=true,.profile=profile_index("twin270"),
+                        .exhaust=x,.volume=.5f,.rpm=4200};
+        ev_set_control(&e,&c); seconds(&e,2);
+        uint32_t hash=2166136261u;
+        for(unsigned block=0;block<4;block++) {
+            ev_render(&e,pcm,EV_BLOCK);
+            for(unsigned i=0;i<EV_BLOCK;i++) hash=(hash^(uint16_t)pcm[i])*16777619u;
+        }
+        exhaust_hashes[x]=hash;
+        int peak=0;
+        for(unsigned i=0;i<EV_BLOCK;i++) {
+            int v=pcm[i]<0?-pcm[i]:pcm[i];
+            if(v>peak) peak=v;
+        }
+        assert(peak>100 && isfinite(e.resonator1));
+        for(unsigned previous=0;previous<x;previous++)
+            assert(exhaust_hashes[previous]!=exhaust_hashes[x]);
+    }
     for(unsigned p=0;p<EV_PROFILES;p++) {
         ev_init(&e);
         ev_control_t c={.running=true,.profile=p,.volume=1,.rpm=3600};

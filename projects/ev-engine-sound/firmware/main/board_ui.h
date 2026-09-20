@@ -9,6 +9,7 @@
 
 typedef enum {
     BOARD_UI_PROFILE,
+    BOARD_UI_EXHAUST,
     BOARD_UI_ENGINE_TOGGLE,
     BOARD_UI_VOLUME_DELTA,
     BOARD_UI_REDLINE_DELTA,
@@ -20,6 +21,7 @@ typedef enum {
 
 typedef struct {
     unsigned profile;
+    unsigned exhaust;
     unsigned redline_rpm;
     float rpm;
     float throttle;

@@ -270,6 +270,7 @@ static bool ui_state_snapshot(board_ui_state_t *state,void *context) {
     unsigned profile=control.profile<EV_PROFILES?control.profile:0;
     *state=(board_ui_state_t){
         .profile=profile,
+        .exhaust=control.exhaust<EV_EXHAUSTS?control.exhaust:0,
         .redline_rpm=(unsigned)ev_redline(&control),
         .rpm=d.rpm,
         .throttle=control.throttle,
@@ -296,6 +297,11 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
                 desired.rpm=0;
                 desired.redline_rpm=0;
             }
+            break;
+        case BOARD_UI_EXHAUST:
+            if(value<0 || value>=EV_EXHAUSTS) accepted=false;
+            else desired.exhaust=(unsigned)value;
+            takes_control=false;
             break;
         case BOARD_UI_ENGINE_TOGGLE:
             desired.running=!desired.running;
@@ -361,8 +367,9 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
     ev_control_t after=desired;
     portEXIT_CRITICAL(&lock);
     unsigned profile=after.profile<EV_PROFILES?after.profile:0;
-    ESP_LOGI(TAG,"UI_ACTION action=%d value=%d result=%s profile=%s gear=%u running=%d throttle=%.0f volume=%.0f redline=%.0f",
+    ESP_LOGI(TAG,"UI_ACTION action=%d value=%d result=%s profile=%s exhaust=%s gear=%u running=%d throttle=%.0f volume=%.0f redline=%.0f",
              action,value,accepted?"OK":"INVALID_ARGUMENT",ev_profiles[profile].name,
+             ev_exhausts[after.exhaust<EV_EXHAUSTS?after.exhaust:0].name,
              after.gear,after.running,after.throttle*100,after.volume*100,
              ev_redline(&after));
 }
@@ -371,7 +378,7 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
 void app_main(void) {
     console_handle=xTaskGetCurrentTaskHandle();
     ESP_ERROR_CHECK(console_init());
-    ESP_LOGI(TAG,"BOOT version=0.1.0 reset_reason=%d rate=%d",esp_reset_reason(),EV_RATE);
+    ESP_LOGI(TAG,"BOOT version=0.2.0 reset_reason=%d rate=%d",esp_reset_reason(),EV_RATE);
 #ifdef CONFIG_EV_BOARD_CONFIRMED
     ESP_LOGI(TAG,"BOARD name=%s i2s={mclk:%d,bclk:%d,ws:%d,dout:%d,slot:%d} amp_gpio=%d",
              EV_BOARD_NAME,EV_AUDIO_I2S_MCLK_GPIO,
@@ -398,7 +405,8 @@ void app_main(void) {
         amp_set(false); ESP_LOGE(TAG,"task_start voice_heartbeat failed err=ENOMEM");
     }
     ESP_LOGI(TAG,"READY profiles=single,twin180,twin270,twin360,vtwin,vtwin90,triple120,triple270,inline4,crossplane4,inline5,inline6,v6_60,flat6,flatplane8,crossplane8,v10,v12");
-    ESP_LOGI(TAG,"READY commands=profile;gear N|0..6;redline default|N(max %d);start;stop;throttle 0..100;rpm 0..redline;volume 0..100;ping;status;bootloader",
+    ESP_LOGI(TAG,"READY exhausts=stock,akrapovic,yoshimura,tin_can,straight");
+    ESP_LOGI(TAG,"READY commands=profile;exhaust;gear N|0..6;redline default|N(max %d);start;stop;throttle 0..100;rpm 0..redline;volume 0..100;ping;status;bootloader",
              EV_MAX_RPM);
     char line[96]; size_t used=0; bool overflow=false;
     for(;;) {
@@ -431,9 +439,10 @@ void app_main(void) {
                         esp_rom_software_reset_system();
                     } else if(result==2) {
                         portENTER_CRITICAL(&lock); diagnostics_t d=diagnostics; bool f=fault; portEXIT_CRITICAL(&lock);
-                        ESP_LOGI(TAG,"STATUS version=0.1.0 reset_reason=%d profile=%s gear=%u running=%d rpm=%.0f throttle=%.0f volume=%.0f redline=%.0f fault=%d",
+                        ESP_LOGI(TAG,"STATUS version=0.2.0 reset_reason=%d profile=%s exhaust=%s gear=%u running=%d rpm=%.0f throttle=%.0f volume=%.0f redline=%.0f fault=%d",
                                  esp_reset_reason(),
-                                 ev_profiles[c.profile].name,c.gear,d.running,d.rpm,c.throttle*100,
+                                 ev_profiles[c.profile].name,ev_exhausts[c.exhaust].name,
+                                 c.gear,d.running,d.rpm,c.throttle*100,
                                  c.volume*100,ev_redline(&c),f);
                         esp_err_t report_err=board_audio_report();
                         if(report_err!=ESP_OK)

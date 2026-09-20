@@ -48,7 +48,8 @@ static void show_page(void) {
     lv_obj_set_flag(setting,LV_OBJ_FLAG_HIDDEN,main);
     lv_obj_set_flag(help,LV_OBJ_FLAG_HIDDEN,main);
     lv_label_set_text(hint,main?"A:REV  B:NEXT  HOLD B:SET":"A:-   B:+   HOLD B:NEXT");
-    if(!main) lv_label_set_text(help,keys.page==EV_STICK_VOLUME?
+    if(!main) lv_label_set_text(help,keys.page==EV_STICK_EXHAUST?
+        "Unofficial procedural style\nA+B: stop engine":keys.page==EV_STICK_VOLUME?
         "Battery: keep below 75%\nA+B: stop engine":"Virtual engine RPM limit\nA+B: stop engine");
     have_previous=false;
     ESP_LOGI(TAG,"STATE_TRANSITION: UI_PAGE -> %d",keys.page);
@@ -70,8 +71,12 @@ static void poll_keys(lv_timer_t *timer) {
     if(events&EV_KEY_REV_ON) action(BOARD_UI_REV_PRESS,100);
     if(events&EV_KEY_NEXT) action(BOARD_UI_PROFILE,(s.profile+1)%EV_PROFILES);
     int delta=(events&EV_KEY_PLUS)?1:(events&EV_KEY_MINUS)?-1:0;
-    if(delta) action(keys.page==EV_STICK_VOLUME?BOARD_UI_VOLUME_DELTA:BOARD_UI_REDLINE_DELTA,
-                     delta*(keys.page==EV_STICK_VOLUME?5:500));
+    if(delta) {
+        if(keys.page==EV_STICK_EXHAUST)
+            action(BOARD_UI_EXHAUST,(int)((s.exhaust+EV_EXHAUSTS+delta)%EV_EXHAUSTS));
+        else action(keys.page==EV_STICK_VOLUME?BOARD_UI_VOLUME_DELTA:BOARD_UI_REDLINE_DELTA,
+                    delta*(keys.page==EV_STICK_VOLUME?5:500));
+    }
 }
 static void refresh(lv_timer_t *timer) {
     (void)timer;
@@ -85,6 +90,7 @@ static void refresh(lv_timer_t *timer) {
     bool changed=!have_previous || previous.profile!=s.profile;
     if(changed) {
         lv_label_set_text(title,keys.page==EV_STICK_MAIN?ev_profiles[s.profile].ui_name:
+            keys.page==EV_STICK_EXHAUST?"EXHAUST STYLE":
             keys.page==EV_STICK_VOLUME?"SPEAKER VOLUME":"REDLINE RPM");
         if(have_previous && previous.profile!=s.profile) phase=0;
     }
@@ -93,8 +99,12 @@ static void refresh(lv_timer_t *timer) {
     if(!have_previous || s.phase!=previous.phase || s.volume!=previous.volume || s.fault!=previous.fault)
         lv_label_set_text_fmt(status_text,"%s  VOL %d",s.fault?"FAULT":ev_phase_name(s.phase),(int)lroundf(s.volume*100));
     if(keys.page!=EV_STICK_MAIN) {
-        if(!have_previous || s.volume!=previous.volume || s.redline_rpm!=previous.redline_rpm) {
-            if(keys.page==EV_STICK_VOLUME) lv_label_set_text_fmt(setting,"%d%%",(int)lroundf(s.volume*100));
+        if(!have_previous || s.exhaust!=previous.exhaust || s.volume!=previous.volume ||
+           s.redline_rpm!=previous.redline_rpm) {
+            if(keys.page==EV_STICK_EXHAUST)
+                lv_label_set_text(setting,ev_exhausts[s.exhaust<EV_EXHAUSTS?s.exhaust:0].ui_name);
+            else if(keys.page==EV_STICK_VOLUME)
+                lv_label_set_text_fmt(setting,"%d%%",(int)lroundf(s.volume*100));
             else lv_label_set_text_fmt(setting,"%u",s.redline_rpm);
         }
     } else if(s.running || previous.running || changed) {
