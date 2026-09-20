@@ -44,8 +44,8 @@ const ev_profile_t ev_profiles[EV_PROFILES] = {
  * used. Trademarked names describe an unofficial, stylised tuning direction. */
 const ev_exhaust_t ev_exhausts[EV_EXHAUSTS] = {
     {"stock",      "STOCK",          1.00f,.985f,.60f,.30f,.18f,.025f,.12f,.25f,1.50f,.10f},
-    {"akrapovic",  "AKRAPOVIC STYLE", .82f,.987f,.72f,.26f,.13f,.020f,.10f,.22f,1.70f,.14f},
-    {"yoshimura",  "YOSHIMURA STYLE",1.12f,.982f,.56f,.34f,.22f,.035f,.16f,.31f,1.90f,.16f},
+    {"akrapovic",  "AKRAPOVIC",       .82f,.987f,.72f,.26f,.13f,.020f,.10f,.22f,1.70f,.14f},
+    {"yoshimura",  "YOSHIMURA",      1.12f,.982f,.56f,.34f,.22f,.035f,.16f,.31f,1.90f,.16f},
     {"tin_can",    "TIN CAN",        2.25f,.976f,.38f,.46f,.30f,.045f,.25f,.40f,2.20f,.22f},
     {"straight",   "NO MUFFLER",      .68f,.990f,.90f,.42f,.25f,.040f,.20f,.38f,2.80f,.32f},
 };

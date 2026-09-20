@@ -97,7 +97,8 @@ stop
 ```
 
 排气参数名为 `stock`、`akrapovic`、`yoshimura`、`tin_can`、`straight`。立创实战派
-可在 `SET` → `EXHAUST STYLE` 直接切换；StickS3 长按 B 可轮换到排气设置页。
+可在首页第二条横滑选择带直接拖拽或点选；每种风格都有独立排气轮廓标志。StickS3
+长按 B 可轮换到排气设置页。
 
 完整的板级引脚、交互说明和验证记录见：
 

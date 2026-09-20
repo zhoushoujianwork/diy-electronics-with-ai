@@ -6,8 +6,11 @@ keeps the live engine state visible while a control is being touched.
 ## Main page
 
 - Top controls: `START` / `STOP`, live RPM/state and a `SET` page button.
-- A horizontal, centre-snapping carousel switches directly among all 18 engine
-  profiles. Cards can be swiped or tapped; no dropdown is used.
+- Two horizontal, centre-snapping carousels switch directly among all 18 engine
+  profiles and five exhaust styles. Cards can be swiped or tapped; no dropdown
+  is used. Exhaust cards include distinct miniature silhouettes: the Akrapovič
+  style uses a dark tapered can with a red tip, the tin-can style uses a tall
+  silver banded body, and the no-muffler style is shown as a narrow open pipe.
 - The centre is an Engine Simulator-inspired mechanical cutaway rather than an
   arc gauge. A retained RGB565 LVGL canvas renders cylinders, valves, pistons, connecting
   rods, crank pins and ignition for inline, V and flat layouts. Cylinder phase
@@ -36,7 +39,7 @@ keeps the live engine state visible while a control is being touched.
   audio continues and the mechanism resumes at the current simulated phase.
 - Text, styles and slider values are updated only when changed. The mechanism
   stops invalidating when parked and does not redraw behind the settings page.
-- A 74240-byte static RGB565 canvas replaces hundreds of per-frame draw tasks.
+- A 55040-byte static RGB565 canvas replaces hundreds of per-frame draw tasks.
   Two 40-line DMA buffers transfer the result without putting frame data on a stack.
 - `UI_READBACK` includes render count, maximum render/update times, raster frame
   count (`draw_passes`) and scrolling state for device-side verification.
@@ -59,8 +62,8 @@ labels, not measured replicas or manufacturer-endorsed sound maps.
 ## Settings page
 
 - `OUTPUT VOLUME -/+`: software output gain in 5% steps, from 0% to 100%.
-- `EXHAUST STYLE </>`: switches among `STOCK`, `AKRAPOVIC STYLE`,
-  `YOSHIMURA STYLE`, `TIN CAN` and `NO MUFFLER` while the engine is running.
+- Exhaust selection lives on the main page so it remains visible beside the
+  engine selector and can be changed while the mechanism is running.
 - Values update live and apply immediately. Changing engine type restores that
   type's default redline. `BACK` returns to the main page.
 

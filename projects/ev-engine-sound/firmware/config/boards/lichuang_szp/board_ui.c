@@ -34,20 +34,22 @@ static lv_display_t *display;
 static lv_indev_t *touch_indev;
 static lv_obj_t *main_page,*settings_page;
 static lv_obj_t *profile_strip,*profile_cards[EV_PROFILES],*engine_visual;
+static lv_obj_t *exhaust_strip,*exhaust_cards[EV_EXHAUSTS];
 static lv_obj_t *rpm_label,*state_label,*pulse_led,*start_button,*start_label;
 static lv_obj_t *redline_slider,*redline_value_label,*rev_button,*volume_value_label;
-static lv_obj_t *exhaust_value_label;
 static board_ui_action_cb_t action_callback;
 static board_ui_state_cb_t state_callback;
 static void *callback_context;
 static uint64_t last_firings;
 static bool last_pulse;
 static unsigned displayed_profile=EV_PROFILES;
+static unsigned displayed_exhaust=EV_EXHAUSTS;
 static float crank_phase;
 static bool displayed_running;
 static bool redline_dragging;
 static bool ready;
-static bool carousel_scrolling,carousel_syncing,settings_visible;
+static bool carousel_scrolling,carousel_syncing;
+static bool exhaust_scrolling,exhaust_syncing,settings_visible;
 static uint32_t draw_count,refresh_max_us,last_refresh_tick;
 static uint32_t render_count,render_max_us;
 static int64_t render_started;
@@ -89,9 +91,9 @@ static lv_obj_t *button_with_label(lv_obj_t *parent,const char *text,
     return button;
 }
 
-_Alignas(4) static uint16_t engine_pixels[320*116];
+_Alignas(4) static uint16_t engine_pixels[320*86];
 static void draw_engine_frame(void) {
-    ev_canvas_render(engine_pixels,320,116,displayed_profile,crank_phase/(2*TWO_PI),displayed_running);
+    ev_canvas_render(engine_pixels,320,86,displayed_profile,crank_phase/(2*TWO_PI),displayed_running);
     draw_count++;
     lv_obj_invalidate(engine_visual);
 }
@@ -170,6 +172,71 @@ static void profile_strip_event(lv_event_t *event) {
     draw_engine_frame();
 }
 
+static void style_exhaust_cards(unsigned selected) {
+    for(unsigned i=0;i<EV_EXHAUSTS;i++) {
+        bool active=i==selected;
+        lv_obj_set_style_bg_opa(exhaust_cards[i],active?LV_OPA_COVER:LV_OPA_TRANSP,LV_PART_MAIN);
+        lv_obj_set_style_bg_color(exhaust_cards[i],lv_color_hex(active?0x231B12:0x0B1017),LV_PART_MAIN);
+        lv_obj_set_style_border_width(exhaust_cards[i],active?1:0,LV_PART_MAIN);
+        lv_obj_set_style_border_color(exhaust_cards[i],lv_color_hex(0x9A6838),LV_PART_MAIN);
+        lv_obj_set_style_text_color(exhaust_cards[i],lv_color_hex(active?0xFFB86A:0x718092),LV_PART_MAIN);
+    }
+}
+
+static void sync_exhaust_carousel(unsigned exhaust) {
+    if(exhaust>=EV_EXHAUSTS) exhaust=0;
+    displayed_exhaust=exhaust;
+    style_exhaust_cards(exhaust);
+    exhaust_syncing=true;
+    lv_obj_scroll_to_view(exhaust_cards[exhaust],LV_ANIM_OFF);
+    exhaust_syncing=false;
+    ESP_LOGI(TAG,"UI_SYNC mode=exhaust_swipe exhaust=%s",ev_exhausts[exhaust].name);
+}
+
+static void select_exhaust(unsigned exhaust,const char *source) {
+    if(exhaust>=EV_EXHAUSTS || exhaust==displayed_exhaust) return;
+    displayed_exhaust=exhaust;
+    style_exhaust_cards(exhaust);
+    ESP_LOGI(TAG,"TOUCH action=exhaust_%s value=%s",source,ev_exhausts[exhaust].name);
+    if(action_callback) action_callback(BOARD_UI_EXHAUST,(int)exhaust,callback_context);
+}
+
+static void exhaust_card_event(lv_event_t *event) {
+    if(lv_event_get_code(event)!=LV_EVENT_CLICKED) return;
+    unsigned exhaust=(unsigned)(uintptr_t)lv_event_get_user_data(event);
+    if(exhaust>=EV_EXHAUSTS) return;
+    lv_obj_scroll_to_view(exhaust_cards[exhaust],LV_ANIM_ON);
+    select_exhaust(exhaust,"tap");
+}
+
+static void exhaust_strip_event(lv_event_t *event) {
+    if(lv_event_get_code(event)==LV_EVENT_SCROLL_BEGIN) {
+        exhaust_scrolling=true;
+        lv_anim_t *animation=lv_event_get_param(event);
+        if(animation) {
+            lv_anim_set_duration(animation,220);
+            lv_anim_set_path_cb(animation,lv_anim_path_ease_out);
+        }
+        return;
+    }
+    if(lv_event_get_code(event)!=LV_EVENT_SCROLL_END) return;
+    exhaust_scrolling=false;
+    if(exhaust_syncing) return;
+    lv_area_t strip_area;
+    lv_obj_get_coords(exhaust_strip,&strip_area);
+    int center=(strip_area.x1+strip_area.x2)/2;
+    unsigned best=displayed_exhaust<EV_EXHAUSTS?displayed_exhaust:0;
+    int best_distance=INT32_MAX;
+    for(unsigned i=0;i<EV_EXHAUSTS;i++) {
+        lv_area_t card_area;
+        lv_obj_get_coords(exhaust_cards[i],&card_area);
+        int card_center=(card_area.x1+card_area.x2)/2;
+        int distance=abs(card_center-center);
+        if(distance<best_distance) { best_distance=distance; best=i; }
+    }
+    select_exhaust(best,"swipe");
+}
+
 static void engine_event(lv_event_t *event) {
     if(lv_event_get_code(event)!=LV_EVENT_CLICKED) return;
     ESP_LOGI(TAG,"TOUCH action=engine_toggle");
@@ -181,15 +248,6 @@ static void volume_event(lv_event_t *event) {
     int delta=(int)(intptr_t)lv_event_get_user_data(event);
     ESP_LOGI(TAG,"TOUCH action=volume_delta value=%d",delta);
     if(action_callback) action_callback(BOARD_UI_VOLUME_DELTA,delta,callback_context);
-}
-
-static void exhaust_event(lv_event_t *event) {
-    if(lv_event_get_code(event)!=LV_EVENT_CLICKED) return;
-    int delta=(int)(intptr_t)lv_event_get_user_data(event);
-    unsigned current=previous_state.exhaust<EV_EXHAUSTS?previous_state.exhaust:0;
-    unsigned next=(unsigned)((current+EV_EXHAUSTS+delta)%EV_EXHAUSTS);
-    ESP_LOGI(TAG,"TOUCH action=exhaust value=%s",ev_exhausts[next].name);
-    if(action_callback) action_callback(BOARD_UI_EXHAUST,(int)next,callback_context);
 }
 
 static void redline_event(lv_event_t *event) {
@@ -253,6 +311,7 @@ static void refresh_timer(lv_timer_t *timer) {
     displayed_running=state.running;
 
     if(state.profile!=displayed_profile && !carousel_scrolling) sync_profile_carousel(state.profile);
+    if(state.exhaust!=displayed_exhaust && !exhaust_scrolling) sync_exhaust_carousel(state.exhaust);
     /* Static text/style updates only on change; UI input keeps its own 16 ms timer. */
     int rpm=(int)lroundf(state.rpm/10)*10;
     int previous_rpm=(int)lroundf(previous_state.rpm/10)*10;
@@ -275,10 +334,6 @@ static void refresh_timer(lv_timer_t *timer) {
     if(changed || load!=(int)(previous_state.load*100)) lv_bar_set_value(load_bar,load,LV_ANIM_OFF);
     if(changed || state.volume!=previous_state.volume)
         lv_label_set_text_fmt(volume_value_label,"%d%%",(int)lroundf(state.volume*100));
-    if(changed || state.exhaust!=previous_state.exhaust) {
-        unsigned exhaust=state.exhaust<EV_EXHAUSTS?state.exhaust:0;
-        lv_label_set_text(exhaust_value_label,ev_exhausts[exhaust].ui_name);
-    }
     unsigned minimum=(unsigned)ev_profiles[state.profile].idle_rpm+500;
     if(changed || state.profile!=previous_state.profile)
         lv_slider_set_range(redline_slider,(int32_t)minimum,EV_MAX_RPM);
@@ -300,7 +355,7 @@ static void refresh_timer(lv_timer_t *timer) {
     last_firings=state.firings;
     /* During a swipe, give the small carousel region the entire redraw budget.
      * The mechanism resumes at the current phase when it settles. */
-    if(!settings_visible && !carousel_scrolling &&
+    if(!settings_visible && !carousel_scrolling && !exhaust_scrolling &&
        (moving || changed || state.profile!=previous_state.profile || state.running!=previous_state.running))
         draw_engine_frame();
     previous_state=state; have_previous_state=true;
@@ -319,6 +374,32 @@ static lv_obj_t *create_page(lv_obj_t *screen) {
     lv_obj_set_style_pad_all(page,0,LV_PART_MAIN);
     lv_obj_clear_flag(page,LV_OBJ_FLAG_SCROLLABLE);
     return page;
+}
+
+static void create_exhaust_mark(lv_obj_t *card,unsigned exhaust) {
+    static const uint32_t body_colors[EV_EXHAUSTS]={0x78828D,0x3A3E43,0x9C7135,0xA9AFB5,0x6D747B};
+    static const uint32_t accent_colors[EV_EXHAUSTS]={0xAAB2BA,0xD64535,0xD9AA4E,0x6C737A,0xE27B35};
+    static const int widths[EV_EXHAUSTS]={22,24,21,18,27};
+    static const int heights[EV_EXHAUSTS]={8,7,9,13,4};
+    lv_obj_t *body=lv_obj_create(card);
+    lv_obj_set_pos(body,5,14-heights[exhaust]/2);
+    lv_obj_set_size(body,widths[exhaust],heights[exhaust]);
+    lv_obj_set_style_bg_color(body,lv_color_hex(body_colors[exhaust]),LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(body,LV_OPA_COVER,LV_PART_MAIN);
+    lv_obj_set_style_border_width(body,exhaust==3?2:0,LV_PART_MAIN);
+    lv_obj_set_style_border_color(body,lv_color_hex(0xD5D9DC),LV_PART_MAIN);
+    lv_obj_set_style_radius(body,exhaust==3?2:LV_RADIUS_CIRCLE,LV_PART_MAIN);
+    lv_obj_set_style_pad_all(body,0,LV_PART_MAIN);
+    lv_obj_clear_flag(body,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_t *tip=lv_obj_create(card);
+    lv_obj_set_pos(tip,5+widths[exhaust]-3,14-heights[exhaust]/2);
+    lv_obj_set_size(tip,6,heights[exhaust]);
+    lv_obj_set_style_bg_color(tip,lv_color_hex(accent_colors[exhaust]),LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(tip,LV_OPA_COVER,LV_PART_MAIN);
+    lv_obj_set_style_border_width(tip,0,LV_PART_MAIN);
+    lv_obj_set_style_radius(tip,LV_RADIUS_CIRCLE,LV_PART_MAIN);
+    lv_obj_set_style_pad_all(tip,0,LV_PART_MAIN);
+    lv_obj_clear_flag(tip,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
 }
 
 static void create_ui(void) {
@@ -367,7 +448,7 @@ static void create_ui(void) {
 
     profile_strip=lv_obj_create(main_page);
     lv_obj_set_pos(profile_strip,0,28);
-    lv_obj_set_size(profile_strip,320,39);
+    lv_obj_set_size(profile_strip,320,32);
     lv_obj_set_style_bg_color(profile_strip,lv_color_hex(0x0B1017),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(profile_strip,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(profile_strip,1,LV_PART_MAIN);
@@ -376,8 +457,8 @@ static void create_ui(void) {
     lv_obj_set_style_radius(profile_strip,0,LV_PART_MAIN);
     lv_obj_set_style_pad_left(profile_strip,104,LV_PART_MAIN);
     lv_obj_set_style_pad_right(profile_strip,104,LV_PART_MAIN);
-    lv_obj_set_style_pad_top(profile_strip,3,LV_PART_MAIN);
-    lv_obj_set_style_pad_bottom(profile_strip,3,LV_PART_MAIN);
+    lv_obj_set_style_pad_top(profile_strip,2,LV_PART_MAIN);
+    lv_obj_set_style_pad_bottom(profile_strip,2,LV_PART_MAIN);
     lv_obj_set_style_pad_column(profile_strip,6,LV_PART_MAIN);
     lv_obj_set_flex_flow(profile_strip,LV_FLEX_FLOW_ROW);
     lv_obj_set_scroll_dir(profile_strip,LV_DIR_HOR);
@@ -388,14 +469,14 @@ static void create_ui(void) {
     lv_obj_add_event_cb(profile_strip,profile_strip_event,LV_EVENT_ALL,NULL);
     for(unsigned i=0;i<EV_PROFILES;i++) {
         profile_cards[i]=lv_button_create(profile_strip);
-        lv_obj_set_size(profile_cards[i],112,31);
+        lv_obj_set_size(profile_cards[i],112,26);
         lv_obj_clear_flag(profile_cards[i],LV_OBJ_FLAG_SCROLLABLE);
         lv_obj_add_flag(profile_cards[i],LV_OBJ_FLAG_SNAPPABLE);
         lv_obj_set_style_radius(profile_cards[i],7,LV_PART_MAIN);
         lv_obj_set_style_pad_all(profile_cards[i],0,LV_PART_MAIN);
         lv_obj_set_style_shadow_width(profile_cards[i],0,LV_PART_MAIN);
         lv_obj_t *label=lv_label_create(profile_cards[i]);
-        lv_label_set_text_fmt(label,"%uC\n%s",ev_profiles[i].cylinders,ev_profiles[i].ui_name);
+        lv_label_set_text_fmt(label,"%uC  %s",ev_profiles[i].cylinders,ev_profiles[i].ui_name);
         lv_obj_set_width(label,108);
         lv_obj_set_style_text_font(label,&lv_font_montserrat_12,LV_PART_MAIN);
         lv_label_set_long_mode(label,LV_LABEL_LONG_CLIP);
@@ -405,10 +486,50 @@ static void create_ui(void) {
                             (void *)(uintptr_t)i);
     }
 
+    exhaust_strip=lv_obj_create(main_page);
+    lv_obj_set_pos(exhaust_strip,0,60);
+    lv_obj_set_size(exhaust_strip,320,34);
+    lv_obj_set_style_bg_color(exhaust_strip,lv_color_hex(0x0D1117),LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(exhaust_strip,LV_OPA_COVER,LV_PART_MAIN);
+    lv_obj_set_style_border_width(exhaust_strip,1,LV_PART_MAIN);
+    lv_obj_set_style_border_side(exhaust_strip,LV_BORDER_SIDE_BOTTOM,LV_PART_MAIN);
+    lv_obj_set_style_border_color(exhaust_strip,lv_color_hex(0x3D3023),LV_PART_MAIN);
+    lv_obj_set_style_radius(exhaust_strip,0,LV_PART_MAIN);
+    lv_obj_set_style_pad_left(exhaust_strip,101,LV_PART_MAIN);
+    lv_obj_set_style_pad_right(exhaust_strip,101,LV_PART_MAIN);
+    lv_obj_set_style_pad_top(exhaust_strip,2,LV_PART_MAIN);
+    lv_obj_set_style_pad_bottom(exhaust_strip,2,LV_PART_MAIN);
+    lv_obj_set_style_pad_column(exhaust_strip,6,LV_PART_MAIN);
+    lv_obj_set_flex_flow(exhaust_strip,LV_FLEX_FLOW_ROW);
+    lv_obj_set_scroll_dir(exhaust_strip,LV_DIR_HOR);
+    lv_obj_set_scroll_snap_x(exhaust_strip,LV_SCROLL_SNAP_CENTER);
+    lv_obj_set_scrollbar_mode(exhaust_strip,LV_SCROLLBAR_MODE_OFF);
+    lv_obj_clear_flag(exhaust_strip,LV_OBJ_FLAG_SCROLL_ELASTIC);
+    lv_obj_add_flag(exhaust_strip,LV_OBJ_FLAG_SCROLL_MOMENTUM);
+    lv_obj_add_event_cb(exhaust_strip,exhaust_strip_event,LV_EVENT_ALL,NULL);
+    for(unsigned i=0;i<EV_EXHAUSTS;i++) {
+        exhaust_cards[i]=lv_button_create(exhaust_strip);
+        lv_obj_set_size(exhaust_cards[i],118,28);
+        lv_obj_clear_flag(exhaust_cards[i],LV_OBJ_FLAG_SCROLLABLE);
+        lv_obj_add_flag(exhaust_cards[i],LV_OBJ_FLAG_SNAPPABLE);
+        lv_obj_set_style_radius(exhaust_cards[i],7,LV_PART_MAIN);
+        lv_obj_set_style_pad_all(exhaust_cards[i],0,LV_PART_MAIN);
+        lv_obj_set_style_shadow_width(exhaust_cards[i],0,LV_PART_MAIN);
+        create_exhaust_mark(exhaust_cards[i],i);
+        lv_obj_t *label=lv_label_create(exhaust_cards[i]);
+        lv_label_set_text(label,ev_exhausts[i].ui_name);
+        lv_obj_set_pos(label,36,7);
+        lv_obj_set_width(label,78);
+        lv_obj_set_style_text_font(label,&lv_font_montserrat_12,LV_PART_MAIN);
+        lv_label_set_long_mode(label,LV_LABEL_LONG_CLIP);
+        lv_obj_add_event_cb(exhaust_cards[i],exhaust_card_event,LV_EVENT_CLICKED,
+                            (void *)(uintptr_t)i);
+    }
+
     engine_visual=lv_canvas_create(main_page);
-    lv_canvas_set_buffer(engine_visual,engine_pixels,320,116,LV_COLOR_FORMAT_RGB565);
-    lv_obj_set_pos(engine_visual,0,67);
-    lv_obj_set_size(engine_visual,320,116);
+    lv_canvas_set_buffer(engine_visual,engine_pixels,320,86,LV_COLOR_FORMAT_RGB565);
+    lv_obj_set_pos(engine_visual,0,94);
+    lv_obj_set_size(engine_visual,320,86);
     lv_obj_set_style_bg_color(engine_visual,lv_color_hex(0x090D12),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(engine_visual,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(engine_visual,0,LV_PART_MAIN);
@@ -419,9 +540,9 @@ static void create_ui(void) {
     phase_label=lv_label_create(main_page);
     lv_label_set_text(phase_label,"OFF / SLOW");
     lv_obj_set_style_text_font(phase_label,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_pos(phase_label,9,170);
+    lv_obj_set_pos(phase_label,9,166);
     load_bar=lv_bar_create(main_page);
-    lv_obj_set_pos(load_bar,148,174);
+    lv_obj_set_pos(load_bar,148,170);
     lv_obj_set_size(load_bar,161,5);
     lv_bar_set_range(load_bar,0,100);
     lv_obj_set_style_bg_color(load_bar,lv_color_hex(0x243241),LV_PART_MAIN);
@@ -473,25 +594,10 @@ static void create_ui(void) {
     lv_obj_set_style_text_font(volume_value_label,&lv_font_montserrat_28,LV_PART_MAIN);
     lv_obj_set_style_text_color(volume_value_label,lv_color_hex(0x2DE2A6),LV_PART_MAIN);
 
-    lv_obj_t *exhaust_title=lv_label_create(settings_page);
-    lv_label_set_text(exhaust_title,"EXHAUST STYLE");
-    lv_obj_set_pos(exhaust_title,15,154);
-    lv_obj_set_style_text_color(exhaust_title,lv_color_hex(0x79879A),LV_PART_MAIN);
-    lv_obj_t *exhaust_minus=button_with_label(settings_page,"<",15,180,48,44);
-    lv_obj_t *exhaust_plus=button_with_label(settings_page,">",257,180,48,44);
-    lv_obj_add_event_cb(exhaust_minus,exhaust_event,LV_EVENT_CLICKED,(void *)(intptr_t)-1);
-    lv_obj_add_event_cb(exhaust_plus,exhaust_event,LV_EVENT_CLICKED,(void *)(intptr_t)1);
-    exhaust_value_label=lv_label_create(settings_page);
-    lv_label_set_text(exhaust_value_label,ev_exhausts[0].ui_name);
-    lv_obj_set_pos(exhaust_value_label,68,190);
-    lv_obj_set_width(exhaust_value_label,184);
-    lv_label_set_long_mode(exhaust_value_label,LV_LABEL_LONG_CLIP);
-    lv_obj_set_style_text_align(exhaust_value_label,LV_TEXT_ALIGN_CENTER,LV_PART_MAIN);
-    lv_obj_set_style_text_font(exhaust_value_label,&lv_font_montserrat_14,LV_PART_MAIN);
-    lv_obj_set_style_text_color(exhaust_value_label,lv_color_hex(0x2DE2A6),LV_PART_MAIN);
-
     lv_obj_update_layout(profile_strip);
     sync_profile_carousel(0);
+    lv_obj_update_layout(exhaust_strip);
+    sync_exhaust_carousel(0);
     lv_timer_create(refresh_timer,33,NULL);
 }
 
@@ -632,9 +738,11 @@ esp_err_t board_ui_report(void) {
     ESP_RETURN_ON_FALSE(lvgl_port_lock(1000),ESP_ERR_TIMEOUT,TAG,"UI readback lock");
     unsigned profile=displayed_profile<EV_PROFILES?displayed_profile:0;
     unsigned draws=draw_count,renders=render_count,render_us=render_max_us,refresh_us=refresh_max_us;
-    bool scrolling=carousel_scrolling;
+    bool scrolling=carousel_scrolling || exhaust_scrolling;
+    unsigned exhaust=displayed_exhaust<EV_EXHAUSTS?displayed_exhaust:0;
     lvgl_port_unlock();
-    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=slider_crank profile=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u scrolling=%d",
-             board_ui_stack_high_water_mark(),ev_profiles[profile].name,renders,render_us,refresh_us,draws,scrolling);
+    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=slider_crank profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u scrolling=%d",
+             board_ui_stack_high_water_mark(),ev_profiles[profile].name,ev_exhausts[exhaust].name,
+             renders,render_us,refresh_us,draws,scrolling);
     return ESP_OK;
 }
