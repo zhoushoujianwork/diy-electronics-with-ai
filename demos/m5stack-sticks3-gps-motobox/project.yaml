@@ -1,0 +1,17 @@
+schema: 1
+id: m5stack-sticks3-gps-motobox
+name: M5Stack StickS3 GPS to MotoBox
+kind: demo
+status: prototype
+summary: Read an AT6668 GNSS Unit on StickS3 and upload location telemetry to MotoBox over MQTT TLS.
+owners:
+  - human-ai-lab
+toolchains:
+  - ESP-IDF 5.5.2
+boards:
+  - m5stack-sticks3-k150
+modules:
+  - m5stack-unit-gps-v1.1-at6668
+validation:
+  build: passed
+  hardware: partial

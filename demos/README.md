@@ -10,3 +10,8 @@
 - `dual-button-input`：只验证去抖、长按和组合键。
 
 建议名称不代表已经实现或拥有现货，真正创建时必须填写验证状态。
+
+## Available demos
+
+- [`m5stack-sticks3-gps-motobox`](m5stack-sticks3-gps-motobox/)：StickS3 读取 AT6668 GNSS，
+  通过 Wi-Fi 和 MQTT TLS 上报到 MotoBox；当前为 prototype，等待实机验收。

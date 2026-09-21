@@ -4,6 +4,8 @@ build*/
 **/build-*/
 **/sdkconfig
 **/sdkconfig.old
+**/sdkconfig.local.defaults
+**/sdkconfig.sticks3
 **/managed_components/
 *.wav
 *.log

@@ -1,0 +1,26 @@
+idf_component_register(
+    SRCS
+        "main.c"
+        "board.c"
+        "gnss_parser.c"
+        "telemetry_payload.c"
+        "telemetry_queue.c"
+        "ui.c"
+    INCLUDE_DIRS "."
+    REQUIRES
+        esp_app_format
+        esp_driver_gpio
+        esp_driver_i2c
+        esp_driver_spi
+        esp_driver_uart
+        esp_driver_ledc
+        esp_event
+        esp_lcd
+        esp_netif
+        esp_timer
+        esp_wifi
+        mqtt
+        nvs_flash
+        qrcode
+        esp_lvgl_port
+        lvgl)

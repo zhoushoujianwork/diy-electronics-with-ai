@@ -1,0 +1,42 @@
+schema_version: 1
+id: gps-unit-v1-1
+vendor_id: m5stack
+name: M5Stack Unit GPS v1.1
+family: Unit
+model: U032-V11
+sku: U032-V11
+category: positioning-module
+lifecycle: active
+summary: Grove UART GNSS unit using an ATGM336H-6N module with the AT6668 chipset.
+specifications:
+  processor:
+    manufacturer: CASIC
+    model: AT6668
+    source_refs: [official-docs]
+  interfaces:
+    - type: UART
+      count: 1
+      notes: Default 115200 bit/s, 8N1; NMEA0183 4.1 output.
+      source_refs: [official-docs]
+  connectors:
+    - type: Grove
+      count: 1
+      notes: Black GND, red 5V, yellow UART_RX, white UART_TX.
+      source_refs: [official-docs]
+  power:
+    input_voltage_nominal_v: 5
+    source_refs: [official-docs]
+sources:
+  - id: official-docs
+    type: documentation
+    title: Unit GPS v1.1 documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/unit/Unit-GPS%20v1.1
+    accessed_on: 2026-09-22
+    official: true
+validation:
+  level: cataloged
+notes:
+  - The official documentation lists 31.64 mA at 5 V as typical consumption; it is not a measured startup peak.
+  - The official documentation lists GPS, QZSS, BDS-BD2, BDS-BD3, Galileo and GLONASS reception, 1.5 m CEP50 positioning accuracy and an update rate up to 10 Hz.
+  - Do not reuse the older AT6558 Unit GPS default baud rate for this v1.1 product.

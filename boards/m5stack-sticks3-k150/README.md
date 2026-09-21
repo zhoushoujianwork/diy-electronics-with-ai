@@ -31,9 +31,14 @@ M5Stack 的紧凑型 ESP32-S3 开发套件，SKU 为 K150。仓库使用完整 I
 | LCD MOSI / SCLK | 39 / 40 |
 | LCD DC / CS / RESET / BL | 45 / 41 / 21 / 38 |
 | A / B 按键 | 11 / 12，低电平有效 |
+| HY2.0-4P Grove | 黑 GND、红 5V、黄 GPIO9、白 GPIO10 |
 
 LCD 电源与扬声器使能由 M5PM1 的 GPIO2/GPIO3 控制，不是 ESP32 的 GPIO2/GPIO3。
 GPIO38 用于屏幕背光 PWM；不要再把上述引脚分配给外接模块。
+
+Grove 5V 默认处于输入/关闭状态。使用板载电池或 USB 给 Grove 外设供电时，固件必须先通过
+M5PM1 `POWER_CONFIG.BOOST_EN` 开启 5V 输出；开启后不得再从 Grove 红线反向输入 5V。
+UART 外设通常把主机 GPIO9 作为 TX、GPIO10 作为 RX，但仍须按外设连接器丝印确认交叉方向。
 
 ## 验证状态
 

@@ -1,0 +1,28 @@
+menu "StickS3 GPS MotoBox Demo"
+
+config DEMO_WIFI_SSID
+    string "Wi-Fi SSID"
+    default ""
+
+config DEMO_WIFI_PASSWORD
+    string "Wi-Fi password"
+    default ""
+
+config DEMO_MQTT_URI
+    string "MotoBox MQTT TLS URI"
+    default "mqtts://emqx.daboluo.cc:8883"
+
+config DEMO_MQTT_USERNAME
+    string "Device MQTT username"
+    default ""
+
+config DEMO_MQTT_PASSWORD
+    string "Device MQTT password"
+    default ""
+
+config DEMO_PUBLISH_INTERVAL_MS
+    int "Telemetry interval (ms)"
+    range 1000 60000
+    default 5000
+
+endmenu

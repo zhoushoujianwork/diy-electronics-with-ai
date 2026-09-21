@@ -1,0 +1,8 @@
+# Copy this file to sdkconfig.local.defaults and replace the placeholders.
+# The local file is ignored by Git. MotoBox access is issued separately for
+# the first demonstration devices; do not publish these values.
+CONFIG_DEMO_WIFI_SSID="your-wifi-or-hotspot"
+CONFIG_DEMO_WIFI_PASSWORD="your-wifi-password"
+CONFIG_DEMO_MQTT_URI="wss://your-authorized-broker.example/mqtt"
+CONFIG_DEMO_MQTT_USERNAME="device-specific-username"
+CONFIG_DEMO_MQTT_PASSWORD="device-specific-password"
