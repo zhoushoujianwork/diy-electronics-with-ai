@@ -5,34 +5,34 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EV Engine Sound — 320×240 UI Preview</title>
 <style>
-  :root { color-scheme: dark; font-family: Monaco,Menlo,monospace; background:#111820; color:#cbd4de; }
+  :root { color-scheme: dark; font-family: Monaco,Menlo,monospace; background:#0e1012; color:#fff; }
   * { box-sizing:border-box; }
-  body { margin:0; min-height:100vh; display:grid; place-items:center; background:radial-gradient(circle at 50% 30%,#263342,#0b1016 62%); }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#090a0b; }
   .stage { width:680px; }
-  .screen-shell { width:660px; height:500px; padding:10px; border-radius:22px; background:#252d35; box-shadow:0 22px 70px #000b,inset 0 0 0 2px #46515c; }
-  .screen { width:320px; height:240px; position:relative; overflow:hidden; transform:scale(2); transform-origin:top left; background:#080d14; border:1px solid #3b4652; user-select:none; }
-  .top { height:28px; display:flex; align-items:center; padding:3px 6px; gap:7px; border-bottom:1px solid #263443; background:#0c1219; font-size:8px; }
-  .top button { width:53px; height:22px; border:1px solid #405064; border-radius:5px; background:#15202a; color:#48e0aa; font:7px Monaco,monospace; }
-  .pulse { width:6px; height:6px; background:#ff754f; box-shadow:0 0 5px #ff754f; }
-  .rpm { color:#f2c361; min-width:69px; }
-  .state { color:#99a7b5; flex:1; }
-  .set { max-width:42px; color:#cbd4de!important; }
+  .screen-shell { width:660px; height:500px; padding:10px; border-radius:8px; background:#1b1e20; box-shadow:0 22px 70px #000,inset 0 0 0 1px #777b7e; }
+  .screen { width:320px; height:240px; position:relative; overflow:hidden; transform:scale(2); transform-origin:top left; background:#0e1012; border:1px solid #777b7e; user-select:none; }
+  .top { height:28px; display:flex; align-items:center; padding:3px 6px; gap:7px; border-bottom:1px solid #777b7e; background:#0e1012; font-size:8px; }
+  .top button { width:53px; height:22px; border:1px solid #777b7e; border-radius:0; background:#0e1012; color:#fff; font:7px Monaco,monospace; }
+  .pulse { width:6px; height:6px; border-radius:50%; background:#ee4445; box-shadow:0 0 4px #ee4445; }
+  .rpm { color:#fff; min-width:69px; }
+  .state { color:#f4802a; flex:1; }
+  .set { max-width:42px; color:#fff!important; }
   .powertrain { display:block; width:320px; height:108px; image-rendering:pixelated; }
   .selectors { position:absolute; left:6px; top:139px; display:flex; gap:6px; }
-  .selector { width:151px; height:39px; padding:4px 8px; text-align:left; border-radius:5px; border:1px solid #2de2a6; background:#111923; color:#2de2a6; font:7px Monaco,monospace; cursor:pointer; }
-  .selector.exhaust { border-color:#ffb86a; color:#ffb86a; }
-  .selector small { display:block; color:#718092; font-size:6px; margin-bottom:4px; }
+  .selector { width:151px; height:39px; padding:4px 8px; text-align:left; border-radius:0; border:1px solid #77cee0; background:#0e1012; color:#77cee0; font:7px Monaco,monospace; cursor:pointer; }
+  .selector.exhaust { border-color:#f4802a; color:#f4802a; }
+  .selector small { display:block; color:#777b7e; font-size:6px; margin-bottom:4px; }
   .selector strong { display:block; white-space:nowrap; overflow:hidden; font-size:7px; }
-  .selector:active { transform:translateY(1px); background:#1b2834; }
+  .selector:active { transform:translateY(1px); background:#25282b; }
   .selector.flash { animation:flash .24s steps(2,end); }
   @keyframes flash { 50% { background:#294235; color:#fff; } }
-  .redline { position:absolute; left:8px; top:182px; width:304px; font-size:6px; color:#758595; }
-  .track { height:5px; margin-top:4px; background:#243241; }
-  .track::before { content:""; display:block; width:72%; height:100%; background:#e18543; }
-  .track::after { content:""; display:block; width:6px; height:9px; margin:-7px 0 0 70%; background:#ffd080; }
-  .rev { position:absolute; left:8px; top:207px; width:304px; height:27px; border:1px solid #b45438; border-radius:6px; background:#51251e; color:#ffbb78; font:8px Monaco,monospace; letter-spacing:1px; }
-  .legend { margin-top:22px; color:#94a1af; font-size:13px; line-height:1.65; }
-  .legend b { color:#ffce7b; }
+  .redline { position:absolute; left:8px; top:182px; width:304px; font-size:6px; color:#fff; }
+  .track { height:5px; margin-top:4px; background:#303336; }
+  .track::before { content:""; display:block; width:72%; height:100%; background:#f4802a; }
+  .track::after { content:""; display:block; width:6px; height:9px; margin:-7px 0 0 70%; background:#fdbd2e; }
+  .rev { position:absolute; left:8px; top:207px; width:304px; height:27px; border:1px solid #ee4445; border-radius:0; background:#0e1012; color:#fff; font:8px Monaco,monospace; letter-spacing:1px; }
+  .legend { margin-top:22px; color:#a7aaac; font-size:13px; line-height:1.65; }
+  .legend b { color:#f4802a; }
 </style>
 </head>
 <body>
@@ -40,7 +40,7 @@
   <div class="screen-shell">
     <section class="screen" aria-label="320 by 240 embedded UI preview">
       <header class="top"><button>START</button><span class="pulse"></span><span class="rpm">4200 RPM</span><span class="state">ACCEL</span><button class="set">SET</button></header>
-      <img id="powertrain" class="powertrain" src="assets/powertrain-stock.png" alt="Pixel-art engine, exhaust and throttle grip">
+      <img id="powertrain" class="powertrain" src="assets/powertrain-stock.png" alt="Engine Simulator styled cutaway engine, ignition, exhaust and throttle display">
       <div class="selectors">
         <button id="engine" class="selector"><small>ENGINE · TAP NEXT</small><strong>2C  270 P-TWIN  &gt;</strong></button>
         <button id="exhaust" class="selector exhaust"><small>EXHAUST · TAP NEXT</small><strong>STOCK  &gt;</strong></button>

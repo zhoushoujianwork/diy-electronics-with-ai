@@ -61,8 +61,10 @@ build/render_voice v12 straight build/v12-straight.wav
 
 ## 电脑预览动力总成
 
-发动机、排气和独立油门把手使用与立创实战派固件相同的 320×108、RGB565、无堆
-分配渲染器。无需连接开发板即可生成五种排气的 3 倍整数缩放预览：
+发动机、点火显示、排气和油门把手使用与立创实战派固件相同的 320×108、RGB565、
+无堆分配渲染器。画面采用开源 Engine Simulator 的官方默认配色、机械剖面和点火环
+语言，并保留来源与 MIT 许可说明；排气与触控组件为本项目重新设计。无需连接开发板
+即可生成五种排气的 3 倍整数缩放预览：
 
 ```sh
 cmake --build build --target render_powertrain
@@ -76,10 +78,18 @@ build/render_powertrain build/ui-preview
 仓库还提供可直接用浏览器打开的 [`docs/ui-preview.html`](docs/ui-preview.html)：它按
 320×240 实际布局显示首页，并允许点击发动机与排气按钮验证单步循环切换。
 
-五种排气预览（从左到右、从上到下依次为原厂、Akrapovič 风格、Yoshimura 风格、
-可乐罐和完全移除消声器）：
+五种排气预览（从左到右、从上到下依次为原厂、Akrapovič 风格碳纤罐、Yoshimura
+风格钛色罐、可乐罐和完全移除消声器）：
 
 ![发动机、油门把手与五种排气对比](docs/assets/powertrain-exhaust-preview.png)
+
+电脑端 1920×1080 设计母稿直接使用上游官方截图中的发动机剖面素材，先确定构图、
+层级和排气细节；320×108 图是为 ESP32 RGB565 屏幕重新光栅化的落板版本：
+
+![Engine Simulator 官方视觉语言桌面设计稿](docs/assets/engine-sim-official-concept.png)
+
+上游参考、固定提交和完整许可见
+[`docs/third-party/engine-sim.md`](docs/third-party/engine-sim.md)。
 
 ## 构建 StickS3 固件
 

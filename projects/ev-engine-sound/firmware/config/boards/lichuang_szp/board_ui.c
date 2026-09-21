@@ -69,7 +69,7 @@ static void style_button(lv_obj_t *button,uint32_t color,int radius) {
     lv_obj_set_style_bg_color(button,lv_color_hex(color),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(button,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(button,1,LV_PART_MAIN);
-    lv_obj_set_style_border_color(button,lv_color_hex(0x354052),LV_PART_MAIN);
+    lv_obj_set_style_border_color(button,lv_color_hex(0x777B7E),LV_PART_MAIN);
     lv_obj_set_style_radius(button,radius,LV_PART_MAIN);
     lv_obj_set_style_shadow_width(button,0,LV_PART_MAIN);
     lv_obj_set_style_pad_all(button,0,LV_PART_MAIN);
@@ -80,10 +80,10 @@ static lv_obj_t *button_with_label(lv_obj_t *parent,const char *text,
     lv_obj_t *button=lv_button_create(parent);
     lv_obj_set_pos(button,x,y);
     lv_obj_set_size(button,width,height);
-    style_button(button,0x151C27,8);
+    style_button(button,0x0E1012,0);
     lv_obj_t *label=lv_label_create(button);
     lv_label_set_text(label,text);
-    lv_obj_set_style_text_color(label,lv_color_hex(0xC7D0DC),LV_PART_MAIN);
+    lv_obj_set_style_text_color(label,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
     lv_obj_set_style_text_font(label,&lv_font_montserrat_14,LV_PART_MAIN);
     lv_obj_center(label);
     return button;
@@ -264,7 +264,7 @@ static lv_obj_t *create_page(lv_obj_t *screen) {
     lv_obj_t *page=lv_obj_create(screen);
     lv_obj_set_pos(page,0,0);
     lv_obj_set_size(page,320,240);
-    lv_obj_set_style_bg_color(page,lv_color_hex(0x080B10),LV_PART_MAIN);
+    lv_obj_set_style_bg_color(page,lv_color_hex(0x0E1012),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(page,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(page,0,LV_PART_MAIN);
     lv_obj_set_style_radius(page,0,LV_PART_MAIN);
@@ -279,13 +279,13 @@ static lv_obj_t *create_cycle_selector(lv_obj_t *parent,int x,const char *title,
     lv_obj_t *button=lv_button_create(parent);
     lv_obj_set_pos(button,x,139);
     lv_obj_set_size(button,151,39);
-    style_button(button,0x111923,5);
+    style_button(button,0x0E1012,0);
     lv_obj_set_style_border_color(button,lv_color_hex(accent),LV_PART_MAIN);
     lv_obj_t *caption=lv_label_create(button);
     lv_label_set_text(caption,title);
     lv_obj_set_pos(caption,8,3);
     lv_obj_set_style_text_font(caption,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(caption,lv_color_hex(0x718092),LV_PART_MAIN);
+    lv_obj_set_style_text_color(caption,lv_color_hex(0x777B7E),LV_PART_MAIN);
     *value_label=lv_label_create(button);
     lv_label_set_text(*value_label,"--  >");
     lv_obj_set_pos(*value_label,8,19);
@@ -299,7 +299,7 @@ static lv_obj_t *create_cycle_selector(lv_obj_t *parent,int x,const char *title,
 
 static void create_ui(void) {
     lv_obj_t *screen=lv_screen_active();
-    lv_obj_set_style_bg_color(screen,lv_color_hex(0x080B10),LV_PART_MAIN);
+    lv_obj_set_style_bg_color(screen,lv_color_hex(0x0E1012),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(screen,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_pad_all(screen,0,LV_PART_MAIN);
     lv_obj_clear_flag(screen,LV_OBJ_FLAG_SCROLLABLE);
@@ -309,9 +309,9 @@ static void create_ui(void) {
     lv_obj_add_flag(settings_page,LV_OBJ_FLAG_HIDDEN);
 
     lv_obj_t *title=lv_label_create(main_page);
-    lv_label_set_text(title,"EV SOUND");
+    lv_label_set_text(title,"EV ENGINE");
     lv_obj_set_pos(title,8,6);
-    lv_obj_set_style_text_color(title,lv_color_hex(0xEAF2F8),LV_PART_MAIN);
+    lv_obj_set_style_text_color(title,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
     lv_obj_set_style_text_letter_space(title,1,LV_PART_MAIN);
 
     pulse_led=lv_obj_create(main_page);
@@ -320,12 +320,12 @@ static void create_ui(void) {
     lv_obj_set_style_radius(pulse_led,LV_RADIUS_CIRCLE,LV_PART_MAIN);
     lv_obj_set_style_border_width(pulse_led,0,LV_PART_MAIN);
     lv_obj_set_style_pad_all(pulse_led,0,LV_PART_MAIN);
-    lv_obj_set_style_bg_color(pulse_led,lv_color_hex(0xFFBD6A),LV_PART_MAIN);
+    lv_obj_set_style_bg_color(pulse_led,lv_color_hex(0xEE4445),LV_PART_MAIN);
 
     state_label=lv_label_create(main_page);
     lv_label_set_text(state_label,"READY");
     lv_obj_set_pos(state_label,89,6);
-    lv_obj_set_style_text_color(state_label,lv_color_hex(0x79879A),LV_PART_MAIN);
+    lv_obj_set_style_text_color(state_label,lv_color_hex(0xF4802A),LV_PART_MAIN);
 
     rpm_label=lv_label_create(main_page);
     lv_label_set_text(rpm_label,"0000 RPM");
@@ -333,7 +333,7 @@ static void create_ui(void) {
     lv_obj_set_width(rpm_label,87);
     lv_label_set_long_mode(rpm_label,LV_LABEL_LONG_CLIP);
     lv_obj_set_style_text_align(rpm_label,LV_TEXT_ALIGN_RIGHT,LV_PART_MAIN);
-    lv_obj_set_style_text_color(rpm_label,lv_color_hex(0x2DE2A6),LV_PART_MAIN);
+    lv_obj_set_style_text_color(rpm_label,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
 
     start_button=button_with_label(main_page,"START",219,3,45,23);
     start_label=lv_obj_get_child(start_button,0);
@@ -345,16 +345,16 @@ static void create_ui(void) {
     lv_canvas_set_buffer(engine_visual,engine_pixels,RIG_W,RIG_H,LV_COLOR_FORMAT_RGB565);
     lv_obj_set_pos(engine_visual,0,28);
     lv_obj_set_size(engine_visual,RIG_W,RIG_H);
-    lv_obj_set_style_bg_color(engine_visual,lv_color_hex(0x090D12),LV_PART_MAIN);
+    lv_obj_set_style_bg_color(engine_visual,lv_color_hex(0x0E1012),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(engine_visual,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(engine_visual,0,LV_PART_MAIN);
     lv_obj_set_style_radius(engine_visual,0,LV_PART_MAIN);
     lv_obj_set_style_pad_all(engine_visual,0,LV_PART_MAIN);
     lv_obj_clear_flag(engine_visual,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
 
-    create_cycle_selector(main_page,6,"ENGINE · TAP NEXT",0x2DE2A6,
+    create_cycle_selector(main_page,6,"ENGINE · TAP NEXT",0x77CEE0,
                           &engine_value_label,profile_next_event);
-    create_cycle_selector(main_page,163,"EXHAUST · TAP NEXT",0xFFB86A,
+    create_cycle_selector(main_page,163,"EXHAUST · TAP NEXT",0xF4802A,
                           &exhaust_value_label,exhaust_next_event);
 
     phase_label=lv_label_create(main_page);

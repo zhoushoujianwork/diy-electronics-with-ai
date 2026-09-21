@@ -9,19 +9,22 @@ keeps the live engine state visible while a control is being touched.
 - `ENGINE · TAP NEXT` and `EXHAUST · TAP NEXT` are large, independent cycle
   buttons. Each click advances exactly one item and wraps at the end; there are
   no swipe gestures, momentum, dropdowns or hidden lists.
-- The centre is a retained RGB565 powertrain workbench with no vehicle body.
-  The left side shows a profile-sensitive engine assembly with up to six visible
-  cylinder barrels, plug leads, intake trumpets, cooling fins, cases and a rotating
-  crank pulley. The firing cylinder glows in time with live engine state.
-- A separate twist-throttle assembly occupies the upper right. It includes a
-  housing, cable, ribbed rubber grip, end cap, twist index and live opening bar.
-- The selected exhaust is enlarged on the lower right. Stock uses a long
-  grey silencer, Akrapovič style a dark tapered can with a red tip, Yoshimura
-  style a brushed-gold can with contrasting bands, `TIN CAN` an intentionally
-  oversized red drinks can with silver rolled rims, pull tab, bubbles and a
-  generic `COLA` wordmark, and `NO MUFFLER` a narrow heat-tinted open pipe.
-  Small `AKRA`, `YOSH`, `OEM` and `OPEN` pixel marks make every selection readable;
-  they are descriptive non-official artwork rather than copied brand assets.
+- The retained RGB565 workbench contains no motorcycle body. Its framed panels,
+  exact default palette, cutaway conventions and ignition rings are adapted from
+  the MIT-licensed open-source Engine Simulator UI. The left panel shows a V-engine
+  cutaway with white pistons, grey rods/crank, pink banks, blue/yellow valve gear
+  and an orange combustion flash synchronized to live firing state.
+- The centre column has the official-style `IGNITION` ring array above a combined
+  twin-rail throttle diagram and compact physical twist grip. Cylinder count and
+  the lit ring follow live engine state.
+- The right panel gives the selected exhaust its own technical elevation and a
+  live orange/red flow trace. Stock uses a long grey silencer, Akrapovič style a
+  dark tapered carbon can with red outlet band, Yoshimura style a titanium-colour
+  tapered can, `TIN CAN` an oversized red drinks can with rolled rims, pull tab,
+  white ribbon and generic `COLA` wordmark, and `NO MUFFLER` a heat-tinted open pipe.
+  Brand names are descriptive non-official preset labels; no exhaust-company
+  logos or product artwork are copied. See `third-party/engine-sim.md` for the
+  upstream revision, adapted elements and full MIT notice.
 - `REDLINE` is a main-page slider from idle + 500 RPM through 16000 RPM.
 - `HOLD THROTTLE`: the only throttle control on screen. Pressing starts the
   engine and applies 100% throttle; releasing always returns to zero throttle.
