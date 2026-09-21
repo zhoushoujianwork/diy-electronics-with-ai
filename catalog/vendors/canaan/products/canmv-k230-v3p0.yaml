@@ -6,6 +6,7 @@ family: CanMV K230
 model: CanMV K230 V3.0
 revision: "3.0"
 category: development-board
+board_profile: boards/canaan-canmv-k230-v3p0/
 lifecycle: unknown
 summary: Canaan K230 development board supported by CanMV, with a publicly available V3.0 LPDDR4 schematic and PCB project that includes analog microphone and expansion-header circuitry.
 specifications:
@@ -27,7 +28,7 @@ specifications:
   connectors:
     - type: 2x20 2.54 mm expansion header
       count: 1
-      notes: JP1 is HEADER_20X2_H in the K230 sheet, with a HEADER_2x20_H_F_2.54MM device definition. Per-pin routing, voltage domains, and mating orientation require a separate board-profile review.
+      notes: JP1 is HEADER_20X2_H in the K230 sheet, with a HEADER_2x20_H_F_2.54MM device definition. The linked board profile reviews the PDM clock/data route, its supply domain, power pins, and pin-one marker; the complete header is not yet profiled.
       source_refs: [v3-hardware-project]
     - type: Analog audio jack
       count: 1
@@ -105,6 +106,6 @@ validation:
 notes:
   - The K230 has one core rated up to 800 MHz and one core rated up to 1.6 GHz; max_frequency_hz records the SoC maximum rather than a shared per-core clock.
   - The firmware board target alone does not establish hardware details. The official hardware-index and v3-hardware-project now establish the dated schematic/PCB source, LPDDR4 part identity, analog microphone, audio jack, and expansion-header design. Do not interpret missing catalog fields as missing official documentation.
-  - Numeric memory capacity, complete pin routing and mux compatibility, power limits, and mechanical dimensions remain outside the completed review. Hardware facts recorded from the 2024-05-09 engineering project must be matched to the exact assembled-board revision before wiring.
+  - The linked board profile reviews the external PDM route and onboard analog microphone relocation using the V3.0 schematic, PCB nets, and official K230 TRM. Numeric memory capacity, complete pin routing and mux compatibility, power limits, and mechanical dimensions remain outside the completed review. Match the 2024-05-09 design to the exact assembled-board revision before wiring.
   - The shared CanMV v1.8 PyAudio implementation supports PDM input with input_device_index=1, stereo channel groups, 64-times oversampling, and per-group 3A configuration. This establishes a software path, not this board's exposed pins or measured PDM/AEC compatibility (canmv-pyaudio).
-  - The PDM recording example configures Lushan Pi pins and must not be copied as V3.0 wiring. See docs/research/pdm-vs-max9814-audio-frontends.md for microphone selection, clock and channel constraints, and pending hardware checks (canmv-pdm-example).
+  - The PDM recording example configures Lushan Pi pins and alone is not V3.0 wiring evidence. Use the separately sourced V3.0 board profile for wiring, and docs/research/pdm-vs-max9814-audio-frontends.md for microphone selection, clock/channel constraints, and pending hardware checks (canmv-pdm-example).

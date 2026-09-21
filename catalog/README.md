@@ -136,7 +136,7 @@ independent of the validation level.
 ## 选型比较
 
 - [PDM MEMS 与 MAX9814 模拟音频前端](../docs/research/pdm-vs-max9814-audio-frontends.md)：
-  官方规格差异、语音对讲选型，以及 Canaan CanMV K230 V3.0 的软件依据与待验证接线边界。
+  官方规格差异、语音对讲选型，以及 Canaan CanMV K230 V3.0 的软件依据、音频接线档案与待验证范围。
 
 ## Validate
 
