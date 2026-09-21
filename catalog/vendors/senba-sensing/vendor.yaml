@@ -1,0 +1,12 @@
+schema_version: 1
+id: senba-sensing
+name: Senba Sensing Technology
+website: https://www.senbasensor.com/
+documentation: https://www.senbasensor.com/pyroelectric-infrared-sensor/
+aliases:
+  - Nanyang Senba Optical and Electronic Co., Ltd.
+  - Senba Sensing Tech
+  - 森霸感应
+last_reviewed: 2026-09-21
+notes:
+  - Product selection notes and AS312 integration boundaries are documented in README.md.

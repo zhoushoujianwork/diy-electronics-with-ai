@@ -12,8 +12,8 @@ specifications:
   interfaces:
     - type: GPIO digital output
       count: 1
-      notes: Output is routed to GPIO36 on the documented StickC host; high indicates a detected infrared trigger.
-      source_refs: [official-docs, official-docs-zh]
+      notes: The onboard AS312 output is routed through a 1 kilohm series resistor to GPIO36 on the documented StickC host; high indicates a detected infrared trigger. The official schematic contains no status-indicator LED.
+      source_refs: [official-docs, official-docs-zh, official-schematic, official-store]
   power:
     input_voltage_nominal_v: 3.3
     logic_voltage_v: 3.3
@@ -44,9 +44,17 @@ sources:
     url: https://github.com/m5stack/M5-Schematic/blob/master/Hat/StickHat_PIR.pdf
     accessed_on: 2026-09-21
     official: true
+  - id: official-store
+    type: product-page
+    title: M5StickC PIR Hat (AS312)
+    publisher: M5Stack
+    url: https://shop.m5stack.com/products/m5stickccompatible-hat-pir-sensor
+    accessed_on: 2026-09-21
+    official: true
 validation:
   level: cataloged
 notes:
+  - The official store and schematic identify the onboard sensor as AS312; the related bare-component record is catalog/vendors/senba-sensing/products/as312.yaml.
   - Official nominal detection distance is 500 cm, sensing angle is less than 100 degrees, and trigger hold time is 2 seconds.
   - Official static-current figure is less than 60 microamperes and the stated operating-temperature range is -20 to 80 degrees Celsius.
   - Compatibility and the actual GPIO must be checked against the exact host model before connection.

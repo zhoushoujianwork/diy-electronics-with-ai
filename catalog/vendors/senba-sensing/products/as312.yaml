@@ -1,0 +1,53 @@
+schema_version: 1
+id: as312
+vendor_id: senba-sensing
+name: Senba AS312
+family: AS/AL/AM312
+model: AS312
+sku: C90465
+category: sensor-module
+lifecycle: unknown
+summary: Low-voltage digital pyroelectric infrared motion-sensor component used inside finished PIR modules and accessories.
+specifications:
+  interfaces:
+    - type: Digital REL motion output
+      count: 1
+      notes: The current manufacturer family sheet shows a three-pin VDD, REL, and VSS package; this is a sensor component, not a standardized three-wire breakout module.
+      source_refs: [manufacturer-datasheet]
+  power:
+    input_voltage_min_v: 2.7
+    input_voltage_max_v: 3.3
+    source_refs: [manufacturer-datasheet, lcsc-product]
+sources:
+  - id: lcsc-product
+    type: product-page
+    title: Senba Sensing Tech AS312 C90465
+    publisher: LCSC Electronics
+    url: https://www.lcsc.com/product-detail/C90465.html
+    accessed_on: 2026-09-21
+    official: true
+    notes: Distributor catalog entry used to bind the manufacturer, model, LCSC code, package, and linked manufacturer datasheet.
+  - id: manufacturer-datasheet
+    type: datasheet
+    title: AS/AL/AM312 pyroelectric infrared sensor family datasheet
+    publisher: Senba Sensing Technology
+    url: https://datasheet.lcsc.com/datasheet/pdf/749dd87f318d70b6996b91ade283d216.pdf?productCode=C90465
+    accessed_on: 2026-09-21
+    official: true
+    notes: Manufacturer-authored family datasheet hosted by LCSC; it does not establish a complete breakout module's lens, range, connector pin order, or indicator features.
+  - id: m5stack-u054
+    type: product-page
+    title: M5StickC PIR Hat (AS312)
+    publisher: M5Stack
+    url: https://shop.m5stack.com/products/m5stickccompatible-hat-pir-sensor
+    accessed_on: 2026-09-21
+    official: true
+    notes: Official finished-product example confirming that M5Stack U054 integrates an AS312 sensor.
+validation:
+  level: cataloged
+notes:
+  - AS312 identifies the sensing component, not every small board sold as an AS312 module. Verify the purchased board's supply range, VCC/GND/OUT order, lens, output hold time, and any regulator or indicator from its exact documentation.
+  - Detection distance and angle are system properties strongly affected by the Fresnel lens, enclosure, orientation, ambient temperature, and target motion; no generic module-level range is claimed here.
+  - M5Stack U054 is a documented AS312 integration with a 3.3 V supply, digital output routed through a 1 kilohm resistor to GPIO36 on the documented M5StickC host, no schematic indicator LED, a 2 second hold time, a 500 cm nominal range, and an angle below 100 degrees. Those finished-HAT figures must not be copied to an unknown AS312 breakout.
+  - Compared with the commonly sold HC-SR501 adjustable breakout class, AS312-based compact modules are appropriate when small size, low-voltage operation, and fixed behavior matter more than trim-pot adjustment. HC-SR501 seller variants are not treated as one traceable product record.
+  - In an access-control design, PIR should only wake or start face recognition; identity verification and the lock-control safety path must make the release decision.

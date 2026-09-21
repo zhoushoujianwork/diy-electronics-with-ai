@@ -43,9 +43,10 @@ M5Stack Hat PIR 的精确型号为 `U054`，属于传感器模块而不是开发
 - [英文文档](https://docs.m5stack.com/en/hat/hat-pir)
 - [简体中文文档](https://docs.m5stack.com/zh_CN/hat/hat-pir)
 - [仓库产品记录](products/hat-pir-u054.yaml)
+- [内部 Senba AS312 传感器记录](../senba-sensing/products/as312.yaml)
 
-它的产品记录同时引用中英文官方页；面向 StickC 的 GPIO36 接法不能自动外推到 StickS3、
-StickC Plus SE 或其他主机，必须按精确主机型号重新核对。
+它的产品记录同时引用中英文官方页；官方商城与原理图确认内部使用 AS312，原理图中没有状态指示 LED。
+面向 StickC 的 GPIO36 接法不能自动外推到 StickS3、StickC Plus SE 或其他主机，必须按精确主机型号重新核对。
 
 ## 归档边界
 
