@@ -17,7 +17,7 @@
   .rpm { color:#f2c361; min-width:69px; }
   .state { color:#99a7b5; flex:1; }
   .set { max-width:42px; color:#cbd4de!important; }
-  .bike { display:block; width:320px; height:108px; image-rendering:pixelated; }
+  .powertrain { display:block; width:320px; height:108px; image-rendering:pixelated; }
   .selectors { position:absolute; left:6px; top:139px; display:flex; gap:6px; }
   .selector { width:151px; height:39px; padding:4px 8px; text-align:left; border-radius:5px; border:1px solid #2de2a6; background:#111923; color:#2de2a6; font:7px Monaco,monospace; cursor:pointer; }
   .selector.exhaust { border-color:#ffb86a; color:#ffb86a; }
@@ -40,7 +40,7 @@
   <div class="screen-shell">
     <section class="screen" aria-label="320 by 240 embedded UI preview">
       <header class="top"><button>START</button><span class="pulse"></span><span class="rpm">4200 RPM</span><span class="state">ACCEL</span><button class="set">SET</button></header>
-      <img id="bike" class="bike" src="assets/motorcycle-stock.png" alt="Pixel-art motorcycle">
+      <img id="powertrain" class="powertrain" src="assets/powertrain-stock.png" alt="Pixel-art engine, exhaust and throttle grip">
       <div class="selectors">
         <button id="engine" class="selector"><small>ENGINE · TAP NEXT</small><strong>2C  270 P-TWIN  &gt;</strong></button>
         <button id="exhaust" class="selector exhaust"><small>EXHAUST · TAP NEXT</small><strong>STOCK  &gt;</strong></button>
@@ -54,16 +54,16 @@
 <script>
 const engines=[['1C','360 CRANK'],['2C','180 P-TWIN'],['2C','270 P-TWIN'],['2C','360 P-TWIN'],['2C','45 V-TWIN'],['2C','90 V-TWIN'],['3C','120 EVEN'],['3C','270 T-PLANE'],['4C','EVEN INLINE'],['4C','CROSSPLANE'],['5C','INLINE FIVE'],['6C','INLINE SIX'],['6C','60 V-SIX'],['6C','FLAT SIX'],['8C','FLATPLANE V8'],['8C','CROSSPLANE V8'],['10C','72 V-TEN'],['12C','60 V-TWELVE']];
 const exhausts=[
-  ['STOCK','assets/motorcycle-stock.png'],
-  ['AKRAPOVIC','assets/motorcycle-akrapovic.png'],
-  ['YOSHIMURA','assets/motorcycle-yoshimura.png'],
-  ['TIN CAN','assets/motorcycle-tin-can.png'],
-  ['NO MUFFLER','assets/motorcycle-straight.png']
+  ['STOCK','assets/powertrain-stock.png'],
+  ['AKRAPOVIC','assets/powertrain-akrapovic.png'],
+  ['YOSHIMURA','assets/powertrain-yoshimura.png'],
+  ['TIN CAN','assets/powertrain-tin-can.png'],
+  ['NO MUFFLER','assets/powertrain-straight.png']
 ];
 let engineIndex=2,exhaustIndex=0;
 function pulse(button){button.classList.remove('flash');void button.offsetWidth;button.classList.add('flash');}
 document.querySelector('#engine').onclick=e=>{engineIndex=(engineIndex+1)%engines.length;e.currentTarget.querySelector('strong').textContent=engines[engineIndex].join('  ')+'  >';pulse(e.currentTarget);};
-document.querySelector('#exhaust').onclick=e=>{exhaustIndex=(exhaustIndex+1)%exhausts.length;e.currentTarget.querySelector('strong').textContent=exhausts[exhaustIndex][0]+'  >';document.querySelector('#bike').src=exhausts[exhaustIndex][1];pulse(e.currentTarget);};
+document.querySelector('#exhaust').onclick=e=>{exhaustIndex=(exhaustIndex+1)%exhausts.length;e.currentTarget.querySelector('strong').textContent=exhausts[exhaustIndex][0]+'  >';document.querySelector('#powertrain').src=exhausts[exhaustIndex][1];pulse(e.currentTarget);};
 </script>
 </body>
 </html>

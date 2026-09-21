@@ -9,7 +9,7 @@
 #include "board_audio.h"
 #include "board_config.h"
 #include "engine_voice.h"
-#include "motorcycle_canvas.h"
+#include "powertrain_canvas.h"
 #include "esp_timer.h"
 #include "driver/ledc.h"
 #include "driver/spi_master.h"
@@ -89,20 +89,21 @@ static lv_obj_t *button_with_label(lv_obj_t *parent,const char *text,
     return button;
 }
 
-enum { BIKE_W=320, BIKE_H=108 };
-_Alignas(4) static uint16_t engine_pixels[BIKE_W*BIKE_H];
+enum { RIG_W=EV_POWERTRAIN_WIDTH, RIG_H=EV_POWERTRAIN_HEIGHT };
+_Alignas(4) static uint16_t engine_pixels[RIG_W*RIG_H];
 
-static void draw_motorcycle(const board_ui_state_t *state) {
+static void draw_powertrain(const board_ui_state_t *state) {
     unsigned profile=state->profile<EV_PROFILES?state->profile:0;
-    ev_motorcycle_state_t visual={
+    ev_powertrain_state_t visual={
         .profile=profile,
         .cylinders=ev_profiles[profile].cylinders,
         .exhaust=state->exhaust<EV_EXHAUSTS?state->exhaust:0,
         .last_cylinder=state->last_cylinder,
         .running=state->running,
+        .throttle=state->throttle,
         .phase=fmodf(crank_phase/TWO_PI,1.f)
     };
-    ev_motorcycle_render(engine_pixels,&visual);
+    ev_powertrain_render(engine_pixels,&visual);
     draw_count++;
     lv_obj_invalidate(engine_visual);
 }
@@ -253,7 +254,7 @@ static void refresh_timer(lv_timer_t *timer) {
     last_firings=state.firings;
     if(!settings_visible && (moving || changed || state.profile!=previous_state.profile ||
        state.exhaust!=previous_state.exhaust || state.running!=previous_state.running))
-        draw_motorcycle(&state);
+        draw_powertrain(&state);
     previous_state=state; have_previous_state=true;
     uint32_t elapsed=(uint32_t)(esp_timer_get_time()-begin);
     if(elapsed>refresh_max_us) refresh_max_us=elapsed;
@@ -341,9 +342,9 @@ static void create_ui(void) {
     lv_obj_add_event_cb(settings_button,page_event,LV_EVENT_CLICKED,(void *)(uintptr_t)true);
 
     engine_visual=lv_canvas_create(main_page);
-    lv_canvas_set_buffer(engine_visual,engine_pixels,BIKE_W,BIKE_H,LV_COLOR_FORMAT_RGB565);
+    lv_canvas_set_buffer(engine_visual,engine_pixels,RIG_W,RIG_H,LV_COLOR_FORMAT_RGB565);
     lv_obj_set_pos(engine_visual,0,28);
-    lv_obj_set_size(engine_visual,BIKE_W,BIKE_H);
+    lv_obj_set_size(engine_visual,RIG_W,RIG_H);
     lv_obj_set_style_bg_color(engine_visual,lv_color_hex(0x090D12),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(engine_visual,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(engine_visual,0,LV_PART_MAIN);
@@ -539,7 +540,7 @@ esp_err_t board_ui_init(i2c_master_bus_handle_t shared_i2c,
     lvgl_port_unlock();
     ESP_RETURN_ON_ERROR(init_backlight(),TAG,"backlight");
     ready=true;
-    ESP_LOGI(TAG,"UI_READY panel=ST7789 320x240 touch=FT6336 lvgl_stack=10240 animation=pixel_motorcycle refresh_ms=16 motion_ms=33 selector=cycle_buttons");
+    ESP_LOGI(TAG,"UI_READY panel=ST7789 320x240 touch=FT6336 lvgl_stack=10240 animation=powertrain_rig refresh_ms=16 motion_ms=33 selector=cycle_buttons");
     return ESP_OK;
 }
 
@@ -555,7 +556,7 @@ esp_err_t board_ui_report(void) {
     unsigned draws=draw_count,renders=render_count,render_us=render_max_us,refresh_us=refresh_max_us;
     unsigned exhaust=displayed_exhaust<EV_EXHAUSTS?displayed_exhaust:0;
     lvgl_port_unlock();
-    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=pixel_motorcycle profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u selector=cycle_buttons",
+    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=powertrain_rig profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u selector=cycle_buttons",
              board_ui_stack_high_water_mark(),ev_profiles[profile].name,ev_exhausts[exhaust].name,
              renders,render_us,refresh_us,draws);
     return ESP_OK;

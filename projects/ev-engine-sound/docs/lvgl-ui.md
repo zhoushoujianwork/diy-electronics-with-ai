@@ -9,14 +9,13 @@ keeps the live engine state visible while a control is being touched.
 - `ENGINE · TAP NEXT` and `EXHAUST · TAP NEXT` are large, independent cycle
   buttons. Each click advances exactly one item and wraps at the end; there are
   no swipe gestures, momentum, dropdowns or hidden lists.
-- The centre is a retained RGB565 pixel-art motorcycle. Wheel spokes rotate at
-  an RPM-linked slow-motion rate, the engine block shows up to six cylinder bars
-  and flashes the latest firing cylinder, and running engines emit pixel smoke.
-  The production renderer now includes twin mirrors, instrument glow, headlamp,
-  stitched stepped seat, tail light, sculpted tank and EV badge, frame highlights,
-  front brake disc and caliper, rear sprocket and chain, foot controls, engine
-  fins and cases. It is stylised status art, not manufacturer-specific geometry.
-- The selected exhaust is drawn directly on the motorcycle. Stock uses a long
+- The centre is a retained RGB565 powertrain workbench with no vehicle body.
+  The left side shows a profile-sensitive engine assembly with up to six visible
+  cylinder barrels, plug leads, intake trumpets, cooling fins, cases and a rotating
+  crank pulley. The firing cylinder glows in time with live engine state.
+- A separate twist-throttle assembly occupies the upper right. It includes a
+  housing, cable, ribbed rubber grip, end cap, twist index and live opening bar.
+- The selected exhaust is enlarged on the lower right. Stock uses a long
   grey silencer, Akrapovič style a dark tapered can with a red tip, Yoshimura
   style a brushed-gold can with contrasting bands, `TIN CAN` an intentionally
   oversized red drinks can with silver rolled rims, pull tab, bubbles and a
@@ -32,10 +31,10 @@ keeps the live engine state visible while a control is being touched.
 
 ## Rendering and touch timing
 
-- Touch and display timers use 16 ms; the motorcycle update target is 33 ms.
+- Touch and display timers use 16 ms; the powertrain update target is 33 ms.
   These are scheduling targets, not claims of measured 60/30 FPS.
 - Cycle-button callbacks log the old and new selection before dispatching the
-  action. Text, styles and slider values are updated only when changed. The motorcycle
+  action. Text, styles and slider values are updated only when changed. The powertrain
   stops invalidating when parked and does not redraw behind the settings page.
 - A 69120-byte static RGB565 canvas avoids heap allocation in the render loop.
   Two 40-line DMA buffers transfer the result without putting frame data on a stack.
@@ -61,7 +60,7 @@ labels, not measured replicas or manufacturer-endorsed sound maps.
 
 - `OUTPUT VOLUME -/+`: software output gain in 5% steps, from 0% to 100%.
 - Exhaust selection lives on the main page so it remains visible beside the
-  engine selector and can be changed while the motorcycle is running.
+  engine selector and can be changed while the engine is running.
 - Values update live and apply immediately. Changing engine type restores that
   type's default redline. `BACK` returns to the main page.
 

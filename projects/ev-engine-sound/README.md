@@ -59,27 +59,27 @@ build/render_voice v12 straight build/v12-straight.wav
 
 每个 WAV 包含启动、渐进给油、高转、收油和停机过程，使用与固件相同的合成核心。
 
-## 电脑预览像素机车
+## 电脑预览动力总成
 
-像素机车使用与立创实战派固件相同的 320×108、RGB565、无堆分配渲染器。无需连接
-开发板即可生成五种排气的 3 倍整数缩放预览：
+发动机、排气和独立油门把手使用与立创实战派固件相同的 320×108、RGB565、无堆
+分配渲染器。无需连接开发板即可生成五种排气的 3 倍整数缩放预览：
 
 ```sh
-cmake --build build --target render_motorcycle
+cmake --build build --target render_powertrain
 mkdir -p build/ui-preview
-build/render_motorcycle build/ui-preview
+build/render_powertrain build/ui-preview
 ```
 
-输出为 `motorcycle-stock.ppm`、`motorcycle-akrapovic.ppm`、
-`motorcycle-yoshimura.ppm`、`motorcycle-tin_can.ppm` 和
-`motorcycle-straight.ppm`。整数缩放不使用插值，屏幕上的每个像素都能直接检查。
+输出为 `powertrain-stock.ppm`、`powertrain-akrapovic.ppm`、
+`powertrain-yoshimura.ppm`、`powertrain-tin_can.ppm` 和
+`powertrain-straight.ppm`。整数缩放不使用插值，屏幕上的每个像素都能直接检查。
 仓库还提供可直接用浏览器打开的 [`docs/ui-preview.html`](docs/ui-preview.html)：它按
 320×240 实际布局显示首页，并允许点击发动机与排气按钮验证单步循环切换。
 
 五种排气预览（从左到右、从上到下依次为原厂、Akrapovič 风格、Yoshimura 风格、
 可乐罐和完全移除消声器）：
 
-![五种像素排气对比](docs/assets/motorcycle-exhaust-preview.png)
+![发动机、油门把手与五种排气对比](docs/assets/powertrain-exhaust-preview.png)
 
 ## 构建 StickS3 固件
 
@@ -119,9 +119,9 @@ stop
 ```
 
 排气参数名为 `stock`、`akrapovic`、`yoshimura`、`tin_can`、`straight`。立创实战派
-首页使用像素风机车作为主视觉；点击 `ENGINE · TAP NEXT` 或 `EXHAUST · TAP NEXT`
-即可循环切换下一个发动机或排气，不使用滑动手势。选中的排气会直接改变机车上的像素
-排气造型，其中可乐罐显示为红色饮料罐和银色卷边。StickS3 长按 B 可轮换到排气设置页。
+首页只展示像素发动机总成、当前排气和独立油门把手；点击 `ENGINE · TAP NEXT` 或
+`EXHAUST · TAP NEXT` 即可循环切换下一个发动机或排气，不使用滑动手势。可乐罐显示
+为带 `COLA` 字标、拉环和银色卷边的红色饮料罐。StickS3 长按 B 可轮换到排气设置页。
 
 完整的板级引脚、交互说明和验证记录见：
 

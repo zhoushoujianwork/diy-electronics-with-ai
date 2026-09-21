@@ -1,5 +1,5 @@
 #include "engine_voice.h"
-#include "motorcycle_canvas.h"
+#include "powertrain_canvas.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,11 +14,11 @@ static void rgb565_to_rgb(uint16_t value,unsigned char out[3]) {
 static int write_scaled_ppm(const char *path,const uint16_t *pixels,int scale) {
     FILE *file=fopen(path,"wb");
     if(!file) return 1;
-    fprintf(file,"P6\n%d %d\n255\n",EV_MOTORCYCLE_WIDTH*scale,EV_MOTORCYCLE_HEIGHT*scale);
-    for(int y=0;y<EV_MOTORCYCLE_HEIGHT;y++) for(int sy=0;sy<scale;sy++)
-        for(int x=0;x<EV_MOTORCYCLE_WIDTH;x++) {
+    fprintf(file,"P6\n%d %d\n255\n",EV_POWERTRAIN_WIDTH*scale,EV_POWERTRAIN_HEIGHT*scale);
+    for(int y=0;y<EV_POWERTRAIN_HEIGHT;y++) for(int sy=0;sy<scale;sy++)
+        for(int x=0;x<EV_POWERTRAIN_WIDTH;x++) {
             unsigned char rgb[3];
-            rgb565_to_rgb(pixels[y*EV_MOTORCYCLE_WIDTH+x],rgb);
+            rgb565_to_rgb(pixels[y*EV_POWERTRAIN_WIDTH+x],rgb);
             for(int sx=0;sx<scale;sx++) fwrite(rgb,1,sizeof(rgb),file);
         }
     return fclose(file)!=0;
@@ -26,21 +26,22 @@ static int write_scaled_ppm(const char *path,const uint16_t *pixels,int scale) {
 
 int main(int argc,char **argv) {
     const char *directory=argc>1?argv[1]:".";
-    uint16_t *pixels=calloc(EV_MOTORCYCLE_WIDTH*EV_MOTORCYCLE_HEIGHT,sizeof(*pixels));
+    uint16_t *pixels=calloc(EV_POWERTRAIN_WIDTH*EV_POWERTRAIN_HEIGHT,sizeof(*pixels));
     if(!pixels) return 1;
     int failed=0;
     for(unsigned exhaust=0;exhaust<EV_EXHAUSTS;exhaust++) {
-        ev_motorcycle_state_t state={
+        ev_powertrain_state_t state={
             .profile=1,
             .cylinders=ev_profiles[1].cylinders,
             .exhaust=exhaust,
             .last_cylinder=1,
             .running=true,
+            .throttle=.72f,
             .phase=.18f
         };
-        ev_motorcycle_render(pixels,&state);
+        ev_powertrain_render(pixels,&state);
         char path[512];
-        snprintf(path,sizeof(path),"%s/motorcycle-%s.ppm",directory,ev_exhausts[exhaust].name);
+        snprintf(path,sizeof(path),"%s/powertrain-%s.ppm",directory,ev_exhausts[exhaust].name);
         if(write_scaled_ppm(path,pixels,3)) {
             fprintf(stderr,"failed to write %s\n",path);
             failed=1;
