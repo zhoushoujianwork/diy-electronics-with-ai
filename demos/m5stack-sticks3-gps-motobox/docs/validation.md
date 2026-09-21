@@ -52,8 +52,8 @@ The lowest observed high-water marks during Wi-Fi + WSS/TLS + LCD + GNSS UART op
 | LVGL UI | 8192 bytes | 4172 bytes | pass |
 | Heartbeat/diagnostics | 4096 bytes | 1832 bytes | pass |
 
-Each retained at least 25% and at least 1024 bytes. The working tree was based on repository commit
-`35f35ec`; replace this with the final Demo commit hash after the milestone is committed.
+Each retained at least 25% and at least 1024 bytes. The validated firmware and Demo sources are recorded in
+repository commit `c8085cb`.
 
 ## Remaining acceptance work
 
