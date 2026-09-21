@@ -133,6 +133,11 @@ false precision. Omit a field that the official source does not establish.
 The lifecycle (`active`, `not-recommended-for-new-designs`, `discontinued`, or `unknown`) is
 independent of the validation level.
 
+## 选型比较
+
+- [PDM MEMS 与 MAX9814 模拟音频前端](../docs/research/pdm-vs-max9814-audio-frontends.md)：
+  官方规格差异、语音对讲选型，以及 Canaan CanMV K230 V3.0 的软件依据与待验证接线边界。
+
 ## Validate
 
 From the repository root:

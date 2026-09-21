@@ -1,0 +1,11 @@
+schema_version: 1
+id: analog-devices
+name: Analog Devices
+website: https://www.analog.com/
+documentation: https://www.analog.com/en/products.html
+aliases:
+  - ADI
+  - Maxim Integrated
+last_reviewed: 2026-09-21
+notes:
+  - Legacy Maxim product numbers such as MAX9814 are documented by Analog Devices. Chip specifications do not establish the design or authenticity of third-party breakout boards.

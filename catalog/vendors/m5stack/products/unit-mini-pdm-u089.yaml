@@ -1,0 +1,74 @@
+schema_version: 1
+id: unit-mini-pdm-u089
+vendor_id: m5stack
+name: M5Stack Unit Mini PDM U089
+family: Unit
+model: Unit Mini PDM
+sku: U089
+category: audio-module
+lifecycle: unknown
+summary: Digital MEMS microphone Unit using a Knowles SPM1423HM4H-B microphone with PDM clock and data signals.
+specifications:
+  interfaces:
+    - type: PDM digital microphone
+      count: 1
+      notes: Host supplies CLK and receives DAT; this is a PDM bitstream, not standard I2S PCM with BCLK and LRCLK. The schematic ties the microphone SELECT input to ground.
+      source_refs: [official-docs, official-docs-zh, official-schematic, microphone-datasheet]
+  connectors:
+    - type: HY2.0-4P
+      count: 1
+      notes: Official documentation identifies a Grove connection carrying power, ground, PDM clock, and PDM data. Verify mating orientation and the exact host pin map separately.
+      source_refs: [official-docs, official-docs-zh]
+  power:
+    input_voltage_nominal_v: 5
+    logic_voltage_v: 3.3
+    source_refs: [official-docs, official-docs-zh, official-schematic]
+  mechanical:
+    width_mm: 24
+    height_mm: 24
+    depth_mm: 13
+    weight_g: 4
+    source_refs: [official-docs, official-docs-zh]
+software:
+  toolchains: [Arduino]
+  frameworks: [UiFlow2]
+  source_refs: [official-docs, official-docs-zh]
+sources:
+  - id: official-docs
+    type: documentation
+    title: Unit Mini PDM U089 documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/unit/pdm
+    accessed_on: 2026-09-21
+    official: true
+  - id: official-docs-zh
+    type: documentation
+    title: Unit Mini PDM U089 中文文档
+    publisher: M5Stack
+    url: https://docs.m5stack.com/zh_CN/unit/pdm
+    accessed_on: 2026-09-21
+    official: true
+  - id: official-schematic
+    type: schematic
+    title: Unit Mini PDM schematic linked by the official documentation
+    publisher: M5Stack
+    url: https://static-cdn.m5stack.com/resource/docs/products/unit/pdm/pdm_sch_01.webp
+    accessed_on: 2026-09-21
+    official: true
+  - id: microphone-datasheet
+    type: datasheet
+    title: SPM1423HM4H-B specification, Revision A
+    publisher: Knowles Acoustics
+    url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/core/SPM1423HM4H-B_datasheet_en.pdf
+    accessed_on: 2026-09-21
+    official: true
+    notes: Manufacturer-authored microphone datasheet hosted and linked by M5Stack; bare-microphone values are not whole-Unit power measurements.
+validation:
+  level: cataloged
+notes:
+  - The official schematic shows 5 V entering an HT7333 regulator and a 3.3 V microphone rail. The bare microphone's 1.6-3.6 V supply range must not be substituted for the finished Unit's documented 5 V connector supply. No whole-Unit peak-current value was established.
+  - M5Stack lists sensitivity of -22 dBFS at 94 dB SPL and 1 kHz, typical A-weighted SNR of 61.4 dB, and typical THD of 1 percent at 100 dB SPL and 1 kHz. These are acoustic specifications, not evidence of intelligibility at a particular distance.
+  - The linked Knowles Revision A sheet instead lists nominal SNR of 61.5 dB(A), a 1 percent maximum THD at 100 dB SPL, and 600 microamperes maximum microphone current under its stated conditions. Preserve these source/qualifier differences; the M5Stack page's 600 microampere operating-current entry is not a measured peak for the finished Unit.
+  - Knowles specifies an active clock range of 1.0-3.25 MHz, sleep below 1 kHz with nominal 25 and maximum 45 microamperes microphone current, and up to 10 ms wake-up time. Removing supply causes powered-down mode; stopping the clock causes sleep, not supply removal. This is not voice-triggered wake-up.
+  - No built-in AGC, acoustic echo cancellation, loudspeaker drive, or outdoor ingress rating is established by the cited Unit documentation.
+  - K230/CanMV selection guidance and the distinction from MAX9814 analog front ends are in docs/research/pdm-vs-max9814-audio-frontends.md; host pin compatibility and real-device audio quality remain unverified.

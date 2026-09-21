@@ -52,8 +52,25 @@ sources:
     url: https://github.com/kendryte/k230_docs/blob/f8e30213963e0ed5cf995c3cd4701218a45e4793/en/01_software/board/ai/K230_nncase_Development_Guide.md
     accessed_on: 2026-09-21
     official: true
+  - id: canmv-pyaudio
+    type: repository
+    title: CanMV v1.8 PyAudio I2S and PDM implementation
+    publisher: Canaan
+    url: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/port/builtin_py/media/pyaudio.py
+    accessed_on: 2026-09-21
+    official: true
+  - id: canmv-pdm-example
+    type: repository
+    title: CanMV v1.8 PDM recording example with Lushan Pi IO configuration
+    publisher: Canaan
+    url: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/resources/examples/02-Media/audio_pdm.py
+    accessed_on: 2026-09-21
+    official: true
+    notes: The example explicitly targets Lushan Pi IO; it is not a CanMV K230 V3.0 pin map.
 validation:
   level: cataloged
 notes:
   - The K230 has one core rated up to 800 MHz and one core rated up to 1.6 GHz; max_frequency_hz records the SoC maximum rather than a shared per-core clock.
   - The official board target identifies the K230 MCU and the CanMV K230 V3.0 board name, but does not establish this board's LPDDR capacity, connector exposure, pin map, dimensions, or power limits; those facts are intentionally omitted.
+  - The shared CanMV v1.8 PyAudio implementation supports PDM input with input_device_index=1, stereo channel groups, 64-times oversampling, and per-group 3A configuration. This establishes a software path, not this board's exposed pins or measured PDM/AEC compatibility (canmv-pyaudio).
+  - The PDM recording example configures Lushan Pi pins and must not be copied as V3.0 wiring. See docs/research/pdm-vs-max9814-audio-frontends.md for microphone selection, clock and channel constraints, and pending hardware checks (canmv-pdm-example).

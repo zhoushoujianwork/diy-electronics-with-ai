@@ -41,6 +41,15 @@ K230 SoC 的官方数据手册描述双 64 位 RISC-V C908、KPU、AI2D/2D、视
 [LCKFB 供应商知识页](../lckfb/README.md)。Canaan SoC/CanMV 平台事实与 LCKFB 板级事实应
 分别维护，不能把庐山派原理图或引脚写成通用 K230 能力。
 
+## PDM 音频：官方软件路径与板型边界
+
+CanMV v1.8 的公开 `media/pyaudio.py` 实现已有 PDM 输入和 3A 配置分支；同时提供
+`audio_pdm.py` 示例，但示例明确按庐山派配置 GPIO。不能把这组引脚写入 CanMV K230 V3.0
+板卡记录。单颗 PDM 麦克风还需核对该版本按双声道组采集的行为、有效左右槽与时钟范围。
+
+详见 [PDM MEMS 与 MAX9814 音频前端比较](../../../docs/research/pdm-vs-max9814-audio-frontends.md)，
+其中引用固定提交的官方源码，并区分 SoC 支持、Python 绑定、V3.0 接线和真实音频效果。
+
 ## 去标识化工程经验
 
 以下内容是多次 CanMV/K230 开发中可复用的去标识化经验，不包含私有项目、设备或部署信息。

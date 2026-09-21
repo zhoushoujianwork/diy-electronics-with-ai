@@ -1,0 +1,44 @@
+schema_version: 1
+id: max9814
+vendor_id: analog-devices
+name: Analog Devices MAX9814 microphone amplifier IC
+family: MAX microphone amplifiers
+model: MAX9814
+category: audio-module
+lifecycle: active
+summary: Analog microphone preamplifier IC with automatic gain control and electret microphone bias; not a digital microphone or a complete breakout-board specification.
+specifications:
+  interfaces:
+    - type: Analog microphone input and amplified analog output
+      count: 1
+      notes: MICOUT has a typical 1.23 V DC bias under datasheet conditions. An audio ADC or codec is required to obtain digital PCM; there is no PDM or I2S output.
+      source_refs: [official-product, official-datasheet]
+  power:
+    input_voltage_min_v: 2.7
+    input_voltage_max_v: 5.5
+    source_refs: [official-datasheet]
+sources:
+  - id: official-product
+    type: product-page
+    title: MAX9814 Microphone Amplifier with AGC and Low-Noise Microphone Bias
+    publisher: Analog Devices
+    url: https://www.analog.com/en/products/max9814.html
+    accessed_on: 2026-09-21
+    official: true
+  - id: official-datasheet
+    type: datasheet
+    title: MAX9814 data sheet, Revision 4
+    publisher: Analog Devices
+    url: https://www.analog.com/media/en/technical-documentation/data-sheets/MAX9814.pdf
+    accessed_on: 2026-09-21
+    official: true
+validation:
+  level: cataloged
+notes:
+  - This record describes the IC, grouped under audio-module because the current catalog schema has no audio-IC category. It does not identify or validate any third-party MAX9814 microphone breakout, its microphone capsule, or its PCB revision.
+  - Without compression, the selectable total gain is 40, 50, or 60 dB; the variable-gain stage provides 20 dB of compression. Attack time is capacitor-programmed, release ratio is selectable, and hold time is fixed at 30 ms (official-datasheet).
+  - The datasheet supply-current values are 3.1 mA typical and 6 mA maximum under the stated conditions; they are not the current of a complete microphone breakout plus ADC. The internal microphone-bias generator is nominally 2 V (official-datasheet).
+  - The advertised 0.04 percent typical THD+N is an amplifier electrical measurement under specified signal, gain, load, and AGC conditions; it is not a complete microphone module acoustic-distortion measurement (official-datasheet).
+  - AGC changes gain with level and does not provide acoustic echo cancellation, selective noise removal, or automatic speaker/microphone switching. The chip has a shutdown input, but its availability on a breakout requires that board's documentation.
+  - A codec microphone input may already supply bias and substantial gain. Verify coupling, attenuation, input range, and gain staging before adding this amplifier; never connect MICOUT to a digital PDM or I2S input.
+  - Selection guidance is in docs/research/pdm-vs-max9814-audio-frontends.md. No host build or hardware audio validation is claimed.

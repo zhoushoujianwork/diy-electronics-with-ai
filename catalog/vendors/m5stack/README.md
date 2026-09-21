@@ -48,6 +48,14 @@ M5Stack Hat PIR 的精确型号为 `U054`，属于传感器模块而不是开发
 它的产品记录同时引用中英文官方页；官方商城与原理图确认内部使用 AS312，原理图中没有状态指示 LED。
 面向 StickC 的 GPIO36 接法不能自动外推到 StickS3、StickC Plus SE 或其他主机，必须按精确主机型号重新核对。
 
+## 音频 Unit 的接口辨别
+
+[Unit Mini PDM U089](products/unit-mini-pdm-u089.yaml) 使用 SPM1423HM4H-B，输出为 CLK/DAT
+两线 PDM，不是普通 BCLK/LRCLK/DATA 的 I2S PCM。“根据时钟自动切换状态”不代表语音唤醒、
+AGC 或回声消除。应同时读取官方产品页、原理图与所链接的芯片手册，区分成品的 5 V 供电、
+3.3 V 信号域，以及裸麦克风的电流/时钟限制；页面与手册对 SNR/THD 的限定有细微差异，
+产品记录中分别保留。比较见 [PDM 与 MAX9814](../../../docs/research/pdm-vs-max9814-audio-frontends.md)。
+
 ## 归档边界
 
 - 可独立运行的 M5Stack Core、Stick、Atom 等开发板进入产品目录；只有经过精确板型和引脚
