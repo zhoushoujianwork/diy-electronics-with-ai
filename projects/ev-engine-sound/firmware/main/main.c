@@ -9,6 +9,7 @@
 #include "sdkconfig.h"
 #include "driver/gpio.h"
 #include "driver/i2s_std.h"
+#include "esp_app_desc.h"
 #include "esp_check.h"
 #include "esp_log.h"
 #include "esp_rom_sys.h"
@@ -378,7 +379,8 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
 void app_main(void) {
     console_handle=xTaskGetCurrentTaskHandle();
     ESP_ERROR_CHECK(console_init());
-    ESP_LOGI(TAG,"BOOT version=0.2.0 reset_reason=%d rate=%d",esp_reset_reason(),EV_RATE);
+    const char *firmware_version=esp_app_get_description()->version;
+    ESP_LOGI(TAG,"BOOT version=%s reset_reason=%d rate=%d",firmware_version,esp_reset_reason(),EV_RATE);
 #ifdef CONFIG_EV_BOARD_CONFIRMED
     ESP_LOGI(TAG,"BOARD name=%s i2s={mclk:%d,bclk:%d,ws:%d,dout:%d,slot:%d} amp_gpio=%d",
              EV_BOARD_NAME,EV_AUDIO_I2S_MCLK_GPIO,
@@ -439,8 +441,8 @@ void app_main(void) {
                         esp_rom_software_reset_system();
                     } else if(result==2) {
                         portENTER_CRITICAL(&lock); diagnostics_t d=diagnostics; bool f=fault; portEXIT_CRITICAL(&lock);
-                        ESP_LOGI(TAG,"STATUS version=0.2.0 reset_reason=%d profile=%s exhaust=%s gear=%u running=%d rpm=%.0f throttle=%.0f volume=%.0f redline=%.0f fault=%d",
-                                 esp_reset_reason(),
+                        ESP_LOGI(TAG,"STATUS version=%s reset_reason=%d profile=%s exhaust=%s gear=%u running=%d rpm=%.0f throttle=%.0f volume=%.0f redline=%.0f fault=%d",
+                                 firmware_version,esp_reset_reason(),
                                  ev_profiles[c.profile].name,ev_exhausts[c.exhaust].name,
                                  c.gear,d.running,d.rpm,c.throttle*100,
                                  c.volume*100,ev_redline(&c),f);

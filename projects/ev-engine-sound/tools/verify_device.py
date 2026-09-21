@@ -12,12 +12,16 @@ parser.add_argument("--log", required=True)
 args = parser.parse_args()
 schedule = [
     (0.2, "stop"), (0.5, "status"), (1, "profile inline4"),
-    (1.3, "volume 40"), (2, "start"), (5, "throttle 100"),
-    (10, "throttle 0"), (14, "status"), (16, "stop"),
+    (1.3, "volume 40"), (1.6, "exhaust stock"), (2, "start"),
+    (3, "throttle 100"), (5, "exhaust akrapovic"),
+    (7, "exhaust yoshimura"), (9, "exhaust tin_can"),
+    (11, "exhaust straight"), (12, "throttle 0"),
+    (14, "status"), (16, "stop"),
     (19, "profile v12"), (20, "redline 16000"), (21, "start"),
     (23, "throttle 100"), (29, "status"), (42, "status"),
     (44, "throttle 0"), (49, "profile flat6"), (50, "throttle 60"),
     (54, "throttle 0"), (57, "stop"), (58, "volume 60"),
+    (59, "exhaust stock"),
     (60, "profile inline4"), (63, "status"),
 ]
 device = serial.Serial()
@@ -64,7 +68,11 @@ for line in beats:
 for phase in ("STARTING", "ACCEL", "COAST", "IDLE", "STOPPING", "OFF"):
     assert re.search(r"STATE_TRANSITION: AUDIO \w+ -> " + phase, text), phase
 assert re.search(r"rpm=1[56][0-9]{3}", text), "high RPM not reached"
-assert "animation=slider_crank" in text, "wrong UI firmware"
+assert re.search(r"STATUS[^\n]*version=0\.3\.0", text), "wrong firmware version"
+assert "animation=powertrain_rig" in text, "wrong UI renderer"
+assert "selector=cycle_buttons" in text, "wrong selector mode"
+for exhaust in ("stock", "akrapovic", "yoshimura", "tin_can", "straight"):
+    assert re.search(r"UI_SYNC[^\n]*mode=cycle_buttons[^\n]*exhaust=" + exhaust, text), exhaust
 assert "AUDIO_READBACK" in text
 assert re.search(r"STATUS[^\n]*running=0 rpm=0 throttle=0 volume=60", text), "safe final state missing"
 for name in ("audio", "console", "heartbeat", "lvgl"):

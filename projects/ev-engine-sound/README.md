@@ -19,6 +19,9 @@ T-Plane 三缸、直列发动机、V 型发动机、水平对置六缸、平面�
 
 ## 支持硬件
 
+当前立创实战派固件版本为 **0.3.0**，对应官方 Engine Simulator 视觉语言、首页点击
+循环切换发动机/排气和五种程序化排气音色。
+
 | 板型 | 显示与控制 | 音频 | 状态 |
 | --- | --- | --- | --- |
 | M5Stack StickS3 K150 | 240×135 ST7789、A/B 按键 | ES8311 + 板载扬声器 | 已烧录验证 |
@@ -129,7 +132,8 @@ stop
 ```
 
 排气参数名为 `stock`、`akrapovic`、`yoshimura`、`tin_can`、`straight`。立创实战派
-首页只展示像素发动机总成、当前排气和独立油门把手；点击 `ENGINE · TAP NEXT` 或
+首页只展示官方视觉语言的发动机剖面、逐缸点火环、当前排气和独立油门把手；点击
+`ENGINE · TAP NEXT` 或
 `EXHAUST · TAP NEXT` 即可循环切换下一个发动机或排气，不使用滑动手势。可乐罐显示
 为带 `COLA` 字标、拉环和银色卷边的红色饮料罐。StickS3 长按 B 可轮换到排气设置页。
 
@@ -137,6 +141,7 @@ stop
 
 - [StickS3 适配说明](docs/sticks3.md)
 - [LVGL 界面说明](docs/lvgl-ui.md)
+- [项目介绍与预览素材索引](docs/project-preview.md)
 - [验证记录](docs/validation.md)
 
 车辆电源和油门、速度或 CAN 信号需要经过匹配的降压、隔离与电平保护后再接入。

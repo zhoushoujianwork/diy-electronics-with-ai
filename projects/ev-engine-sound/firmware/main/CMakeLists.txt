@@ -7,7 +7,7 @@ if(NOT EXISTS "${EV_BOARD_DIR}/board_config.h" OR
 endif()
 message(STATUS "EV engine-sound board: ${EV_BOARD}")
 
-set(EV_REQUIRES esp_driver_i2s esp_driver_i2c esp_driver_gpio esp_timer esp_tinyusb)
+set(EV_REQUIRES esp_app_format esp_driver_i2s esp_driver_i2c esp_driver_gpio esp_timer esp_tinyusb)
 if(EV_BOARD STREQUAL "lichuang_szp" OR EV_BOARD STREQUAL "m5_sticks3")
     list(APPEND EV_REQUIRES esp_driver_spi esp_driver_ledc esp_lcd
          esp_lvgl_port lvgl)
