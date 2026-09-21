@@ -47,6 +47,44 @@ JP1 是 2×20、2.54 mm 排针，**不能套用树莓派 40Pin 接线图**：本
 - 单颗 U089 只需要这一组 CLK/DAT；不要照抄示例额外配置 GPIO34/35/36，避免影响 I2S 等用途。
   TRM 中 GPIO26/27 的 PDM 路线可与内部 codec 播放模式组合；最终并发能力仍要核对固件和资源。
 
+### 与 ESP32 的 UART2 同时使用
+
+如果 GPIO26/27 原先配置为连接 ESP32 的串口，应将串口恢复到 V3.0 排针标注的
+UART2 引脚，把 GPIO26/27 完整留给 PDM：
+
+| 信号 | K230 GPIO | JP1 **物理针号** | 连接 ESP32 |
+| --- | --- | --- | --- |
+| `UART2_TXD` | GPIO5 | **17** | 接 ESP32 RX |
+| `UART2_RXD` | GPIO6 | **20** | 接 ESP32 TX |
+| GND | — | **2、4 或 37** | 接 ESP32 GND |
+
+V3.0 PCB 中，`BANK0_GPIO5` 和 `BANK0_GPIO6` 都只连接 U22 与 JP1。U22 符号分别把它们定义为
+`GPIO5/.../UART2_TXD` 和 `GPIO6/.../UART2_RXD`。[CanMV v1.8 官方 UART 示例][uart-example]
+也使用 GPIO5/6 配置 UART2：
+
+```python
+from machine import FPIOA, UART
+
+fpioa = FPIOA()
+fpioa.set_function(5, fpioa.UART2_TXD)  # JP1 物理 17
+fpioa.set_function(6, fpioa.UART2_RXD)  # JP1 物理 20
+
+uart = UART(
+    UART.UART2,
+    baudrate=115200,
+    bits=UART.EIGHTBITS,
+    parity=UART.PARITY_NONE,
+    stop=UART.STOPBITS_ONE,
+)
+```
+
+TX/RX 必须交叉，并共地。两块板若分别供电，不因串口通信而把 5 V 或 3.3 V 电源并联。
+迁移需要同时修改 K230 的 FPIOA 配置和物理接线；ESP32 端可继续使用原来的 RX/TX GPIO。
+GPIO5/6 还带 JTAG/PULSE_CNTR 复用，当前程序若在使用相应功能，应先处理冲突。
+
+这里的 **JP1 物理 19** 是 `PDM_CLK/GPIO26`；图中写作 `IO19` 的信号位于 **JP1 物理 6**，
+两者不是同一个编号。完成迁移后的并用分配为：UART2 占物理 17/20，U089 占物理 1/2/15/19。
+
 ### 采音配置边界
 
 [CanMV v1.8 PyAudio][pyaudio] 的 PDM 输入使用 `input_device_index=1`，按 `channels // 2`
@@ -118,6 +156,7 @@ JP1 是 2×20、2.54 mm 排针，**不能套用树莓派 40Pin 接线图**：本
 | 设计身份、MIC1 型号 | `project.json`；MIC1 device `b77360a59fd645b59750cd2c27aaf91d` |
 | JP1 原理图 | `SHEET/0c927a82e1304c6f92e0d9ce685acb19/1.esch`，元件 `e1755` |
 | JP1 信号复核 | 15 脚引出线 `e7634` 标记 `BANK2_GPIO27`；19 脚引出线 `e7664` 标记 `BANK2_GPIO26` |
+| UART2 与 PDM 并用 | JP1.17=`BANK0_GPIO5`、JP1.20=`BANK0_GPIO6`；U22 U14/V14 分别列 `UART2_TXD/RXD` |
 | 模拟音频及阻容值 | 同一 SHEET 目录的 `4.esch`：MIC1、R52、R53、C171、C172、C173 |
 | PCB 端点连线 | `PCB/23f7d29160794d52a81a8acbb8b1bd2e.epcb` 的 `PAD_NET`；JP1=`e266`、U22=`e802`、MIC1=`e170` |
 | U22 球位、BANK2 电源名 | `SYMBOL/a784a75e68e84db3ab777b116ab6a14b.esym`：R11 / U11 / W13 |
@@ -133,3 +172,4 @@ TRM 固定提交 `25777d1b6d5d385baa60f0dc7b06708c65df4586` 的 §11.1.6 / Table
 [trm]: https://github.com/kendryte/k230_trm_docs/blob/25777d1b6d5d385baa60f0dc7b06708c65df4586/K230_TRM.md#1116-interface-description
 [m5]: https://docs.m5stack.com/zh_CN/unit/pdm
 [pyaudio]: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/port/builtin_py/media/pyaudio.py
+[uart-example]: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/resources/examples/03-Machine/uart.py
