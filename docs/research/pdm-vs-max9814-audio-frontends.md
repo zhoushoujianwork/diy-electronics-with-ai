@@ -48,9 +48,20 @@
 对应资料库中的 [Canaan CanMV K230 V3.0](../../catalog/vendors/canaan/products/canmv-k230-v3p0.yaml)。
 这与 LCKFB 庐山派 K230、Lite K230D 是不同板型。
 
+**板级资料补充：**官方 [V3.0 硬件工程][v3-project] 已提供 2024-05-09 的 7 页原理图和 PCB。
+其 `Peripherial` 页与器件定义确认 MIC1 为 Goertek B4012AP422-003 驻极体麦克风、AUDIO1 为
+Audio_PJ-3220 音频插座；`K230` 页有 JP1 2×20 扩展排针。来源路径、错误链接标签与文件
+哈希见 [Canaan 供应商知识页](../../catalog/vendors/canaan/README.md)。此前未核对到这些
+文件，不能据此称“V3.0 官方资料不全”。这里尚未完成逐针连线和 PDM 复用审查。
+
+对已有这块板的原型，建议**先验证板载麦克风与音频播放路径**，检查音质、位置和 AEC 是否
+满足需要，再决定是否外置拾音模块。前文 U089 优先于 MAX9814 的判断适用于需要外置麦克风
+且 PDM 连接条件满足的情况，并不表示必须额外购买麦克风。
+
 | 层次 | 已核验事实 | 尚未证明 |
 | --- | --- | --- |
 | K230 音频外设 | 官方 Audio API 说明支持 PDM 输入、I2S 输入输出、内部 codec，以及 PDM 输入与 I2S 输出组合 | V3.0 的具体可用排针、电压域与资源冲突 |
+| V3.0 硬件设计 | 官方 EPRO 包含原理图/PCB，可确认板载模拟麦克风、音频插座和扩展排针设计 | 实物修订/装配一致性，以及 PDM 候选引脚的逐针连线与复用审查 |
 | CanMV v1.8 | 固定提交的 `media/pyaudio.py` 有 PDM 设备输入、PCM 读取与 3A 配置分支 | 任一实际烧录镜像均具有相同行为 |
 | PDM 示例 | 官方存在 `audio_pdm.py` | 示例明确以庐山派配置 GPIO，不是 V3.0 接线证据 |
 | 对讲效果 | 软件提供 ANS/AGC/AEC 控制入口 | 播放参考信号、通道和延迟匹配，以及真实双讲效果 |
@@ -72,7 +83,7 @@ SDK 音频实战资料中另有 PDM→I2S 回环，但其参考硬件是 EVB/音
    PDM 分支强制 stereo。单颗 U089 应先按一组双声道核验（`channels=2`），读取第 0 组、
    确认有效左右槽，再提取单声道；直接填 `channels=1` 会使分组数变成零。
    U089 的 SELECT 在模块上接地，没有证明另一槽有有效音频，不能未经检查混合左右槽。
-3. 先获得 **V3.0 精确修订**的公开原理图/排针表，确定 PDM_CLK、PDM_IN 的实际暴露、
+3. 按已找到的 **V3.0 2024-05-09 官方工程**核对实物修订，逐针确认 PDM_CLK、PDM_IN 的实际暴露、
    FPIOA 合法映射、电压域及与摄像头、显示、存储、I2S 输出的冲突。不要复制庐山派示例的
    26/27/34/35/36，也不要把 GPIO 编号当排针物理编号。
 4. U089 接口按官方 5 V 供电，CLK/DAT 为 3.3 V 域；与目标 PAD 电压域匹配后才连接。
@@ -87,7 +98,8 @@ SDK 音频实战资料中另有 PDM→I2S 回环，但其参考硬件是 EVB/音
 **K230 选型结论：**若 V3.0 有可用且电平匹配的 PDM 引脚，优先 U089；其软件接入已有
 官方依据。如果精确板卡已有易接入的模拟音频输入，MAX9814 路径也可评估，但必须先检查
 codec 的偏置与增益。不能把经过 40-60 dB 放大的输出直接当成裸咪头接入高增益 MIC 输入。
-目前缺的是 V3.0 引脚和实机证据，不能把 U089 表述为“已即插即用”。
+目前未完成的是 V3.0 引脚审查与实机验证，原理图/PCB 来源已经找到；不能把 U089 表述为
+“已即插即用”。板载麦克风路径应先作为现成硬件基线测试。
 
 ## AEC 原理：一个麦克风与一路播放参考即可
 
@@ -145,3 +157,4 @@ AEC（Acoustic Echo Cancellation，声学回声消除）不要求同一设备有
 [pyaudio]: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/port/builtin_py/media/pyaudio.py
 [pdm-example]: https://github.com/kendryte/canmv_k230/blob/c2d1f5cc994c206d0032aaf6aaf09332f3dc3c4c/resources/examples/02-Media/audio_pdm.py
 [audio-api]: https://github.com/kendryte/k230_docs/blob/f8e30213963e0ed5cf995c3cd4701218a45e4793/en/01_software/board/mpp/K230_Audio_API_Reference.md
+[v3-project]: https://kendryte-download.canaan-creative.com/developer/k230/HDK/CanMV-K230%E5%B7%A5%E7%A8%8B%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6/ProDocument_CanMV-K230-LP4-V3.0-20240509.epro

@@ -20,11 +20,41 @@
 | K230 硬件/SDK 文档 | [kendryte/k230_docs](https://github.com/kendryte/k230_docs) | `zh/` 与 `en/` 分别保存中英文文档 |
 | K230 技术参考手册 | [kendryte/k230_trm_docs](https://github.com/kendryte/k230_trm_docs) | 查外设、寄存器、PAD/FPIOA 等 SoC 级事实 |
 | CanMV K230 固件 | [kendryte/canmv_k230](https://github.com/kendryte/canmv_k230) | 板型目标、版本、构建方式和 MicroPython 实现 |
+| CanMV API 与使用文档 | [kendryte/k230_canmv_docs](https://github.com/kendryte/k230_canmv_docs) | API、示例和使用说明；通用 CanMV-K230 页面不能代替 V3.0 工程 |
+| RTOS SDK 板级配置 | [kendryte/k230_rtos_sdk](https://github.com/kendryte/k230_rtos_sdk) | `boards/k230_canmv_v3p0/` 与对应 defconfig，属于固件配置依据 |
 | CanMV v1.8 | [release](https://github.com/kendryte/canmv_k230/releases/tag/v1.8) | 本页现场经验对应的固件大版本 |
 | 模型工具链 | [kendryte/nncase](https://github.com/kendryte/nncase) | 模型导入、量化和 KModel 编译 |
 
 优先引用固定提交或 release tag。`main`、在线文档站和镜像下载页会随版本变化；记录 API 行为时
 必须同时写明 CanMV 版本和精确板型，不能把某次固件的行为外推到所有 K230 镜像。
+
+## CanMV K230 V3.0 硬件工程入口
+
+**V3.0 的原理图和 PCB 工程有官方公开来源。**查到固件仓库中的 `mpconfigboard.h` 后，
+还应继续查 [K230 Docs README 的 CanMV-K230 工程设计文件区][hardware-index]，不能据一个
+简短的板型配置文件或一个未补齐的 catalog 记录断言硬件资料缺失。
+
+其中 [V3.0 EPRO 工程][v3-project] 的文件名为
+`ProDocument_CanMV-K230-LP4-V3.0-20240509.epro`。截至 2026-09-21，下载并只读解析确认：
+
+- `project.json` 的原理图与 PCB 名称为 `CanMV-K230-LP4-V3.0_20240509`。
+- 工程包含 7 页原理图：P1、K230、LPDDR4、Video、Power-K230、Peripherial、HDMI+ETH，
+  以及 1 个 PCB；`.epro` 是 ZIP 格式，内含 `.esch`、`.epcb` 与元器件库定义。
+- 官方 README 对这个 EPRO 的链接文字误标为“CanMV-K230D-Zero V1.0”，但下载 URL 和工程
+  内部名称都指向 K230 LP4 V3.0。核验应结合工程内部身份，不照抄错误的链接标签。
+- 同一区域的 `CanMV-K230_2023-10-11.html` 是嵌入数据的离线 SMT/PCB 查看页面；文件名日期
+  与 EPRO 不同，不能自动当成同一次设计导出，查看源码时也应避免整份输出其内嵌数据。
+
+下载文件为 998617 字节，SHA-256 为
+`14d25ec39c6fa5e6cb9624edbdaffb0b659b82daddfd18a91ecab601d5258555`。
+哈希用于识别本次核验的公开文件，不是对厂家未来同名下载的完整性保证。工程原件不复制
+进入本仓库；已核实的器件与接口设计归入 [产品记录](products/canmv-k230-v3p0.yaml)。
+
+固件仓库、官方文档仓库和 HDK 下载站分开维护。用户 fork 可以帮助发现来源和软件版本，
+产品事实仍应回溯官方工程；fork 中的应用代码或硬编码 GPIO 不能替代板级连线证据。
+
+[hardware-index]: https://github.com/kendryte/k230_docs/blob/f8e30213963e0ed5cf995c3cd4701218a45e4793/README.md
+[v3-project]: https://kendryte-download.canaan-creative.com/developer/k230/HDK/CanMV-K230%E5%B7%A5%E7%A8%8B%E8%AE%BE%E8%AE%A1%E6%96%87%E4%BB%B6/ProDocument_CanMV-K230-LP4-V3.0-20240509.epro
 
 ## 能力地图
 
@@ -90,8 +120,9 @@ CanMV v1.8 的公开 `media/pyaudio.py` 实现已有 PDM 输入和 3A 配置分�
 4. 只有官方原理图或实物测量确认后，才把具体 PAD、排针、电源方向和机械尺寸写进 `boards/`。
 5. 将“API 可调用”“返回了数据”“功能可用”“质量达标”“长稳通过”分别记录，不合并结论。
 
-## 当前未知与归档边界
+## 当前核验范围与归档边界
 
-- [`products/canmv-k230-v3p0.yaml`](products/canmv-k230-v3p0.yaml) 暂不记录 LPDDR 容量、完整接口、
-  40Pin 映射、供电限制和机械参数，因为选定的公开官方来源没有完整建立这些板级事实。
+- [`products/canmv-k230-v3p0.yaml`](products/canmv-k230-v3p0.yaml) 已补入公开 V3.0 工程来源、
+  LPDDR4 器件型号、麦克风、音频插座和 40Pin 排针设计。LPDDR 数值容量、完整引脚映射、
+  电压域与复用、供电限制和机械参数尚未完成核验；这是核验进度，不是官方资料缺失的结论。
 - 私有项目、设备照片、内部日志或未公开测量不能补齐上述字段；只有公开可复核来源才能进入 catalog。
