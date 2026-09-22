@@ -18,7 +18,9 @@ specifications:
     source_refs: [official-docs]
   memory:
     flash_bytes: 16777216
+    ram_bytes: 524288
     psram_bytes: 8388608
+    storage_notes: Onboard microSD/TF slot uses 1-bit SD mode; removable card capacity is not specified here.
     source_refs: [official-docs]
   wireless:
     - type: wi-fi
@@ -33,35 +35,109 @@ specifications:
     height_px: 240
     diagonal_in: 2.0
     controller: ST7789
-    source_refs: [official-docs]
+    source_refs: [official-docs, lcd-tutorial]
+  interfaces:
+    - type: SPI display
+      notes: ST7789; official display example uses a 320 by 240 landscape canvas.
+      source_refs: [official-docs, lcd-tutorial]
+    - type: I2C capacitive touch
+      notes: FT6336; official LVGL tutorial uses the esp_lcd_touch_ft5x06 driver.
+      source_refs: [official-docs, lvgl-tutorial]
+    - type: Six-axis IMU
+      notes: QMI8658 with three-axis acceleration and three-axis angular rate, connected over I2C.
+      source_refs: [official-docs]
+    - type: Audio playback
+      notes: ES8311 codec, NS4150B mono Class-D amplifier, and DB1811AB50 1 W speaker.
+      source_refs: [official-docs]
+    - type: Audio capture
+      notes: ES7210 four-channel ADC; two ZTS6216 microphones and one DAC feedback channel are wired for echo-cancellation applications. This does not establish software AEC performance.
+      source_refs: [official-docs, board-introduction]
+    - type: Camera
+      notes: GC0308, nominal 0.3 megapixel, connected through an internal board-to-board connector.
+      source_refs: [board-introduction]
+    - type: USB hub and UART bridge
+      notes: CH334F hub connects the external Type-C upstream to CH340K USB-UART and ESP32-S3 USB-OTG downstream paths.
+      source_refs: [official-docs, board-introduction]
+    - type: I2C GPIO expander
+      notes: Official resource diagram labels TCA9557; the circuit introduction assigns LCD chip select, amplifier enable and camera power-down to the expander. Exact fitted part and revision must be checked before electrical substitution.
+      source_refs: [official-project, board-introduction]
   connectors:
     - type: USB Type-C
       count: 1
+      notes: Power, download/debug, and USB data via the onboard hub; do not identify the MCU USB path solely by connector appearance.
       source_refs: [official-docs]
+    - type: GH1.25-5P expansion
+      count: 2
+      notes: One shared I2C port and one multifunction port; 3.3 V and 5 V supply pins are described. Connector ordering and output-current limits require exact schematic verification. CAN-capable GPIO does not establish a ready-to-wire CAN bus interface.
+      source_refs: [official-project, board-introduction]
+    - type: microSD / TF
+      count: 1
+      notes: 1-bit SD mode, using CMD, CLK and DAT0.
+      source_refs: [board-introduction]
   power:
     input_voltage_nominal_v: 5
     logic_voltage_v: 3.3
     source_refs: [official-docs]
+  mechanical:
+    width_mm: 69
+    height_mm: 41
+    source_refs: [official-project, official-docs]
 software:
   toolchains: [ESP-IDF]
-  frameworks: []
-  source_refs: [official-docs]
+  frameworks: [LVGL]
+  source_refs: [official-docs, lvgl-tutorial]
 sources:
   - id: official-docs
     type: documentation
     title: LCKFB Shi Zhan Pai ESP32-S3 documentation
     publisher: LCKFB
     url: https://wiki.lckfb.com/zh-hans/szpi-esp32s3/
-    accessed_on: 2026-09-21
+    accessed_on: 2026-09-22
     official: true
   - id: official-project
     type: product-page
     title: LCKFB Shi Zhan Pai ESP32-S3 project page
     publisher: LCKFB
-    url: https://lckfb.com/project/detail/lckfb-szpi-esp32s3
-    accessed_on: 2026-09-21
+    url: https://lckfb.com/project/detail/lckfb-esp32-s3-va
+    accessed_on: 2026-09-22
+    official: true
+    notes: The resource diagram labels 240 by 320 pixels; its specification table uses 320 by 240. The enclosure drawing labels 69 by 41 by 15 mm.
+  - id: board-introduction
+    type: documentation
+    title: Chapter 1 - board introduction and circuit description
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/szpi-esp32s3/beginner/introduction.html
+    accessed_on: 2026-09-22
+    official: true
+    notes: One DAC paragraph says ES8310, conflicting with the same chapter's overview and official hardware table, which identify ES8311; retain the discrepancy rather than treating them as interchangeable parts.
+  - id: lcd-tutorial
+    type: documentation
+    title: Chapter 9 - LCD display, orientation and RGB565 images
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/szpi-esp32s3/beginner/lcd-display.html
+    accessed_on: 2026-09-22
+    official: true
+  - id: lvgl-tutorial
+    type: documentation
+    title: Chapter 11 - LVGL display and FT6336 integration
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/szpi-esp32s3/beginner/lvgl.html
+    accessed_on: 2026-09-22
+    official: true
+    notes: Tutorial uses LVGL 8.3.11; do not copy its version-specific API or configuration unchanged into LVGL 9.
+  - id: open-hardware
+    type: documentation
+    title: Open hardware, schematic and enclosure design entry points
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/szpi-esp32s3/open-source-hardware/
+    accessed_on: 2026-09-22
     official: true
 validation:
   level: cataloged
 notes:
   - Repository-specific pin assignments and hardware evidence are maintained in the linked board profile.
+  - Display width_px and height_px use the official landscape example orientation, not an assertion about the panel's unrotated addressing axes. Both 240 by 320 and 320 by 240 describe the same pixel count.
+  - Mechanical width and height describe the complete enclosure, not the LCD active area or PCB outline.
+  - Enclosure depth is deliberately omitted from mechanical fields because the official product drawing says 15 mm while the documentation introduction says 14 mm. Exact revision and mechanical CAD must be checked before enclosure design.
+  - The exact LCD active-area dimensions, cover-glass outline, luminance, total-board peak current, and expansion-port current budgets remain unestablished in the reviewed sources.
+  - The board introduction identifies separate 3.3 V rails for MCU and audio circuits; the two regulators are listed as SY8088AAC in the official hardware table. Per-regulator ratings are not a board-level current budget.

@@ -10,6 +10,7 @@
 | --- | --- | --- |
 | 产品与购买 | [lckfb.com](https://lckfb.com/) | 立创开发板官网 |
 | 技术文档 | [wiki.lckfb.com](https://wiki.lckfb.com/) | 开发板文档、教程和开源硬件入口 |
+| 实战派 ESP32-S3 VA | [产品页](https://lckfb.com/project/detail/lckfb-esp32-s3-va) / [文档](https://wiki.lckfb.com/zh-hans/szpi-esp32s3/) | 产品 URL 用 `lckfb-esp32-s3-va`，文档目录用 `szpi-esp32s3`；不要靠名称拼接项目 URL |
 | 庐山派 K230 产品族 | [简体中文](https://wiki.lckfb.com/zh-hans/lushan-pi-k230/) | 当前有效的完整产品族文档 |
 | 庐山派选型表 | [K230 与 Lite K230D](https://wiki.lckfb.com/zh-hans/lushan-pi-k230/k230vsk230d.html) | 两款主板的官方差异表 |
 | 原理图与 PCB | [开源硬件](https://wiki.lckfb.com/zh-hans/lushan-pi-k230/open-source-hardware/profile.html) | 从侧栏进入原理图、PCB、固件和扩展板资料 |
@@ -31,6 +32,11 @@ IO 不同。`K230` 与 `K230D` 不是可互换的板名；模型可运行不代�
 
 ## 去标识化工程经验
 
+- 小屏规格要分别记录面板像素、软件横竖屏、显示区物理尺寸和整机外壳尺寸。实战派 S3 的
+  产品标注有 240×320，官方横屏示例则使用 320×240；这不表示两款屏幕。外壳厚度在产品图
+  与 Wiki 中分别为 15 mm 和 14 mm，当前产品记录保留冲突，不写成确定的结构建模尺寸。
+- 实战派 S3 的官方 LVGL 教程基于 8.3.11；迁移至 LVGL 9 时，应按实际版本重核配置、字体、
+  RGB565 字节序和触摸旋转，不能把教学例程视作所有版本的通用配置。
 - 摄像头、显示/OSD、触摸和 KPU 共用媒体资源；KPU 留在主循环，网络线程负责收发和排队，
   不跨线程调用 KPU，也不在 VO 已绑定的通道重复抓帧。
 - 使用板型能力表隔离 UART、RGB LED、蜂鸣器和背光实现。标准版配置不能复制给 Lite K230D，
