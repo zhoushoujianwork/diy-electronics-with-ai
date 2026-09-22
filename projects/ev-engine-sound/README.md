@@ -59,11 +59,12 @@ firmware/config/boards/
 | --- | --- |
 | ![音量、红线和自动熄火时间下拉菜单](docs/assets/firmware-ui-v2-drawer-master.png) | ![收油并等待自动熄火](docs/assets/firmware-ui-v2-auto-off-master.png) |
 
-以上是 1280×960 电脑设计母稿，用于检查对齐、文字和层级；真正落板的是同一设计的
-320×240 版本。五种排气的最终像素密度对照如下，可乐罐保留拉环、卷边、白色斜带和
-通用 `COLA` 字标，品牌风格预设不复制厂商 Logo。
+以上是 1280×960 电脑设计母稿，用于讨论对齐、文字和层级，并非整屏固件渲染。
+设计稿与当前 LVGL 实现的字体、控件样式和机械细节存在差异，详见
+[设计与实现约定](docs/ui-implementation-contract.md)。下图是五种排气的 320×240
+设计预览；可乐罐包含拉环、卷边、白色斜带和通用 `COLA` 字标，品牌风格预设不复制厂商 Logo。
 
-![五种排气的 320×240 固件像素对照](docs/assets/firmware-ui-v2-exhausts.png)
+![五种排气的 320×240 设计预览，非整屏固件渲染](docs/assets/firmware-ui-v2-exhausts.png)
 
 ## StickS3 操作
 
@@ -205,6 +206,7 @@ stop
 
 - [StickS3 适配说明](docs/sticks3.md)
 - [LVGL 界面说明](docs/lvgl-ui.md)
+- [UI 开发模式与 SquareLine 自动化调研](docs/ui-development-research.md)
 - [项目介绍与预览素材索引](docs/project-preview.md)
 - [验证记录](docs/validation.md)
 
