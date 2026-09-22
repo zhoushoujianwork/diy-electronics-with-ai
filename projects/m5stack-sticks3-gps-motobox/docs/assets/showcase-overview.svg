@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">StickS3 GPS to MotoBox — architecture diagram</title>
+  <desc id="desc">The GPS Unit sends GNSS data to StickS3 over UART. StickS3 uploads telemetry to MotoBox over Wi-Fi and MQTT TLS. The prototype includes a RAM offline queue and server-code binding. This is a diagram, not a hardware photograph or validation record.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto-start-reverse">
+      <path d="M0 0 L8 4 L0 8" fill="none" stroke="#65d4c2" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="960" height="540" rx="24" fill="#101c29"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="48" y="72" fill="#f4f8fc" font-size="44" font-weight="700">StickS3 GPS → MotoBox</text>
+    <text x="48" y="115" fill="#a8bacd" font-size="26">GNSS tracker · Wi-Fi uplink</text>
+
+    <g fill="#192c3d" stroke="#35506a" stroke-width="2">
+      <rect x="48" y="166" width="240" height="244" rx="18"/>
+      <rect x="360" y="166" width="240" height="244" rx="18"/>
+      <rect x="672" y="166" width="240" height="244" rx="18"/>
+    </g>
+
+    <g fill="none" stroke="#65d4c2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="168" cy="246" r="32"/>
+      <circle cx="168" cy="246" r="10"/>
+      <path d="M168 200 V218 M168 274 V292 M122 246 H140 M196 246 H214"/>
+      <rect x="450" y="198" width="60" height="96" rx="14"/>
+      <path d="M462 215 H498 V265 H462 Z M475 280 H485"/>
+      <path d="M754 277 H830 C853 277 858 241 835 235 C835 199 780 195 769 230 C737 220 723 269 754 277 Z"/>
+    </g>
+
+    <g text-anchor="middle">
+      <g fill="#f4f8fc" font-size="32" font-weight="700">
+        <text x="168" y="340">GPS Unit</text>
+        <text x="480" y="340">StickS3</text>
+        <text x="792" y="340">MotoBox</text>
+      </g>
+      <g fill="#a8bacd" font-size="24">
+        <text x="168" y="377">v1.1 · AT6668</text>
+        <text x="480" y="377">K150 · ESP32-S3</text>
+        <text x="792" y="377">Service + mini app</text>
+      </g>
+      <g fill="#65d4c2" font-size="23">
+        <text x="324" y="235">UART</text>
+        <text x="636" y="228">Wi-Fi</text>
+        <text x="636" y="293">TLS</text>
+      </g>
+    </g>
+    <g fill="none" stroke="#65d4c2" stroke-width="3" marker-end="url(#arrow)">
+      <path d="M294 254 H345"/>
+      <path d="M606 254 H657"/>
+    </g>
+
+    <text x="48" y="462" fill="#f4f8fc" font-size="27">MQTT TLS · RAM offline queue · Code binding</text>
+    <text x="48" y="505" fill="#a8bacd" font-size="22">Architecture diagram · See validation notes for tested scope</text>
+  </g>
+</svg>

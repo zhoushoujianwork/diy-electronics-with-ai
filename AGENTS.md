@@ -79,6 +79,33 @@ only a concise sanitized result when useful.
 - Use `hardware-verified` only after real-device evidence. Record partial verification precisely.
 - Retired work remains discoverable with its reason and replacement; do not silently delete experience.
 
+## Homepage project and Demo showcase
+
+- Keep a compact, illustrated showcase near the top of the root `README.md`, before the directory index,
+  so readers can discover working examples without browsing nested folders. Feature 2–6 representative
+  entries when available; do not invent entries to meet a quota. Link to the complete `projects/` and
+  `demos/` indexes, and state explicitly when either category has no entries.
+- Each featured entry must include its name and README link, `Project` or `Demo` type, a one-sentence
+  purpose, a preview image with descriptive alt text, a plain-language progress label, the exact
+  `project.yaml` status, verified scope, remaining acceptance work, and a link to validation evidence.
+- Distinguish progress from validation: `idea` means planned; `prototype` and `build-verified` remain
+  in development; `hardware-verified` proves only the documented board/version/scope and may still be
+  in development. Label an entry completed / stable maintenance only when it is `stable` and acceptance
+  for its declared scope is complete. Label `retired` explicitly and retain its reason/replacement link.
+  Do not upgrade a manifest to make a showcase look finished; preserve partial-validation qualifications.
+- Reuse small, redistributable images stored with the relevant project or Demo (for example,
+  `docs/assets/`) and reference them with repository-relative paths that render on GitHub. Prefer actual
+  photos, screenshots or reproducible renders. If none exists, add an accurate diagram and label it as
+  a diagram; label design previews separately from real-device evidence. Retain third-party attribution
+  and license links. Never expose credentials, binding codes, private locations or other personal data.
+- When adding, promoting, renaming, retiring or changing the status of a project or Demo, review the
+  homepage selection and update affected showcase entries and the corresponding directory index in
+  the same change. Keep featured names, paths, images, progress and limitations aligned with the project
+  README, manifest and validation records; keep the homepage concise and detailed instructions local.
+- Before committing showcase changes, verify image and documentation links, inspect the rendered
+  layout, and compare status/progress claims with the manifests and evidence. Images alone never
+  justify a validation or completion claim.
+
 ## Change hygiene
 
 - Keep changes inside one demo/project unless a shared contract genuinely changes.

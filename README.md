@@ -7,6 +7,20 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 
 项目身份为 **DIY Electronics with AI**，GitHub 仓库名为 `diy-electronics-with-ai`。
 
+## 项目与 Demo 展示
+
+从下面的项目了解这里能做什么；点击名称查看硬件清单、接线和运行步骤。
+**目前两个项目都仍在开发中**，已验证范围和待完成项分别列出。
+
+| [EV Engine Sound](projects/ev-engine-sound/) · Project | [StickS3 GPS → MotoBox](projects/m5stack-sticks3-gps-motobox/) · Project |
+| --- | --- |
+| [<img src="projects/ev-engine-sound/docs/assets/engine-sim-official-concept.png" width="420" alt="EV Engine Sound 桌面设计预览：发动机剖面、点火和排气界面，非实机照片">](projects/ev-engine-sound/)<br>桌面设计预览 · [素材来源与许可](projects/ev-engine-sound/docs/third-party/engine-sim.md) | [<img src="projects/m5stack-sticks3-gps-motobox/docs/assets/showcase-overview.svg" width="420" alt="StickS3 GPS 到 MotoBox 的工作原理示意：GPS Unit 经 UART 接入 StickS3，再通过 Wi-Fi 和 MQTT TLS 上报服务端，非实机照片">](projects/m5stack-sticks3-gps-motobox/)<br>工作原理示意 · 非实机照片 |
+| ESP32-S3 实时合成发动机声浪，配合活塞与点火动画；18 种发动机配置、5 种排气音色。可先在电脑试听，再按板型构建固件。 | StickS3 + GPS Unit 的 Wi-Fi 定位终端，包含位置上报、离线队列和服务端验证码绑定。MotoBox 服务账号与凭据需另行开通。 |
+| **开发中 · 已部分实机验证** · [`hardware-verified`](projects/ev-engine-sound/project.yaml)<br>已验证：StickS3 与立创实战派的部分功能；历史 ESP32-S3 板型仅构建通过。<br>待完成：其余实体交互、听感与视觉验收；v2 界面仍为电脑预览。<br>[验证记录与具体范围](projects/ev-engine-sound/docs/validation.md) | **开发中 · 原型** · [`prototype`](projects/m5stack-sticks3-gps-motobox/project.yaml)<br>已验证：构建、室内联网、状态上报与断网恢复。<br>待完成：户外定位、移动轨迹与验证码绑定、小程序实机验收。<br>[验证记录与具体范围](projects/m5stack-sticks3-gps-motobox/docs/validation.md) |
+
+更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)（目前暂无独立 Demo）。
+状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。
+
 ## 内容入口
 
 - [`projects/`](projects/)：可独立构建、具有明确用途的完整工程。
@@ -18,12 +32,6 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 - [`docs/`](docs/)：仓库约定、协作方法和开源发布检查表。
 - [`templates/`](templates/)：新建 Demo/项目时复制的模板。
 - [`tests/`](tests/)：跨项目验证、硬件在环和日志检查工具。
-
-第一个完整项目是 [`EV Engine Sound`](projects/ev-engine-sound/)，它保留原来的桌面音频核心、
-ESP-IDF 固件、三种板级配置和实机验证记录。
-
-[`StickS3 GPS → MotoBox`](projects/m5stack-sticks3-gps-motobox/) 是 Wi-Fi GNSS 定位终端项目，
-包含位置上报、离线队列和服务端验证码绑定流程；当前为 `prototype`，户外定位和小程序实机验收待完成。
 
 ## 基本原则
 
@@ -68,7 +76,17 @@ Commit 或 PR 贡献回同一个 Git 仓库。显式调用使用 `$diy...`，不
 
 `idea` → `prototype` → `build-verified` → `hardware-verified` → `stable`
 
-无法继续维护的内容标为 `retired`，不把未上板代码描述成“已支持”。
+| 状态 | 面向使用者的含义 |
+| --- | --- |
+| `idea` | 规划中，尚未形成可复现实现。 |
+| `prototype` | 开发中，已有原型，关键验收仍未完成。 |
+| `build-verified` | 开发中，构建已通过，硬件效果待验证。 |
+| `hardware-verified` | 已有实机验证；必须查看具体板型、版本与验证范围，可能仍在开发中。 |
+| `stable` | 当前声明范围已完成并通过验收，进入稳定维护；不代表所有设想功能都已实现。 |
+| `retired` | 已停止维护，保留退役原因和替代方案。 |
+
+状态以各项目的 `project.yaml` 和验证记录为准。只有达到 `stable` 且声明范围的验收完成，
+才在展示区标为“已完成 / 稳定维护”；部分硬件验证不能代替项目完成验收。
 
 ## 开源许可
 
