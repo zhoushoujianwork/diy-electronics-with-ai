@@ -11,7 +11,5 @@
 
 建议名称不代表已经实现或拥有现货，真正创建时必须填写验证状态。
 
-## Available demos
-
-- [`m5stack-sticks3-gps-motobox`](m5stack-sticks3-gps-motobox/)：StickS3 读取 AT6668 GNSS，
-  通过 Wi-Fi 和 MQTT TLS 上报到 MotoBox；当前为 prototype，等待实机验收。
+目前暂无独立 Demo。[StickS3 GPS → MotoBox](../projects/m5stack-sticks3-gps-motobox/)
+已按完整定位终端的功能范围归入 `projects/`，验证状态仍为 `prototype`。

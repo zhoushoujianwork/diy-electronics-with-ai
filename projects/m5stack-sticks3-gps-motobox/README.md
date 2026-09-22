@@ -1,8 +1,12 @@
 # StickS3 GPS → MotoBox
 
-This open Demo turns an M5Stack StickS3 into a Wi-Fi GNSS tracker. It reads an M5Stack Unit GPS v1.1,
+This open project turns an M5Stack StickS3 into a Wi-Fi GNSS tracker. It reads an M5Stack Unit GPS v1.1,
 uploads MotoBox-compatible telemetry over MQTT TLS, and shows a device QR code that the MotoBox mini program
 can bind.
+
+The project remains a `prototype`: indoor connectivity and offline recovery have been validated, while outdoor
+positioning, moving tracks and mini-program real-device acceptance are still pending. See
+[validation](docs/validation.md) for the evidence and remaining checks.
 
 The first public demonstration uses a platform-managed device account. MotoBox broker access is issued
 separately; cloning this repository does not automatically create a cloud device or MQTT credential.
@@ -38,7 +42,7 @@ wire. Confirm the connector key and labels before power-on; ESP32-S3 GPIO is not
 Install ESP-IDF 5.5.2, then create the ignored local configuration:
 
 ```bash
-cd demos/m5stack-sticks3-gps-motobox/firmware
+cd projects/m5stack-sticks3-gps-motobox/firmware
 cp sdkconfig.local.defaults.example sdkconfig.local.defaults
 ```
 
@@ -52,6 +56,9 @@ idf.py -B build \
   set-target esp32s3 build
 idf.py -B build -p /dev/cu.usbmodemXXXX flash monitor
 ```
+
+If you previously built this project under `demos/`, use a fresh build directory after the move to `projects/`;
+the old CMake cache contains absolute paths. Keep your ignored local configuration when rebuilding.
 
 The firmware rejects empty credentials and a broker URI that does not begin with `mqtts://` or `wss://`. It validates the
 server hostname and public certificate chain through the ESP-IDF certificate bundle. Do not disable TLS
@@ -70,13 +77,13 @@ verification to work around a broker certificate error.
 5. Move outdoors for the first fix. The device page distinguishes an online device waiting for a first fix from
    an offline device. After valid points arrive, open **实时位置**, **历史轨迹**, or **分享位置**.
 
-MotoBox is the hosted companion service for this Demo. The firmware, protocol example and reproduction steps
+MotoBox is the hosted companion service for this project. The firmware, protocol example and reproduction steps
 are open under the repository MIT license; the hosted service and its device credentials are operated
 separately.
 
 - MotoBox website: [motobox.daboluo.cc](https://motobox.daboluo.cc/)
 - MotoBox source and API contract: [github.com/zhoushoujianwork/motobox](https://github.com/zhoushoujianwork/motobox)
-- This hardware Demo: `demos/m5stack-sticks3-gps-motobox/` in DIY Electronics with AI
+- This hardware project: `projects/m5stack-sticks3-gps-motobox/` in DIY Electronics with AI
 
 ## Data and offline behavior
 
@@ -87,7 +94,7 @@ separately.
 - Valid fix: matched RMC/GGA time, at least four satellites, `0 < HDOP < 20`, age at most five seconds
 - Offline queue: 120 RAM frames, oldest first; a frame is removed only after its PUBACK
 - Full queue: preserve an in-flight frame, drop the oldest frame not in flight, and expose the drop count
-- Restart: RAM backlog is intentionally lost in this first Demo
+- Restart: RAM backlog is intentionally lost in this prototype
 
 The firmware initializes the K150's 8 MiB Octal PSRAM. The offline queue and TLS allocations use external RAM
 so that display DMA buffers and FreeRTOS task stacks retain sufficient internal memory.
