@@ -28,6 +28,8 @@ static ev_control_t desired={.volume=.60f};
 static int64_t last_control_us;
 static bool control_watchdog;
 static bool ui_rev_active;
+static unsigned idle_auto_off_ms=3000;
+static int64_t idle_auto_off_deadline_us;
 static bool fault;
 static ev_engine_t engine;
 static int16_t mono[EV_BLOCK];
@@ -161,17 +163,37 @@ static void audio_task(void *unused) {
     ev_phase_t previous_phase=EV_PHASE_OFF;
     for(;;) {
         int64_t now=esp_timer_get_time();
-        bool expired=false;
+        bool expired=false,idle_armed=false,idle_expired=false;
+        unsigned armed_ms=0;
         portENTER_CRITICAL(&lock);
         if(control_watchdog && desired.running &&
            now-last_control_us>(int64_t)CONFIG_EV_TIMEOUT_MS*1000) {
             desired.running=false; desired.throttle=0; desired.rpm=0; expired=true;
+        }
+        if(desired.running && desired.throttle<=.02f && desired.rpm<=1.f) {
+            if(idle_auto_off_deadline_us==0) {
+                idle_auto_off_deadline_us=now+(int64_t)idle_auto_off_ms*1000;
+                idle_armed=true;
+                armed_ms=idle_auto_off_ms;
+            } else if(now>=idle_auto_off_deadline_us) {
+                desired.running=false;
+                desired.throttle=0;
+                desired.rpm=0;
+                idle_auto_off_deadline_us=0;
+                idle_expired=true;
+                armed_ms=idle_auto_off_ms;
+            }
+        } else {
+            idle_auto_off_deadline_us=0;
         }
         ev_control_t control=desired;
         bool failed=fault;
         portEXIT_CRITICAL(&lock);
         if(failed) control.running=false;
         if(expired) ESP_LOGW(TAG,"STATE_TRANSITION: RUN -> STOP reason=control_timeout");
+        if(idle_armed) ESP_LOGI(TAG,"AUTO_OFF_ARMED delay_ms=%u",armed_ms);
+        if(idle_expired)
+            ESP_LOGI(TAG,"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms=%u",armed_ms);
         if(control.running!=previous_running) {
             ESP_LOGI(TAG,"STATE_TRANSITION: %s -> %s",previous_running?"RUN":"STOP",control.running?"RUN":"STOP");
             previous_running=control.running;
@@ -267,7 +289,12 @@ static bool ui_state_snapshot(board_ui_state_t *state,void *context) {
     ev_control_t control=desired;
     diagnostics_t d=diagnostics;
     bool failed=fault;
+    unsigned auto_off_ms=idle_auto_off_ms;
+    int64_t auto_off_deadline_us=idle_auto_off_deadline_us;
     portEXIT_CRITICAL(&lock);
+    int64_t now=esp_timer_get_time();
+    unsigned auto_off_remaining_ms=auto_off_deadline_us>now?
+        (unsigned)((auto_off_deadline_us-now+999)/1000):0;
     unsigned profile=control.profile<EV_PROFILES?control.profile:0;
     *state=(board_ui_state_t){
         .profile=profile,
@@ -276,6 +303,8 @@ static bool ui_state_snapshot(board_ui_state_t *state,void *context) {
         .rpm=d.rpm,
         .throttle=control.throttle,
         .volume=control.volume,
+        .auto_off_ms=auto_off_ms,
+        .auto_off_remaining_ms=auto_off_remaining_ms,
         .gear=control.gear,
         .running=d.running,
         .fault=failed,
@@ -322,6 +351,14 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
             takes_control=false;
             break;
         }
+        case BOARD_UI_VOLUME_SET: {
+            int next=value;
+            if(next<0) next=0;
+            if(next>100) next=100;
+            desired.volume=(float)next/100.0f;
+            takes_control=false;
+            break;
+        }
         case BOARD_UI_REDLINE_DELTA: {
             unsigned profile=desired.profile<EV_PROFILES?desired.profile:0;
             int minimum=(int)ev_profiles[profile].idle_rpm+500;
@@ -344,6 +381,14 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
             takes_control=false;
             break;
         }
+        case BOARD_UI_AUTO_OFF_SET: {
+            int next=value;
+            if(next<1000) next=1000;
+            if(next>8000) next=8000;
+            idle_auto_off_ms=(unsigned)next;
+            takes_control=false;
+            break;
+        }
         case BOARD_UI_REV_PRESS:
             ui_rev_active=true;
             desired.throttle=(float)value/100.0f;
@@ -363,16 +408,22 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
     }
     if(accepted) {
         if(takes_control) control_watchdog=false;
-        last_control_us=esp_timer_get_time();
+        int64_t now=esp_timer_get_time();
+        last_control_us=now;
+        if(desired.running && desired.throttle<=.02f && desired.rpm<=1.f)
+            idle_auto_off_deadline_us=now+(int64_t)idle_auto_off_ms*1000;
+        else
+            idle_auto_off_deadline_us=0;
     }
     ev_control_t after=desired;
+    unsigned after_auto_off_ms=idle_auto_off_ms;
     portEXIT_CRITICAL(&lock);
     unsigned profile=after.profile<EV_PROFILES?after.profile:0;
-    ESP_LOGI(TAG,"UI_ACTION action=%d value=%d result=%s profile=%s exhaust=%s gear=%u running=%d throttle=%.0f volume=%.0f redline=%.0f",
+    ESP_LOGI(TAG,"UI_ACTION action=%d value=%d result=%s profile=%s exhaust=%s gear=%u running=%d throttle=%.0f volume=%.0f redline=%.0f auto_off_ms=%u",
              action,value,accepted?"OK":"INVALID_ARGUMENT",ev_profiles[profile].name,
              ev_exhausts[after.exhaust<EV_EXHAUSTS?after.exhaust:0].name,
              after.gear,after.running,after.throttle*100,after.volume*100,
-             ev_redline(&after));
+             ev_redline(&after),after_auto_off_ms);
 }
 #endif
 
@@ -425,7 +476,14 @@ void app_main(void) {
                     int result=ev_command(&c,line);
                     if(result==0 || result==1) {
                         portENTER_CRITICAL(&lock);
-                        if(result==0) { desired=c; ui_rev_active=false; }
+                        if(result==0) {
+                            desired=c;
+                            ui_rev_active=false;
+                            if(desired.running && desired.throttle<=.02f && desired.rpm<=1.f)
+                                idle_auto_off_deadline_us=esp_timer_get_time()+(int64_t)idle_auto_off_ms*1000;
+                            else
+                                idle_auto_off_deadline_us=0;
+                        }
                         control_watchdog=true;
                         last_control_us=esp_timer_get_time();
                         portEXIT_CRITICAL(&lock);
@@ -440,12 +498,20 @@ void app_main(void) {
                         REG_WRITE(RTC_CNTL_OPTION1_REG,RTC_CNTL_FORCE_DOWNLOAD_BOOT);
                         esp_rom_software_reset_system();
                     } else if(result==2) {
-                        portENTER_CRITICAL(&lock); diagnostics_t d=diagnostics; bool f=fault; portEXIT_CRITICAL(&lock);
-                        ESP_LOGI(TAG,"STATUS version=%s reset_reason=%d profile=%s exhaust=%s gear=%u running=%d rpm=%.0f throttle=%.0f volume=%.0f redline=%.0f fault=%d",
+                        portENTER_CRITICAL(&lock);
+                        diagnostics_t d=diagnostics;
+                        bool f=fault;
+                        unsigned auto_off_ms=idle_auto_off_ms;
+                        int64_t auto_off_deadline_us=idle_auto_off_deadline_us;
+                        portEXIT_CRITICAL(&lock);
+                        int64_t now=esp_timer_get_time();
+                        unsigned remaining_ms=auto_off_deadline_us>now?
+                            (unsigned)((auto_off_deadline_us-now+999)/1000):0;
+                        ESP_LOGI(TAG,"STATUS version=%s reset_reason=%d profile=%s exhaust=%s gear=%u running=%d rpm=%.0f throttle=%.0f volume=%.0f redline=%.0f auto_off_ms=%u auto_off_remaining_ms=%u fault=%d",
                                  firmware_version,esp_reset_reason(),
                                  ev_profiles[c.profile].name,ev_exhausts[c.exhaust].name,
                                  c.gear,d.running,d.rpm,c.throttle*100,
-                                 c.volume*100,ev_redline(&c),f);
+                                 c.volume*100,ev_redline(&c),auto_off_ms,remaining_ms,f);
                         esp_err_t report_err=board_audio_report();
                         if(report_err!=ESP_OK)
                             ESP_LOGE(TAG,"audio_report err=%s",esp_err_to_name(report_err));

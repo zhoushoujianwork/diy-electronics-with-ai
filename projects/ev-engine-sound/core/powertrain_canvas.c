@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 /*
@@ -120,15 +121,6 @@ static void frame(int x,int y,int w,int h,const char *title) {
     text5(title,x+5,y+4,FG);
 }
 
-static void upstream_mark(void) {
-    /* The upstream A-mark, redrawn at display resolution from art/assets.blend. */
-    triangle(5,9,12,9,7,30,FG);
-    triangle(11,9,17,9,14,30,FG);
-    rect(7,22,8,3,FG);
-    text5("ENGINE",21,6,FG);
-    text5("SIM",21,15,GRID);
-}
-
 static void bank(int crank_x,int crank_y,float angle,float travel,bool firing,bool left) {
     float ux=cosf(angle),uy=sinf(angle);
     int pinx=crank_x+(int)(8.f*cosf(travel));
@@ -158,94 +150,80 @@ static void bank(int crank_x,int crank_y,float angle,float travel,bool firing,bo
 }
 
 static void engine_cutaway(const ev_powertrain_state_t *state) {
-    upstream_mark();
-    text5("CUTAWAY",91,6,FG);
+    frame(0,0,172,108,"ENGINE CUTAWAY");
+    char metadata[12];
+    snprintf(metadata,sizeof(metadata),"%uC",state->cylinders);
+    text5(metadata,149,4,GRID);
     float a=state->phase*6.283185307f;
     int active=(int)(state->last_cylinder&1u);
-    bank(73,82,-2.30f,a,state->running && active==0,true);
-    bank(73,82,-0.84f,a+3.14159265f,state->running && active==1,false);
-    disc(73,82,19,0xB0B0B0); disc(73,82,10,0x999999);
-    int jx=73+(int)(8*cosf(a)),jy=82+(int)(8*sinf(a));
+    bank(85,83,-2.30f,a,state->running && active==0,true);
+    bank(85,83,-0.84f,a+3.14159265f,state->running && active==1,false);
+    disc(85,83,19,0xB0B0B0); disc(85,83,10,0x999999);
+    int jx=85+(int)(8*cosf(a)),jy=83+(int)(8*sinf(a));
     disc(jx,jy,6,0xC6C6C6); disc(jx,jy,3,0x777777);
-    line(49,101,97,101,2,GRID);
-}
-
-static void ignition(const ev_powertrain_state_t *state) {
-    frame(148,0,75,54,"IGNITION");
+    text5("IGN",8,96,GRID);
     unsigned count=state->cylinders;
     if(count<1) count=1;
-    if(count>8) count=8;
-    int columns=count>4?4:(int)count;
-    int rows=(int)((count+3)/4);
-    int y0=rows==1?35:29;
+    if(count>6) count=6;
     for(unsigned i=0;i<count;i++) {
-        int x=160+(int)(i%(unsigned)columns)*(52/(columns>1?columns-1:1));
-        int y=y0+(int)(i/(unsigned)columns)*15;
+        int x=38+(int)i*(88/(count>1?(int)count-1:1));
         bool hot=state->running && i==state->last_cylinder%count;
-        ring(x,y,6,5,DIM);
-        disc(x,y,hot?4:3,hot?FG:0x3E3E3E);
-        if(hot) disc(x,y,2,ORANGE);
+        ring(x,99,4,3,DIM);
+        disc(x,99,hot?3:2,hot?FG:0x3E3E3E);
+        if(hot) disc(x,99,1,ORANGE);
     }
+    text5("LIVE",142,96,state->running?ORANGE:GRID);
 }
 
-static void throttle(float amount) {
-    if(amount<0) amount=0;
-    if(amount>1) amount=1;
-    frame(148,53,75,55,"THROTTLE");
-    line(158,69,158,98,2,FG); line(212,69,212,98,2,FG);
-    int plate=84-(int)(amount*8.f);
-    line(174,plate+3,198,plate-3,2,FG); disc(186,plate,2,FG);
-    rect(165,99,42,4,0x2E3134);
-    for(int x=168;x<202;x+=5) rect(x,99,2,4,0x111315);
-    rect(205,98,6,6,ORANGE);
-}
-
-static void exhaust(unsigned kind,bool running,float phase) {
-    frame(222,0,98,108,"EXHAUST");
-    line(227,28,238,39,3,PINK); line(227,40,238,43,3,PINK);
-    line(238,39,247,49,4,0xD6D6D6); line(238,43,247,49,4,0xBDBDBD);
-    line(247,49,258,53,5,0xAFAFAF);
+static void exhaust(unsigned kind,bool running,float phase,float throttle) {
+    frame(172,0,148,108,"EXHAUST");
+    line(178,27,190,39,3,PINK); line(178,39,193,43,3,PINK);
+    line(190,39,207,49,5,0xD2D4D5);
 
     if(kind==0) {
-        text5("STOCK",283,15,GRID);
-        line(255,47,301,47,13,0x606468); line(258,43,298,43,3,0xB8BBBD);
-        rect(297,43,10,9,0xC9CBCC); rect(305,45,7,5,0x252729);
-        text5("OEM",270,57,FG);
+        text5("STOCK",283,4,GRID);
+        line(210,48,298,48,24,0x63676B); line(216,39,292,39,4,0x9CA0A3);
+        rect(298,40,10,17,0xCDD0D2); rect(306,44,9,10,0x292C2F);
+        text5("OEM",248,45,FG);
     } else if(kind==1) {
-        text5("AKRA",289,15,GRID);
-        triangle(254,42,301,45,295,58,0x26282A);
-        triangle(254,42,295,58,257,58,0x34373A);
-        line(261,45,293,53,1,0x555A5D); line(270,43,301,49,1,0x555A5D);
-        rect(296,45,8,12,RED); rect(302,48,9,6,0x202224);
-        text5("CF",272,49,FG);
+        text5("AKRA",289,4,GRID);
+        triangle(207,34,303,39,291,68,0x292C2F);
+        triangle(207,34,291,68,211,65,0x34373A);
+        for(int x=218;x<286;x+=12) line(x,37,x+20,64,1,0x555A5D);
+        rect(293,40,11,25,RED); rect(302,46,13,13,0x222527);
+        text5("CF",250,48,FG);
     } else if(kind==2) {
-        text5("YOSHI",283,15,GRID);
-        triangle(254,43,301,40,297,59,0xB78A4D);
-        triangle(254,43,297,59,257,58,0xD2A563);
-        rect(258,43,4,15,0x6D4C2C); rect(293,42,5,16,0xE7DBBE);
-        rect(299,45,12,9,0x34291F); text5("TI",272,49,BG);
+        text5("YOSHI",283,4,GRID);
+        triangle(207,36,301,32,293,68,0xC89B58);
+        triangle(207,36,293,68,211,65,0xD2A563);
+        line(209,36,299,33,2,0xF0DFBD);
+        rect(212,36,7,30,0x795832); rect(287,34,10,33,0xEADCBE);
+        rect(296,43,19,16,0x352B20); text5("TI",250,48,BG);
     } else if(kind==3) {
-        text5("TIN CAN",271,15,GRID);
-        rect(252,38,51,27,0xBC1830); rect(254,36,47,3,0xD9DDDF);
-        rect(254,65,47,3,0xAEB4B7); rect(252,42,4,19,0x831020);
-        line(258,61,294,41,2,FG); line(264,65,300,45,2,FG);
-        rect(268,45,25,13,0xA90E24); text5("COLA",269,48,FG);
-        ring(262,40,4,3,0x777C80); rect(261,38,7,2,0xB9BEC1);
-        rect(300,42,5,20,0xE44B59); rect(304,48,8,8,0x343638);
+        text5("TIN CAN",272,4,GRID);
+        rect(205,31,96,40,0xBD1831); rect(209,28,92,5,0xDCE0E2);
+        rect(209,70,92,5,0xAEB4B7); rect(205,36,5,30,0x831020);
+        ring(222,32,7,5,0x777C80); rect(219,29,13,2,0xB9BEC1);
+        line(216,67,290,34,2,FG); line(230,73,305,41,2,FG);
+        rect(300,38,7,28,0xE54B59); rect(305,45,11,13,0x34373A);
+        text5("COLA",243,47,FG);
     } else {
-        text5("OPEN",289,15,GRID);
-        line(254,50,307,50,10,0x777B7E); line(256,47,306,47,3,0xD2D4D5);
-        rect(267,44,4,13,BLUE); rect(272,44,4,13,PINK); rect(277,44,4,13,ORANGE);
-        rect(304,44,8,13,0x2B2D2F); text5("NO CAN",266,62,FG);
+        text5("OPEN",289,4,GRID);
+        line(207,49,307,49,11,0x74787B); line(210,45,306,45,3,0xD2D4D5);
+        rect(236,42,4,15,BLUE); rect(243,42,4,15,PINK); rect(250,42,4,15,ORANGE);
+        rect(304,41,11,17,0x292C2F); text5("NO CAN",244,63,FG);
     }
 
-    text5("FLOW",228,78,FG);
-    line(228,96,312,96,1,DIM);
-    int amp=running?(kind==4?7:kind==3?5:3):0;
-    int previous_y=96;
-    for(int x=228;x<=312;x++) {
-        float wave=sinf((float)(x-228)*0.22f+phase*6.283185307f);
-        int y=96-(int)(wave*(float)amp*(0.25f+0.75f*(x-228)/84.f));
+    text5("FLOW",178,80,GRID);
+    line(178,97,313,97,1,DIM);
+    if(throttle<0) throttle=0;
+    if(throttle>1) throttle=1;
+    float drive=.55f+.45f*throttle;
+    int amp=running?(int)((kind==4?8:kind==3?6:4)*drive):0;
+    int previous_y=97;
+    for(int x=178;x<=313;x++) {
+        float wave=sinf((float)(x-178)*0.18f+phase*6.283185307f);
+        int y=97-(int)(wave*(float)amp*(0.20f+0.80f*(x-178)/135.f));
         line(x-1,previous_y,x,y,1,kind==4?RED:ORANGE);
         previous_y=y;
     }
@@ -254,9 +232,6 @@ static void exhaust(unsigned kind,bool running,float phase) {
 void ev_powertrain_render(uint16_t *pixels,const ev_powertrain_state_t *state) {
     canvas=pixels;
     rect(0,0,W,H,BG);
-    frame(0,0,149,108,"");
     engine_cutaway(state);
-    ignition(state);
-    throttle(state->throttle);
-    exhaust(state->exhaust,state->running,state->phase);
+    exhaust(state->exhaust,state->running,state->phase,state->throttle);
 }

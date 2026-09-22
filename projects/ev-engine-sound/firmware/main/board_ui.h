@@ -12,8 +12,10 @@ typedef enum {
     BOARD_UI_EXHAUST,
     BOARD_UI_ENGINE_TOGGLE,
     BOARD_UI_VOLUME_DELTA,
+    BOARD_UI_VOLUME_SET,
     BOARD_UI_REDLINE_DELTA,
     BOARD_UI_REDLINE_SET,
+    BOARD_UI_AUTO_OFF_SET,
     BOARD_UI_REV_PRESS,
     BOARD_UI_REV_RELEASE,
     BOARD_UI_ENGINE_STOP,
@@ -26,6 +28,8 @@ typedef struct {
     float rpm;
     float throttle;
     float volume;
+    unsigned auto_off_ms;
+    unsigned auto_off_remaining_ms;
     unsigned gear;
     bool running;
     bool fault;
