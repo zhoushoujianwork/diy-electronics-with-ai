@@ -23,7 +23,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 ESP-IDF 固件、三种板级配置和实机验证记录。
 
 [`StickS3 GPS → MotoBox`](projects/m5stack-sticks3-gps-motobox/) 是 Wi-Fi GNSS 定位终端项目，
-包含位置上报、离线队列和扫码绑定流程；当前为 `prototype`，户外定位和小程序实机验收待完成。
+包含位置上报、离线队列和服务端验证码绑定流程；当前为 `prototype`，户外定位和小程序实机验收待完成。
 
 ## 基本原则
 

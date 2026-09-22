@@ -13,13 +13,6 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 2.9.0
-  espressif/qrcode:
-    component_hash: 3b493771bc5d6ad30cbf87c25bf784aada8a08c941504355b55d6b75518ed7bc
-    dependencies: []
-    source:
-      registry_url: https://components.espressif.com/
-      type: service
-    version: 0.1.0~2
   idf:
     source:
       type: idf
@@ -57,8 +50,7 @@ dependencies:
     version: 9.6.0~1
 direct_dependencies:
 - espressif/esp_lvgl_port
-- espressif/qrcode
 - lvgl/lvgl
-manifest_hash: ab29929672d46991df1a386b36ba6c9ae8cb71840e67ae3c7c286ae6fecc0b9a
+manifest_hash: ee58eea0e831fe26600eec9306fb9ec618c1b854338ebdf30d5eef9aa9a54f06
 target: esp32s3
 version: 2.0.0

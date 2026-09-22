@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "board.h"
+#include "binding_protocol.h"
 #include "demo_status.h"
 #include "driver/uart.h"
 #include "esp_app_desc.h"
@@ -16,6 +17,7 @@
 #include "esp_mac.h"
 #include "esp_netif.h"
 #include "esp_netif_sntp.h"
+#include "esp_random.h"
 #include "esp_system.h"
 #include "esp_timer.h"
 #include "esp_wifi.h"
@@ -51,6 +53,10 @@ static TaskHandle_t telemetry_task_handle;
 static TaskHandle_t heartbeat_task_handle;
 static char device_id[24];
 static char telemetry_topic[96];
+static char binding_request_topic[96];
+static char binding_response_topic[96];
+static char binding_request_id[BINDING_REQUEST_ID_LENGTH + 1];
+static int binding_subscribe_id;
 static uint64_t next_sequence = 1;
 static bool sntp_started;
 static bool clock_trusted;
@@ -233,6 +239,7 @@ static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void
     esp_mqtt_event_handle_t event = event_data;
     if (event_id == MQTT_EVENT_CONNECTED) {
         set_status_flag(&status.mqtt_connected, true);
+        binding_subscribe_id = esp_mqtt_client_subscribe(mqtt_client, binding_response_topic, 1);
         ESP_LOGI(TAG, "MQTT_CONNECTED uri=%s", CONFIG_DEMO_MQTT_URI);
     } else if (event_id == MQTT_EVENT_DISCONNECTED) {
         set_status_flag(&status.mqtt_connected, false);
@@ -240,6 +247,34 @@ static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void
         telemetry_queue_retry_inflight(&telemetry_queue);
         xSemaphoreGive(queue_mutex);
         ESP_LOGW(TAG, "MQTT_DISCONNECTED");
+    } else if (event_id == MQTT_EVENT_SUBSCRIBED && event->msg_id == binding_subscribe_id) {
+        char payload[144];
+        size_t length = binding_request_build(payload, sizeof(payload), device_id, binding_request_id);
+        int message_id = length ? esp_mqtt_client_publish(mqtt_client, binding_request_topic,
+                                                           payload, (int)length, 1, 0) : -1;
+        if (message_id < 0) {
+            ESP_LOGE(TAG, "BINDING_REQUEST_FAILED");
+        } else {
+            ESP_LOGI(TAG, "BINDING_REQUESTED msg_id=%d", message_id);
+        }
+    } else if (event_id == MQTT_EVENT_DATA) {
+        size_t expected_topic_length = strlen(binding_response_topic);
+        bool matching_topic = event->topic_len == (int)expected_topic_length &&
+                              memcmp(event->topic, binding_response_topic, expected_topic_length) == 0;
+        if (matching_topic && event->data_len == event->total_data_len) {
+            binding_response_t response;
+            if (binding_response_parse(event->data, (size_t)event->data_len, device_id,
+                                       binding_request_id, &response)) {
+                portENTER_CRITICAL(&state_lock);
+                status.binding_ready = true;
+                memcpy(status.binding_code, response.code, sizeof(status.binding_code));
+                status.binding_expires_ms = response.expires_ms;
+                portEXIT_CRITICAL(&state_lock);
+                ESP_LOGI(TAG, "BINDING_CODE_READY expires_ms=%" PRId64, response.expires_ms);
+            } else {
+                ESP_LOGW(TAG, "BINDING_RESPONSE_REJECTED");
+            }
+        }
     } else if (event_id == MQTT_EVENT_PUBLISHED) {
         xSemaphoreTake(queue_mutex, portMAX_DELAY);
         telemetry_item_t *head = telemetry_queue_head(&telemetry_queue);
@@ -367,6 +402,15 @@ static void make_device_id(void)
     snprintf(device_id, sizeof(device_id), "BOX-%02X%02X%02X%02X%02X%02X",
              mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
     snprintf(telemetry_topic, sizeof(telemetry_topic), "vehicle/v1/%s/telemetry", device_id);
+    snprintf(binding_request_topic, sizeof(binding_request_topic),
+             "vehicle/v1/%s/binding/request", device_id);
+    snprintf(binding_response_topic, sizeof(binding_response_topic),
+             "vehicle/v1/%s/binding/response", device_id);
+    uint8_t request_bytes[16];
+    esp_fill_random(request_bytes, sizeof(request_bytes));
+    for (size_t i = 0; i < sizeof(request_bytes); ++i) {
+        snprintf(binding_request_id + i * 2, 3, "%02x", request_bytes[i]);
+    }
 }
 
 void app_main(void)

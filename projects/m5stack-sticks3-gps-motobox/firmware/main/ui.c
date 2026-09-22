@@ -16,11 +16,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "lvgl.h"
-#include "qrcode.h"
 
 #define LCD_WIDTH 240
 #define LCD_HEIGHT 135
-#define QR_CANVAS_SIZE 116
 
 static const char *TAG = "ui";
 static portMUX_TYPE status_lock = portMUX_INITIALIZER_UNLOCKED;
@@ -33,9 +31,10 @@ static lv_obj_t *speed_label;
 static lv_obj_t *network_label;
 static lv_obj_t *queue_label;
 static lv_obj_t *time_label;
-static lv_obj_t *qr_canvas;
-static uint16_t qr_pixels[QR_CANVAS_SIZE * QR_CANVAS_SIZE];
+static lv_obj_t *binding_code_label;
+static lv_obj_t *binding_expiry_label;
 static bool bind_page_visible;
+static bool binding_was_ready;
 static bool button_previous;
 
 static lv_obj_t *make_label(lv_obj_t *parent, int x, int y, int width,
@@ -48,25 +47,6 @@ static lv_obj_t *make_label(lv_obj_t *parent, int x, int y, int width,
     lv_obj_set_style_text_color(label, lv_color_hex(color), 0);
     lv_label_set_long_mode(label, LV_LABEL_LONG_CLIP);
     return label;
-}
-
-static void render_qrcode(esp_qrcode_handle_t code)
-{
-    const int modules = esp_qrcode_get_size(code);
-    const int quiet = 4;
-    const int scale = QR_CANVAS_SIZE / (modules + quiet * 2);
-    const int drawn = (modules + quiet * 2) * scale;
-    const int offset = (QR_CANVAS_SIZE - drawn) / 2;
-    for (int y = 0; y < QR_CANVAS_SIZE; ++y) {
-        for (int x = 0; x < QR_CANVAS_SIZE; ++x) {
-            int qx = (x - offset) / scale - quiet;
-            int qy = (y - offset) / scale - quiet;
-            bool inside = x >= offset && y >= offset && x < offset + drawn && y < offset + drawn;
-            bool black = inside && qx >= 0 && qy >= 0 && qx < modules && qy < modules &&
-                         esp_qrcode_get_module(code, qx, qy);
-            qr_pixels[y * QR_CANVAS_SIZE + x] = black ? 0x0000 : 0xffff;
-        }
-    }
 }
 
 static void refresh_timer(lv_timer_t *timer)
@@ -87,6 +67,17 @@ static void refresh_timer(lv_timer_t *timer)
     lv_label_set_text_fmt(queue_label, "QUEUE %u/120   DROP %u",
                           status.queue_depth, status.queue_dropped);
     lv_label_set_text(time_label, status.time_trusted ? "UTC READY" : "WAITING FOR UTC");
+
+    lv_label_set_text(binding_code_label, status.binding_ready ? status.binding_code : "------");
+    lv_label_set_text(binding_expiry_label,
+                      status.binding_ready ? "ENTER IN MOTOBOX - 10 MIN" : "WAITING FOR SERVER CODE");
+    if (status.binding_ready && !binding_was_ready) {
+        bind_page_visible = true;
+        lv_obj_add_flag(status_page, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_remove_flag(bind_page, LV_OBJ_FLAG_HIDDEN);
+        ESP_LOGI(TAG, "PAGE bind reason=code_ready");
+    }
+    binding_was_ready = status.binding_ready;
 
     bool pressed = gpio_get_level(STICKS3_BUTTON_A_GPIO) == 0;
     if (pressed && !button_previous) {
@@ -113,14 +104,14 @@ static void create_pages(void)
     lv_obj_set_style_pad_all(status_page, 0, 0);
     lv_obj_set_style_bg_color(status_page, lv_color_hex(0x090e15), 0);
     lv_obj_t *title = make_label(status_page, 7, 4, 226, &lv_font_montserrat_14, 0x2de2a6);
-    lv_label_set_text(title, "MotoBox GPS Demo");
+    lv_label_set_text(title, "MotoBox GPS");
     gps_label = make_label(status_page, 7, 28, 226, &lv_font_montserrat_14, 0xe5edf5);
     speed_label = make_label(status_page, 7, 50, 226, &lv_font_montserrat_14, 0xe5edf5);
     network_label = make_label(status_page, 7, 72, 226, &lv_font_montserrat_12, 0x92a7bc);
     queue_label = make_label(status_page, 7, 91, 226, &lv_font_montserrat_12, 0x92a7bc);
     time_label = make_label(status_page, 7, 110, 160, &lv_font_montserrat_12, 0x92a7bc);
     lv_obj_t *hint = make_label(status_page, 181, 110, 52, &lv_font_montserrat_12, 0x2de2a6);
-    lv_label_set_text(hint, "A: BIND");
+    lv_label_set_text(hint, "A: CODE");
 
     bind_page = lv_obj_create(screen);
     lv_obj_remove_flag(bind_page, LV_OBJ_FLAG_SCROLLABLE);
@@ -130,29 +121,21 @@ static void create_pages(void)
     lv_obj_set_style_radius(bind_page, 0, 0);
     lv_obj_set_style_pad_all(bind_page, 0, 0);
     lv_obj_set_style_bg_color(bind_page, lv_color_hex(0xffffff), 0);
-    qr_canvas = lv_canvas_create(bind_page);
-    lv_canvas_set_buffer(qr_canvas, qr_pixels, QR_CANVAS_SIZE, QR_CANVAS_SIZE, LV_COLOR_FORMAT_RGB565);
-    lv_obj_set_pos(qr_canvas, 4, 9);
-    lv_obj_t *scan = make_label(bind_page, 126, 12, 109, &lv_font_montserrat_14, 0x18181b);
-    lv_label_set_text(scan, "SCAN IN\nMOTOBOX");
-    lv_obj_t *prefix = make_label(bind_page, 126, 53, 109, &lv_font_montserrat_20, 0x18181b);
-    lv_label_set_text(prefix, "BOX-");
-    lv_obj_t *id_first = make_label(bind_page, 126, 80, 109, &lv_font_montserrat_14, 0x18181b);
-    lv_obj_t *id_second = make_label(bind_page, 126, 99, 109, &lv_font_montserrat_14, 0x18181b);
+    lv_obj_t *heading = make_label(bind_page, 8, 8, 224, &lv_font_montserrat_14, 0x18181b);
+    lv_obj_set_style_text_align(heading, LV_TEXT_ALIGN_CENTER, 0);
+    lv_label_set_text(heading, "MOTOBOX BINDING CODE");
+    binding_code_label = make_label(bind_page, 8, 38, 224, &lv_font_montserrat_28, 0x18181b);
+    lv_obj_set_style_text_align(binding_code_label, LV_TEXT_ALIGN_CENTER, 0);
+    lv_label_set_text(binding_code_label, "------");
+    binding_expiry_label = make_label(bind_page, 8, 79, 224, &lv_font_montserrat_12, 0x52525b);
+    lv_obj_set_style_text_align(binding_expiry_label, LV_TEXT_ALIGN_CENTER, 0);
+    lv_label_set_text(binding_expiry_label, "WAITING FOR SERVER CODE");
+    lv_obj_t *device = make_label(bind_page, 8, 101, 224, &lv_font_montserrat_12, 0x71717a);
+    lv_obj_set_style_text_align(device, LV_TEXT_ALIGN_CENTER, 0);
     const char *suffix = strlen(shown_device_id) > 4 ? shown_device_id + 4 : shown_device_id;
-    char first[7] = {0};
-    strncpy(first, suffix, 6);
-    lv_label_set_text(id_first, first);
-    lv_label_set_text(id_second, strlen(suffix) > 6 ? suffix + 6 : "");
+    lv_label_set_text_fmt(device, "DEVICE %s", suffix);
     lv_obj_t *back = make_label(bind_page, 184, 120, 52, &lv_font_montserrat_12, 0x18181b);
     lv_label_set_text(back, "A: BACK");
-
-    esp_qrcode_config_t qr_config = ESP_QRCODE_CONFIG_DEFAULT();
-    qr_config.display_func = render_qrcode;
-    qr_config.max_qrcode_version = 4;
-    qr_config.qrcode_ecc_level = ESP_QRCODE_ECC_MED;
-    ESP_ERROR_CHECK(esp_qrcode_generate(&qr_config, shown_device_id));
-    lv_obj_invalidate(qr_canvas);
     lv_obj_add_flag(bind_page, LV_OBJ_FLAG_HIDDEN);
     lv_timer_create(refresh_timer, 200, NULL);
 }
@@ -238,7 +221,7 @@ esp_err_t ui_init(const char *device_id)
         .duty = 560,
     };
     ESP_RETURN_ON_ERROR(ledc_channel_config(&channel), TAG, "backlight PWM");
-    ESP_LOGI(TAG, "UI_READY display=240x135 task_stack=8192 qr_payload=%s", shown_device_id);
+    ESP_LOGI(TAG, "UI_READY display=240x135 task_stack=8192 binding_code=server");
     return ESP_OK;
 }
 

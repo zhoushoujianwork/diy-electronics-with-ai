@@ -2,6 +2,7 @@ idf_component_register(
     SRCS
         "main.c"
         "board.c"
+        "binding_protocol.c"
         "gnss_parser.c"
         "telemetry_payload.c"
         "telemetry_queue.c"
@@ -21,6 +22,5 @@ idf_component_register(
         esp_wifi
         mqtt
         nvs_flash
-        qrcode
         esp_lvgl_port
         lvgl)

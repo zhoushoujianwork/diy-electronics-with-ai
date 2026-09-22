@@ -6,8 +6,8 @@
   malformed checksum digits, invalid dates and fixes, mismatched sentence times, midnight rollover, protocol
   fields and units, omission of location without a fix, queue overflow with an in-flight head, PUBACK removal
   and reconnect retry.
-- ESP-IDF 5.5.2 clean build: passed. Application size was `0x1619f0`; the 3 MiB application partition had
-  54% free.
+- ESP-IDF 5.5.2 clean build with the binding-code firmware: passed. Application size was `0xacd00`; the 3 MiB application partition had
+  77% free.
 - StickS3 K150 flash: passed twice on `/dev/cu.usbmodem21101`, including flash hash verification. The exact
   hardware was StickS3 K150 + Unit GPS v1.1, powered from USB-C with Grove 5 V enabled by M5PM1.
 - Final flashed build serial run: passed for more than 6 minutes through sequence 71. Every queued frame
@@ -36,7 +36,8 @@
   guarded by a persistent host firewall rule so only the Nginx loopback upstream can reach it. The ACME deploy
   hook now validates the certificate/key pair, restarts the gateway and reloads Nginx; timestamped rollback
   copies were retained on the server.
-- GPS outdoor fix, moving track, mini-program real-device scan/bind and location sharing: pending.
+- GPS outdoor fix, moving track, server-code binding on the updated firmware, mini-program real-device bind and
+  location sharing: pending. The earlier MQTT and display run predates the binding-code firmware change.
 - Mini-program host tests and JavaScript syntax checks: passed. WeChat DevTools recognized the production
   AppID, but preview compilation was blocked because the local DevTools session requires a fresh login.
 - Status remains `prototype` until the real-device checks below are complete.
@@ -58,7 +59,7 @@ repository commit `c8085cb`.
 ## Remaining acceptance work
 
 The indoor run does not prove GNSS positioning. Move the powered unit outdoors with an open sky view, sign in
-to an authorized MotoBox mini-program release, scan the on-screen device QR code, and complete the movement
+to an authorized MotoBox mini-program release, enter the on-screen one-time code, and complete the movement
 and sharing checks below. Do not change the manifest to `hardware-verified` until this succeeds.
 
 ## Hardware acceptance procedure
@@ -74,7 +75,8 @@ Pass criteria:
 4. Every task retains at least 25% and at least 1024 bytes of stack at the observed high-water mark.
 5. MQTT reconnects, queued frames drain in sequence after PUBACK, and the drop counter remains zero.
 6. MotoBox `latest` and `events` contain the device and preserve sample time across the outage.
-7. The mini program binds the QR device ID and shows the current point and historical track.
+7. The server returns a six-digit code only after the authenticated MQTT request; the mini program consumes it
+   once, binds the matching device, and shows the current point and historical track.
 
 Keep the complete serial log and private route outside Git. Commit only a sanitized summary with coarse or
 synthetic coordinates.
