@@ -68,11 +68,13 @@ for line in beats:
 for phase in ("STARTING", "ACCEL", "COAST", "IDLE", "STOPPING", "OFF"):
     assert re.search(r"STATE_TRANSITION: AUDIO \w+ -> " + phase, text), phase
 assert re.search(r"rpm=1[56][0-9]{3}", text), "high RPM not reached"
-assert re.search(r"STATUS[^\n]*version=0\.4\.0", text), "wrong firmware version"
-assert "animation=powertrain_rig" in text, "wrong UI renderer"
-assert "layout=dual_panel_v2" in text, "wrong UI layout"
+assert re.search(r"STATUS[^\n]*version=0\.4\.1", text), "wrong firmware version"
+assert "animation=sticks3_canvas" in text, "wrong UI renderer"
+assert "layout=full_width_engine" in text, "wrong UI layout"
 assert "selector=cycle_buttons" in text, "wrong selector mode"
 assert "menu=pull_down" in text, "wrong settings menu mode"
+assert "drawer_auto_close_ms=3500" in text, "wrong drawer auto-close policy"
+assert "font_scale=12_28" in text, "wrong firmware font scale"
 assert re.search(r"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms=3000", text), "auto-off transition missing"
 for exhaust in ("stock", "akrapovic", "yoshimura", "tin_can", "straight"):
     assert re.search(r"UI_SYNC[^\n]*mode=cycle_buttons[^\n]*exhaust=" + exhaust, text), exhaust

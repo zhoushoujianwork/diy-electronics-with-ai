@@ -8,8 +8,8 @@
 
 #include "board_audio.h"
 #include "board_config.h"
-#include "engine_canvas.h"
 #include "engine_voice.h"
+#include "powertrain_canvas.h"
 #include "esp_timer.h"
 #include "driver/ledc.h"
 #include "driver/spi_master.h"
@@ -23,6 +23,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "lvgl.h"
+#include "ui.h"
 
 static const char *TAG="board_ui";
 static const float TWO_PI=6.283185307f;
@@ -37,8 +38,10 @@ static esp_lcd_panel_handle_t panel;
 static esp_lcd_touch_handle_t touch;
 static lv_display_t *display;
 static lv_indev_t *touch_indev;
-static lv_obj_t *main_page;
 static lv_obj_t *engine_visual;
+static lv_obj_t *engine_fire_left,*engine_fire_right,*engine_crank_pin;
+static lv_obj_t *engine_ignition_dots[6];
+static lv_obj_t *engine_cylinder_label,*engine_live_label;
 static lv_obj_t *engine_value_label,*exhaust_value_label;
 static lv_obj_t *rpm_label,*state_label,*pulse_led;
 static lv_obj_t *redline_slider,*redline_value_label,*rev_button,*rev_label,*rev_detail_label;
@@ -74,23 +77,59 @@ static void display_render_event(lv_event_t *event) {
     }
 }
 
-static void style_button(lv_obj_t *button,uint32_t color,int radius) {
-    lv_obj_set_style_bg_color(button,lv_color_hex(color),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(button,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_border_width(button,1,LV_PART_MAIN);
-    lv_obj_set_style_border_color(button,lv_color_hex(0x777B7E),LV_PART_MAIN);
-    lv_obj_set_style_radius(button,radius,LV_PART_MAIN);
-    lv_obj_set_style_shadow_width(button,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(button,0,LV_PART_MAIN);
+enum { RIG_H=EV_POWERTRAIN_HEIGHT, EXHAUST_W=EV_EXHAUST_WIDTH };
+_Alignas(4) static uint16_t exhaust_pixels[EXHAUST_W*RIG_H];
+
+static lv_obj_t *engine_marker(lv_obj_t *parent,int size,uint32_t color) {
+    lv_obj_t *marker=lv_obj_create(parent);
+    lv_obj_set_size(marker,size,size);
+    lv_obj_set_style_radius(marker,LV_RADIUS_CIRCLE,LV_PART_MAIN);
+    lv_obj_set_style_bg_color(marker,lv_color_hex(color),LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(marker,LV_OPA_COVER,LV_PART_MAIN);
+    lv_obj_set_style_border_width(marker,0,LV_PART_MAIN);
+    lv_obj_set_style_pad_all(marker,0,LV_PART_MAIN);
+    lv_obj_clear_flag(marker,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
+    return marker;
 }
 
-enum { RIG_W=320, RIG_H=108 };
-_Alignas(4) static uint16_t engine_pixels[RIG_W*RIG_H];
+static void update_engine_overlays(const board_ui_state_t *state) {
+    unsigned cylinders=ev_profiles[state->profile].cylinders;
+    if(cylinders>6) cylinders=6;
+    if(cylinders<1) cylinders=1;
+    unsigned active=state->last_cylinder%cylinders;
+    for(unsigned i=0;i<6;i++) {
+        bool visible=i<cylinders;
+        bool firing=visible && state->running && i==active;
+        lv_obj_set_style_bg_color(engine_ignition_dots[i],
+            lv_color_hex(firing?0xFF9D24:0x3E4549),LV_PART_MAIN);
+        if(visible) lv_obj_clear_flag(engine_ignition_dots[i],LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_add_flag(engine_ignition_dots[i],LV_OBJ_FLAG_HIDDEN);
+    }
+    lv_obj_set_style_bg_opa(engine_fire_left,
+        state->running && !(state->last_cylinder&1u)?LV_OPA_60:LV_OPA_TRANSP,LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(engine_fire_right,
+        state->running && (state->last_cylinder&1u)?LV_OPA_60:LV_OPA_TRANSP,LV_PART_MAIN);
+    lv_obj_set_pos(engine_crank_pin,
+        84+(int)lroundf(8*cosf(crank_phase)),
+        91+(int)lroundf(8*sinf(crank_phase)));
+    lv_label_set_text_fmt(engine_cylinder_label,"%uC",ev_profiles[state->profile].cylinders);
+    lv_obj_set_style_text_color(engine_live_label,
+        lv_color_hex(state->running?0xFF9D24:0x777B7E),LV_PART_MAIN);
+}
 
 static void draw_powertrain(const board_ui_state_t *state) {
     unsigned profile=state->profile<EV_PROFILES?state->profile:0;
-    ev_canvas_render(engine_pixels,RIG_W,RIG_H,profile,
-                     fmodf(crank_phase/TWO_PI,1.f),state->running);
+    ev_powertrain_state_t visual={
+        .profile=profile,
+        .cylinders=ev_profiles[profile].cylinders,
+        .exhaust=state->exhaust<EV_EXHAUSTS?state->exhaust:0,
+        .last_cylinder=state->last_cylinder,
+        .running=state->running,
+        .throttle=state->throttle,
+        .phase=fmodf(crank_phase/TWO_PI,1.f)
+    };
+    ev_exhaust_render(exhaust_pixels,&visual);
+    update_engine_overlays(state);
     draw_count++;
     lv_obj_invalidate(engine_visual);
 }
@@ -315,267 +354,82 @@ static void refresh_timer(lv_timer_t *timer) {
     if(elapsed>refresh_max_us) refresh_max_us=elapsed;
 }
 
-static lv_obj_t *create_page(lv_obj_t *screen) {
-    lv_obj_t *page=lv_obj_create(screen);
-    lv_obj_set_pos(page,0,0);
-    lv_obj_set_size(page,320,240);
-    lv_obj_set_style_bg_color(page,lv_color_hex(0x0E1012),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(page,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_border_width(page,0,LV_PART_MAIN);
-    lv_obj_set_style_radius(page,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(page,0,LV_PART_MAIN);
-    lv_obj_clear_flag(page,LV_OBJ_FLAG_SCROLLABLE);
-    return page;
-}
-
-static lv_obj_t *create_cycle_selector(lv_obj_t *parent,int x,const char *title,
-                                       uint32_t accent,lv_obj_t **value_label,
-                                       lv_event_cb_t event_cb) {
-    lv_obj_t *button=lv_button_create(parent);
-    lv_obj_set_pos(button,x,140);
-    lv_obj_set_size(button,153,38);
-    style_button(button,0x0E1012,0);
-    lv_obj_set_style_border_color(button,lv_color_hex(accent),LV_PART_MAIN);
-    lv_obj_t *caption=lv_label_create(button);
-    lv_label_set_text(caption,title);
-    lv_obj_set_pos(caption,7,2);
-    lv_obj_set_style_text_font(caption,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(caption,lv_color_hex(0x777B7E),LV_PART_MAIN);
-    *value_label=lv_label_create(button);
-    lv_label_set_text(*value_label,"--  >");
-    lv_obj_set_pos(*value_label,7,18);
-    lv_obj_set_width(*value_label,138);
-    lv_label_set_long_mode(*value_label,LV_LABEL_LONG_CLIP);
-    lv_obj_set_style_text_font(*value_label,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(*value_label,lv_color_hex(accent),LV_PART_MAIN);
-    lv_obj_add_event_cb(button,event_cb,LV_EVENT_CLICKED,NULL);
-    return button;
-}
-
 static void create_ui(void) {
-    lv_obj_t *screen=lv_screen_active();
-    lv_obj_set_style_bg_color(screen,lv_color_hex(0x0E1012),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(screen,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(screen,0,LV_PART_MAIN);
-    lv_obj_clear_flag(screen,LV_OBJ_FLAG_SCROLLABLE);
+    ui_init();
 
-    main_page=create_page(screen);
+    engine_value_label=ui_EngineSelectorValue;
+    exhaust_value_label=ui_ExhaustSelectorValue;
+    rpm_label=ui_RpmValue;
+    state_label=ui_RunState;
+    pulse_led=ui_PulseLed;
+    rev_button=ui_ThrottleButton;
+    rev_label=ui_ThrottleState;
+    rev_detail_label=ui_ThrottleDetail;
+    countdown_bar=ui_CountdownBar;
+    drawer_viewport=ui_DrawerViewport;
+    drawer_panel=ui_SettingsDrawer;
+    drawer_grab=ui_DrawerGrab;
+    header_drag=ui_HeaderDrag;
+    volume_slider=ui_VolumeSlider;
+    volume_value_label=ui_VolumeSliderValue;
+    redline_slider=ui_RedlineSlider;
+    redline_value_label=ui_RedlineSliderValue;
+    auto_off_slider=ui_AutoOffSlider;
+    auto_off_value_label=ui_AutoOffSliderValue;
 
-    lv_obj_t *logo=lv_label_create(main_page);
-    lv_label_set_text(logo,"A");
-    lv_obj_set_pos(logo,2,-4);
-    lv_obj_set_style_text_font(logo,&lv_font_montserrat_28,LV_PART_MAIN);
-    lv_obj_set_style_text_color(logo,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
-
-    lv_obj_t *title=lv_label_create(main_page);
-    lv_label_set_text(title,"EV ENGINE");
-    lv_obj_set_pos(title,21,1);
-    lv_obj_set_style_text_font(title,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(title,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
-    lv_obj_t *subtitle=lv_label_create(main_page);
-    lv_label_set_text(subtitle,"SIMULATOR");
-    lv_obj_set_pos(subtitle,21,13);
-    lv_obj_set_style_text_font(subtitle,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(subtitle,lv_color_hex(0x777B7E),LV_PART_MAIN);
-
-    pulse_led=lv_obj_create(main_page);
-    lv_obj_set_pos(pulse_led,91,10);
-    lv_obj_set_size(pulse_led,7,7);
-    lv_obj_set_style_radius(pulse_led,LV_RADIUS_CIRCLE,LV_PART_MAIN);
-    lv_obj_set_style_border_width(pulse_led,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(pulse_led,0,LV_PART_MAIN);
-    lv_obj_set_style_bg_color(pulse_led,lv_color_hex(0xEE4445),LV_PART_MAIN);
-
-    rpm_label=lv_label_create(main_page);
-    lv_label_set_text(rpm_label,"0 RPM");
-    lv_obj_set_pos(rpm_label,102,5);
-    lv_obj_set_width(rpm_label,68);
-    lv_label_set_long_mode(rpm_label,LV_LABEL_LONG_CLIP);
-    lv_obj_set_style_text_font(rpm_label,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(rpm_label,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
-
-    state_label=lv_label_create(main_page);
-    lv_label_set_text(state_label,"OFF");
-    lv_obj_set_pos(state_label,174,5);
-    lv_obj_set_width(state_label,62);
-    lv_label_set_long_mode(state_label,LV_LABEL_LONG_CLIP);
-    lv_obj_set_style_text_font(state_label,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(state_label,lv_color_hex(0x777B7E),LV_PART_MAIN);
-
-    lv_obj_t *settings_hint=lv_label_create(main_page);
-    lv_label_set_text(settings_hint,"SETTINGS\nPULL DOWN V");
-    lv_obj_set_pos(settings_hint,240,1);
-    lv_obj_set_width(settings_hint,73);
-    lv_obj_set_style_text_align(settings_hint,LV_TEXT_ALIGN_RIGHT,LV_PART_MAIN);
-    lv_obj_set_style_text_font(settings_hint,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(settings_hint,lv_color_hex(0x777B7E),LV_PART_MAIN);
-
-    engine_visual=lv_canvas_create(main_page);
-    lv_canvas_set_buffer(engine_visual,engine_pixels,RIG_W,RIG_H,LV_COLOR_FORMAT_RGB565);
-    lv_obj_set_pos(engine_visual,0,28);
-    lv_obj_set_size(engine_visual,RIG_W,RIG_H);
-    lv_obj_set_style_bg_color(engine_visual,lv_color_hex(0x0E1012),LV_PART_MAIN);
+    lv_obj_add_flag(ui_PowertrainPlaceholder,LV_OBJ_FLAG_HIDDEN);
+    engine_visual=lv_canvas_create(ui_PowertrainHost);
+    lv_canvas_set_buffer(engine_visual,exhaust_pixels,EXHAUST_W,RIG_H,LV_COLOR_FORMAT_RGB565);
+    lv_obj_set_pos(engine_visual,172,0);
+    lv_obj_set_size(engine_visual,EXHAUST_W,RIG_H);
+    lv_obj_set_style_bg_color(engine_visual,lv_color_hex(0x0D1113),LV_PART_MAIN);
     lv_obj_set_style_bg_opa(engine_visual,LV_OPA_COVER,LV_PART_MAIN);
     lv_obj_set_style_border_width(engine_visual,0,LV_PART_MAIN);
     lv_obj_set_style_radius(engine_visual,0,LV_PART_MAIN);
     lv_obj_set_style_pad_all(engine_visual,0,LV_PART_MAIN);
     lv_obj_clear_flag(engine_visual,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
 
-    create_cycle_selector(main_page,5,"ENGINE · TAP NEXT",0x77CEE0,
-                          &engine_value_label,profile_next_event);
-    create_cycle_selector(main_page,162,"EXHAUST · TAP NEXT",0xF4802A,
-                          &exhaust_value_label,exhaust_next_event);
-
-    rev_button=lv_button_create(main_page);
-    lv_obj_set_pos(rev_button,5,184);
-    lv_obj_set_size(rev_button,310,47);
-    style_button(rev_button,0x0E1012,0);
-    lv_obj_set_style_border_color(rev_button,lv_color_hex(0x777B7E),LV_PART_MAIN);
-    lv_obj_t *rev_caption=lv_label_create(rev_button);
-    lv_label_set_text(rev_caption,"THROTTLE INPUT");
-    lv_obj_set_pos(rev_caption,8,1);
-    lv_obj_set_style_text_font(rev_caption,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(rev_caption,lv_color_hex(0x777B7E),LV_PART_MAIN);
-    rev_label=lv_label_create(rev_button);
-    lv_label_set_text(rev_label,"PRESS + HOLD");
-    lv_obj_set_pos(rev_label,8,14);
-    lv_obj_set_style_text_font(rev_label,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(rev_label,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
-    rev_detail_label=lv_label_create(rev_button);
-    lv_label_set_text(rev_detail_label,"STARTS ENGINE AUTOMATICALLY");
-    lv_obj_set_pos(rev_detail_label,8,28);
-    lv_obj_set_style_text_font(rev_detail_label,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(rev_detail_label,lv_color_hex(0x777B7E),LV_PART_MAIN);
-    countdown_bar=lv_bar_create(rev_button);
-    lv_obj_set_pos(countdown_bar,8,41);
-    lv_obj_set_size(countdown_bar,143,3);
-    lv_bar_set_range(countdown_bar,0,100);
-    lv_bar_set_value(countdown_bar,0,LV_ANIM_OFF);
-    lv_obj_set_style_bg_color(countdown_bar,lv_color_hex(0x303336),LV_PART_MAIN);
-    lv_obj_set_style_bg_color(countdown_bar,lv_color_hex(0xF4802A),LV_PART_INDICATOR);
-    lv_obj_t *stem=lv_obj_create(rev_button);
-    lv_obj_set_pos(stem,170,22); lv_obj_set_size(stem,25,4);
-    lv_obj_set_style_bg_color(stem,lv_color_hex(0xD8DADC),LV_PART_MAIN);
-    lv_obj_set_style_border_width(stem,0,LV_PART_MAIN); lv_obj_set_style_radius(stem,0,LV_PART_MAIN);
-    lv_obj_clear_flag(stem,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
-    lv_obj_t *grip=lv_obj_create(rev_button);
-    lv_obj_set_pos(grip,190,11); lv_obj_set_size(grip,100,22);
-    lv_obj_set_style_bg_color(grip,lv_color_hex(0x25292C),LV_PART_MAIN);
-    lv_obj_set_style_border_color(grip,lv_color_hex(0x4D5154),LV_PART_MAIN);
-    lv_obj_set_style_border_width(grip,1,LV_PART_MAIN); lv_obj_set_style_radius(grip,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(grip,0,LV_PART_MAIN);
-    lv_obj_clear_flag(grip,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
-    for(int x=6;x<94;x+=8) {
-        lv_obj_t *groove=lv_obj_create(grip);
-        lv_obj_set_pos(groove,x,1); lv_obj_set_size(groove,3,18);
-        lv_obj_set_style_bg_color(groove,lv_color_hex(0x0E1012),LV_PART_MAIN);
-        lv_obj_set_style_border_width(groove,0,LV_PART_MAIN);
-        lv_obj_set_style_radius(groove,0,LV_PART_MAIN);
-        lv_obj_clear_flag(groove,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
+    engine_fire_left=engine_marker(ui_PowertrainHost,8,0xFF9D24);
+    lv_obj_set_pos(engine_fire_left,49,37);
+    lv_obj_set_style_bg_opa(engine_fire_left,LV_OPA_TRANSP,LV_PART_MAIN);
+    engine_fire_right=engine_marker(ui_PowertrainHost,8,0xFF9D24);
+    lv_obj_set_pos(engine_fire_right,117,37);
+    lv_obj_set_style_bg_opa(engine_fire_right,LV_OPA_TRANSP,LV_PART_MAIN);
+    engine_crank_pin=engine_marker(ui_PowertrainHost,5,0xD6D9DB);
+    for(unsigned i=0;i<6;i++) {
+        engine_ignition_dots[i]=engine_marker(ui_PowertrainHost,6,0x3E4549);
+        lv_obj_set_pos(engine_ignition_dots[i],38+(int)i*17,98);
     }
-    lv_obj_t *grip_end=lv_obj_create(rev_button);
-    lv_obj_set_pos(grip_end,290,10); lv_obj_set_size(grip_end,12,24);
-    lv_obj_set_style_bg_color(grip_end,lv_color_hex(0xF4802A),LV_PART_MAIN);
-    lv_obj_set_style_border_width(grip_end,0,LV_PART_MAIN); lv_obj_set_style_radius(grip_end,0,LV_PART_MAIN);
-    lv_obj_clear_flag(grip_end,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
-    lv_obj_add_event_cb(rev_button,rev_event,LV_EVENT_ALL,NULL);
+    engine_cylinder_label=lv_label_create(ui_PowertrainHost);
+    lv_obj_set_pos(engine_cylinder_label,150,3);
+    lv_obj_set_size(engine_cylinder_label,17,8);
+    lv_label_set_text(engine_cylinder_label,"4C");
+    lv_obj_set_style_text_font(engine_cylinder_label,&lv_font_montserrat_8,LV_PART_MAIN);
+    lv_obj_set_style_text_color(engine_cylinder_label,lv_color_hex(0x777B7E),LV_PART_MAIN);
+    engine_live_label=lv_label_create(ui_PowertrainHost);
+    lv_obj_set_pos(engine_live_label,143,96);
+    lv_obj_set_size(engine_live_label,26,8);
+    lv_label_set_text(engine_live_label,"LIVE");
+    lv_obj_set_style_text_font(engine_live_label,&lv_font_montserrat_8,LV_PART_MAIN);
+    lv_obj_set_style_text_align(engine_live_label,LV_TEXT_ALIGN_RIGHT,LV_PART_MAIN);
+    lv_obj_set_style_text_color(engine_live_label,lv_color_hex(0x777B7E),LV_PART_MAIN);
 
-    drawer_viewport=lv_obj_create(main_page);
-    lv_obj_set_pos(drawer_viewport,0,28);
-    lv_obj_set_size(drawer_viewport,320,DRAWER_HEIGHT);
-    lv_obj_set_style_bg_opa(drawer_viewport,LV_OPA_TRANSP,LV_PART_MAIN);
-    lv_obj_set_style_border_width(drawer_viewport,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(drawer_viewport,0,LV_PART_MAIN);
-    lv_obj_set_style_radius(drawer_viewport,0,LV_PART_MAIN);
-    lv_obj_clear_flag(drawer_viewport,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
-
-    drawer_panel=lv_obj_create(drawer_viewport);
-    lv_obj_set_pos(drawer_panel,0,DRAWER_CLOSED_Y);
-    lv_obj_set_size(drawer_panel,320,DRAWER_HEIGHT);
-    lv_obj_set_style_bg_color(drawer_panel,lv_color_hex(0x121517),LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(drawer_panel,LV_OPA_COVER,LV_PART_MAIN);
-    lv_obj_set_style_border_color(drawer_panel,lv_color_hex(0x777B7E),LV_PART_MAIN);
-    lv_obj_set_style_border_width(drawer_panel,1,LV_PART_MAIN);
-    lv_obj_set_style_radius(drawer_panel,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(drawer_panel,0,LV_PART_MAIN);
-    lv_obj_clear_flag(drawer_panel,LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_t *drawer_title=lv_label_create(drawer_panel);
-    lv_label_set_text(drawer_title,"QUICK SETTINGS");
-    lv_obj_set_pos(drawer_title,9,3);
-    lv_obj_set_style_text_font(drawer_title,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(drawer_title,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
-    lv_obj_t *drawer_close=lv_label_create(drawer_panel);
-    lv_label_set_text(drawer_close,"DRAG UP TO CLOSE");
-    lv_obj_set_pos(drawer_close,205,3);
-    lv_obj_set_style_text_font(drawer_close,&lv_font_montserrat_12,LV_PART_MAIN);
-    lv_obj_set_style_text_color(drawer_close,lv_color_hex(0x777B7E),LV_PART_MAIN);
-
-    const char *row_titles[]={"VOLUME","REDLINE","AUTO OFF"};
-    const int row_y[]={27,54,81};
-    for(unsigned i=0;i<3;i++) {
-        lv_obj_t *row=lv_label_create(drawer_panel);
-        lv_label_set_text(row,row_titles[i]);
-        lv_obj_set_pos(row,9,row_y[i]);
-        lv_obj_set_style_text_font(row,&lv_font_montserrat_12,LV_PART_MAIN);
-        lv_obj_set_style_text_color(row,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
-    }
-    volume_slider=lv_slider_create(drawer_panel);
-    redline_slider=lv_slider_create(drawer_panel);
-    auto_off_slider=lv_slider_create(drawer_panel);
-    lv_obj_t *sliders[]={volume_slider,redline_slider,auto_off_slider};
-    const uint32_t slider_colors[]={0x77CEE0,0xF4802A,0xF394BE};
-    for(unsigned i=0;i<3;i++) {
-        lv_obj_set_pos(sliders[i],91,row_y[i]+1);
-        lv_obj_set_size(sliders[i],172,12);
-        lv_obj_set_style_bg_color(sliders[i],lv_color_hex(0x303336),LV_PART_MAIN);
-        lv_obj_set_style_bg_color(sliders[i],lv_color_hex(slider_colors[i]),LV_PART_INDICATOR);
-        lv_obj_set_style_bg_color(sliders[i],lv_color_hex(0xFDBD2E),LV_PART_KNOB);
-        lv_obj_set_style_pad_all(sliders[i],3,LV_PART_KNOB);
-    }
     lv_slider_set_range(volume_slider,0,100);
     lv_slider_set_value(volume_slider,60,LV_ANIM_OFF);
     lv_slider_set_range(redline_slider,1800,EV_MAX_RPM);
     lv_slider_set_value(redline_slider,8000,LV_ANIM_OFF);
     lv_slider_set_range(auto_off_slider,10,80);
     lv_slider_set_value(auto_off_slider,30,LV_ANIM_OFF);
+    lv_bar_set_range(countdown_bar,0,100);
+    lv_bar_set_value(countdown_bar,0,LV_ANIM_OFF);
+
+    lv_obj_add_event_cb(ui_EngineSelector,profile_next_event,LV_EVENT_CLICKED,NULL);
+    lv_obj_add_event_cb(ui_ExhaustSelector,exhaust_next_event,LV_EVENT_CLICKED,NULL);
+    lv_obj_add_event_cb(rev_button,rev_event,LV_EVENT_ALL,NULL);
     lv_obj_add_event_cb(volume_slider,volume_event,LV_EVENT_ALL,NULL);
     lv_obj_add_event_cb(redline_slider,redline_event,LV_EVENT_ALL,NULL);
     lv_obj_add_event_cb(auto_off_slider,auto_off_event,LV_EVENT_ALL,NULL);
-    volume_value_label=lv_label_create(drawer_panel);
-    redline_value_label=lv_label_create(drawer_panel);
-    auto_off_value_label=lv_label_create(drawer_panel);
-    lv_obj_t *values[]={volume_value_label,redline_value_label,auto_off_value_label};
-    const char *defaults[]={"60%","8000","3.0 s"};
-    for(unsigned i=0;i<3;i++) {
-        lv_label_set_text(values[i],defaults[i]);
-        lv_obj_set_pos(values[i],268,row_y[i]);
-        lv_obj_set_width(values[i],43);
-        lv_obj_set_style_text_align(values[i],LV_TEXT_ALIGN_RIGHT,LV_PART_MAIN);
-        lv_obj_set_style_text_font(values[i],&lv_font_montserrat_12,LV_PART_MAIN);
-        lv_obj_set_style_text_color(values[i],lv_color_hex(slider_colors[i]),LV_PART_MAIN);
-    }
-    drawer_grab=lv_obj_create(drawer_panel);
-    lv_obj_set_pos(drawer_grab,120,98); lv_obj_set_size(drawer_grab,80,14);
-    lv_obj_set_style_bg_opa(drawer_grab,LV_OPA_TRANSP,LV_PART_MAIN);
-    lv_obj_set_style_border_width(drawer_grab,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(drawer_grab,0,LV_PART_MAIN);
-    lv_obj_clear_flag(drawer_grab,LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_add_flag(drawer_grab,LV_OBJ_FLAG_CLICKABLE);
-    lv_obj_t *grab_line=lv_obj_create(drawer_grab);
-    lv_obj_set_pos(grab_line,20,5); lv_obj_set_size(grab_line,40,2);
-    lv_obj_set_style_bg_color(grab_line,lv_color_hex(0x777B7E),LV_PART_MAIN);
-    lv_obj_set_style_border_width(grab_line,0,LV_PART_MAIN);
-    lv_obj_set_style_radius(grab_line,0,LV_PART_MAIN);
-    lv_obj_clear_flag(grab_line,LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_CLICKABLE);
     lv_obj_add_event_cb(drawer_grab,drawer_drag_event,LV_EVENT_ALL,NULL);
-
-    header_drag=lv_obj_create(main_page);
-    lv_obj_set_pos(header_drag,0,0); lv_obj_set_size(header_drag,320,28);
-    lv_obj_set_style_bg_opa(header_drag,LV_OPA_TRANSP,LV_PART_MAIN);
-    lv_obj_set_style_border_width(header_drag,0,LV_PART_MAIN);
-    lv_obj_set_style_pad_all(header_drag,0,LV_PART_MAIN);
-    lv_obj_clear_flag(header_drag,LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_add_flag(header_drag,LV_OBJ_FLAG_CLICKABLE);
     lv_obj_add_event_cb(header_drag,drawer_drag_event,LV_EVENT_ALL,NULL);
     lv_obj_move_foreground(drawer_viewport);
     lv_obj_move_foreground(header_drag);
@@ -706,7 +560,7 @@ esp_err_t board_ui_init(i2c_master_bus_handle_t shared_i2c,
     lvgl_port_unlock();
     ESP_RETURN_ON_ERROR(init_backlight(),TAG,"backlight");
     ready=true;
-    ESP_LOGI(TAG,"UI_READY panel=ST7789 320x240 touch=FT6336 lvgl_stack=10240 animation=sticks3_canvas layout=full_width_engine refresh_ms=16 motion_ms=33 selector=cycle_buttons menu=pull_down drawer_auto_close_ms=%u font_scale=12_28",(unsigned)DRAWER_AUTO_CLOSE_MS);
+    ESP_LOGI(TAG,"UI_READY panel=ST7789 320x240 touch=FT6336 lvgl_stack=10240 animation=powertrain_rig layout=dual_panel_v2 refresh_ms=16 motion_ms=33 selector=cycle_buttons menu=pull_down drawer_auto_close_ms=%u font_scale=compact_8_10",(unsigned)DRAWER_AUTO_CLOSE_MS);
     return ESP_OK;
 }
 
@@ -724,7 +578,7 @@ esp_err_t board_ui_report(void) {
     unsigned auto_off_ms=previous_state.auto_off_ms;
     bool drawer_open=lv_obj_get_y(drawer_panel)==0;
     lvgl_port_unlock();
-    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=sticks3_canvas layout=full_width_engine profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u selector=cycle_buttons menu=pull_down drawer_open=%d drawer_auto_close_ms=%u font_scale=12_28 auto_off_ms=%u",
+    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=powertrain_rig layout=dual_panel_v2 profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u selector=cycle_buttons menu=pull_down drawer_open=%d drawer_auto_close_ms=%u font_scale=compact_8_10 auto_off_ms=%u",
              board_ui_stack_high_water_mark(),ev_profiles[profile].name,ev_exhausts[exhaust].name,
              renders,render_us,refresh_us,draws,drawer_open,
              (unsigned)DRAWER_AUTO_CLOSE_MS,auto_off_ms);
