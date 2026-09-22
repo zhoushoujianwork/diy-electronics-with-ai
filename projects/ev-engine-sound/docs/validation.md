@@ -1,5 +1,30 @@
 # 验证记录与硬件验收
 
+## 2026-09-22 固件 0.3.0 立创实战派实机验证
+
+- 板卡为立创·实战派 ESP32-S3 N16R8，USB 供电；下载目标识别为 ESP32-S3 QFN56
+  rev 0.2、40 MHz 晶振、8 MB PSRAM，固件提交 `7c8c333`，ESP-IDF 5.5.2。
+  bootloader、分区表和 745712 B 应用段写入后均通过 esptool Hash 校验，Flash 参数为
+  16 MB / DIO / 80 MHz，未整片擦除。
+- 应用以 TinyUSB CDC 重新枚举，`STATUS` 回读 `version=0.3.0`、
+  `reset_reason=11`（本次烧录后的 USB 复位）。ES8311/PCA9557 读回正常；
+  `UI_READBACK` 确认 `animation=powertrain_rig`、`selector=cycle_buttons`。
+- 67 秒自动负载测试依次轮换原厂、Akrapovič 风格、Yoshimura 风格、可乐罐和直通；
+  五种状态均收到 `UI_SYNC mode=cycle_buttons`。随后 V12 目标 16000 RPM，连续两次
+  回读实测 15999 RPM。66 个心跳帧计数严格递增，`write_errors=0`、`fault=0`，
+  最大音频合成 3078 / 16000 µs；没有 panic、Guru Meditation、stack overflow、
+  任务启动失败、异常复位或心跳中断。
+- 最低剩余栈 audio/console/heartbeat/LVGL 为 3888/7776/1736/5660 B，均高于
+  1024 B 验收阈值。V12 两次 UI 回读间 13.017 秒增加 372 次渲染，约 28.6 FPS；
+  LVGL 最大渲染 49081 µs 包含首屏，最大状态更新 6527 µs。
+- 自动测试后又捕获到实体触摸：排气按钮从 `stock` 切至 `akrapovic`，油门按钮按下，
+  两次均有对应 `TOUCH` 和 `UI_ACTION result=OK`。这是触摸事件链路证据；颜色、细节和
+  五种排气的主观视觉效果仍需用户现场确认，日志不能代替人眼。
+- 最终安全回读为 `inline4`、`stock`、`running=0`、`rpm=0`、`throttle=0`、
+  `volume=60`，功放输出关闭。证据日志保存在本地忽略目录
+  `build/evidence/v030-*-20260922.log`，不提交原始串口日志。
+- 本固件没有 SD、BLE 或 4G 任务，因此本次结果不覆盖这些未来并发负载。
+
 ## 2026-09-21 固件 0.3.0 进入立创实战派流程
 
 - 将官方视觉语言版本标记为固件 `0.3.0`；ESP-IDF 应用描述、`BOOT` 和 `STATUS`
