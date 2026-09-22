@@ -22,3 +22,4 @@ validation:
   hardware: partial
 notes:
   - Exact board-level validation details are in docs/validation.md.
+  - Firmware 0.4.0 adds the dual-panel engine/exhaust UI, pull-down settings, hold-to-rev, and idle auto-off; device validation remains version-specific.

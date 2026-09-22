@@ -1,5 +1,18 @@
 # Engine Simulator visual reference
 
+## Thanks
+
+Special thanks to **Ange Yaghi (AngeTheGreat)** for creating and openly sharing
+[Engine Simulator](https://github.com/ange-yaghi/engine-sim), and to its community
+for making engine simulation and mechanical visualization more approachable.
+Its visual work was the key reference that helped this embedded project move
+from a generic dashboard to a clearer mechanical cutaway and ignition display.
+
+中文说明：特别感谢 Ange Yaghi（AngeTheGreat）开源 Engine Simulator。本项目的
+默认色板、机械剖面表达、仪表框架与点火展示语言从该项目获得了重要启发，并按照
+MIT License 保留来源与许可。ESP32 固件、触控交互、排气对象与程序化音频由本项目
+重新实现。
+
 The 320×108 dashboard renderer adapts the visual language of Ange Yaghi's
 open-source **Engine Simulator**:
 

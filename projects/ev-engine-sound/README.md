@@ -19,13 +19,14 @@ T-Plane 三缸、直列发动机、V 型发动机、水平对置六缸、平面�
 
 ## 支持硬件
 
-当前立创实战派固件版本为 **0.3.0**，对应官方 Engine Simulator 视觉语言、首页点击
-循环切换发动机/排气和五种程序化排气音色。
+当前立创实战派固件版本为 **0.4.0**。新版把 Engine Simulator 风格发动机剖面和
+排气提升为左右双主栏，首页保留发动机/排气点击循环选择；按住底部油门即启动，松开
+后收油并在默认 3 秒无操作时自动熄火。音量、红线和自动熄火时间收进顶栏下拉菜单。
 
 | 板型 | 显示与控制 | 音频 | 状态 |
 | --- | --- | --- | --- |
 | M5Stack StickS3 K150 | 240×135 ST7789、A/B 按键 | ES8311 + 板载扬声器 | 已烧录验证 |
-| 立创实战派 ESP32-S3 N16R8 | 320×240 ST7789、FT6336 触摸 | ES8311 + PCA9557 | 已烧录验证 |
+| 立创实战派 ESP32-S3 N16R8 | 320×240 ST7789、FT6336 触摸 | ES8311 + PCA9557 | v0.3.0 已实机验证；v0.4.0 待设备重新枚举后烧录 |
 | 历史 ESP32-S3 开发板 | 无 UI | MAX98357A | 已构建验证 |
 
 每种硬件使用独立板级目录：
@@ -36,6 +37,33 @@ firmware/config/boards/
 ├── lichuang_szp
 └── legacy_esp32s3
 ```
+
+## 立创实战派界面与操作
+
+主界面只展示发动机剖面、逐缸点火、当前排气和一只实体感油门把手，不再放置独立的
+开关机或菜单按钮。点击蓝色发动机区或橙色排气区会前进一项并在末尾循环；选择不是
+横滑列表，因此戴手套或单手操作时也容易命中。
+
+![0.4.0 双栏主界面电脑母稿](docs/assets/firmware-ui-v2-master.png)
+
+- **启动与给油：**按住底部油门区，固件自动启动并将油门拉到 100%；松手立即回到
+  0%，发动机进入收油和怠速阶段。
+- **自动熄火：**零油门且转速回落到 0 后开始倒计时，默认 3.0 秒；到时自动停止音频
+  和功放输出。倒计时会在油门区显示，不需要额外的关闭按钮。
+- **快速设置：**从顶栏向下拖出菜单，拖动音量、红线转速或自动熄火等待时间；向上
+  拖回即可关闭。三个值松手后立即生效。
+- **循环选择：**点击 `ENGINE · TAP NEXT` 或 `EXHAUST · TAP NEXT`。原厂、碳纤、
+  钛色、可乐罐和直通五种排气都有独立轮廓与程序化音色。
+
+| 下拉快速设置 | 松开油门后的自动熄火倒计时 |
+| --- | --- |
+| ![音量、红线和自动熄火时间下拉菜单](docs/assets/firmware-ui-v2-drawer-master.png) | ![收油并等待自动熄火](docs/assets/firmware-ui-v2-auto-off-master.png) |
+
+以上是 1280×960 电脑设计母稿，用于检查对齐、文字和层级；真正落板的是同一设计的
+320×240 版本。五种排气的最终像素密度对照如下，可乐罐保留拉环、卷边、白色斜带和
+通用 `COLA` 字标，品牌风格预设不复制厂商 Logo。
+
+![五种排气的 320×240 固件像素对照](docs/assets/firmware-ui-v2-exhausts.png)
 
 ## StickS3 操作
 
@@ -64,10 +92,10 @@ build/render_voice v12 straight build/v12-straight.wav
 
 ## 电脑预览动力总成
 
-发动机、点火显示、排气和油门把手使用与立创实战派固件相同的 320×108、RGB565、
-无堆分配渲染器。画面采用开源 Engine Simulator 的官方默认配色、机械剖面和点火环
-语言，并保留来源与 MIT 许可说明；排气与触控组件为本项目重新设计。无需连接开发板
-即可生成五种排气的 3 倍整数缩放预览：
+发动机、点火显示和排气使用与立创实战派 0.4.0 固件相同的 320×108、RGB565、
+无堆分配渲染器。画面采用开源 Engine Simulator 的默认配色、机械剖面和点火环语言，
+并保留来源与 MIT 许可说明；排气、油门把手与触控组件由本项目重新设计。无需连接
+开发板即可生成五种排气的 3 倍整数缩放预览：
 
 ```sh
 cmake --build build --target render_powertrain
@@ -79,9 +107,9 @@ build/render_powertrain build/ui-preview
 `powertrain-yoshimura.ppm`、`powertrain-tin_can.ppm` 和
 `powertrain-straight.ppm`。整数缩放不使用插值，屏幕上的每个像素都能直接检查。
 仓库还提供可直接用浏览器打开的 [`docs/ui-preview.html`](docs/ui-preview.html)：它按
-320×240 实际布局显示桌面优先候选首页，可实际下拉顶栏、拖拽音量/红线/自动熄火
-设置、点击循环切换发动机与排气，并验证按住油门自动点火、松开后倒计时熄火。
-这些 v2 交互仍是电脑预览，尚未替换已验证的 v0.3.0 真机界面。
+320×240 实际布局演示 0.4.0 交互，可下拉顶栏、拖拽音量/红线/自动熄火设置、点击
+循环切换发动机与排气，并验证按住油门自动点火、松开后倒计时熄火。浏览器页面是交互
+说明工具，不是运行 ESP32 固件的仿真器；真机结论以验证记录和串口日志为准。
 
 五种排气预览（从左到右、从上到下依次为原厂、Akrapovič 风格碳纤罐、Yoshimura
 风格钛色罐、可乐罐和完全移除消声器）：
@@ -96,9 +124,43 @@ build/render_powertrain build/ui-preview
 上游参考、固定提交和完整许可见
 [`docs/third-party/engine-sim.md`](docs/third-party/engine-sim.md)。
 
-## 构建 StickS3 固件
+## 致谢上游
+
+特别感谢 **Ange Yaghi（AngeTheGreat）** 开源
+[Engine Simulator](https://github.com/ange-yaghi/engine-sim)。本项目的默认色板、机械
+剖面表达、仪表框架与点火展示语言从该项目获得了重要启发，并按照 MIT License 保留
+来源与许可。ESP32 固件、触控交互、五种排气对象与程序化音频由本项目重新实现。
+
+也感谢 Engine Simulator 社区持续分享发动机结构、声浪模拟和可视化方面的知识。
+品牌风格排气名称仅用于描述非官方调音方向，不代表上游作者或相关厂商参与、授权或
+背书本项目。
+
+## 构建与烧录立创实战派
 
 项目使用 ESP-IDF 5.5。在 `firmware/` 目录执行：
+
+```sh
+. "$IDF_PATH/export.sh"
+
+idf.py -B build-lichuang \
+  -DSDKCONFIG=build-lichuang/sdkconfig \
+  '-DSDKCONFIG_DEFAULTS=sdkconfig.defaults;config/boards/lichuang_szp/sdkconfig.defaults' \
+  -DEV_BOARD=lichuang_szp \
+  -DIDF_TARGET=esp32s3 build
+
+idf.py -B build-lichuang -p /dev/cu.YOUR_DEVICE flash
+mkdir -p build-lichuang/evidence
+python3 ../tools/verify_device.py /dev/cu.YOUR_DEVICE \
+  --log build-lichuang/evidence/device.log
+```
+
+烧录前用 VID/PID、USB 物理位置和描述三项核对目标板，不能只凭变化的串口编号判断。
+验证脚本运行 67 秒并最终停机，原始串口日志应保存在本地忽略目录；提交文档只保留
+板卡版本、固件提交、供电方式、持续时间、验收条件和脱敏摘要。
+
+## 构建 StickS3 固件
+
+同样在 `firmware/` 目录执行：
 
 ```sh
 . "$IDF_PATH/export.sh"
