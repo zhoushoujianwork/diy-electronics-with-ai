@@ -12,6 +12,7 @@
 #define M5PM1_REG_I2C_CONFIG 0x09
 #define M5PM1_REG_GPIO_MODE 0x10
 #define M5PM1_REG_GPIO_OUTPUT 0x11
+#define M5PM1_REG_GPIO_INPUT 0x12
 #define M5PM1_REG_GPIO_DRIVE 0x13
 #define M5PM1_REG_GPIO_FUNCTION0 0x16
 #define M5PM1_BOOST_ENABLE (1U << 3)
@@ -75,6 +76,7 @@ esp_err_t board_power_init(void)
     /* StickS3 LCD rail is PM1 GPIO2. Set the level before changing direction. */
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_OUTPUT, M5PM1_GPIO2, true), TAG, "LCD rail high");
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_FUNCTION0, M5PM1_GPIO2, false), TAG, "GPIO2 function");
+    ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_DRIVE, M5PM1_GPIO2, false), TAG, "GPIO2 push-pull");
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_MODE, M5PM1_GPIO2, true), TAG, "GPIO2 output");
     /* Official M5PM1 setExtOutput(true): POWER_CONFIG.BOOST_EN. */
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_POWER_CONFIG, M5PM1_BOOST_ENABLE, true), TAG, "Grove 5V boost");
@@ -86,13 +88,29 @@ esp_err_t board_power_init(void)
 esp_err_t board_audio_prepare(void)
 {
     ESP_RETURN_ON_FALSE(bus && pm1, ESP_ERR_INVALID_STATE, TAG, "power not initialized");
-    /* Set the amplifier level before making PM1 GPIO3 an output. */
+    /* PM1 GPIO3 controls the AW8737 amplifier; keep it muted while the codec starts. */
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_OUTPUT, M5PM1_GPIO3, false), TAG, "amp mute");
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_FUNCTION0, M5PM1_GPIO3, false), TAG, "GPIO3 function");
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_DRIVE, M5PM1_GPIO3, false), TAG, "GPIO3 push-pull");
     ESP_RETURN_ON_ERROR(update_bits(M5PM1_REG_GPIO_MODE, M5PM1_GPIO3, true), TAG, "GPIO3 output");
     vTaskDelay(pdMS_TO_TICKS(100));
+
+    uint8_t power = 0, mode = 0, output = 0, input = 0, drive = 0, function = 0;
+    ESP_RETURN_ON_ERROR(device_read(pm1, M5PM1_REG_POWER_CONFIG, &power), TAG, "PM1 power readback");
+    ESP_RETURN_ON_ERROR(device_read(pm1, M5PM1_REG_GPIO_MODE, &mode), TAG, "PM1 mode readback");
+    ESP_RETURN_ON_ERROR(device_read(pm1, M5PM1_REG_GPIO_OUTPUT, &output), TAG, "PM1 output readback");
+    ESP_RETURN_ON_ERROR(device_read(pm1, M5PM1_REG_GPIO_INPUT, &input), TAG, "PM1 input readback");
+    ESP_RETURN_ON_ERROR(device_read(pm1, M5PM1_REG_GPIO_DRIVE, &drive), TAG, "PM1 drive readback");
+    ESP_RETURN_ON_ERROR(device_read(pm1, M5PM1_REG_GPIO_FUNCTION0, &function), TAG,
+                        "PM1 function readback");
+    ESP_LOGI(TAG,
+             "AUDIO_RAIL_READBACK power=0x%02x mode=0x%02x out=0x%02x in=0x%02x drive=0x%02x function=0x%02x",
+             power, mode, output, input, drive, function);
+    ESP_RETURN_ON_FALSE((mode & M5PM1_GPIO2) && (output & M5PM1_GPIO2) &&
+                        (input & M5PM1_GPIO2) && !(drive & M5PM1_GPIO2),
+                        ESP_ERR_INVALID_RESPONSE, TAG, "audio power rail is not high");
     ESP_RETURN_ON_ERROR(add_device(ES8311_ADDRESS, &codec), TAG, "add ES8311");
+    ESP_LOGI(TAG, "AUDIO_CODEC_FOUND addr=0x%02x", ES8311_ADDRESS);
 
     /* Validated StickS3 setup: 16 kHz, MCLK=256 Fs, 16-bit stereo I2S slots. */
     static const uint8_t sequence[][2] = {
