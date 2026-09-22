@@ -1,7 +1,7 @@
 schema: 1
 id: m5stack-sticks3-gps-motobox
 name: M5Stack StickS3 GPS to MotoBox
-kind: demo
+kind: project
 status: prototype
 summary: Read an AT6668 GNSS Unit on StickS3 and upload location telemetry to MotoBox over MQTT TLS.
 owners:
