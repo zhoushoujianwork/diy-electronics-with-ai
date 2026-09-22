@@ -6,10 +6,17 @@
   malformed checksum digits, invalid dates and fixes, mismatched sentence times, midnight rollover, protocol
   fields and units, omission of location without a fix, queue overflow with an in-flight head, PUBACK removal
   and reconnect retry.
-- ESP-IDF 5.5.2 clean build with the binding-code firmware: passed. Application size was `0xacd00`; the 3 MiB application partition had
-  77% free.
+- ESP-IDF 5.5.2 clean build with the voice-enabled binding firmware: passed. Application size was `0x181b20`;
+  the 3 MiB application partition had 50% free.
 - StickS3 K150 flash: passed twice on `/dev/cu.usbmodem21101`, including flash hash verification. The exact
   hardware was StickS3 K150 + Unit GPS v1.1, powered from USB-C with Grove 5 V enabled by M5PM1.
+- Voice-enabled hardware run: passed on the same StickS3 K150 + Unit GPS v1.1 and USB-C power arrangement.
+  The boot log reached `AUDIO_READY`, `BINDING_VOICE_READY` and the codec/PM1 readback checks. A real
+  authenticated production request then reached `BINDING_CODE_READY`, `BINDING_VOICE_START` and
+  `BINDING_VOICE_DONE`; the user confirmed that the speaker audibly read the six digits. The 4096-byte voice
+  task retained 2092 bytes at its lowest observed high-water mark after playback. Serial monitoring continued
+  for about 80 seconds without panic, Guru Meditation, stack overflow, task-start failure, reset loop, USB
+  reconnect or heartbeat loss. The flashed source is recorded in commit `12f0348`.
 - Final flashed build serial run: passed for more than 6 minutes through sequence 71. Every queued frame
   received a QoS 1 PUBACK, queue depth returned to zero, `dropped` remained zero, heap stayed near 8.34 MiB,
   and no panic, reset, task-start failure or USB reconnect appeared. Its observed free-stack minima were GPS
@@ -36,8 +43,8 @@
   guarded by a persistent host firewall rule so only the Nginx loopback upstream can reach it. The ACME deploy
   hook now validates the certificate/key pair, restarts the gateway and reloads Nginx; timestamped rollback
   copies were retained on the server.
-- GPS outdoor fix, moving track, server-code binding on the updated firmware, mini-program real-device bind and
-  location sharing: pending. The earlier MQTT and display run predates the binding-code firmware change.
+- GPS outdoor fix, moving track, mini-program real-device bind and location sharing: pending. The authenticated
+  server-code request, on-screen display and speaker playback are hardware-validated.
 - Mini-program host tests and JavaScript syntax checks: passed. WeChat DevTools recognized the production
   AppID, but preview compilation was blocked because the local DevTools session requires a fresh login.
 - Status remains `prototype` until the real-device checks below are complete.
@@ -51,16 +58,18 @@ The lowest observed high-water marks during Wi-Fi + WSS/TLS + LCD + GNSS UART op
 | GPS UART/parser | 4096 bytes | 1516 bytes | pass |
 | Telemetry/MQTT queue | 6144 bytes | 3072 bytes | pass |
 | LVGL UI | 8192 bytes | 4172 bytes | pass |
+| Binding-code voice | 4096 bytes | 2092 bytes | pass |
 | Heartbeat/diagnostics | 4096 bytes | 1832 bytes | pass |
 
-Each retained at least 25% and at least 1024 bytes. The validated firmware and Demo sources are recorded in
-repository commit `c8085cb`.
+Each retained at least 25% and at least 1024 bytes. The longer Wi-Fi/MQTT/GNSS run used the earlier firmware
+recorded in repository commit `c8085cb`; the speaker playback and voice-task measurement use commit `12f0348`.
 
 ## Remaining acceptance work
 
-The indoor run does not prove GNSS positioning. Move the powered unit outdoors with an open sky view, sign in
-to an authorized MotoBox mini-program release, enter the on-screen one-time code, and complete the movement
-and sharing checks below. Do not change the manifest to `hardware-verified` until this succeeds.
+The indoor run does not prove GNSS positioning or mini-program consumption of the code. Move the powered unit
+outdoors with an open sky view, sign in to an authorized MotoBox mini-program release, enter the spoken or
+on-screen one-time code, and complete the movement and sharing checks below. Do not change the manifest to
+`hardware-verified` until this succeeds.
 
 ## Hardware acceptance procedure
 
@@ -75,8 +84,9 @@ Pass criteria:
 4. Every task retains at least 25% and at least 1024 bytes of stack at the observed high-water mark.
 5. MQTT reconnects, queued frames drain in sequence after PUBACK, and the drop counter remains zero.
 6. MotoBox `latest` and `events` contain the device and preserve sample time across the outage.
-7. The server returns a six-digit code only after the authenticated MQTT request; the mini program consumes it
-   once, binds the matching device, and shows the current point and historical track.
+7. The server returns a six-digit code only after the authenticated MQTT request; the device displays and
+   speaks it, then the mini program consumes it once, binds the matching device, and shows the current point
+   and historical track. The request/display/speaker portion has passed; mini-program consumption remains.
 
 Keep the complete serial log and private route outside Git. Commit only a sanitized summary with coarse or
 synthetic coordinates.

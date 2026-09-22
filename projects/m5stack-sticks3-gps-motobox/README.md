@@ -1,8 +1,8 @@
 # StickS3 GPS → MotoBox
 
 This open project turns an M5Stack StickS3 into a Wi-Fi GNSS tracker. It reads an M5Stack Unit GPS v1.1,
-uploads MotoBox-compatible telemetry over MQTT TLS, and displays a server-generated one-time code that the
-MotoBox mini program uses to bind the device.
+uploads MotoBox-compatible telemetry over MQTT TLS, and displays and speaks a server-generated one-time code
+that the MotoBox mini program uses to bind the device.
 
 The project remains a `prototype`: indoor connectivity and offline recovery have been validated, while outdoor
 positioning, moving tracks and mini-program real-device acceptance are still pending. See
@@ -64,12 +64,18 @@ The firmware rejects empty credentials and a broker URI that does not begin with
 server hostname and public certificate chain through the ESP-IDF certificate bundle. Do not disable TLS
 verification to work around a broker certificate error.
 
+The Mandarin binding prompt and digit clips are checked in as 16 kHz mono PCM, so normal firmware builds do
+not require a speech service. `firmware/tools/generate_binding_voice.py` reproduces them on macOS with the
+Tingting system voice and `ffmpeg` when the wording or audio processing needs to change.
+
 ## Bind with the MotoBox mini program
 
 1. Wait for `Wi-Fi UP` and `MQTT UP`. After the authenticated MQTT session is ready, the StickS3 requests a
-   six-digit one-time code from MotoBox and opens the binding page automatically.
-2. Open the MotoBox mini program, select **添加设备**, and enter the code shown on the StickS3. The code is valid
-   for ten minutes and can be used once. Press A to switch between the code and status pages.
+   six-digit one-time code from MotoBox, opens the binding page, and says “绑定验证码” followed by the six
+   digits. The announcement plays once for each new code; restart the device to request and hear the current
+   code again if it was missed.
+2. Open the MotoBox mini program, select **添加设备**, and enter the code spoken or shown by the StickS3. The
+   code is valid for ten minutes and can be used once. Press A to switch between the code and status pages.
 3. Open the MotoBox WeChat mini program and sign in. Its availability may be limited to the current official or
    invited experience release; use the access route supplied with the demonstration. The latest repository
    evidence only confirms an uploaded development build. It does not claim that every WeChat user can open a
@@ -104,11 +110,15 @@ so that display DMA buffers and FreeRTOS task stacks retain sufficient internal 
 
 ```text
 POWER_READY lcd=on grove_5v=on pm1=0x6e
+AUDIO_READY amp=off format=0x0c volume=0xbf
+BINDING_VOICE_READY sample_rate=16000 task_stack=4096
 GNSS_READY uart=1 baud=115200 rx=10 tx=9
 WIFI_CONNECTED
 MQTT_CONNECTED uri=wss://...
 BINDING_REQUESTED msg_id=...
 BINDING_CODE_READY expires_ms=...
+BINDING_VOICE_START digits=6
+BINDING_VOICE_DONE stack_free=...
 GNSS_FIX ... sat=8 hdop=1.1 ...
 MQTT_ACK seq=1 ...
 HEARTBEAT gps=1 ... queue=0 dropped=0 ...
