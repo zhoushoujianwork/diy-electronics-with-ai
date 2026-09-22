@@ -2,16 +2,30 @@ idf_component_register(
     SRCS
         "main.c"
         "board.c"
+        "binding_announcement.c"
         "binding_protocol.c"
         "gnss_parser.c"
         "telemetry_payload.c"
         "telemetry_queue.c"
         "ui.c"
     INCLUDE_DIRS "."
+    EMBED_FILES
+        "assets/binding_code.pcm"
+        "assets/digit_0.pcm"
+        "assets/digit_1.pcm"
+        "assets/digit_2.pcm"
+        "assets/digit_3.pcm"
+        "assets/digit_4.pcm"
+        "assets/digit_5.pcm"
+        "assets/digit_6.pcm"
+        "assets/digit_7.pcm"
+        "assets/digit_8.pcm"
+        "assets/digit_9.pcm"
     REQUIRES
         esp_app_format
         esp_driver_gpio
         esp_driver_i2c
+        esp_driver_i2s
         esp_driver_spi
         esp_driver_uart
         esp_driver_ledc

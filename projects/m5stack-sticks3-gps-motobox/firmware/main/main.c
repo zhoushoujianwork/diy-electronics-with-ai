@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "board.h"
+#include "binding_announcement.h"
 #include "binding_protocol.h"
 #include "demo_status.h"
 #include "driver/uart.h"
@@ -60,6 +61,7 @@ static int binding_subscribe_id;
 static uint64_t next_sequence = 1;
 static bool sntp_started;
 static bool clock_trusted;
+static bool binding_voice_ready;
 
 static int64_t wall_time_ms(void)
 {
@@ -271,6 +273,12 @@ static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void
                 status.binding_expires_ms = response.expires_ms;
                 portEXIT_CRITICAL(&state_lock);
                 ESP_LOGI(TAG, "BINDING_CODE_READY expires_ms=%" PRId64, response.expires_ms);
+                if (binding_voice_ready) {
+                    esp_err_t voice_err = binding_announcement_enqueue(response.code);
+                    if (voice_err != ESP_OK) {
+                        ESP_LOGE(TAG, "BINDING_VOICE_QUEUE_FAILED err=%s", esp_err_to_name(voice_err));
+                    }
+                }
             } else {
                 ESP_LOGW(TAG, "BINDING_RESPONSE_REJECTED");
             }
@@ -383,13 +391,14 @@ static void heartbeat_task(void *unused)
         ui_set_status(&current);
         ESP_LOGI(TAG,
             "HEARTBEAT gps=%d sat=%d fix_age_ms=%u wifi=%d mqtt=%d utc=%d queue=%u dropped=%u "
-            "stack_gps=%u stack_telemetry=%u stack_ui=%u stack_heartbeat=%u heap=%u",
+            "stack_gps=%u stack_telemetry=%u stack_ui=%u stack_voice=%u stack_heartbeat=%u heap=%u",
             current.fix_valid, current.satellites, current.fix_age_ms,
             current.wifi_connected, current.mqtt_connected, current.time_trusted,
             current.queue_depth, current.queue_dropped,
             (unsigned)uxTaskGetStackHighWaterMark(gps_task_handle),
             (unsigned)uxTaskGetStackHighWaterMark(telemetry_task_handle),
-            ui_stack_high_water_mark(), (unsigned)uxTaskGetStackHighWaterMark(NULL),
+            ui_stack_high_water_mark(), binding_announcement_stack_high_water_mark(),
+            (unsigned)uxTaskGetStackHighWaterMark(NULL),
             (unsigned)esp_get_free_heap_size());
         vTaskDelay(pdMS_TO_TICKS(10000));
     }
@@ -420,6 +429,12 @@ void app_main(void)
     ESP_LOGI(TAG, "BOOT device_id=%s model=m5stack-sticks3-gps firmware=%s reset_reason=%d",
              device_id, esp_app_get_description()->version, esp_reset_reason());
     ESP_ERROR_CHECK(board_power_init());
+    esp_err_t voice_err = binding_announcement_init();
+    if (voice_err == ESP_OK) {
+        binding_voice_ready = true;
+    } else {
+        ESP_LOGE(TAG, "BINDING_VOICE_UNAVAILABLE err=%s", esp_err_to_name(voice_err));
+    }
     ESP_ERROR_CHECK(ui_init(device_id));
 
     queue_mutex = xSemaphoreCreateMutex();
