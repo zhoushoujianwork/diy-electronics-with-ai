@@ -13,7 +13,10 @@ cc -std=c11 -Wall -Wextra -Werror -I"$main" \
   "$here/test_telemetry_queue.c" "$main/telemetry_queue.c" -o "$out/test_telemetry_queue"
 cc -std=c11 -Wall -Wextra -Werror -I"$main" \
   "$here/test_telemetry_payload.c" "$main/telemetry_payload.c" -o "$out/test_telemetry_payload"
+cc -std=c11 -Wall -Wextra -Werror -I"$main" \
+  "$here/test_binding_protocol.c" "$main/binding_protocol.c" -o "$out/test_binding_protocol"
 
 "$out/test_gnss_parser"
 "$out/test_telemetry_queue"
 "$out/test_telemetry_payload"
+"$out/test_binding_protocol"
