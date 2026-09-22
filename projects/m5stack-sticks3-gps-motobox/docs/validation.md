@@ -17,6 +17,18 @@
   task retained 2092 bytes at its lowest observed high-water mark after playback. Serial monitoring continued
   for about 80 seconds without panic, Guru Meditation, stack overflow, task-start failure, reset loop, USB
   reconnect or heartbeat loss. The flashed source is recorded in commit `12f0348`.
+- Cold-start binding-voice regression: fixed and revalidated on 2026-09-22 with the same StickS3 K150,
+  Unit GPS v1.1 and USB-C power arrangement. PM1 GPIO2, which enables the shared LCD/ES8311 3.3 V rail,
+  had retained its open-drain reset state: its output latch read high while its physical input read low, so
+  ES8311 did not acknowledge at `0x18`. Configuring GPIO2 as push-pull before making it an output produced
+  `mode=0x0c out=0x04 in=0x15 drive=0x13`, followed by `AUDIO_CODEC_FOUND`, `AUDIO_READY`,
+  `BINDING_CODE_READY`, `BINDING_VOICE_START` and `BINDING_VOICE_DONE`. The real production response drove
+  one six-digit playback; the user confirmed hearing it and completing the mini-program binding. The UI also
+  logged `PAGE bind reason=code_ready`, confirming that it switched to the page that renders the same server
+  code. The 4096-byte voice task again retained 2092 bytes. Serial monitoring continued for 70 seconds with
+  stable ten-second heartbeats and no panic, Guru Meditation, stack overflow, task-start failure, reset loop
+  or USB reconnect. The complete serial log remains outside Git at `/tmp/sticks3-binding-gpio2-fixed.log`;
+  the flashed source is the firmware in this validation commit.
 - Final flashed build serial run: passed for more than 6 minutes through sequence 71. Every queued frame
   received a QoS 1 PUBACK, queue depth returned to zero, `dropped` remained zero, heap stayed near 8.34 MiB,
   and no panic, reset, task-start failure or USB reconnect appeared. Its observed free-stack minima were GPS
@@ -43,8 +55,8 @@
   guarded by a persistent host firewall rule so only the Nginx loopback upstream can reach it. The ACME deploy
   hook now validates the certificate/key pair, restarts the gateway and reloads Nginx; timestamped rollback
   copies were retained on the server.
-- GPS outdoor fix, moving track, mini-program real-device bind and location sharing: pending. The authenticated
-  server-code request, on-screen display and speaker playback are hardware-validated.
+- GPS outdoor fix, moving track and mini-program location sharing: pending. The authenticated server-code
+  request, on-screen display, speaker playback and mini-program real-device binding are hardware-validated.
 - Mini-program host tests and JavaScript syntax checks: passed. WeChat DevTools recognized the production
   AppID, but preview compilation was blocked because the local DevTools session requires a fresh login.
 - Status remains `prototype` until the real-device checks below are complete.
@@ -66,10 +78,9 @@ recorded in repository commit `c8085cb`; the speaker playback and voice-task mea
 
 ## Remaining acceptance work
 
-The indoor run does not prove GNSS positioning or mini-program consumption of the code. Move the powered unit
-outdoors with an open sky view, sign in to an authorized MotoBox mini-program release, enter the spoken or
-on-screen one-time code, and complete the movement and sharing checks below. Do not change the manifest to
-`hardware-verified` until this succeeds.
+The indoor run does not prove GNSS positioning or the mini-program location views. Move the powered unit outdoors
+with an open sky view and complete the movement and sharing checks below. Do not change the manifest to
+`hardware-verified` until those checks succeed.
 
 ## Hardware acceptance procedure
 
@@ -86,7 +97,8 @@ Pass criteria:
 6. MotoBox `latest` and `events` contain the device and preserve sample time across the outage.
 7. The server returns a six-digit code only after the authenticated MQTT request; the device displays and
    speaks it, then the mini program consumes it once, binds the matching device, and shows the current point
-   and historical track. The request/display/speaker portion has passed; mini-program consumption remains.
+   and historical track. The request, display, speaker and one-time mini-program binding have passed; the
+   current-point and historical-track views remain pending until outdoor GNSS validation.
 
 Keep the complete serial log and private route outside Git. Commit only a sanitized summary with coarse or
 synthetic coordinates.
