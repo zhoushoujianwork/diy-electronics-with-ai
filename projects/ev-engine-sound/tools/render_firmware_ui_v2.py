@@ -58,7 +58,7 @@ def frame(draw, bounds, title, right=None):
         text(draw, (bounds[2] - 5, bounds[1] + 4), right, 6, GRID, "ra")
 
 
-def draw_header(draw):
+def draw_header(draw, rpm="4200 RPM", state="ACCEL", state_color=ORANGE):
     draw.rectangle(box(0, 0, 319, 27), outline=GRID, width=sc(1))
     # Compact upstream-inspired A mark, separated from the project name.
     draw.polygon([(sc(5), sc(5)), (sc(11), sc(5)), (sc(8), sc(21))], fill=FG)
@@ -67,15 +67,15 @@ def draw_header(draw):
     text(draw, (21, 5), "EV ENGINE", 7)
     text(draw, (21, 15), "SIMULATOR", 4.5, GRID)
     draw.ellipse(box(91, 10, 97, 16), fill=RED)
-    text(draw, (102, 6), "4200 RPM", 7)
-    text(draw, (174, 7), "ACCEL", 6, ORANGE)
-    for x, label_value, width in ((219, "START", 45), (269, "SET", 43)):
-        draw.rectangle(box(x, 3, x + width, 24), outline=GRID, width=sc(1))
-        text(draw, (x + width / 2, 13.5), label_value, 5.5, FG, "mm")
+    text(draw, (102, 6), rpm, 7)
+    text(draw, (174, 7), state, 6, state_color)
+    # The whole header is the gesture target. This is an affordance, not a menu button.
+    text(draw, (313, 5), "SETTINGS", 5.5, FG, "ra")
+    text(draw, (313, 15), "PULL DOWN  V", 4.2, GRID, "ra")
 
 
 def draw_engine_panel(image, draw):
-    frame(draw, (0, 28, 172, 136), "ENGINE CUTAWAY", "2C / 270")
+    frame(draw, (0, 28, 171, 136), "ENGINE CUTAWAY", "2C / 270")
     source = Image.open(ENGINE_SOURCE).convert("RGB")
     # Keep the official geometry intact; crop only excess near-black breathing room.
     source = ImageOps.fit(source, (sc(159), sc(88)), method=Image.Resampling.LANCZOS,
@@ -93,7 +93,7 @@ def draw_engine_panel(image, draw):
 
 def draw_exhaust(draw, kind):
     label_value = dict((key, title) for title, key in EXHAUSTS)[kind]
-    frame(draw, (171, 28, 319, 136), "EXHAUST", label_value)
+    frame(draw, (172, 28, 319, 136), "EXHAUST", label_value)
 
     # Two exhaust primaries meet on a shared datum before the selected can.
     line(draw, [(178, 54), (190, 66), (207, 73)], PINK, 3)
@@ -126,7 +126,7 @@ def draw_exhaust(draw, kind):
         text(draw, (254, 74), "TI", 7, BG, "mm")
     elif kind == "tin_can":
         draw.rectangle(box(205, 54, 301, 93), fill="#bd1831", outline="#e54b59", width=sc(2))
-        draw.rectangle(box(209, 51, 88 + 213, 56), fill="#dce0e2")
+        draw.rectangle(box(209, 51, 301, 56), fill="#dce0e2")
         draw.rectangle(box(209, 92, 301, 97), fill="#aeb4b7")
         draw.ellipse(box(216, 52, 232, 58), outline=GRID, width=sc(1))
         line(draw, [(216, 89), (290, 57)], FG, 2)
@@ -160,35 +160,75 @@ def draw_selector(draw, x, title, value, accent):
     text(draw, (x + 145, 159), ">", 8, accent, "mm")
 
 
-def draw_footer(draw, exhaust_name):
+def draw_throttle(draw, mode="active", remaining=3.0):
+    accent = RED if mode == "active" else GRID
+    draw.rectangle(box(5, 184, 314, 231), outline=accent, width=sc(1))
+    text(draw, (14, 190), "THROTTLE INPUT", 4.5, GRID)
+    if mode == "active":
+        text(draw, (14, 201), "HOLD TO REV", 7, FG)
+        text(draw, (14, 217), "RELEASE  =  AUTO OFF 3.0 s", 4.5, GRID)
+    else:
+        text(draw, (14, 201), "THROTTLE RELEASED", 6.5, FG)
+        text(draw, (14, 216), f"AUTO OFF IN {remaining:.1f} s", 5.5, ORANGE)
+        # A quiet countdown line communicates that no separate stop control is required.
+        draw.rectangle(box(14, 225, 157, 228), fill=DIM)
+        draw.rectangle(box(14, 225, 14 + 143 * remaining / 3.0, 228), fill=ORANGE)
+
+    # Mechanical twist-grip, large enough to remain legible on the physical 320x240 screen.
+    line(draw, [(176, 207), (201, 207)], "#bfc3c5", 4)
+    draw.rectangle(box(196, 197, 295, 217), fill="#25292c", outline="#4d5154", width=sc(1))
+    for x in range(202, 290, 8):
+        draw.rectangle(box(x, 198, x + 3, 216), fill=BG)
+    draw.rectangle(box(295, 196, 307, 218), fill=ORANGE if mode == "active" else "#6e4b2f")
+    line(draw, [(175, 203), (194, 203)], "#e1e3e4", 1)
+    text(draw, (252, 222), "PRESS + HOLD", 4.2, FG if mode == "active" else GRID, "ma")
+
+
+def draw_footer(draw, exhaust_name, mode="active", remaining=3.0):
     draw_selector(draw, 5, "ENGINE", "2C  270 P-TWIN", BLUE)
     draw_selector(draw, 162, "EXHAUST", exhaust_name, ORANGE)
-    text(draw, (8, 185), "REDLINE", 4.5, GRID)
-    text(draw, (8, 194), "9000 RPM", 6, FG)
-    draw.rectangle(box(8, 210, 207, 214), fill=DIM)
-    draw.rectangle(box(8, 210, 150, 214), fill=ORANGE)
-    draw.rectangle(box(146, 207, 152, 217), fill=YELLOW)
-
-    # The actual control doubles as the requested throttle-grip illustration.
-    draw.rectangle(box(216, 184, 312, 231), outline=RED, width=sc(1))
-    text(draw, (264, 189), "THROTTLE", 4.5, GRID, "ma")
-    line(draw, [(225, 204), (298, 204)], "#aeb2b5", 3)
-    draw.rectangle(box(237, 197, 290, 211), fill="#262a2d")
-    for x in range(241, 287, 6):
-        draw.rectangle(box(x, 198, x + 2, 210), fill=BG)
-    draw.rectangle(box(290, 197, 298, 211), fill=ORANGE)
-    text(draw, (264, 222), "HOLD TO REV", 4.5, FG, "mm")
-    text(draw, (8, 228), "FW 0.3.0  ·  ENGINE SIM VISUAL / MIT", 3.8, GRID)
+    draw_throttle(draw, mode, remaining)
+    text(draw, (8, 234), "DESIGN PREVIEW  ·  ENGINE SIM VISUAL / MIT", 3.5, GRID)
 
 
-def render(kind):
+def draw_settings_drawer(draw, volume=60, redline=9000, auto_off=3.0):
+    """Draw the fully-open pull-down panel over the mechanical view."""
+    draw.rectangle(box(0, 28, 319, 139), fill="#121517", outline=GRID, width=sc(1))
+    text(draw, (10, 33), "QUICK SETTINGS", 7, FG)
+    text(draw, (309, 34), "DRAG UP TO CLOSE", 4.2, GRID, "ra")
+    line(draw, [(9, 47), (310, 47)], DIM, .6)
+
+    def slider(y, label_value, value_text, ratio, accent):
+        text(draw, (10, y), label_value, 5.5, FG)
+        draw.rectangle(box(91, y + 2, 263, y + 6), fill=DIM)
+        knob_x = 91 + 172 * ratio
+        draw.rectangle(box(91, y + 2, knob_x, y + 6), fill=accent)
+        draw.rectangle(box(knob_x - 2, y - 1, knob_x + 3, y + 9), fill=YELLOW)
+        text(draw, (309, y - 1), value_text, 5.5, accent, "ra")
+
+    slider(55, "VOLUME", f"{volume}%", volume / 100.0, BLUE)
+    slider(82, "REDLINE", f"{redline} RPM", (redline - 6000) / 10000.0, ORANGE)
+    slider(109, "AUTO OFF", f"{auto_off:.1f} s", (auto_off - 1.0) / 7.0, PINK)
+    line(draw, [(140, 132), (180, 132)], GRID, 2)
+    text(draw, (160, 135), "^", 4, GRID, "mm")
+
+
+def render(kind, view="active"):
     image = Image.new("RGB", (W * S, H * S), BG)
     draw = ImageDraw.Draw(image)
-    draw_header(draw)
+    if view == "auto_off":
+        draw_header(draw, "1200 RPM", "COAST", YELLOW)
+    else:
+        draw_header(draw)
     draw_engine_panel(image, draw)
     draw_exhaust(draw, kind)
     title = dict((key, name) for name, key in EXHAUSTS)[kind]
-    draw_footer(draw, title)
+    if view == "auto_off":
+        draw_footer(draw, title, "auto_off", 2.4)
+    else:
+        draw_footer(draw, title)
+    if view == "drawer":
+        draw_settings_drawer(draw)
     # BOX keeps the 4x layout grid crisp while still averaging diagonal geometry.
     exact = image.resize((W, H), Image.Resampling.BOX)
     return image, exact
@@ -210,6 +250,18 @@ def main():
     main_screen.resize((W * 4, H * 4), Image.Resampling.NEAREST).save(
         ASSETS / "firmware-ui-v2-review.png", optimize=True)
 
+    drawer_master, drawer_exact = render("tin_can", "drawer")
+    drawer_master.save(ASSETS / "firmware-ui-v2-drawer-master.png", optimize=True)
+    drawer_exact.save(ASSETS / "firmware-ui-v2-drawer.png", optimize=True)
+    drawer_exact.resize((W * 4, H * 4), Image.Resampling.NEAREST).save(
+        ASSETS / "firmware-ui-v2-drawer-review.png", optimize=True)
+
+    auto_off_master, auto_off_exact = render("tin_can", "auto_off")
+    auto_off_master.save(ASSETS / "firmware-ui-v2-auto-off-master.png", optimize=True)
+    auto_off_exact.save(ASSETS / "firmware-ui-v2-auto-off.png", optimize=True)
+    auto_off_exact.resize((W * 4, H * 4), Image.Resampling.NEAREST).save(
+        ASSETS / "firmware-ui-v2-auto-off-review.png", optimize=True)
+
     contact = Image.new("RGB", (W * 3, H * 2), BG)
     for i, (_, screen) in enumerate(screens):
         x = (i % 3) * W
@@ -219,6 +271,8 @@ def main():
         ASSETS / "firmware-ui-v2-exhausts.png", optimize=True)
     print(ASSETS / "firmware-ui-v2-master.png")
     print(ASSETS / "firmware-ui-v2-review.png")
+    print(ASSETS / "firmware-ui-v2-drawer-review.png")
+    print(ASSETS / "firmware-ui-v2-auto-off-review.png")
     print(ASSETS / "firmware-ui-v2-exhausts.png")
 
 

@@ -79,7 +79,9 @@ build/render_powertrain build/ui-preview
 `powertrain-yoshimura.ppm`、`powertrain-tin_can.ppm` 和
 `powertrain-straight.ppm`。整数缩放不使用插值，屏幕上的每个像素都能直接检查。
 仓库还提供可直接用浏览器打开的 [`docs/ui-preview.html`](docs/ui-preview.html)：它按
-320×240 实际布局显示首页，并允许点击发动机与排气按钮验证单步循环切换。
+320×240 实际布局显示桌面优先候选首页，可实际下拉顶栏、拖拽音量/红线/自动熄火
+设置、点击循环切换发动机与排气，并验证按住油门自动点火、松开后倒计时熄火。
+这些 v2 交互仍是电脑预览，尚未替换已验证的 v0.3.0 真机界面。
 
 五种排气预览（从左到右、从上到下依次为原厂、Akrapovič 风格碳纤罐、Yoshimura
 风格钛色罐、可乐罐和完全移除消声器）：

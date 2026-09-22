@@ -25,7 +25,7 @@
 | `docs/assets/engine-sim-official-concept.png` | 1920×1080 项目介绍主视觉 | 直接使用 MIT 上游发动机截图素材确定桌面构图 |
 | `docs/assets/powertrain-exhaust-preview.png` | 五种排气对照图 | 来自固件共用 RGB565 渲染器 |
 | `docs/assets/powertrain-*.png` | 单个排气近看 | 3×整数缩放，不做插值 |
-| `docs/ui-preview.html` | 320×240 交互预览 | 可点击发动机与排气选择器验证循环逻辑 |
+| `docs/ui-preview.html` | 320×240 交互预览 | 可下拉顶栏、拖拽设置、按住油门，并验证自动熄火与循环切换 |
 | `docs/third-party/engine-sim.md` | 来源与许可 | 固定上游提交、改编范围和完整 MIT 声明 |
 
 ## 桌面优先 v2（等待确认，尚未移植）
@@ -33,12 +33,19 @@
 - `docs/assets/firmware-ui-v2-master.png`：1280×960 平滑电脑设计母稿。
 - `docs/assets/firmware-ui-v2-review.png`：先降到最终 320×240，再以最近邻放大 4 倍；
   用它判断真实屏幕上的清晰度，不用高分辨率母稿冒充设备效果。
+- `docs/assets/firmware-ui-v2-drawer-master.png` 与
+  `docs/assets/firmware-ui-v2-drawer-review.png`：顶栏下拉设置抽屉的平滑母稿与像素检查稿。
+- `docs/assets/firmware-ui-v2-auto-off-master.png` 与
+  `docs/assets/firmware-ui-v2-auto-off-review.png`：松开油门后的收油、倒计时自动熄火状态。
 - `docs/assets/firmware-ui-v2-exhausts.png`：五种排气在同一固定网格中的对照。
 - `tools/render_firmware_ui_v2.py`：可重复生成母稿、最终像素稿和五种单屏 PNG。
 
 该方案把原来的发动机/点火/油门/排气三个窄栏改为 172/148 两个主栏：点火合入
-发动机面板，油门把手移到底部按压控件，发动机与排气都获得足够面积。此节仅代表
-电脑端候选设计；用户确认前不替换当前 v0.3.0 固件。
+发动机面板，油门把手移到底部整行按压控件，发动机与排气都获得足够面积。最新版
+删除顶栏 `START` / `SET` 和首页红线滑块：按住油门即自动点火并拉升转速，松开后进入
+收油/怠速，默认 3 秒无操作自动熄火；从顶栏向下拖出覆盖式设置抽屉，可拖拽音量、
+红线转速和自动熄火等待时间，向上拖回收起。发动机与排气仍只采用点击单步循环，
+不使用横滑。此节仅代表电脑端候选设计；用户确认前不替换当前 v0.3.0 固件。
 
 ## 介绍时应保留的事实边界
 
