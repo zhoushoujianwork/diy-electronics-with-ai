@@ -28,7 +28,7 @@ static ev_control_t desired={.volume=.60f};
 static int64_t last_control_us;
 static bool control_watchdog;
 static bool ui_rev_active;
-static unsigned idle_auto_off_ms=3000;
+static unsigned idle_auto_off_ms=5500;
 static int64_t idle_auto_off_deadline_us;
 static bool fault;
 static ev_engine_t engine;
@@ -170,7 +170,10 @@ static void audio_task(void *unused) {
            now-last_control_us>(int64_t)CONFIG_EV_TIMEOUT_MS*1000) {
             desired.running=false; desired.throttle=0; desired.rpm=0; expired=true;
         }
-        if(desired.running && desired.throttle<=.02f && desired.rpm<=1.f) {
+        /* The dwell begins only after the simulated engine has completed its
+         * overrun and reached the profile's real idle phase. */
+        if(desired.running && desired.throttle<=.02f && desired.rpm<=1.f &&
+           engine.phase==EV_PHASE_IDLE) {
             if(idle_auto_off_deadline_us==0) {
                 idle_auto_off_deadline_us=now+(int64_t)idle_auto_off_ms*1000;
                 idle_armed=true;
@@ -191,7 +194,7 @@ static void audio_task(void *unused) {
         portEXIT_CRITICAL(&lock);
         if(failed) control.running=false;
         if(expired) ESP_LOGW(TAG,"STATE_TRANSITION: RUN -> STOP reason=control_timeout");
-        if(idle_armed) ESP_LOGI(TAG,"AUTO_OFF_ARMED delay_ms=%u",armed_ms);
+        if(idle_armed) ESP_LOGI(TAG,"AUTO_OFF_ARMED delay_ms=%u phase=IDLE",armed_ms);
         if(idle_expired)
             ESP_LOGI(TAG,"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms=%u",armed_ms);
         if(control.running!=previous_running) {
@@ -410,10 +413,7 @@ static void ui_action(board_ui_action_t action,int value,void *context) {
         if(takes_control) control_watchdog=false;
         int64_t now=esp_timer_get_time();
         last_control_us=now;
-        if(desired.running && desired.throttle<=.02f && desired.rpm<=1.f)
-            idle_auto_off_deadline_us=now+(int64_t)idle_auto_off_ms*1000;
-        else
-            idle_auto_off_deadline_us=0;
+        idle_auto_off_deadline_us=0;
     }
     ev_control_t after=desired;
     unsigned after_auto_off_ms=idle_auto_off_ms;
@@ -479,10 +479,7 @@ void app_main(void) {
                         if(result==0) {
                             desired=c;
                             ui_rev_active=false;
-                            if(desired.running && desired.throttle<=.02f && desired.rpm<=1.f)
-                                idle_auto_off_deadline_us=esp_timer_get_time()+(int64_t)idle_auto_off_ms*1000;
-                            else
-                                idle_auto_off_deadline_us=0;
+                            idle_auto_off_deadline_us=0;
                         }
                         control_watchdog=true;
                         last_control_us=esp_timer_get_time();

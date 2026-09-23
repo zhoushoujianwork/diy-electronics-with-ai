@@ -264,10 +264,16 @@ static void refresh_timer(lv_timer_t *timer) {
         if(pressed) {
             lv_label_set_text(rev_label,"THROTTLE OPEN");
             lv_label_set_text(rev_detail_label,"RELEASE = AUTO OFF");
+        } else if(state.phase==EV_PHASE_STOPPING) {
+            lv_label_set_text(rev_label,"ENGINE STOPPING");
+            lv_label_set_text(rev_detail_label,"IGNITION CUT + FLYWHEEL COAST");
         } else if(state.running && remaining_ds) {
             lv_label_set_text(rev_label,"THROTTLE RELEASED");
             lv_label_set_text_fmt(rev_detail_label,"AUTO OFF IN %u.%u s",
                                   remaining_ds/10,remaining_ds%10);
+        } else if(state.running) {
+            lv_label_set_text(rev_label,"RETURNING TO IDLE");
+            lv_label_set_text(rev_detail_label,"AUTO OFF STARTS AT IDLE");
         } else {
             lv_label_set_text(rev_label,"PRESS + HOLD");
             lv_label_set_text(rev_detail_label,"STARTS ENGINE AUTOMATICALLY");
@@ -537,7 +543,7 @@ static void create_ui(void) {
     lv_slider_set_range(redline_slider,1800,EV_MAX_RPM);
     lv_slider_set_value(redline_slider,8000,LV_ANIM_OFF);
     lv_slider_set_range(auto_off_slider,10,80);
-    lv_slider_set_value(auto_off_slider,30,LV_ANIM_OFF);
+    lv_slider_set_value(auto_off_slider,55,LV_ANIM_OFF);
     lv_obj_add_event_cb(volume_slider,volume_event,LV_EVENT_ALL,NULL);
     lv_obj_add_event_cb(redline_slider,redline_event,LV_EVENT_ALL,NULL);
     lv_obj_add_event_cb(auto_off_slider,auto_off_event,LV_EVENT_ALL,NULL);
@@ -545,7 +551,7 @@ static void create_ui(void) {
     redline_value_label=lv_label_create(drawer_panel);
     auto_off_value_label=lv_label_create(drawer_panel);
     lv_obj_t *values[]={volume_value_label,redline_value_label,auto_off_value_label};
-    const char *defaults[]={"60%","8000","3.0 s"};
+    const char *defaults[]={"60%","8000","5.5 s"};
     for(unsigned i=0;i<3;i++) {
         lv_label_set_text(values[i],defaults[i]);
         lv_obj_set_pos(values[i],268,row_y[i]);

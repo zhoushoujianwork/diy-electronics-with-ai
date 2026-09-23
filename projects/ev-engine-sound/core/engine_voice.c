@@ -82,6 +82,8 @@ void ev_init(ev_engine_t *e) {
 
 void ev_set_control(ev_engine_t *e, const ev_control_t *c) {
     ev_control_t next = *c;
+    bool begin_stop=e->control.running && !next.running;
+    bool begin_run=!e->control.running && next.running;
     if (next.profile >= EV_PROFILES) next.profile = 0;
     if (next.exhaust >= EV_EXHAUSTS) next.exhaust = 0;
     next.throttle = clamp(next.throttle, 0, 1);
@@ -97,7 +99,10 @@ void ev_set_control(ev_engine_t *e, const ev_control_t *c) {
         e->lowpass = e->dc_x = e->dc_y = e->cycle = 0;
         e->control = next;
         resonance(e);
+        if(!next.running) e->stop_age=0;
     }
+    if(begin_stop && e->rpm>40) e->stop_age=1.0f/EV_RATE;
+    else if(begin_run) e->stop_age=0;
     if(next.gear!=e->control.gear) e->shift_samples=(unsigned)(EV_RATE*120/1000);
     e->control = next;
 }
@@ -114,6 +119,15 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
     const float dt=1.0f/EV_RATE;
     for (size_t i=0; i<count; ++i) {
         /* Time constants are in seconds on both the 16 kHz board and 32 kHz host. */
+        bool stopping=!e->control.running && e->stop_age>0;
+        if(stopping) {
+            e->stop_age+=dt;
+            if(e->stop_age>=EV_SHUTDOWN_SECONDS || e->rpm<=40) {
+                e->stop_age=0;
+                stopping=false;
+            }
+        }
+        float stop_mix=stopping?clamp(1-e->stop_age/EV_SHUTDOWN_SECONDS,0,1):0;
         if(e->control.running) {
             if(e->start_age<1.0f) e->start_age+=dt;
         } else e->start_age=0;
@@ -130,7 +144,11 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
         float next_rpm=e->rpm+step;
         e->rpm_residual=step-(next_rpm-e->rpm);
         e->rpm=next_rpm;
-        float target_gain = e->control.running ? e->control.volume : 0;
+        /* Keep a quieter mechanical tail after ignition cut. Compression pulses
+         * and flywheel inertia make shutdown a distinct action instead of a
+         * near-instant gain fade. */
+        float target_gain = e->control.running ? e->control.volume :
+            e->control.volume*.48f*stop_mix;
         if(e->shift_samples) {
             /* A short ignition cut makes a sequential shift audible while the
              * flywheel response supplies the corresponding RPM fall/rise. */
@@ -145,12 +163,14 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
         for (unsigned c=0; c<p->cylinders; ++c) {
             float distance = p->firing[c] - e->cycle;
             if (distance <= 0) distance += 1;
-            if (distance <= delta && e->rpm > 50 && e->control.running) {
+            if (distance <= delta && e->rpm > 50 && (e->control.running || stopping)) {
                 e->random ^= e->random << 13;
                 e->random ^= e->random >> 17;
                 e->random ^= e->random << 5;
-                pulse += .85f + .15f * (float)(e->random & 65535)/65535;
-                ++e->firings;
+                float variation=(float)(e->random & 65535)/65535;
+                pulse += e->control.running?.85f+.15f*variation:
+                    stop_mix*(.20f+.12f*variation);
+                if(e->control.running) ++e->firings;
                 e->last_cylinder=p->firing_order[c];
             }
         }
@@ -183,7 +203,7 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
         pcm[i] = (int16_t)(clamp(y*e->gain, -1, 1)*30000);
         ++e->frames;
     }
-    if(!e->control.running) e->phase=e->rpm>40?EV_PHASE_STOPPING:EV_PHASE_OFF;
+    if(!e->control.running) e->phase=e->stop_age>0?EV_PHASE_STOPPING:EV_PHASE_OFF;
     else if(e->start_age<.55f) e->phase=EV_PHASE_STARTING;
     else if(e->overrun>.035f || (e->control.throttle<.02f && e->rpm>p->idle_rpm+250)) e->phase=EV_PHASE_COAST;
     else if(e->control.rpm==0 && e->control.throttle<.02f) e->phase=EV_PHASE_IDLE;

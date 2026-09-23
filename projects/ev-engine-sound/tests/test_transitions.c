@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int last_sample, max_step;
+static int last_sample, max_step, render_peak;
 static void render(ev_engine_t *e,float duration) {
     int16_t pcm[EV_BLOCK];
     unsigned remaining=(unsigned)(duration*EV_RATE);
@@ -14,6 +14,8 @@ static void render(ev_engine_t *e,float duration) {
             int step=abs((int)pcm[i]-last_sample);
             if(step>max_step) max_step=step;
             last_sample=pcm[i];
+            int magnitude=abs((int)pcm[i]);
+            if(magnitude>render_peak) render_peak=magnitude;
             assert(abs((int)pcm[i])<30000);
         }
         remaining-=n;
@@ -48,7 +50,10 @@ int main(void) {
         assert(e.phase==EV_PHASE_COAST && e.rpm>high*.8f);
         assert(e.overrun>0 && e.load>0);
         render(&e,4); assert(e.phase==EV_PHASE_IDLE);
-        c.running=false; ev_set_control(&e,&c); render(&e,2);
+        c.running=false; ev_set_control(&e,&c);
+        render_peak=0; render(&e,.75f);
+        assert(e.phase==EV_PHASE_STOPPING && render_peak>100);
+        render(&e,1.25f);
         assert(last_sample==0 && e.phase==EV_PHASE_OFF);
         c.running=true; ev_set_control(&e,&c); render(&e,.1f);
         assert(e.phase==EV_PHASE_STARTING);

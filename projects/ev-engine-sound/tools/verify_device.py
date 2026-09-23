@@ -11,18 +11,18 @@ parser.add_argument("port")
 parser.add_argument("--log", required=True)
 args = parser.parse_args()
 schedule = [
-    (0.2, "stop"), (0.5, "status"), (1, "profile inline4"),
-    (1.3, "volume 40"), (1.6, "exhaust stock"), (2, "start"),
+    (0.2, "stop"), (0.5, "volume 0"), (0.8, "status"),
+    (1, "profile inline4"), (1.6, "exhaust stock"), (2, "start"),
     (3, "throttle 100"), (5, "exhaust akrapovic"),
     (7, "exhaust yoshimura"), (9, "exhaust tin_can"),
     (11, "exhaust straight"), (12, "throttle 0"),
-    (14, "status"), (16, "stop"),
-    (19, "profile v12"), (20, "redline 16000"), (21, "start"),
-    (23, "throttle 100"), (29, "status"), (42, "status"),
-    (44, "throttle 0"), (49, "profile flat6"), (50, "throttle 60"),
-    (54, "throttle 0"), (57, "stop"), (58, "volume 60"),
-    (59, "exhaust stock"),
-    (60, "profile inline4"), (63, "status"),
+    (15, "status"), (21, "status"), (24, "status"),
+    (25, "profile v12"), (26, "redline 16000"), (27, "start"),
+    (29, "throttle 100"), (36, "status"), (45, "status"),
+    (47, "throttle 0"), (52, "profile flat6"), (53, "throttle 60"),
+    (57, "throttle 0"), (66, "status"), (68, "stop"),
+    (69, "volume 0"), (70, "exhaust stock"),
+    (71, "profile inline4"), (72, "status"),
 ]
 device = serial.Serial()
 device.port, device.baudrate = args.port, 115200
@@ -33,7 +33,7 @@ start, next_ping, step = time.monotonic(), 0, 0
 capture = bytearray()
 try:
     with open(args.log, "wb") as log:
-        while time.monotonic() - start < 67:
+        while time.monotonic() - start < 74:
             data = device.read(4096)
             if data:
                 capture.extend(data)
@@ -68,18 +68,20 @@ for line in beats:
 for phase in ("STARTING", "ACCEL", "COAST", "IDLE", "STOPPING", "OFF"):
     assert re.search(r"STATE_TRANSITION: AUDIO \w+ -> " + phase, text), phase
 assert re.search(r"rpm=1[56][0-9]{3}", text), "high RPM not reached"
-assert re.search(r"STATUS[^\n]*version=0\.4\.1", text), "wrong firmware version"
+assert re.search(r"STATUS[^\n]*version=0\.4\.2", text), "wrong firmware version"
 assert "animation=sticks3_canvas" in text, "wrong UI renderer"
 assert "layout=full_width_engine" in text, "wrong UI layout"
 assert "selector=cycle_buttons" in text, "wrong selector mode"
 assert "menu=pull_down" in text, "wrong settings menu mode"
 assert "drawer_auto_close_ms=3500" in text, "wrong drawer auto-close policy"
 assert "font_scale=12_28" in text, "wrong firmware font scale"
-assert re.search(r"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms=3000", text), "auto-off transition missing"
+assert re.search(r"AUTO_OFF_ARMED delay_ms=5500 phase=IDLE", text), "idle dwell did not start at real idle"
+assert re.search(r"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms=5500", text), "auto-off transition missing"
 for exhaust in ("stock", "akrapovic", "yoshimura", "tin_can", "straight"):
     assert re.search(r"UI_SYNC[^\n]*mode=cycle_buttons[^\n]*exhaust=" + exhaust, text), exhaust
 assert "AUDIO_READBACK" in text
-assert re.search(r"STATUS[^\n]*running=0 rpm=0 throttle=0 volume=60", text), "safe final state missing"
+assert all("pca_out=0x00" in line for line in re.findall(r"AUDIO_READBACK[^\n]*", text)), "amplifier enabled during silent verification"
+assert re.search(r"STATUS[^\n]*running=0 rpm=0 throttle=0 volume=0", text), "safe final state missing"
 for name in ("audio", "console", "heartbeat", "lvgl"):
     values = [int(x) for x in re.findall(r"stack_" + name + r"=(\d+)", text)]
     assert values and min(values) >= 1024, (name, values)

@@ -15,6 +15,7 @@
 #define EV_EXHAUSTS 5
 #define EV_GEARS 6
 #define EV_MAX_RPM 16000
+#define EV_SHUTDOWN_SECONDS 1.6f
 
 typedef struct {
     const char *name;
@@ -57,7 +58,7 @@ typedef struct {
     float rpm, cycle, gain, load, envelope;
     float resonator1, resonator2, resonator_a, resonator_b;
     float lowpass, dc_x, dc_y;
-    float start_age, starter_phase, overrun, rpm_residual;
+    float start_age, stop_age, starter_phase, overrun, rpm_residual;
     ev_phase_t phase;
     unsigned last_cylinder;
     uint32_t random;
