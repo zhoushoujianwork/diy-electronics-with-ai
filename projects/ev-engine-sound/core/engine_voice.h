@@ -15,6 +15,7 @@
 #define EV_EXHAUSTS 5
 #define EV_GEARS 6
 #define EV_MAX_RPM 16000
+#define EV_IDLE_FLOOR_RPM 2200.0f
 #define EV_SHUTDOWN_SECONDS 1.6f
 
 typedef struct {
@@ -70,5 +71,6 @@ void ev_init(ev_engine_t *e);
 void ev_set_control(ev_engine_t *e, const ev_control_t *control);
 void ev_render(ev_engine_t *e, int16_t *pcm, size_t count);
 float ev_redline(const ev_control_t *control);
+float ev_idle_rpm(const ev_control_t *control);
 /* -1 invalid, 0 state change, 1 ping, 2 status, 3 bootloader request. */
 int ev_command(ev_control_t *c, const char *line);

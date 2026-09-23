@@ -278,8 +278,8 @@ static void refresh_timer(lv_timer_t *timer) {
             lv_label_set_text(rev_label,"PRESS + HOLD");
             lv_label_set_text(rev_detail_label,"STARTS ENGINE AUTOMATICALLY");
         }
-        int countdown=state.auto_off_ms?
-            (int)(100U*state.auto_off_remaining_ms/state.auto_off_ms):0;
+        int countdown=state.auto_off_target_ms?
+            (int)(100U*state.auto_off_remaining_ms/state.auto_off_target_ms):0;
         lv_bar_set_value(countdown_bar,countdown,LV_ANIM_OFF);
         lv_obj_set_style_border_color(rev_button,
             lv_color_hex(state.running?0xEE4445:0x777B7E),LV_PART_MAIN);
@@ -289,7 +289,8 @@ static void refresh_timer(lv_timer_t *timer) {
         lv_slider_set_value(volume_slider,volume,LV_ANIM_OFF);
         lv_label_set_text_fmt(volume_value_label,"%d%%",(int)lroundf(state.volume*100));
     }
-    unsigned minimum=(unsigned)ev_profiles[state.profile].idle_rpm+500;
+    ev_control_t profile_control={.profile=state.profile};
+    unsigned minimum=(unsigned)ev_idle_rpm(&profile_control)+500;
     if(changed || state.profile!=previous_state.profile)
         lv_slider_set_range(redline_slider,(int32_t)minimum,EV_MAX_RPM);
     if(!redline_dragging && (changed || state.redline_rpm!=previous_state.redline_rpm)) {
@@ -516,7 +517,7 @@ static void create_ui(void) {
     lv_obj_set_style_text_font(drawer_close,&lv_font_montserrat_12,LV_PART_MAIN);
     lv_obj_set_style_text_color(drawer_close,lv_color_hex(0x777B7E),LV_PART_MAIN);
 
-    const char *row_titles[]={"VOLUME","REDLINE","AUTO OFF"};
+    const char *row_titles[]={"VOLUME","REDLINE","AUTO OFF AVG"};
     const int row_y[]={27,54,81};
     for(unsigned i=0;i<3;i++) {
         lv_obj_t *row=lv_label_create(drawer_panel);
@@ -542,8 +543,8 @@ static void create_ui(void) {
     lv_slider_set_value(volume_slider,60,LV_ANIM_OFF);
     lv_slider_set_range(redline_slider,1800,EV_MAX_RPM);
     lv_slider_set_value(redline_slider,8000,LV_ANIM_OFF);
-    lv_slider_set_range(auto_off_slider,10,80);
-    lv_slider_set_value(auto_off_slider,55,LV_ANIM_OFF);
+    lv_slider_set_range(auto_off_slider,150,600);
+    lv_slider_set_value(auto_off_slider,300,LV_ANIM_OFF);
     lv_obj_add_event_cb(volume_slider,volume_event,LV_EVENT_ALL,NULL);
     lv_obj_add_event_cb(redline_slider,redline_event,LV_EVENT_ALL,NULL);
     lv_obj_add_event_cb(auto_off_slider,auto_off_event,LV_EVENT_ALL,NULL);
@@ -551,7 +552,7 @@ static void create_ui(void) {
     redline_value_label=lv_label_create(drawer_panel);
     auto_off_value_label=lv_label_create(drawer_panel);
     lv_obj_t *values[]={volume_value_label,redline_value_label,auto_off_value_label};
-    const char *defaults[]={"60%","8000","5.5 s"};
+    const char *defaults[]={"60%","8000","30.0 s"};
     for(unsigned i=0;i<3;i++) {
         lv_label_set_text(values[i],defaults[i]);
         lv_obj_set_pos(values[i],268,row_y[i]);

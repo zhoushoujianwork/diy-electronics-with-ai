@@ -29,6 +29,7 @@ typedef struct {
     float throttle;
     float volume;
     unsigned auto_off_ms;
+    unsigned auto_off_target_ms;
     unsigned auto_off_remaining_ms;
     unsigned gear;
     bool running;

@@ -22,6 +22,8 @@ int main(void) {
     for(unsigned p=0;p<EV_PROFILES;p++) {
         assert(ev_profiles[p].cylinders>=1);
         assert(ev_profiles[p].cylinders<=EV_MAX_CYLINDERS);
+        ev_control_t idle_control={.profile=p};
+        assert(ev_idle_rpm(&idle_control)>=2000 && ev_idle_rpm(&idle_control)<3000);
         bool order_seen[EV_MAX_CYLINDERS]={false};
         for(unsigned c=0;c<ev_profiles[p].cylinders;c++) {
             assert(ev_profiles[p].firing[c]>=0.0f);

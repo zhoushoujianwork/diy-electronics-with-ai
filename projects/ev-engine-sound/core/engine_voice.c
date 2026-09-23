@@ -58,11 +58,16 @@ static float clamp(float x, float lo, float hi) {
  * to a lower steady RPM. Neutral remains a free-revving engine. */
 static const float gear_rpm_scale[EV_GEARS+1]={1.00f,1.00f,.82f,.68f,.58f,.50f,.44f};
 
+float ev_idle_rpm(const ev_control_t *control) {
+    unsigned profile=control && control->profile<EV_PROFILES?control->profile:0;
+    return fmaxf(ev_profiles[profile].idle_rpm,EV_IDLE_FLOOR_RPM);
+}
+
 float ev_redline(const ev_control_t *control) {
     unsigned profile=control && control->profile<EV_PROFILES?control->profile:0;
     float base=ev_profiles[profile].redline_rpm;
     if(!control || control->redline_rpm<=0 || !isfinite(control->redline_rpm)) return base;
-    return clamp(control->redline_rpm,ev_profiles[profile].idle_rpm+500.0f,EV_MAX_RPM);
+    return clamp(control->redline_rpm,ev_idle_rpm(control)+500.0f,EV_MAX_RPM);
 }
 
 static void resonance(ev_engine_t *e) {
@@ -91,7 +96,7 @@ void ev_set_control(ev_engine_t *e, const ev_control_t *c) {
     if(next.gear>EV_GEARS) next.gear=EV_GEARS;
     if(next.redline_rpm>0)
         next.redline_rpm=clamp(next.redline_rpm,
-                               ev_profiles[next.profile].idle_rpm+500.0f,EV_MAX_RPM);
+                               ev_idle_rpm(&next)+500.0f,EV_MAX_RPM);
     next.rpm = clamp(next.rpm, 0, ev_redline(&next));
     if (next.profile != e->control.profile || next.exhaust != e->control.exhaust) {
         /* Reset incompatible resonance state under a fresh gain ramp. */
@@ -116,6 +121,7 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
     const ev_profile_t *p = &ev_profiles[e->control.profile];
     const ev_exhaust_t *x = &ev_exhausts[e->control.exhaust];
     const float redline=ev_redline(&e->control);
+    const float idle_rpm=ev_idle_rpm(&e->control);
     const float dt=1.0f/EV_RATE;
     for (size_t i=0; i<count; ++i) {
         /* Time constants are in seconds on both the 16 kHz board and 32 kHz host. */
@@ -136,7 +142,7 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
         float ignition=clamp(e->start_age/.55f,0,1);
         ignition=ignition*ignition*(3-2*ignition);
         float target=e->control.rpm>0?e->control.rpm:
-            (p->idle_rpm+e->load*(redline-p->idle_rpm)*gear_rpm_scale[e->control.gear])*ignition;
+            (idle_rpm+e->load*(redline-idle_rpm)*gear_rpm_scale[e->control.gear])*ignition;
         if(!e->control.running) target=0;
         /* Carry sub-ULP steps instead of snapping to a slowly moving target:
          * snapping would bypass flywheel inertia on throttle release. */
@@ -205,11 +211,11 @@ void ev_render(ev_engine_t *e, int16_t *pcm, size_t count) {
     }
     if(!e->control.running) e->phase=e->stop_age>0?EV_PHASE_STOPPING:EV_PHASE_OFF;
     else if(e->start_age<.55f) e->phase=EV_PHASE_STARTING;
-    else if(e->overrun>.035f || (e->control.throttle<.02f && e->rpm>p->idle_rpm+250)) e->phase=EV_PHASE_COAST;
+    else if(e->overrun>.035f || (e->control.throttle<.02f && e->rpm>idle_rpm+250)) e->phase=EV_PHASE_COAST;
     else if(e->control.rpm==0 && e->control.throttle<.02f) e->phase=EV_PHASE_IDLE;
     else if(e->control.throttle-e->load>.025f ||
             e->rpm<(e->control.rpm>0?e->control.rpm:
-                p->idle_rpm+e->control.throttle*(redline-p->idle_rpm)*gear_rpm_scale[e->control.gear])-150)
+                idle_rpm+e->control.throttle*(redline-idle_rpm)*gear_rpm_scale[e->control.gear])-150)
         e->phase=EV_PHASE_ACCEL;
     else e->phase=EV_PHASE_HOLD;
 }

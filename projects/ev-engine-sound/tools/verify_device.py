@@ -16,12 +16,10 @@ schedule = [
     (3, "throttle 100"), (5, "exhaust akrapovic"),
     (7, "exhaust yoshimura"), (9, "exhaust tin_can"),
     (11, "exhaust straight"), (12, "throttle 0"),
-    (15, "status"), (21, "status"), (24, "status"),
-    (25, "profile v12"), (26, "redline 16000"), (27, "start"),
-    (29, "throttle 100"), (36, "status"), (45, "status"),
-    (47, "throttle 0"), (52, "profile flat6"), (53, "throttle 60"),
-    (57, "throttle 0"), (66, "status"), (68, "stop"),
-    (69, "volume 0"), (70, "exhaust stock"),
+    (18, "status"), (38, "status"), (54, "status"),
+    (55, "profile v12"), (56, "redline 16000"), (57, "start"),
+    (58, "throttle 100"), (64, "status"), (67, "throttle 0"),
+    (69, "stop"), (70, "exhaust stock"),
     (71, "profile inline4"), (72, "status"),
 ]
 device = serial.Serial()
@@ -68,15 +66,16 @@ for line in beats:
 for phase in ("STARTING", "ACCEL", "COAST", "IDLE", "STOPPING", "OFF"):
     assert re.search(r"STATE_TRANSITION: AUDIO \w+ -> " + phase, text), phase
 assert re.search(r"rpm=1[56][0-9]{3}", text), "high RPM not reached"
-assert re.search(r"STATUS[^\n]*version=0\.4\.2", text), "wrong firmware version"
+assert re.search(r"STATUS[^\n]*version=0\.4\.3", text), "wrong firmware version"
 assert "animation=sticks3_canvas" in text, "wrong UI renderer"
 assert "layout=full_width_engine" in text, "wrong UI layout"
 assert "selector=cycle_buttons" in text, "wrong selector mode"
 assert "menu=pull_down" in text, "wrong settings menu mode"
 assert "drawer_auto_close_ms=3500" in text, "wrong drawer auto-close policy"
 assert "font_scale=12_28" in text, "wrong firmware font scale"
-assert re.search(r"AUTO_OFF_ARMED delay_ms=5500 phase=IDLE", text), "idle dwell did not start at real idle"
-assert re.search(r"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms=5500", text), "auto-off transition missing"
+armed=re.search(r"AUTO_OFF_ARMED center_ms=30000 target_ms=(\d+) phase=IDLE",text)
+assert armed and 25000<=int(armed[1])<=35000, "random idle dwell outside 25-35 seconds"
+assert re.search(r"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms="+armed[1]+r" randomized=1", text), "auto-off transition missing"
 for exhaust in ("stock", "akrapovic", "yoshimura", "tin_can", "straight"):
     assert re.search(r"UI_SYNC[^\n]*mode=cycle_buttons[^\n]*exhaust=" + exhaust, text), exhaust
 assert "AUDIO_READBACK" in text

@@ -42,7 +42,7 @@ int ev_command(ev_control_t *c, const char *line) {
             else {
                 char *end;
                 float rpm=strtof(arg,&end);
-                float minimum=ev_profiles[next.profile].idle_rpm+500.0f;
+                float minimum=ev_idle_rpm(&next)+500.0f;
                 if(end==arg || *end || !isfinite(rpm) || rpm<minimum || rpm>EV_MAX_RPM) return -1;
                 next.redline_rpm=rpm;
                 if(next.rpm>rpm) next.rpm=rpm;

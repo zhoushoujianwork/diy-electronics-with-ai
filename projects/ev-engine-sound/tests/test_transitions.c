@@ -38,8 +38,9 @@ int main(void) {
         last_sample=0;
         ev_set_control(&e,&c); render(&e,.2f);
         assert(e.phase==EV_PHASE_STARTING);
-        assert(e.rpm<ev_profiles[p].idle_rpm*.5f);
-        render(&e,2.8f); assert(e.phase==EV_PHASE_IDLE);
+        assert(e.rpm<ev_idle_rpm(&c)*.5f);
+        render(&e,2.8f);
+        assert(e.phase==EV_PHASE_IDLE && e.rpm>=2000 && e.rpm<3000);
         c.throttle=1; ev_set_control(&e,&c); render(&e,.08f);
         assert(e.phase==EV_PHASE_ACCEL && e.load<.9f);
         render(&e,3); assert(e.phase==EV_PHASE_HOLD);
