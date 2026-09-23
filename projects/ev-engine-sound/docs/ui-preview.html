@@ -268,7 +268,7 @@
 
       <div class="drawer-viewport">
       <section id="drawer" class="settings-drawer" aria-label="快速设置">
-        <div class="drawer-head">QUICK SETTINGS <span>DRAG UP TO CLOSE</span></div>
+        <div class="drawer-head">QUICK SETTINGS <span>AUTO CLOSE 5 s</span></div>
         <label class="settings-row">VOLUME
           <input id="volume" type="range" min="0" max="100" step="1" value="60" style="--accent:var(--blue);--fill:60%">
           <output id="volumeOut">60%</output>
@@ -319,6 +319,29 @@ let lastFrame = performance.now();
 let releasedAt = 0;
 let drawerProgress = 0;
 let drawerDrag = null;
+let drawerCloseTimer = null;
+const activeScreenPointers = new Set();
+
+function armDrawerAutoClose() {
+  clearTimeout(drawerCloseTimer);
+  if (drawerProgress < 1 || drawerDrag || activeScreenPointers.size) return;
+  drawerCloseTimer = setTimeout(() => {
+    drawerProgress = 0;
+    ui.drawer.style.transition = 'transform 180ms cubic-bezier(.2,.8,.2,1)';
+    renderDrawer();
+  }, 5000);
+}
+
+document.getElementById('screen').addEventListener('pointerdown', event => {
+  activeScreenPointers.add(event.pointerId);
+  clearTimeout(drawerCloseTimer);
+});
+function finishScreenTouch(event) {
+  if (!activeScreenPointers.delete(event.pointerId)) return;
+  armDrawerAutoClose();
+}
+window.addEventListener('pointerup', finishScreenTouch);
+window.addEventListener('pointercancel', finishScreenTouch);
 
 function flash(element) {
   element.classList.remove('flash');
@@ -413,16 +436,16 @@ function updateRange(input, output, format) {
   input.style.setProperty('--fill', `${(value - min) / (max - min) * 100}%`);
   output.textContent = format(value);
 }
-ui.volume.addEventListener('input', () => updateRange(ui.volume, ui.volumeOut, value => `${value}%`));
-ui.redline.addEventListener('input', () => updateRange(ui.redline, ui.redlineOut, value => `${value}`));
-ui.autoOff.addEventListener('input', () => updateRange(ui.autoOff, ui.autoOffOut, value => `${value.toFixed(1)} s`));
-
+ui.volume.addEventListener('input', () => { updateRange(ui.volume, ui.volumeOut, value => `${value}%`); armDrawerAutoClose(); });
+ui.redline.addEventListener('input', () => { updateRange(ui.redline, ui.redlineOut, value => `${value}`); armDrawerAutoClose(); });
+ui.autoOff.addEventListener('input', () => { updateRange(ui.autoOff, ui.autoOffOut, value => `${value.toFixed(1)} s`); armDrawerAutoClose(); });
 function renderDrawer() {
   ui.drawer.style.transform = `translateY(${(drawerProgress - 1) * 112}px)`;
 }
 function startDrawerDrag(event) {
   if (event.target.matches('input')) return;
   event.preventDefault();
+  clearTimeout(drawerCloseTimer);
   drawerDrag = { pointerId:event.pointerId, y:event.clientY, progress:drawerProgress };
   event.currentTarget.setPointerCapture?.(event.pointerId);
   ui.drawer.style.transition = 'none';
@@ -439,6 +462,7 @@ function endDrawer(event) {
   drawerDrag = null;
   ui.drawer.style.transition = 'transform 180ms cubic-bezier(.2,.8,.2,1)';
   renderDrawer();
+  armDrawerAutoClose();
 }
 [ui.headerDrag, ui.drawerGrab].forEach(target => {
   target.addEventListener('pointerdown', startDrawerDrag);

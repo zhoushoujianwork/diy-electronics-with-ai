@@ -20,7 +20,7 @@ schedule = [
     (55, "profile v12"), (56, "redline 16000"), (57, "start"),
     (58, "throttle 100"), (64, "status"), (67, "throttle 0"),
     (69, "stop"), (70, "exhaust stock"),
-    (71, "profile inline4"), (72, "status"),
+    (71, "profile inline4"), (72, "status"), (75, "status"),
 ]
 device = serial.Serial()
 device.port, device.baudrate = args.port, 115200
@@ -31,7 +31,7 @@ start, next_ping, step = time.monotonic(), 0, 0
 capture = bytearray()
 try:
     with open(args.log, "wb") as log:
-        while time.monotonic() - start < 74:
+        while time.monotonic() - start < 77:
             data = device.read(4096)
             if data:
                 capture.extend(data)
@@ -71,16 +71,18 @@ assert "animation=sticks3_canvas" in text, "wrong UI renderer"
 assert "layout=full_width_engine" in text, "wrong UI layout"
 assert "selector=cycle_buttons" in text, "wrong selector mode"
 assert "menu=pull_down" in text, "wrong settings menu mode"
-assert "drawer_auto_close_ms=3500" in text, "wrong drawer auto-close policy"
+assert "drawer_auto_close_ms=5000" in text, "wrong drawer auto-close policy"
 assert "font_scale=12_28" in text, "wrong firmware font scale"
-armed=re.search(r"AUTO_OFF_ARMED center_ms=30000 target_ms=(\d+) phase=IDLE",text)
-assert armed and 25000<=int(armed[1])<=35000, "random idle dwell outside 25-35 seconds"
-assert re.search(r"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms="+armed[1]+r" randomized=1", text), "auto-off transition missing"
+armed=[int(value) for value in re.findall(r"AUTO_OFF_ARMED center_ms=30000 target_ms=(\d+) phase=IDLE",text)]
+assert armed and all(25000<=value<=35000 for value in armed), "random idle dwell outside 25-35 seconds"
+stopped=[int(value) for value in re.findall(r"STATE_TRANSITION: RUN -> STOP reason=idle_auto_off idle_ms=(\d+) randomized=1",text)]
+assert any(value in armed for value in stopped), "auto-off transition missing"
 for exhaust in ("stock", "akrapovic", "yoshimura", "tin_can", "straight"):
     assert re.search(r"UI_SYNC[^\n]*mode=cycle_buttons[^\n]*exhaust=" + exhaust, text), exhaust
 assert "AUDIO_READBACK" in text
 assert all("pca_out=0x00" in line for line in re.findall(r"AUDIO_READBACK[^\n]*", text)), "amplifier enabled during silent verification"
-assert re.search(r"STATUS[^\n]*running=0 rpm=0 throttle=0 volume=0", text), "safe final state missing"
+statuses=re.findall(r"STATUS[^\n]*",text)
+assert statuses and re.search(r"running=0 rpm=0 throttle=0 volume=0",statuses[-1]), "safe final state missing"
 for name in ("audio", "console", "heartbeat", "lvgl"):
     values = [int(x) for x in re.findall(r"stack_" + name + r"=(\d+)", text)]
     assert values and min(values) >= 1024, (name, values)

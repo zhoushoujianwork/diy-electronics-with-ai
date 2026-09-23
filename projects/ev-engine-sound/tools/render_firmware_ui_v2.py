@@ -195,7 +195,7 @@ def draw_settings_drawer(draw, volume=60, redline=9000, auto_off=3.0):
     """Draw the fully-open pull-down panel over the mechanical view."""
     draw.rectangle(box(0, 28, 319, 139), fill="#121517", outline=GRID, width=sc(1))
     text(draw, (10, 33), "QUICK SETTINGS", 7, FG)
-    text(draw, (309, 34), "DRAG UP TO CLOSE", 4.2, GRID, "ra")
+    text(draw, (309, 34), "AUTO CLOSE 5 s", 4.2, GRID, "ra")
     line(draw, [(9, 47), (310, 47)], DIM, .6)
 
     def slider(y, label_value, value_text, ratio, accent):

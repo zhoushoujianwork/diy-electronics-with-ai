@@ -29,7 +29,8 @@ static const float TWO_PI=6.283185307f;
 enum {
     DRAWER_HEIGHT=112,
     DRAWER_CLOSED_Y=-112,
-    DRAWER_AUTO_CLOSE_MS=3500,
+    DRAWER_AUTO_CLOSE_MS=5000,
+    DRAWER_RETRACT_MS=220,
 };
 
 static esp_lcd_panel_io_handle_t panel_io;
@@ -179,6 +180,24 @@ static void auto_off_event(lv_event_t *event) {
     }
 }
 
+static void drawer_set_y(void *object,int32_t y) {
+    lv_obj_set_y((lv_obj_t *)object,y);
+}
+
+static void drawer_move_to(int32_t y) {
+    lv_anim_delete(drawer_panel,drawer_set_y);
+    int32_t current=lv_obj_get_y(drawer_panel);
+    if(current==y) return;
+    lv_anim_t animation;
+    lv_anim_init(&animation);
+    lv_anim_set_var(&animation,drawer_panel);
+    lv_anim_set_values(&animation,current,y);
+    lv_anim_set_duration(&animation,DRAWER_RETRACT_MS);
+    lv_anim_set_path_cb(&animation,lv_anim_path_ease_out);
+    lv_anim_set_exec_cb(&animation,drawer_set_y);
+    lv_anim_start(&animation);
+}
+
 static void drawer_drag_event(lv_event_t *event) {
     lv_event_code_t code=lv_event_get_code(event);
     lv_indev_t *indev=lv_indev_active();
@@ -186,6 +205,7 @@ static void drawer_drag_event(lv_event_t *event) {
     lv_point_t point={0};
     lv_indev_get_point(indev,&point);
     if(code==LV_EVENT_PRESSED) {
+        lv_anim_delete(drawer_panel,drawer_set_y);
         drawer_dragging=true;
         drawer_auto_close_tick=0;
         drawer_drag_start_y=point.y;
@@ -199,7 +219,7 @@ static void drawer_drag_event(lv_event_t *event) {
     } else if((code==LV_EVENT_RELEASED || code==LV_EVENT_PRESS_LOST) && drawer_dragging) {
         drawer_dragging=false;
         bool open=lv_obj_get_y(drawer_panel)>-70;
-        lv_obj_set_y(drawer_panel,open?0:DRAWER_CLOSED_Y);
+        drawer_move_to(open?0:DRAWER_CLOSED_Y);
         settings_visible=open;
         drawer_auto_close_tick=open?lv_tick_get()+DRAWER_AUTO_CLOSE_MS:0;
         ESP_LOGI(TAG,"TOUCH action=settings_drawer value=%s",open?"open":"closed");
@@ -222,10 +242,12 @@ static void refresh_timer(lv_timer_t *timer) {
     if(!state_callback) return;
     int64_t begin=esp_timer_get_time();
     uint32_t now=lv_tick_get();
+    if(settings_visible && lv_indev_get_state(touch_indev)==LV_INDEV_STATE_PRESSED)
+        drawer_auto_close_tick=now+DRAWER_AUTO_CLOSE_MS;
     if(settings_visible && drawer_auto_close_tick && !drawer_dragging &&
        !volume_dragging && !redline_dragging && !auto_off_dragging &&
        (int32_t)(now-drawer_auto_close_tick)>=0) {
-        lv_obj_set_y(drawer_panel,DRAWER_CLOSED_Y);
+        drawer_move_to(DRAWER_CLOSED_Y);
         settings_visible=false;
         drawer_auto_close_tick=0;
         ESP_LOGI(TAG,"UI_AUTO_CLOSE menu=pull_down idle_ms=%u",(unsigned)DRAWER_AUTO_CLOSE_MS);
@@ -512,7 +534,7 @@ static void create_ui(void) {
     lv_obj_set_style_text_font(drawer_title,&lv_font_montserrat_12,LV_PART_MAIN);
     lv_obj_set_style_text_color(drawer_title,lv_color_hex(0xFFFFFF),LV_PART_MAIN);
     lv_obj_t *drawer_close=lv_label_create(drawer_panel);
-    lv_label_set_text(drawer_close,"DRAG UP TO CLOSE");
+    lv_label_set_text(drawer_close,"AUTO CLOSE 5 S");
     lv_obj_set_pos(drawer_close,205,3);
     lv_obj_set_style_text_font(drawer_close,&lv_font_montserrat_12,LV_PART_MAIN);
     lv_obj_set_style_text_color(drawer_close,lv_color_hex(0x777B7E),LV_PART_MAIN);
@@ -731,9 +753,11 @@ esp_err_t board_ui_report(void) {
     unsigned auto_off_ms=previous_state.auto_off_ms;
     bool drawer_open=lv_obj_get_y(drawer_panel)==0;
     lvgl_port_unlock();
-    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=sticks3_canvas layout=full_width_engine profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u selector=cycle_buttons menu=pull_down drawer_open=%d drawer_auto_close_ms=%u font_scale=12_28 auto_off_ms=%u",
+    ESP_LOGI(TAG,"UI_READBACK ready=1 stack_lvgl=%u animation=sticks3_canvas layout=full_width_engine profile=%s exhaust=%s render_count=%u render_max_us=%u update_max_us=%u draw_passes=%u",
              board_ui_stack_high_water_mark(),ev_profiles[profile].name,ev_exhausts[exhaust].name,
-             renders,render_us,refresh_us,draws,drawer_open,
+             renders,render_us,refresh_us,draws);
+    ESP_LOGI(TAG,"UI_READBACK selector=cycle_buttons menu=pull_down drawer_open=%d drawer_auto_close_ms=%u font_scale=12_28 auto_off_ms=%u",
+             drawer_open,
              (unsigned)DRAWER_AUTO_CLOSE_MS,auto_off_ms);
     return ESP_OK;
 }
