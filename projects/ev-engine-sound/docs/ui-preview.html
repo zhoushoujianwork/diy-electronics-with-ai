@@ -321,10 +321,13 @@ let drawerProgress = 0;
 let drawerDrag = null;
 let drawerCloseTimer = null;
 const activeScreenPointers = new Set();
+const activeUpperPointers = new Set();
+const activeSliderPointers = new Set();
+const screen = document.getElementById('screen');
 
 function armDrawerAutoClose() {
   clearTimeout(drawerCloseTimer);
-  if (drawerProgress < 1 || drawerDrag || activeScreenPointers.size) return;
+  if (drawerProgress < 1 || drawerDrag || activeUpperPointers.size || activeSliderPointers.size) return;
   drawerCloseTimer = setTimeout(() => {
     drawerProgress = 0;
     ui.drawer.style.transition = 'transform 180ms cubic-bezier(.2,.8,.2,1)';
@@ -332,13 +335,28 @@ function armDrawerAutoClose() {
   }, 5000);
 }
 
-document.getElementById('screen').addEventListener('pointerdown', event => {
+function trackScreenTouch(event) {
+  if (!activeScreenPointers.has(event.pointerId)) return;
+  const bounds = screen.getBoundingClientRect();
+  const inUpperArea = event.clientX >= bounds.left && event.clientX < bounds.right &&
+    event.clientY >= bounds.top && event.clientY < bounds.top + bounds.height * 140 / 240;
+  if (inUpperArea) {
+    activeUpperPointers.add(event.pointerId);
+    clearTimeout(drawerCloseTimer);
+  } else if (activeUpperPointers.delete(event.pointerId)) {
+    armDrawerAutoClose();
+  }
+}
+screen.addEventListener('pointerdown', event => {
   activeScreenPointers.add(event.pointerId);
-  clearTimeout(drawerCloseTimer);
+  trackScreenTouch(event);
 });
+window.addEventListener('pointermove', trackScreenTouch);
 function finishScreenTouch(event) {
   if (!activeScreenPointers.delete(event.pointerId)) return;
-  armDrawerAutoClose();
+  const wasUpper = activeUpperPointers.delete(event.pointerId);
+  const wasSlider = activeSliderPointers.delete(event.pointerId);
+  if (wasUpper || wasSlider) armDrawerAutoClose();
 }
 window.addEventListener('pointerup', finishScreenTouch);
 window.addEventListener('pointercancel', finishScreenTouch);
@@ -439,6 +457,9 @@ function updateRange(input, output, format) {
 ui.volume.addEventListener('input', () => { updateRange(ui.volume, ui.volumeOut, value => `${value}%`); armDrawerAutoClose(); });
 ui.redline.addEventListener('input', () => { updateRange(ui.redline, ui.redlineOut, value => `${value}`); armDrawerAutoClose(); });
 ui.autoOff.addEventListener('input', () => { updateRange(ui.autoOff, ui.autoOffOut, value => `${value.toFixed(1)} s`); armDrawerAutoClose(); });
+[ui.volume, ui.redline, ui.autoOff].forEach(input => {
+  input.addEventListener('pointerdown', event => { activeSliderPointers.add(event.pointerId); clearTimeout(drawerCloseTimer); });
+});
 function renderDrawer() {
   ui.drawer.style.transform = `translateY(${(drawerProgress - 1) * 112}px)`;
 }

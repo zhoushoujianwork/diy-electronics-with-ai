@@ -29,6 +29,7 @@ static const float TWO_PI=6.283185307f;
 enum {
     DRAWER_HEIGHT=112,
     DRAWER_CLOSED_Y=-112,
+    DRAWER_TOUCH_BOTTOM_Y=28+DRAWER_HEIGHT,
     DRAWER_AUTO_CLOSE_MS=5000,
     DRAWER_RETRACT_MS=220,
 };
@@ -128,8 +129,7 @@ static void exhaust_next_event(lv_event_t *event) {
 
 static void volume_event(lv_event_t *event) {
     lv_event_code_t code=lv_event_get_code(event);
-    if(code==LV_EVENT_PRESSED || code==LV_EVENT_VALUE_CHANGED ||
-       code==LV_EVENT_RELEASED || code==LV_EVENT_PRESS_LOST)
+    if(code==LV_EVENT_PRESSED || code==LV_EVENT_RELEASED || code==LV_EVENT_PRESS_LOST)
         drawer_auto_close_tick=lv_tick_get()+DRAWER_AUTO_CLOSE_MS;
     if(code==LV_EVENT_PRESSED) volume_dragging=true;
     if(code==LV_EVENT_VALUE_CHANGED) {
@@ -146,8 +146,7 @@ static void volume_event(lv_event_t *event) {
 
 static void redline_event(lv_event_t *event) {
     lv_event_code_t code=lv_event_get_code(event);
-    if(code==LV_EVENT_PRESSED || code==LV_EVENT_VALUE_CHANGED ||
-       code==LV_EVENT_RELEASED || code==LV_EVENT_PRESS_LOST)
+    if(code==LV_EVENT_PRESSED || code==LV_EVENT_RELEASED || code==LV_EVENT_PRESS_LOST)
         drawer_auto_close_tick=lv_tick_get()+DRAWER_AUTO_CLOSE_MS;
     if(code==LV_EVENT_PRESSED) redline_dragging=true;
     if(code==LV_EVENT_VALUE_CHANGED) {
@@ -164,8 +163,7 @@ static void redline_event(lv_event_t *event) {
 
 static void auto_off_event(lv_event_t *event) {
     lv_event_code_t code=lv_event_get_code(event);
-    if(code==LV_EVENT_PRESSED || code==LV_EVENT_VALUE_CHANGED ||
-       code==LV_EVENT_RELEASED || code==LV_EVENT_PRESS_LOST)
+    if(code==LV_EVENT_PRESSED || code==LV_EVENT_RELEASED || code==LV_EVENT_PRESS_LOST)
         drawer_auto_close_tick=lv_tick_get()+DRAWER_AUTO_CLOSE_MS;
     if(code==LV_EVENT_PRESSED) auto_off_dragging=true;
     if(code==LV_EVENT_VALUE_CHANGED) {
@@ -242,8 +240,12 @@ static void refresh_timer(lv_timer_t *timer) {
     if(!state_callback) return;
     int64_t begin=esp_timer_get_time();
     uint32_t now=lv_tick_get();
-    if(settings_visible && lv_indev_get_state(touch_indev)==LV_INDEV_STATE_PRESSED)
-        drawer_auto_close_tick=now+DRAWER_AUTO_CLOSE_MS;
+    if(settings_visible && lv_indev_get_state(touch_indev)==LV_INDEV_STATE_PRESSED) {
+        lv_point_t point;
+        lv_indev_get_point(touch_indev,&point);
+        if(point.y>=0 && point.y<DRAWER_TOUCH_BOTTOM_Y)
+            drawer_auto_close_tick=now+DRAWER_AUTO_CLOSE_MS;
+    }
     if(settings_visible && drawer_auto_close_tick && !drawer_dragging &&
        !volume_dragging && !redline_dragging && !auto_off_dragging &&
        (int32_t)(now-drawer_auto_close_tick)>=0) {
