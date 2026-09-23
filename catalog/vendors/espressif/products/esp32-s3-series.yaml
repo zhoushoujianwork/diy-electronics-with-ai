@@ -6,6 +6,11 @@ family: ESP32-S3
 category: microcontroller-module
 lifecycle: unknown
 summary: Espressif Wi-Fi and Bluetooth LE system-on-chip family.
+specifications:
+  wireless:
+    - type: bluetooth
+      standard: Bluetooth 5 LE only
+      source_refs: [official-product-page]
 sources:
   - id: official-product-page
     type: product-page
@@ -18,4 +23,4 @@ validation:
   level: cataloged
 notes:
   - Use the exact chip or module datasheet for package, memory, pin, and electrical details.
-
+  - Bluetooth LE availability does not provide the Bluetooth Classic A2DP source profile used by ordinary car stereos and most Bluetooth headphones.

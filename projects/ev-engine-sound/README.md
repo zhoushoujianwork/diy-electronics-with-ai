@@ -29,6 +29,19 @@ T-Plane 三缸、直列发动机、V 型发动机、水平对置六缸、平面�
 | 立创实战派 ESP32-S3 N16R8 | 320×240 ST7789、FT6336 触摸 | ES8311 + PCA9557 | v0.3.0 已实机验证；v0.4.0 待设备重新枚举后烧录 |
 | 历史 ESP32-S3 开发板 | 无 UI | MAX98357A | 已构建验证 |
 
+### 蓝牙音频外放（选型中）
+
+当前固件没有蓝牙音频输出。ESP32-S3 虽有 Bluetooth LE，但车载音乐系统、普通蓝牙
+音箱和耳机通常需要 Bluetooth Classic A2DP Source；不能仅通过打开板载 BLE 实现。
+已核验的候选有运行 A2DP Source 固件的原版 ESP32 开发板，以及刷入 Audio Transceiver
+固件的 Microchip BM83SM1-00TA。成品 AUX 发射盒还需要先确认线电平输出，不能直接接
+本项目的扬声器功放端。外形、协议角色与官方资料见
+[A2DP Source 选型笔记](../../docs/research/bluetooth-a2dp-source-selection.md)。
+
+尚未确定发射硬件、接线、供电和配对交互；也没有蓝牙固件、车机或耳机实测。因此本项
+不计入现有 `hardware-verified` 范围。后续验收需覆盖音频采样率转换、油门到出声延迟、
+断连重连、持续运行时的音频/任务栈/心跳，以及目标车机的 A2DP 接收能力。
+
 每种硬件使用独立板级目录：
 
 ```text

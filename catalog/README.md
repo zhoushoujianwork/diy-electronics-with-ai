@@ -137,6 +137,8 @@ independent of the validation level.
 
 - [PDM MEMS 与 MAX9814 模拟音频前端](../docs/research/pdm-vs-max9814-audio-frontends.md)：
   官方规格差异、语音对讲选型，以及 Canaan CanMV K230 V3.0 的软件依据、音频接线档案与待验证范围。
+- [蓝牙音频外放与 A2DP Source 选型](../docs/research/bluetooth-a2dp-source-selection.md)：
+  BLE / Bluetooth Classic、Source / Sink 区别，以及开发板、贴片模块、成品发射器的官方外观与输入路径。
 
 ## Validate
 

@@ -1,0 +1,56 @@
+schema_version: 1
+id: esp32-devkitc-32e
+vendor_id: espressif
+name: ESP32-DevKitC-32E
+family: ESP32-DevKitC
+model: ESP32-DevKitC-32E
+category: development-board
+lifecycle: active
+summary: Espressif development board with an ESP32-WROOM-32E module, suitable for prototyping a Bluetooth Classic A2DP source.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-WROOM-32E
+    source_refs: [devkit-page]
+  memory:
+    flash_bytes: 4194304
+    source_refs: [devkit-page]
+  wireless:
+    - type: bluetooth
+      standard: Bluetooth Classic BR/EDR and Bluetooth LE
+      source_refs: [esp32-page, a2dp-api]
+  connectors:
+    - type: USB
+      count: 1
+      notes: Development board has a USB-UART bridge; connector details depend on the exact board revision.
+      source_refs: [devkit-page]
+software:
+  toolchains: [ESP-IDF]
+  source_refs: [devkit-page, a2dp-api]
+sources:
+  - id: devkit-page
+    type: product-page
+    title: ESP32-DevKitC
+    publisher: Espressif Systems
+    url: https://www.espressif.com/en/products/devkits/esp32-devkitc
+    accessed_on: 2026-09-23
+    official: true
+  - id: esp32-page
+    type: product-page
+    title: ESP32 SoC
+    publisher: Espressif Systems
+    url: https://www.espressif.com/en/products/socs/esp32
+    accessed_on: 2026-09-23
+    official: true
+  - id: a2dp-api
+    type: documentation
+    title: ESP-IDF ESP32 Bluetooth A2DP API
+    publisher: Espressif Systems
+    url: https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/bluetooth/esp_a2dp.html
+    accessed_on: 2026-09-23
+    official: true
+validation:
+  level: cataloged
+notes:
+  - The board is an open-firmware A2DP source candidate, not a pre-programmed Bluetooth audio transmitter.
+  - Exact header pins, current budget, firmware behavior, pairing, audio timing, and sound quality require a separate design and hardware validation.

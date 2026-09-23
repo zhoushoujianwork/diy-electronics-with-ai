@@ -1,0 +1,37 @@
+schema_version: 1
+id: bm83sm1-00ta
+vendor_id: microchip
+name: BM83SM1-00TA Bluetooth stereo audio module
+family: BM83
+model: BM83SM1-00TA
+category: audio-module
+lifecycle: active
+summary: Bluetooth audio transceiver module whose AT firmware supports A2DP source output from AUX or I2S audio input.
+specifications:
+  wireless:
+    - type: bluetooth
+      standard: Bluetooth 5.0; A2DP source with Audio Transceiver firmware
+      source_refs: [bm83-page]
+  interfaces:
+    - type: AUX audio input
+      notes: The manufacturer's BM83SM1-00Tx description lists AUX-in as an input for source operation.
+      source_refs: [bm83-page]
+    - type: I2S audio input
+      notes: The manufacturer's BM83SM1-00Tx description lists I2S as an input for source operation; sample format and wiring remain to be checked against the exact firmware and datasheet.
+      source_refs: [bm83-page]
+    - type: UART host control
+      source_refs: [bm83-page]
+sources:
+  - id: bm83-page
+    type: product-page
+    title: BM83 Bluetooth Stereo Audio Module
+    publisher: Microchip Technology
+    url: https://www.microchip.com/en-us/product/BM83
+    accessed_on: 2026-09-23
+    official: true
+validation:
+  level: cataloged
+notes:
+  - Microchip identifies BM83SM1-00Tx as A2DP source-capable when programmed with Audio Transceiver firmware; generic BM83 or A2DP labeling alone is not enough.
+  - The product page states that source mode can stream to up to two paired sink devices. Pairing behavior, firmware package, supply, pinout, audio clocking, and latency have not been validated here.
+  - Product photos and data sheets are linked from the official page; no third-party image or document is redistributed.

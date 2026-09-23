@@ -1,0 +1,42 @@
+schema_version: 1
+id: fsc-bt1026c
+vendor_id: feasycom
+name: FSC-BT1026C Bluetooth audio receiver module
+family: FSC-BT1026
+model: FSC-BT1026C
+category: audio-module
+lifecycle: active
+summary: Dual-mode Bluetooth audio receiver module; its standard firmware supports A2DP sink, not A2DP source.
+specifications:
+  processor:
+    manufacturer: Qualcomm
+    model: QCC3024
+    source_refs: [product-page]
+  wireless:
+    - type: bluetooth
+      standard: Bluetooth 5.1 dual mode; standard firmware A2DP sink only
+      source_refs: [product-page, vendor-forum]
+  mechanical:
+    width_mm: 13
+    height_mm: 26.9
+    source_refs: [product-page]
+sources:
+  - id: product-page
+    type: product-page
+    title: FSC-BT1026C Bluetooth 5.1 Audio Receiver Module
+    publisher: Feasycom
+    url: https://www.feasycom.com/product/fsc-bt1026c/
+    accessed_on: 2026-09-23
+    official: true
+  - id: vendor-forum
+    type: documentation
+    title: Feasycom engineer clarification on FSC-BT1026 A2DP source support
+    publisher: Feasycom
+    url: https://forum.feasycom.cn/d/81-a2dp-source
+    accessed_on: 2026-09-23
+    official: true
+validation:
+  level: cataloged
+notes:
+  - A generic A2DP entry in a shared AT command manual does not enable source mode on this model. The vendor forum confirms the standard FSC-BT1026 A/B/C/D/E/F firmware is sink only.
+  - Appropriate for receiving audio from a phone, not for sending generated audio to a car stereo or Bluetooth headphones.
