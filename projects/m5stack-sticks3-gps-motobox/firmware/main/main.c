@@ -178,6 +178,9 @@ static void gps_task(void *unused)
                 status.gnss_gga_quality = parser.gga_quality;
                 status.satellites = parser.reported_satellites < 0 ? 0 : parser.reported_satellites;
                 status.hdop = parser.reported_hdop;
+                status.gsv_seen = parser.gsv_seen;
+                status.gsv_peak_in_view = parser.gsv_peak_in_view;
+                status.gsv_peak_snr = parser.gsv_peak_snr;
                 portEXIT_CRITICAL(&state_lock);
             }
             if (!has_fix) continue;
@@ -445,6 +448,9 @@ static size_t build_payload(char *buffer, size_t capacity, uint64_t sequence, in
         .gnss_gga_quality = current.gnss_gga_seen ? current.gnss_gga_quality : -1,
         .gnss_satellites = current.satellites,
         .gnss_hdop = current.hdop,
+        .gsv_seen = current.gsv_seen,
+        .gsv_peak_in_view = current.gsv_peak_in_view,
+        .gsv_peak_snr = current.gsv_peak_snr,
         .has_fix = fresh,
         .fix_age_ms = age,
         .fix = fix,
@@ -524,12 +530,13 @@ static void heartbeat_task(void *unused)
         int64_t now_ms = esp_timer_get_time() / 1000;
         if (now_ms >= next_log_ms) {
             ESP_LOGI(TAG,
-            "HEARTBEAT gps_online=%d gps_fix=%d rmc=%c gga_q=%d sat=%d hdop=%.1f fix_age_ms=%u wifi=%d ip=%s rssi=%d mqtt=%d binding_known=%d bound=%d utc=%d queue=%u dropped=%u "
+            "HEARTBEAT gps_online=%d gps_fix=%d rmc=%c gga_q=%d sat=%d hdop=%.1f gsv_seen=%d gsv_peak_view=%d gsv_peak_snr=%d fix_age_ms=%u wifi=%d ip=%s rssi=%d mqtt=%d binding_known=%d bound=%d utc=%d queue=%u dropped=%u "
             "stack_gps=%u stack_telemetry=%u stack_ui=%u stack_voice=%u stack_heartbeat=%u heap=%u",
             current.gnss_online, current.fix_valid,
             current.gnss_rmc_status ? current.gnss_rmc_status : '?',
             current.gnss_gga_seen ? current.gnss_gga_quality : -1,
-            current.satellites, current.hdop, current.fix_age_ms,
+            current.satellites, current.hdop, current.gsv_seen, current.gsv_peak_in_view,
+            current.gsv_peak_snr, current.fix_age_ms,
             current.wifi_connected, current.wifi_connected ? current.wifi_ip : "-", current.wifi_rssi,
             current.mqtt_connected, current.binding_known, current.binding_bound, current.time_trusted,
             current.queue_depth, current.queue_dropped,

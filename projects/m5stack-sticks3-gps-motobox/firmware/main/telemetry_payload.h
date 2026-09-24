@@ -19,6 +19,9 @@ typedef struct {
     int gnss_gga_quality;
     int gnss_satellites;
     float gnss_hdop;
+    bool gsv_seen;
+    int gsv_peak_in_view;
+    int gsv_peak_snr;
     bool has_fix;
     uint32_t fix_age_ms;
     gnss_fix_t fix;

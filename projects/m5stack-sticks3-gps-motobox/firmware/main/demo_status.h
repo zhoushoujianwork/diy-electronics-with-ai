@@ -22,6 +22,9 @@ typedef struct {
     int wifi_rssi;
     int satellites;
     float hdop;
+    bool gsv_seen;
+    int gsv_peak_in_view;
+    int gsv_peak_snr;
     float speed_kmh;
     uint32_t fix_age_ms;
     unsigned queue_depth;

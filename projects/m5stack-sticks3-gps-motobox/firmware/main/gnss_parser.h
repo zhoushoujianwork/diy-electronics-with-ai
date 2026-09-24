@@ -27,6 +27,9 @@ typedef struct {
     int gga_quality;
     int reported_satellites;
     float reported_hdop;
+    bool gsv_seen;
+    int gsv_peak_in_view;
+    int gsv_peak_snr;
     int rmc_second;
     int gga_second;
     double rmc_latitude;

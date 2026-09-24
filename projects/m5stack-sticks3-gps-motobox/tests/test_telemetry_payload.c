@@ -26,6 +26,9 @@ int main(void)
         .gnss_gga_quality = 0,
         .gnss_satellites = 0,
         .gnss_hdop = 25.5f,
+        .gsv_seen = true,
+        .gsv_peak_in_view = 3,
+        .gsv_peak_snr = 22,
     };
     assert(telemetry_payload_build(payload, sizeof(payload), &status) > 0);
     contains(payload, "\"timestamp\":1790017179");
@@ -39,6 +42,9 @@ int main(void)
     contains(payload, "\"gnss_gga_quality\":0");
     contains(payload, "\"gnss_satellites\":0");
     contains(payload, "\"gnss_hdop\":25.5");
+    contains(payload, "\"gsv_seen\":true");
+    contains(payload, "\"gsv_peak_in_view\":3");
+    contains(payload, "\"gsv_peak_snr\":22");
     contains(payload, "\"seq\":42");
     contains(payload, "\"ts_ms\":1790017179265");
     assert(strstr(payload, "\"location\"") == NULL);

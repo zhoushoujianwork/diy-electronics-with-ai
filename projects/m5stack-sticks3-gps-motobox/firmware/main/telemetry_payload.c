@@ -23,7 +23,8 @@ size_t telemetry_payload_build(char *buffer, size_t capacity,
             "\"modules\":{\"wifi\":%s,\"gsm\":false,\"gnss\":true,\"imu\":false,\"sd\":false},"
             "\"ext\":{\"seq\":%" PRIu64 ",\"ts_ms\":%" PRId64 ",\"speed_kmh\":%.2f,"
             "\"position_source\":\"GNSS\",\"gnss_online\":%s,\"gnss_rmc_status\":\"%c\","
-            "\"gnss_gga_quality\":%d,\"gnss_satellites\":%d,\"gnss_hdop\":%.1f}}",
+            "\"gnss_gga_quality\":%d,\"gnss_satellites\":%d,\"gnss_hdop\":%.1f,"
+            "\"gsv_seen\":%s,\"gsv_peak_in_view\":%d,\"gsv_peak_snr\":%d}}",
             input->device_id, input->now_ms / 1000, input->firmware,
             input->fix.latitude, input->fix.longitude, input->fix.altitude_m,
             input->fix.speed_kmh, input->fix.course_deg, input->fix.satellites,
@@ -32,7 +33,8 @@ size_t telemetry_payload_build(char *buffer, size_t capacity,
             input->sequence, input->fix.utc_ms, input->fix.speed_kmh,
             input->gnss_online ? "true" : "false",
             rmc_status,
-            input->gnss_gga_quality, input->gnss_satellites, input->gnss_hdop);
+            input->gnss_gga_quality, input->gnss_satellites, input->gnss_hdop,
+            input->gsv_seen ? "true" : "false", input->gsv_peak_in_view, input->gsv_peak_snr);
     } else {
         written = snprintf(buffer, capacity,
             "{\"device_id\":\"%s\",\"timestamp\":%" PRId64 ",\"firmware\":\"%s\","
@@ -42,13 +44,15 @@ size_t telemetry_payload_build(char *buffer, size_t capacity,
             "\"modules\":{\"wifi\":%s,\"gsm\":false,\"gnss\":%s,\"imu\":false,\"sd\":false},"
             "\"ext\":{\"seq\":%" PRIu64 ",\"ts_ms\":%" PRId64 ",\"speed_kmh\":0,"
             "\"position_source\":\"NONE\",\"gnss_online\":%s,\"gnss_rmc_status\":\"%c\","
-            "\"gnss_gga_quality\":%d,\"gnss_satellites\":%d,\"gnss_hdop\":%.1f}}",
+            "\"gnss_gga_quality\":%d,\"gnss_satellites\":%d,\"gnss_hdop\":%.1f,"
+            "\"gsv_seen\":%s,\"gsv_peak_in_view\":%d,\"gsv_peak_snr\":%d}}",
             input->device_id, input->now_ms / 1000, input->firmware,
             input->uptime_s, input->free_heap, input->wifi_connected ? "true" : "false",
             input->gnss_online ? "true" : "false",
             input->sequence, input->now_ms, input->gnss_online ? "true" : "false",
             rmc_status,
-            input->gnss_gga_quality, input->gnss_satellites, input->gnss_hdop);
+            input->gnss_gga_quality, input->gnss_satellites, input->gnss_hdop,
+            input->gsv_seen ? "true" : "false", input->gsv_peak_in_view, input->gsv_peak_snr);
     }
     return written > 0 && (size_t)written < capacity ? (size_t)written : 0;
 }
