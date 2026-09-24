@@ -11,6 +11,14 @@ and a stationary outdoor GNSS fix have been validated. Moving tracks and mini-pr
 The first public demonstration uses a platform-managed device account. MotoBox broker access is issued
 separately; cloning this repository does not automatically create a cloud device or MQTT credential.
 
+## Illustrated user manual / 中文图解手册
+
+[中文图解使用手册](docs/manual/README.md) explains the StickS3 controls, GPS wiring, screen states,
+network prerequisites, binding flow and troubleshooting in three illustrated pages, plus a technical overview
+of GNSS, platform registration/device enrollment and WeChat location sharing. It follows the documented
+firmware version and distinguishes implemented behavior from completed hardware validation. The illustrations are
+AI-generated diagrams, not device screenshots; the project remains a `prototype`.
+
 ## Hardware
 
 | Item | Exact model/revision | Quantity | Notes |

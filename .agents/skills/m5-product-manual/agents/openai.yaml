@@ -1,0 +1,6 @@
+interface:
+  display_name: "M5 产品图解手册 / M5 Product Manual"
+  short_description: "按硬件、固件与验证资料制作图解说明书 / Evidence-based manuals"
+  default_prompt: "使用 $m5-product-manual，根据本项目当前 M5Stack 硬件、固件和验证记录制作详细中文图解说明书。"
+policy:
+  allow_implicit_invocation: true
