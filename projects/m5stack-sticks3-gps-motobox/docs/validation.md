@@ -2,13 +2,42 @@
 
 ## Current state
 
+- On the second outdoor run on 2026-09-24, the `fec6e12` firmware reached its first backend-confirmed
+  stationary GNSS fix at 14:51:19 UTC. A read-only SQL check through 15:01:45 UTC found 126 consecutive
+  valid `GNSS` location frames, sequences 86–211, with seven to eleven GGA-used satellites and HDOP 1.4–7.1.
+  Recent frames reported GGA quality 1. Earlier GSV telemetry had climbed to a six-satellite peak in a
+  single constellation report and peak SNR 45, establishing reception before the fix. No coordinates or
+  device identifier are included here. The broader telemetry window contains a sequence reset from 78 to 1
+  at 14:44:13 UTC; without an outdoor serial capture its cause cannot be determined. This evidence proves
+  a stationary outdoor GNSS fix and sustained MQTT ingestion for the observed interval, not a moving track,
+  location accuracy against ground truth, or absence of reboot during the whole outdoor session.
+- GSV visibility firmware `fec6e12` was built and hash-verified on the same StickS3 K150 + Unit GPS
+  v1.1 / U032-V11 with USB-C power and Grove 5 V. Two indoor serial windows spanning about 140 seconds
+  recorded 14 heartbeats; after SNTP established trusted time, 13 five-second telemetry frames
+  were published and acknowledged with queue depth and drops at zero. GSV sentences passed checksum and
+  parser validation, but the indoor peaks were zero satellites in view and zero signal-to-noise ratio;
+  GGA also reported zero satellites used. SQL stored `gsv_seen=true`, `gsv_peak_in_view=0` and
+  `gsv_peak_snr=0` alongside `position_source=NONE`. No panic, stack overflow, Guru Meditation, reset
+  or USB reconnect was observed. Minimum free stack in this run was GPS 1480 B, telemetry 2624 B,
+  UI 4164 B, voice 3308 B and heartbeat 1584 B. Raw logs remain private at
+  `/tmp/sticks3-gsv-diagnostic-20260924.log` and `/tmp/sticks3-gsv-steady-20260924.log`. The GSV peaks
+  are maxima since boot, not current satellite counts. The outdoor result is recorded above.
+- Diagnostic firmware from `fd281f6` was built with ESP-IDF 5.5.2 and hash-verified on the StickS3 K150
+  with Unit GPS v1.1 / U032-V11, powered over USB-C with Grove 5 V enabled. A 95-second indoor serial
+  capture after flashing recorded nine continuous heartbeats, 19 telemetry publications and 19 MQTT ACKs,
+  nine `bound=1` replies, no panic, stack overflow, Guru Meditation or reset, and no queue drops.
+  Minimum free stack was GPS 1492 B, telemetry 2576 B, UI 4196 B, voice 3308 B and heartbeat 1532 B,
+  each above 25% and 1024 B. Production SQL independently stored `gnss_online=true`, `RMC=V`, GGA quality 0,
+  satellites 0, HDOP 25.5 and `position_source=NONE` in recent frames. The private full log stays outside
+  Git at `/tmp/sticks3-gnss-uplink-20260924.log`. This diagnostic version was superseded by `fec6e12`
+  before the second outdoor run.
 - The user placed the powered unit outdoors on 2026-09-24. A read-only production SQL check at 14:17 UTC
   found consecutive five-second telemetry frames through sequence 228 but no valid location. The running
   firmware does not yet report satellite diagnostics over MQTT, so this observation establishes only that
   uplink continued without a fix; it does not establish outdoor satellite visibility. A new diagnostic
   payload records `ext.gnss_online`, `gnss_rmc_status`, `gnss_gga_quality`, `gnss_satellites`, `gnss_hdop`
-  and `position_source` (`GNSS` or `NONE`). Host tests and an ESP-IDF build passed, but this version has not
-  been flashed because the unit is still outside. Outdoor satellite and task-stack verification remain pending.
+  and `position_source` (`GNSS` or `NONE`). This first outdoor run used the earlier firmware and therefore
+  could not expose satellite counts remotely.
 - A later read-only SQL check at 14:29 UTC found 179 frames in the preceding 15 minutes, up to
   sequence 367, and zero valid locations. Valid indoor NMEA traffic establishes that the configured UART baud,
   receive pin and sentence parser work; this outdoor result alone cannot distinguish antenna/sky-view issues
@@ -91,10 +120,11 @@
   guarded by a persistent host firewall rule so only the Nginx loopback upstream can reach it. The ACME deploy
   hook now validates the certificate/key pair, restarts the gateway and reloads Nginx; timestamped rollback
   copies were retained on the server.
-- GPS outdoor fix, moving track and mini-program location sharing: pending. The authenticated server-code
-  request, on-screen display, speaker playback and mini-program real-device binding are hardware-validated.
-- Mini-program host tests and JavaScript syntax checks: passed. WeChat DevTools recognized the production
-  AppID, but preview compilation was blocked because the local DevTools session requires a fresh login.
+- GPS outdoor stationary fix: observed as described above. Moving track and mini-program location sharing
+  remain pending. The authenticated server-code request, on-screen display, speaker playback and mini-program
+  real-device binding are hardware-validated.
+- Mini-program host tests and JavaScript syntax checks: passed. WeChat DevTools compiled the v0.2.31
+  development preview; the phone-assisted location path still needs API rollout and phone-device acceptance.
 - Status remains `prototype` until the real-device checks below are complete.
 
 ## Observed task margins
@@ -103,19 +133,23 @@ The lowest observed high-water marks during Wi-Fi + WSS/TLS + LCD + GNSS UART op
 
 | Task | Configured stack | Lowest free stack | Result |
 | --- | ---: | ---: | --- |
-| GPS UART/parser | 4096 bytes | 1516 bytes | pass |
-| Telemetry/MQTT queue | 6144 bytes | 3072 bytes | pass |
-| LVGL UI | 8192 bytes | 4172 bytes | pass |
+| GPS UART/parser | 4096 bytes | 1480 bytes | pass |
+| Telemetry/MQTT queue | 6144 bytes | 2576 bytes | pass |
+| LVGL UI | 8192 bytes | 4164 bytes | pass |
 | Binding-code voice | 4096 bytes | 2092 bytes | pass |
-| Heartbeat/diagnostics | 4096 bytes | 1832 bytes | pass |
+| Heartbeat/diagnostics | 4096 bytes | 1532 bytes | pass |
 
 Each retained at least 25% and at least 1024 bytes. The longer Wi-Fi/MQTT/GNSS run used the earlier firmware
 recorded in repository commit `c8085cb`; the speaker playback and voice-task measurement use commit `12f0348`.
+The current diagnostic payload and lower telemetry/heartbeat free-stack marks were observed with `fd281f6`
+during the 95-second indoor run; a renewed outdoor load check remains pending.
+GSV parsing in `fec6e12` retained at least 1480 B free GPS stack and 2624 B free telemetry stack in the
+indoor run.
 
 ## Remaining acceptance work
 
-The indoor run does not prove GNSS positioning or the mini-program location views. Move the powered unit outdoors
-with an open sky view and complete the movement and sharing checks below. Do not change the manifest to
+The second outdoor run proved a stationary GNSS fix, but not moving tracks or the mini-program location views.
+Complete the movement and sharing checks below. Do not change the manifest to
 `hardware-verified` until those checks succeed.
 Unbinding and re-binding should return `BIND UNBOUND`, then a single new code, then `BIND BOUND`. The
 physical LCD layout and status transitions during a deliberate MQTT outage also remain to be inspected.

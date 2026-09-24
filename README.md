@@ -16,7 +16,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 | --- | --- |
 | [<img src="projects/ev-engine-sound/docs/assets/engine-sim-official-concept.png" width="420" alt="EV Engine Sound 桌面设计预览：发动机剖面、点火和排气界面，非实机照片">](projects/ev-engine-sound/)<br>桌面设计预览 · [素材来源与许可](projects/ev-engine-sound/docs/third-party/engine-sim.md) | [<img src="projects/m5stack-sticks3-gps-motobox/docs/assets/showcase-overview.svg" width="420" alt="StickS3 GPS 到 MotoBox 的工作原理示意：GPS Unit 经 UART 接入 StickS3，再通过 Wi-Fi 和 MQTT TLS 上报服务端，非实机照片">](projects/m5stack-sticks3-gps-motobox/)<br>工作原理示意 · 非实机照片 |
 | ESP32-S3 实时合成发动机声浪，配合活塞与点火动画；18 种发动机配置、5 种排气音色。可先在电脑试听，再按板型构建固件。 | StickS3 + GPS Unit 的 Wi-Fi 定位终端，包含位置上报、离线队列和服务端验证码绑定。MotoBox 服务账号与凭据需另行开通。 |
-| **开发中 · 已部分实机验证** · [`hardware-verified`](projects/ev-engine-sound/project.yaml)<br>已验证：StickS3 与立创实战派的部分功能；历史 ESP32-S3 板型仅构建通过。<br>待完成：其余实体交互、听感与视觉验收；v2 界面仍为电脑预览。<br>[验证记录与具体范围](projects/ev-engine-sound/docs/validation.md) | **开发中 · 原型** · [`prototype`](projects/m5stack-sticks3-gps-motobox/project.yaml)<br>已验证：构建、室内联网、状态上报、断网恢复，以及验证码显示、播报和小程序实机绑定。<br>待完成：户外定位、移动轨迹与小程序位置页面验收。<br>[验证记录与具体范围](projects/m5stack-sticks3-gps-motobox/docs/validation.md) |
+| **开发中 · 已部分实机验证** · [`hardware-verified`](projects/ev-engine-sound/project.yaml)<br>已验证：StickS3 与立创实战派的部分功能；历史 ESP32-S3 板型仅构建通过。<br>待完成：其余实体交互、听感与视觉验收；v2 界面仍为电脑预览。<br>[验证记录与具体范围](projects/ev-engine-sound/docs/validation.md) | **开发中 · 原型** · [`prototype`](projects/m5stack-sticks3-gps-motobox/project.yaml)<br>已验证：构建、室内联网、状态上报、断网恢复、验证码显示与播报、小程序实机绑定，以及室外静止 GNSS 定位。<br>待完成：移动轨迹与小程序位置页面验收。<br>[验证记录与具体范围](projects/m5stack-sticks3-gps-motobox/docs/validation.md) |
 
 更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)（目前暂无独立 Demo）。
 状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。
