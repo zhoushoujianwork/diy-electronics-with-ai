@@ -1,0 +1,44 @@
+schema_version: 1
+id: dx-gp10
+vendor_id: dx-smart
+name: DX-SMART DX-GP10 GNSS module
+family: DX-GP
+model: DX-GP10
+category: positioning-module
+lifecycle: active
+summary: UART GNSS module supporting GPS, BeiDou and GLONASS, with mode-dependent update-rate limits.
+specifications:
+  interfaces:
+    - type: UART
+      notes: NMEA 0183 output; the UART bit rate is distinct from the positioning update rate.
+      source_refs: [technical-manual]
+sources:
+  - id: module-page
+    type: product-page
+    title: DX-GP10 surface-mount module
+    publisher: Shenzhen DX-SMART Technology
+    url: https://www.szdx-smart.com/cpzx/GNSSdingweimokuai/duomodanpin/127.html
+    accessed_on: 2026-09-24
+    official: true
+  - id: carrier-page
+    type: product-page
+    title: DX-GP10 carrier board
+    publisher: Shenzhen DX-SMART Technology
+    url: https://www.szdx-smart.com/cpzx/GNSSdingweimokuai/duomodanpin/122.html
+    accessed_on: 2026-09-24
+    official: true
+  - id: technical-manual
+    type: datasheet
+    title: DX-GP10 GPS module technical manual V2.0, 2024-06-18
+    publisher: Shenzhen DX-SMART Technology
+    url: https://www.szdx-smart.com/static/upload/2024/07/23/202407233672.pdf
+    accessed_on: 2026-09-24
+    official: true
+    notes: Page 6 gives mode-dependent update limits; pages 7-8 give accuracy conditions; pages 11 and 23 cover the carrier board.
+validation:
+  level: cataloged
+notes:
+  - Manual section 1.2, page 6 states a default update rate of 1 Hz, a maximum of 2 Hz in dual-system mode and 5 Hz in single-system mode. It does not establish 20 Hz support.
+  - Manual section 1.4, pages 7-8 lists horizontal accuracy below 2.0 m CEP, with a 50 percent, two-hour static, -130 dBm and more-than-six-satellites test condition.
+  - This record covers the DX-GP10 receiver. The carrier page links the same manual; carrier dimensions, power input and hardware revision must be checked separately before wiring.
+  - Advertised maxima do not establish the active configuration or measured output rate of a particular device.

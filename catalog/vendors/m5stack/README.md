@@ -56,6 +56,12 @@ AGC 或回声消除。应同时读取官方产品页、原理图与所链接的�
 3.3 V 信号域，以及裸麦克风的电流/时钟限制；页面与手册对 SNR/THD 的限定有细微差异，
 产品记录中分别保留。比较见 [PDM 与 MAX9814](../../../docs/research/pdm-vs-max9814-audio-frontends.md)。
 
+## GPS Unit 的版本与更新率
+
+[Unit GPS v1.1 / U032-V11](products/gps-unit-v1-1.yaml) 使用 AT6668，不能与旧版 AT6558
+Unit GPS 混用参数。最高定位更新率不等于设备当前设置，也不等于网络上报频率；官方速率、
+精度限定及待测范围见 [DX-GP10 与 GPS v1.1 比较](../../../docs/research/gnss-dx-gp10-vs-m5stack-gps-v1-1.md)。
+
 ## 归档边界
 
 - 可独立运行的 M5Stack Core、Stick、Atom 等开发板进入产品目录；只有经过精确板型和引脚

@@ -135,6 +135,8 @@ independent of the validation level.
 
 ## 选型比较
 
+- [大夏龙雀 DX-GP10 与 M5Stack GPS Unit v1.1](../docs/research/gnss-dx-gp10-vs-m5stack-gps-v1-1.md)：
+  默认与最高定位更新率、单模/双模限制、精度比较边界，以及 MG-902 高频能力的待核实项。
 - [PDM MEMS 与 MAX9814 模拟音频前端](../docs/research/pdm-vs-max9814-audio-frontends.md)：
   官方规格差异、语音对讲选型，以及 Canaan CanMV K230 V3.0 的软件依据、音频接线档案与待验证范围。
 - [蓝牙音频外放与 A2DP Source 选型](../docs/research/bluetooth-a2dp-source-selection.md)：
