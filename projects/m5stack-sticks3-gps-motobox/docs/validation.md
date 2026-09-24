@@ -9,6 +9,14 @@
   payload records `ext.gnss_online`, `gnss_rmc_status`, `gnss_gga_quality`, `gnss_satellites`, `gnss_hdop`
   and `position_source` (`GNSS` or `NONE`). Host tests and an ESP-IDF build passed, but this version has not
   been flashed because the unit is still outside. Outdoor satellite and task-stack verification remain pending.
+- A later read-only SQL check at 14:29 UTC found 179 frames in the preceding 15 minutes, up to
+  sequence 367, and zero valid locations. Valid indoor NMEA traffic establishes that the configured UART baud,
+  receive pin and sentence parser work; this outdoor result alone cannot distinguish antenna/sky-view issues
+  from a module positioning problem. MotoBox phone-assisted fallback code now has an owner-authenticated HTTP
+  path and a mini-program foreground switch, with `PHONE` source labels. It remains unproven on a real phone
+  and requires the API and mini-program to be deployed before use. Carrier IP was rejected as a tracking
+  source because its geolocation is unrelated to the phone's precise position. Nearby AP positioning needs
+  provider coverage and credentials; production has neither enabled nor configured the existing AMap resolver.
 - 2026-09-24 status-screen firmware `a743599` was built with ESP-IDF 5.5.2 and flashed with hash verification
   to the StickS3 K150 + Unit GPS v1.1, powered by USB-C with Grove 5 V enabled. A 75-second serial capture
   after flashing recorded eight uninterrupted ten-second heartbeats, `gps_online=1` from valid NMEA traffic,
