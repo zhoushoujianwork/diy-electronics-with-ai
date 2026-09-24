@@ -4,8 +4,8 @@ This open project turns an M5Stack StickS3 into a Wi-Fi GNSS tracker. It reads a
 uploads MotoBox-compatible telemetry over MQTT TLS, and displays and speaks a server-generated one-time code
 that the MotoBox mini program uses to bind the device.
 
-The project remains a `prototype`: indoor connectivity, offline recovery and mini-program real-device binding
-have been validated, while outdoor positioning, moving tracks and mini-program location views are still pending. See
+The project remains a `prototype`: indoor connectivity, offline recovery, mini-program real-device binding
+and a stationary outdoor GNSS fix have been validated. Moving tracks and mini-program location views remain pending. See
 [validation](docs/validation.md) for the evidence and remaining checks.
 
 The first public demonstration uses a platform-managed device account. MotoBox broker access is issued
