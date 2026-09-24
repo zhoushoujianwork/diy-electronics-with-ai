@@ -62,7 +62,11 @@ static void refresh_timer(lv_timer_t *timer)
         lv_label_set_text_fmt(speed_label, "FIX READY  SAT %d  %.1f km/h",
                               status.satellites, status.speed_kmh);
     } else {
-        lv_label_set_text(speed_label, status.gnss_online ? "FIX WAITING" : "CHECK GPS POWER / CABLE");
+        if (status.gnss_online && status.gnss_gga_seen) {
+            lv_label_set_text_fmt(speed_label, "NO FIX  SAT %d", status.satellites);
+        } else {
+            lv_label_set_text(speed_label, status.gnss_online ? "FIX WAITING" : "CHECK GPS POWER / CABLE");
+        }
     }
     lv_label_set_text_fmt(network_label, "Wi-Fi %s  %.17s",
                           status.wifi_connected ? "UP" : "DOWN", status.wifi_ssid);

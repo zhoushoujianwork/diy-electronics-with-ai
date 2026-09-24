@@ -173,6 +173,11 @@ static void gps_task(void *unused)
             if (parser.nmea_sentence_count != before) {
                 portENTER_CRITICAL(&state_lock);
                 latest_nmea_monotonic_ms = esp_timer_get_time() / 1000;
+                status.gnss_rmc_status = parser.rmc_status;
+                status.gnss_gga_seen = parser.gga_seen;
+                status.gnss_gga_quality = parser.gga_quality;
+                status.satellites = parser.reported_satellites < 0 ? 0 : parser.reported_satellites;
+                status.hdop = parser.reported_hdop;
                 portEXIT_CRITICAL(&state_lock);
             }
             if (!has_fix) continue;
@@ -510,9 +515,12 @@ static void heartbeat_task(void *unused)
         int64_t now_ms = esp_timer_get_time() / 1000;
         if (now_ms >= next_log_ms) {
             ESP_LOGI(TAG,
-            "HEARTBEAT gps_online=%d gps_fix=%d sat=%d fix_age_ms=%u wifi=%d ip=%s rssi=%d mqtt=%d binding_known=%d bound=%d utc=%d queue=%u dropped=%u "
+            "HEARTBEAT gps_online=%d gps_fix=%d rmc=%c gga_q=%d sat=%d hdop=%.1f fix_age_ms=%u wifi=%d ip=%s rssi=%d mqtt=%d binding_known=%d bound=%d utc=%d queue=%u dropped=%u "
             "stack_gps=%u stack_telemetry=%u stack_ui=%u stack_voice=%u stack_heartbeat=%u heap=%u",
-            current.gnss_online, current.fix_valid, current.satellites, current.fix_age_ms,
+            current.gnss_online, current.fix_valid,
+            current.gnss_rmc_status ? current.gnss_rmc_status : '?',
+            current.gnss_gga_seen ? current.gnss_gga_quality : -1,
+            current.satellites, current.hdop, current.fix_age_ms,
             current.wifi_connected, current.wifi_connected ? current.wifi_ip : "-", current.wifi_rssi,
             current.mqtt_connected, current.binding_known, current.binding_bound, current.time_trusted,
             current.queue_depth, current.queue_dropped,

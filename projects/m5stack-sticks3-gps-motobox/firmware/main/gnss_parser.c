@@ -173,6 +173,10 @@ static void emit_if_paired(gnss_parser_t *parser, gnss_fix_t *out)
 void gnss_parser_init(gnss_parser_t *parser)
 {
     memset(parser, 0, sizeof(*parser));
+    parser->rmc_status = '?';
+    parser->gga_quality = -1;
+    parser->reported_satellites = -1;
+    parser->reported_hdop = -1;
 }
 
 bool gnss_parse_sentence(gnss_parser_t *parser, const char *sentence, gnss_fix_t *out)
@@ -189,6 +193,8 @@ bool gnss_parse_sentence(gnss_parser_t *parser, const char *sentence, gnss_fix_t
 
     if (count >= 10 && sentence_type(fields[0], "RMC")) {
         recognized = true;
+        parser->rmc_seen = true;
+        parser->rmc_status = fields[2][0] ? fields[2][0] : '?';
         int sod = 0, hour = 0, minute = 0, second = 0;
         double lat = 0, lon = 0, speed_knots = 0, course = 0;
         bool date_format = strlen(fields[9]) == 6 && digits(fields[9], 6);
@@ -216,8 +222,12 @@ bool gnss_parse_sentence(gnss_parser_t *parser, const char *sentence, gnss_fix_t
         }
     } else if (count >= 10 && sentence_type(fields[0], "GGA")) {
         recognized = true;
+        parser->gga_seen = true;
         int sod = 0, quality = 0, satellites = 0;
         double lat = 0, lon = 0, hdop = 0, altitude = 0;
+        parser->gga_quality = parse_nonnegative_int(fields[6], &quality) ? quality : -1;
+        parser->reported_satellites = parse_nonnegative_int(fields[7], &satellites) ? satellites : -1;
+        parser->reported_hdop = parse_number(fields[8], &hdop) && hdop >= 0 ? (float)hdop : -1;
         parser->gga_valid = parse_nonnegative_int(fields[6], &quality) && quality > 0 &&
             parse_hhmmss(fields[1], &sod, NULL, NULL, NULL) &&
             parse_coordinate(fields[2], fields[3], true, &lat) &&
