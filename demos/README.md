@@ -11,5 +11,11 @@
 
 建议名称不代表已经实现或拥有现货，真正创建时必须填写验证状态。
 
-目前暂无独立 Demo。[StickS3 GPS → MotoBox](../projects/m5stack-sticks3-gps-motobox/)
-已按完整定位终端的功能范围归入 `projects/`，验证状态仍为 `prototype`。
+## 已有 Demo
+
+| Demo | 目的 | 状态与验证 |
+| --- | --- | --- |
+| [ESP32 A2DP Engine Sound](esp32-a2dp-engine-sound/) | 原版 ESP32 用 BOOT 控制声浪并通过 A2DP 发给音箱 | 开发中，`build-verified`；已构建，音箱配对/出声待验证。[证据](esp32-a2dp-engine-sound/docs/validation.md) |
+
+[StickS3 GPS → MotoBox](../projects/m5stack-sticks3-gps-motobox/) 按完整定位终端的功能范围
+归入 `projects/`，验证状态仍为 `prototype`。

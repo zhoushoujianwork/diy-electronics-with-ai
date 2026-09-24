@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="350" viewBox="0 0 1100 350">
+<rect width="1100" height="350" rx="20" fill="#101a2b"/>
+<g font-family="sans-serif" fill="#eef4ff">
+<text x="40" y="54" font-size="29" font-weight="bold">ESP32 · A2DP ENGINE SOUND</text>
+<text x="40" y="84" font-size="17" fill="#b1c5dc">Prototype signal diagram · speaker validation pending</text>
+<rect x="40" y="133" width="200" height="130" rx="14" fill="#263b52"/>
+<text x="67" y="178" font-size="25">BOOT / GPIO0</text><text x="67" y="211" font-size="17">Hold: throttle 100%</text><text x="67" y="240" font-size="17">Release: idle → stop</text>
+<rect x="310" y="133" width="420" height="130" rx="14" fill="#164c64"/>
+<text x="338" y="178" font-size="25">ESP32-WROOM-32E</text><text x="338" y="211" font-size="17">Engine synthesis → PCM → SBC</text><text x="338" y="240" font-size="17">44.1 kHz · stereo · A2DP Source</text>
+<rect x="800" y="133" width="260" height="130" rx="14" fill="#413b64"/>
+<text x="828" y="178" font-size="25">Bluetooth speaker</text><text x="828" y="211" font-size="17">A2DP Sink</text><text x="828" y="240" font-size="17">Planned: JBL Go 3</text>
+<text x="265" y="204" font-size="30">→</text><text x="752" y="204" font-size="30">→</text>
+<text x="40" y="314" font-size="18" fill="#b1c5dc">USB → power / flash / UART logs       No external DAC or amplifier required</text>
+</g></svg>

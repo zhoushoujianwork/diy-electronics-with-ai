@@ -11,7 +11,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 ## 项目与 Demo 展示
 
 从下面的设备项目了解这里能做什么；点击小图或名称查看硬件清单、接线和运行步骤。
-**目前两个项目都仍在开发中**，已验证范围和待完成项分别列出。
+**目前两个项目和一个独立 Demo 都仍在开发中**，已验证范围和待完成项分别列出。
 
 | [摩托声浪模拟器 · EV Engine Sound](projects/ev-engine-sound/) · Project | [车辆定位终端 · StickS3 GPS → MotoBox](projects/m5stack-sticks3-gps-motobox/) · Project |
 | --- | --- |
@@ -20,7 +20,11 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 | **开发中 · 已部分实机验证** · [`hardware-verified`](projects/ev-engine-sound/project.yaml)<br>已验证：StickS3 与立创实战派的部分功能；历史 ESP32-S3 板型仅构建通过。<br>待完成：其余实体交互、听感与视觉验收；v2 界面仍为电脑预览。<br>[验证记录与具体范围](projects/ev-engine-sound/docs/validation.md) | **开发中 · 原型** · [`prototype`](projects/m5stack-sticks3-gps-motobox/project.yaml)<br>已验证：构建、室内联网、状态上报、断网恢复、验证码显示与播报、小程序实机绑定，以及室外静止 GNSS 定位。<br>待完成：移动轨迹、定位精度与小程序位置/分享完整链路。<br>[验证记录与具体范围](projects/m5stack-sticks3-gps-motobox/docs/validation.md) |
 | [硬件与运行说明](projects/ev-engine-sound/README.md) | [硬件与运行说明](projects/m5stack-sticks3-gps-motobox/README.md) · [中文图解手册](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md) |
 
-更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)（目前暂无独立 Demo）。
+| [ESP32 蓝牙声浪原型](demos/esp32-a2dp-engine-sound/) · Demo | 进度与验证 |
+| --- | --- |
+| [<img src="demos/esp32-a2dp-engine-sound/docs/assets/signal-path.svg" width="380" alt="BOOT 按键控制原版 ESP32 合成声浪，再经 A2DP 向蓝牙音箱发送的原理示意，非实机照片">](demos/esp32-a2dp-engine-sound/)<br>原理示意 · 非实机照片 | 原版 ESP32-DevKitC 使用 BOOT 给油，经 A2DP 向音箱播放程序化声浪。<br>**开发中 · 构建已验证** · [`build-verified`](demos/esp32-a2dp-engine-sound/project.yaml)<br>已验证：ESP-IDF 构建、BOOT 去抖与 44.1 kHz 合成过渡主机测试。<br>待完成：实体 BOOT、音箱配对/出声、持续播放、重连与延迟验收。<br>[验证记录](demos/esp32-a2dp-engine-sound/docs/validation.md) |
+
+更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)。
 状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。
 
 ## 从项目代码到图解说明书

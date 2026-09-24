@@ -54,15 +54,18 @@ Wi‑Fi 网关、BLE 与经典蓝牙适配器，以及官方云端遥测。资�
 
 ### 蓝牙音频外放（选型中）
 
-当前固件没有蓝牙音频输出。ESP32-S3 虽有 Bluetooth LE，但车载音乐系统、普通蓝牙
+当前 ESP32-S3 固件没有蓝牙音频输出。ESP32-S3 虽有 Bluetooth LE，但车载音乐系统、普通蓝牙
 音箱和耳机通常需要 Bluetooth Classic A2DP Source；不能仅通过打开板载 BLE 实现。
 已核验的候选有运行 A2DP Source 固件的原版 ESP32 开发板，以及刷入 Audio Transceiver
 固件的 Microchip BM83SM1-00TA。成品 AUX 发射盒还需要先确认线电平输出，不能直接接
 本项目的扬声器功放端。外形、协议角色与官方资料见
 [A2DP Source 选型笔记](../../docs/research/bluetooth-a2dp-source-selection.md)。
 
-尚未确定发射硬件、接线、供电和配对交互；也没有蓝牙固件、车机或耳机实测。因此本项
-不计入现有 `hardware-verified` 范围。后续验收需覆盖音频采样率转换、油门到出声延迟、
+已建立独立 [ESP32-DevKitC 蓝牙声浪 Demo](../../demos/esp32-a2dp-engine-sound/)，复用本项目
+声浪核心，使用 BOOT 按住给油、A2DP Source 输出；构建已通过，JBL Go 3 配对与实际出声
+仍待验证，范围见 [Demo 证据](../../demos/esp32-a2dp-engine-sound/docs/validation.md)。自研板
+的发射硬件和 S3 到音频协处理器的接线尚未确定，也没有车机或耳机实测，因此蓝牙不计入
+本项目现有 `hardware-verified` 范围。后续验收需覆盖音频采样率转换、油门到出声延迟、
 断连重连、持续运行时的音频/任务栈/心跳，以及目标车机的 A2DP 接收能力。
 
 每种硬件使用独立板级目录：

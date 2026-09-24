@@ -1,0 +1,24 @@
+schema: 1
+id: esp32-a2dp-engine-sound
+name: ESP32 A2DP Engine Sound
+kind: demo
+status: build-verified
+summary: BOOT-controlled engine synthesis on original ESP32 with A2DP source output
+owners:
+  - human-ai-lab
+toolchains:
+  - esp-idf-5.5.2
+  - cmake
+boards:
+  - espressif-esp32-devkitc-32e
+modules:
+  - bluetooth-classic-a2dp-source
+  - procedural-audio
+  - boot-button-throttle
+validation:
+  build: passed
+  hardware: pending
+notes:
+  - Firmware targets original ESP32 only, not ESP32-S3.
+  - JBL Go 3 pairing, audible output, reconnection and end-to-end latency await the speaker.
+  - Exact measured scope and pending physical checks are recorded in docs/validation.md.
