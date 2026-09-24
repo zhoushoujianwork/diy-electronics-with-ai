@@ -6,7 +6,7 @@ back to the same Git repository. New Skill directories are discovered automatica
 
 ## 中文速查：怎么呼出
 
-相关任务通常会自动匹配 Skill，不写名字也可以。需要手动指定时输入 `$diy`，从 Skill 列表中
+相关任务通常会自动匹配 Skill，不写名字也可以。需要手动指定时输入 `$diy`（图解手册输入 `$m5`），从 Skill 列表中
 选择；不要输入 `@diy`，因为 `@` 搜索的是文件和目录，所以只会看到英文文件夹名。Skill 选择器中的名称、
 简介和默认提示采用中英双语，方便中文理解和英文关键词检索。
 
@@ -20,6 +20,9 @@ back to the same Git repository. New Skill directories are discovered automatica
 | 查自己买过的物料和盘点数量 | `$diy-electronics-materials` | 个人物料查询 |
 
 例如：`使用 $diy-electronics-lookup 查一下 M5Stack HAT PIR 的资料和验证边界。`
+
+制作手册可输入：`使用 $m5-product-manual，根据这个 M5 项目的硬件、固件和验证记录制作中文图解说明书，包含按键、接线、屏幕状态与技术原理。`
+完整能力、准备材料、灵感来源与 MotoBox 示例见 [M5 产品图解手册介绍](m5-product-manual.md)。
 
 ## Install
 
