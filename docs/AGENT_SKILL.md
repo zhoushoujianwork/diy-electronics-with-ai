@@ -15,6 +15,7 @@ back to the same Git repository. New Skill directories are discovered automatica
 | 查已有板卡、模块、接线或项目经验 | `$diy-electronics-lookup` | 只读知识查询 |
 | 查官方资料并补厂商、产品或配件目录 | `$diy-electronics-catalog` | 产品目录沉淀 |
 | 建板卡档案、Demo、固件或完整项目 | `$diy-electronics-project` | 电子项目工程化 |
+| 按 M5Stack 硬件和项目固件制作图解使用说明书 | `$m5-product-manual` | M5 产品图解手册 |
 | 提交代码、建分支或创建 PR | `$diy-electronics-contribute` | Git 与 PR 贡献 |
 | 查自己买过的物料和盘点数量 | `$diy-electronics-materials` | 个人物料查询 |
 
@@ -40,7 +41,8 @@ link. Install client-specific compatibility links only when a client does not sc
 The installer is idempotent when links already point to this checkout. It refuses to overwrite a real
 directory, a broken link, or a link to another checkout. Use `--dry-run` to preview every destination.
 
-All suite Skills use the `diy-electronics-` namespace. During an upgrade, the installer removes only legacy
+General lab Skills use the `diy-electronics-` namespace; the M5Stack manual Skill is named `m5-product-manual`.
+During an upgrade, the installer removes only legacy
 `electronic-materials` or `electronics-lab-*` symbolic links that it can prove pointed to this same checkout;
 real directories and unrelated links are preserved.
 
@@ -51,6 +53,7 @@ Restart or reload the Agent after installation. Automatic discovery is enabled, 
 | `$diy-electronics-lookup` | 只读查询产品目录、板卡、Demo 和项目知识 |
 | `$diy-electronics-catalog` | 核验厂商官方资料并维护公开产品目录 |
 | `$diy-electronics-project` | 建设板卡档案、Demo、项目、组件和验证证据 |
+| `$m5-product-manual` | 根据 M5Stack 硬件、项目固件和验证资料制作图解说明书，校对按键、接线与操作流程 |
 | `$diy-electronics-contribute` | 校验并组织 Commit、分支、推送和 Pull Request |
 | `$diy-electronics-materials` | 查询本机购买与盘点数据库，不公开个人数据 |
 
