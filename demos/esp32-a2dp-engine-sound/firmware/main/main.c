@@ -156,12 +156,11 @@ static void bluetooth_task(void *unused) {
         if (xQueueReceive(events, &e, pdMS_TO_TICKS(100)) == pdTRUE) {
             switch (e.kind) {
             case EV_READY: {
-                /* Replace default SEP 0: fixed 44.1 kHz matches IDF PCM feed. */
-                esp_a2d_mcc_t codec = {.type=ESP_A2D_MCT_SBC, .cie.sbc_info={
-                    .samp_freq=ESP_A2D_SBC_CIE_SF_44K,
-                    .ch_mode=ESP_A2D_SBC_CIE_CH_MODE_STEREO|ESP_A2D_SBC_CIE_CH_MODE_JOINT_STEREO,
-                    .block_len=15, .num_subbands=3, .alloc_mthd=3, .min_bitpool=2, .max_bitpool=53}};
-                ready=checked("register_sep", esp_a2d_source_register_stream_endpoint(0, &codec));
+                /* IDF 5.5.2's internal SBC source already advertises 44.1 kHz.
+                 * Custom SEP registration is handled ONLY with external codec
+                 * mode; its API can return ESP_OK but dispatch an unhandled event
+                 * in internal codec mode. Keep the matching default endpoint. */
+                ready=true;
                 ESP_LOGI(TAG, "A2DP_READY source PCM=44100Hz/16bit/stereo");
                 break;
             }
@@ -370,6 +369,8 @@ void app_main(void) {
     ESP_ERROR_CHECK(esp_bt_gap_set_device_name("EV Engine Prototype"));
     esp_bt_io_cap_t iocap=ESP_BT_IO_CAP_NONE;
     ESP_ERROR_CHECK(esp_bt_gap_set_security_param(ESP_BT_SP_IOCAP_MODE,&iocap,sizeof(iocap)));
+    esp_bt_pin_code_t pin={0};
+    ESP_ERROR_CHECK(esp_bt_gap_set_pin(ESP_BT_PIN_TYPE_VARIABLE,0,pin));
     ESP_ERROR_CHECK(esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE,ESP_BT_NON_DISCOVERABLE));
     ESP_ERROR_CHECK(esp_a2d_register_callback(a2dp_callback));
     ESP_ERROR_CHECK(esp_a2d_source_register_data_callback(audio_data));

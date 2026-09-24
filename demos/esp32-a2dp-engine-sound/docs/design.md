@@ -9,9 +9,10 @@
 A2DP 回调只做有界复制与计数，不合成、不打日志、不等待。欠载补零并累计字节数。
 完整数据路径必须在真正连接音箱后再次测量。
 
-使用固定 44.1 kHz SBC SEP 0 覆盖默认端点，允许 stereo/joint stereo；ESP-IDF 5.5.2 内置
+保留 ESP-IDF 5.5.2 内置 SBC Source 的默认端点；其 `bta_av_co_sbc_caps` 已只提供 44.1 kHz，
 PCM feed 固定为 44.1 kHz / 16 bit / 2 channels。这样无需将原项目 32 kHz PCM 误当成 44.1 kHz。
-滤波常数尚未重新标定，听感以实测为准。
+不调用自定义 SEP 注册：该版本只有 external-codec 模式处理注册事件，内置模式即使 API
+返回 ESP_OK，底层仍会报告 unhandled event。滤波常数尚未重新标定，听感以实测为准。
 
 蓝牙回调用有界队列把状态送到 manager；队列满会计数，心跳报告而不阻塞。发现目标采用
 精确名称匹配，配对与 MAC 保存在蓝牙栈/NVS，不进仓库；断连立即清空 PCM 并停机。
@@ -22,7 +23,7 @@ manager 按状态发起发现/连接/媒体启动，连接超时先请求断开�
 | --- | ---: | --- |
 | main / console | 8192 | BT/NVS 初始化、串口解析/日志；160 B 命令、64 B RX |
 | engine_synth | 6144 | 控制快照、ev_render、转换日志；引擎及 PCM 为静态 |
-| bt_manager | 6144 | 小事件、SEP、协议 API 调用与错误日志 |
+| bt_manager | 6144 | 小事件、协议 API 调用与错误日志 |
 | heartbeat | 4096 | 控制/计数快照、格式化、任务栈查询；32 项 TaskStatus_t 静态 |
 | BTC / BTU | 各 6144 | GAP 名称缓冲约 313 B + 应用回调/日志；协议栈路径 |
 | IDF 音频编码等任务 | 保持 IDF 默认 | 用 `tasks` 检查全部任务；数据回调另记录自身低水位 |
