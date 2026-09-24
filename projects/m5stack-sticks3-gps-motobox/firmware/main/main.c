@@ -35,6 +35,8 @@
 #include "ui.h"
 
 #define FIX_MAX_AGE_MS 5000
+#define GNSS_ONLINE_MAX_AGE_MS 5000
+#define BINDING_STATUS_POLL_MS 10000
 #define WIFI_CONNECTED_BIT BIT0
 #define GPS_TASK_STACK 4096
 #define TELEMETRY_TASK_STACK 6144
@@ -45,6 +47,7 @@ static portMUX_TYPE state_lock = portMUX_INITIALIZER_UNLOCKED;
 static demo_status_t status;
 static gnss_fix_t latest_fix;
 static int64_t latest_fix_monotonic_ms;
+static int64_t latest_nmea_monotonic_ms;
 static EXT_RAM_BSS_ATTR telemetry_queue_t telemetry_queue;
 static SemaphoreHandle_t queue_mutex;
 static EventGroupHandle_t wifi_events;
@@ -62,6 +65,7 @@ static uint64_t next_sequence = 1;
 static bool sntp_started;
 static bool clock_trusted;
 static bool binding_voice_ready;
+static bool binding_code_requested;
 
 static int64_t wall_time_ms(void)
 {
@@ -96,11 +100,20 @@ static void snapshot_status(demo_status_t *out)
     portENTER_CRITICAL(&state_lock);
     *out = status;
     int64_t fix_ms = latest_fix_monotonic_ms;
+    int64_t nmea_ms = latest_nmea_monotonic_ms;
     portEXIT_CRITICAL(&state_lock);
     int64_t age = fix_ms ? esp_timer_get_time() / 1000 - fix_ms : UINT32_MAX;
     out->fix_age_ms = age < 0 ? 0 : age > UINT32_MAX ? UINT32_MAX : (uint32_t)age;
     out->fix_valid = out->fix_valid && out->fix_age_ms <= FIX_MAX_AGE_MS;
+    out->gnss_online = nmea_ms && esp_timer_get_time() / 1000 - nmea_ms <= GNSS_ONLINE_MAX_AGE_MS;
     out->time_trusted = wall_time_trusted();
+    if (out->binding_ready && out->time_trusted && wall_time_ms() >= out->binding_expires_ms) {
+        out->binding_ready = false;
+    }
+    if (out->wifi_connected) {
+        wifi_ap_record_t ap;
+        if (esp_wifi_sta_get_ap_info(&ap) == ESP_OK) out->wifi_rssi = ap.rssi;
+    }
     if (xSemaphoreTake(queue_mutex, pdMS_TO_TICKS(50)) == pdTRUE) {
         out->queue_depth = telemetry_queue_count(&telemetry_queue);
         out->queue_dropped = telemetry_queue_dropped(&telemetry_queue);
@@ -155,7 +168,14 @@ static void gps_task(void *unused)
         int count = uart_read_bytes(UART_NUM_1, bytes, sizeof(bytes), pdMS_TO_TICKS(1000));
         for (int i = 0; i < count; ++i) {
             gnss_fix_t fix;
-            if (!gnss_parser_feed(&parser, (char)bytes[i], &fix)) continue;
+            uint32_t before = parser.nmea_sentence_count;
+            bool has_fix = gnss_parser_feed(&parser, (char)bytes[i], &fix);
+            if (parser.nmea_sentence_count != before) {
+                portENTER_CRITICAL(&state_lock);
+                latest_nmea_monotonic_ms = esp_timer_get_time() / 1000;
+                portEXIT_CRITICAL(&state_lock);
+            }
+            if (!has_fix) continue;
             set_clock_from_gnss(fix.utc_ms);
             portENTER_CRITICAL(&state_lock);
             latest_fix = fix;
@@ -193,19 +213,34 @@ static void start_sntp_once(void)
 static void wifi_event(void *arg, esp_event_base_t base, int32_t id, void *data)
 {
     (void)arg;
-    (void)data;
     if (base == WIFI_EVENT && id == WIFI_EVENT_STA_START) {
-        esp_wifi_connect();
+        esp_err_t err = esp_wifi_connect();
+        if (err != ESP_OK) ESP_LOGE(TAG, "WIFI_CONNECT_FAILED err=%s", esp_err_to_name(err));
     } else if (base == WIFI_EVENT && id == WIFI_EVENT_STA_DISCONNECTED) {
-        set_status_flag(&status.wifi_connected, false);
+        wifi_event_sta_disconnected_t *event = data;
+        portENTER_CRITICAL(&state_lock);
+        status.wifi_connected = false;
+        status.wifi_ip[0] = 0;
+        status.wifi_rssi = 0;
+        portEXIT_CRITICAL(&state_lock);
         xEventGroupClearBits(wifi_events, WIFI_CONNECTED_BIT);
-        esp_wifi_connect();
-        ESP_LOGW(TAG, "WIFI_DISCONNECTED reconnecting=1");
+        esp_err_t err = esp_wifi_connect();
+        ESP_LOGW(TAG, "WIFI_DISCONNECTED reason=%d reconnect_err=%s", event->reason,
+                 esp_err_to_name(err));
     } else if (base == IP_EVENT && id == IP_EVENT_STA_GOT_IP) {
-        set_status_flag(&status.wifi_connected, true);
+        ip_event_got_ip_t *event = data;
+        char ip[16];
+        snprintf(ip, sizeof(ip), IPSTR, IP2STR(&event->ip_info.ip));
+        wifi_ap_record_t ap;
+        int rssi = esp_wifi_sta_get_ap_info(&ap) == ESP_OK ? ap.rssi : 0;
+        portENTER_CRITICAL(&state_lock);
+        status.wifi_connected = true;
+        strcpy(status.wifi_ip, ip);
+        status.wifi_rssi = rssi;
+        portEXIT_CRITICAL(&state_lock);
         xEventGroupSetBits(wifi_events, WIFI_CONNECTED_BIT);
         start_sntp_once();
-        ESP_LOGI(TAG, "WIFI_CONNECTED");
+        ESP_LOGI(TAG, "WIFI_CONNECTED ip=%s rssi=%d", ip, rssi);
     }
 }
 
@@ -228,10 +263,31 @@ static esp_err_t wifi_init(void)
     config.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
     config.sta.pmf_cfg.capable = true;
     config.sta.pmf_cfg.required = false;
+    portENTER_CRITICAL(&state_lock);
+    strncpy(status.wifi_ssid, CONFIG_DEMO_WIFI_SSID, sizeof(status.wifi_ssid) - 1);
+    portEXIT_CRITICAL(&state_lock);
     ESP_RETURN_ON_ERROR(esp_wifi_set_mode(WIFI_MODE_STA), TAG, "Wi-Fi STA mode");
     ESP_RETURN_ON_ERROR(esp_wifi_set_config(WIFI_IF_STA, &config), TAG, "Wi-Fi config");
     ESP_RETURN_ON_ERROR(esp_wifi_start(), TAG, "Wi-Fi start");
     return ESP_OK;
+}
+
+static bool publish_binding_request(bool status_only)
+{
+    char payload[160];
+    size_t length = status_only ?
+        binding_status_request_build(payload, sizeof(payload), device_id, binding_request_id) :
+        binding_request_build(payload, sizeof(payload), device_id, binding_request_id);
+    int message_id = length ? esp_mqtt_client_publish(mqtt_client, binding_request_topic,
+                                                       payload, (int)length, 1, 0) : -1;
+    if (message_id < 0) {
+        ESP_LOGE(TAG, "BINDING_%s_REQUEST_FAILED msg_id=%d", status_only ? "STATUS" : "CODE",
+                 message_id);
+        return false;
+    }
+    ESP_LOGI(TAG, "BINDING_%s_REQUESTED msg_id=%d", status_only ? "STATUS" : "CODE",
+             message_id);
+    return true;
 }
 
 static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void *event_data)
@@ -244,43 +300,83 @@ static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void
         binding_subscribe_id = esp_mqtt_client_subscribe(mqtt_client, binding_response_topic, 1);
         ESP_LOGI(TAG, "MQTT_CONNECTED uri=%s", CONFIG_DEMO_MQTT_URI);
     } else if (event_id == MQTT_EVENT_DISCONNECTED) {
-        set_status_flag(&status.mqtt_connected, false);
+        portENTER_CRITICAL(&state_lock);
+        status.mqtt_connected = false;
+        status.binding_known = false;
+        binding_code_requested = false;
+        portEXIT_CRITICAL(&state_lock);
         xSemaphoreTake(queue_mutex, portMAX_DELAY);
         telemetry_queue_retry_inflight(&telemetry_queue);
         xSemaphoreGive(queue_mutex);
         ESP_LOGW(TAG, "MQTT_DISCONNECTED");
     } else if (event_id == MQTT_EVENT_SUBSCRIBED && event->msg_id == binding_subscribe_id) {
-        char payload[144];
-        size_t length = binding_request_build(payload, sizeof(payload), device_id, binding_request_id);
-        int message_id = length ? esp_mqtt_client_publish(mqtt_client, binding_request_topic,
-                                                           payload, (int)length, 1, 0) : -1;
-        if (message_id < 0) {
-            ESP_LOGE(TAG, "BINDING_REQUEST_FAILED");
-        } else {
-            ESP_LOGI(TAG, "BINDING_REQUESTED msg_id=%d", message_id);
-        }
+        publish_binding_request(true);
     } else if (event_id == MQTT_EVENT_DATA) {
         size_t expected_topic_length = strlen(binding_response_topic);
         bool matching_topic = event->topic_len == (int)expected_topic_length &&
                               memcmp(event->topic, binding_response_topic, expected_topic_length) == 0;
         if (matching_topic && event->data_len == event->total_data_len) {
-            binding_response_t response;
-            if (binding_response_parse(event->data, (size_t)event->data_len, device_id,
-                                       binding_request_id, &response)) {
+            bool bound;
+            if (binding_status_parse(event->data, (size_t)event->data_len, device_id,
+                                     binding_request_id, &bound)) {
+                bool was_bound;
+                bool needs_code;
+                bool code_requested;
                 portENTER_CRITICAL(&state_lock);
+                was_bound = status.binding_known && status.binding_bound;
+                status.binding_known = true;
+                status.binding_bound = bound;
+                if (bound || was_bound) {
+                    status.binding_ready = false;
+                    status.binding_code[0] = 0;
+                }
+                needs_code = !bound && !status.binding_ready;
+                if (bound) binding_code_requested = false;
+                code_requested = binding_code_requested;
+                portEXIT_CRITICAL(&state_lock);
+                ESP_LOGI(TAG, "BINDING_STATUS bound=%d", bound);
+                if (needs_code && !code_requested) {
+                    portENTER_CRITICAL(&state_lock);
+                    binding_code_requested = true;
+                    portEXIT_CRITICAL(&state_lock);
+                    if (!publish_binding_request(false)) {
+                        portENTER_CRITICAL(&state_lock);
+                        binding_code_requested = false;
+                        portEXIT_CRITICAL(&state_lock);
+                    }
+                }
+            } else {
+                binding_response_t response;
+                if (!binding_response_parse(event->data, (size_t)event->data_len, device_id,
+                                       binding_request_id, &response)) {
+                    ESP_LOGW(TAG, "BINDING_RESPONSE_REJECTED");
+                    return;
+                }
+                bool changed;
+                portENTER_CRITICAL(&state_lock);
+                if (!binding_code_requested) {
+                    portEXIT_CRITICAL(&state_lock);
+                    ESP_LOGI(TAG, "BINDING_CODE_IGNORED reason=status_probe");
+                    return;
+                }
+                if (status.binding_known && status.binding_bound) {
+                    portEXIT_CRITICAL(&state_lock);
+                    ESP_LOGW(TAG, "BINDING_CODE_IGNORED reason=already_bound");
+                    return;
+                }
+                changed = !status.binding_ready || strcmp(status.binding_code, response.code) != 0;
                 status.binding_ready = true;
                 memcpy(status.binding_code, response.code, sizeof(status.binding_code));
                 status.binding_expires_ms = response.expires_ms;
+                binding_code_requested = true;
                 portEXIT_CRITICAL(&state_lock);
-                ESP_LOGI(TAG, "BINDING_CODE_READY expires_ms=%" PRId64, response.expires_ms);
-                if (binding_voice_ready) {
+                if (changed) ESP_LOGI(TAG, "BINDING_CODE_READY expires_ms=%" PRId64, response.expires_ms);
+                if (changed && binding_voice_ready) {
                     esp_err_t voice_err = binding_announcement_enqueue(response.code);
                     if (voice_err != ESP_OK) {
                         ESP_LOGE(TAG, "BINDING_VOICE_QUEUE_FAILED err=%s", esp_err_to_name(voice_err));
                     }
                 }
-            } else {
-                ESP_LOGW(TAG, "BINDING_RESPONSE_REJECTED");
             }
         }
     } else if (event_id == MQTT_EVENT_PUBLISHED) {
@@ -347,8 +443,29 @@ static void telemetry_task(void *unused)
     (void)unused;
     int64_t next_sample_ms = 0;
     char payload[TELEMETRY_PAYLOAD_MAX];
+    int64_t next_binding_poll_ms = esp_timer_get_time() / 1000 + BINDING_STATUS_POLL_MS;
     for (;;) {
         int64_t now_mono = esp_timer_get_time() / 1000;
+        int64_t now_wall = wall_time_ms();
+        bool mqtt_up;
+        bool code_expired = false;
+        portENTER_CRITICAL(&state_lock);
+        mqtt_up = status.mqtt_connected;
+        if (status.binding_ready && clock_trusted && now_wall >= status.binding_expires_ms) {
+            status.binding_ready = false;
+            status.binding_code[0] = 0;
+            binding_code_requested = false;
+            code_expired = true;
+        }
+        portEXIT_CRITICAL(&state_lock);
+        if (code_expired) ESP_LOGI(TAG, "BINDING_CODE_EXPIRED");
+        if (mqtt_up && now_mono >= next_binding_poll_ms) {
+            portENTER_CRITICAL(&state_lock);
+            if (!status.binding_ready && !status.binding_bound) binding_code_requested = false;
+            portEXIT_CRITICAL(&state_lock);
+            publish_binding_request(true);
+            next_binding_poll_ms = now_mono + BINDING_STATUS_POLL_MS;
+        }
         if (wall_time_trusted() && now_mono >= next_sample_ms) {
             uint64_t sequence = next_sequence++;
             size_t length = build_payload(payload, sizeof(payload), sequence, wall_time_ms());
@@ -385,22 +502,28 @@ static void telemetry_task(void *unused)
 static void heartbeat_task(void *unused)
 {
     (void)unused;
+    int64_t next_log_ms = 0;
     for (;;) {
         demo_status_t current;
         snapshot_status(&current);
         ui_set_status(&current);
-        ESP_LOGI(TAG,
-            "HEARTBEAT gps=%d sat=%d fix_age_ms=%u wifi=%d mqtt=%d utc=%d queue=%u dropped=%u "
+        int64_t now_ms = esp_timer_get_time() / 1000;
+        if (now_ms >= next_log_ms) {
+            ESP_LOGI(TAG,
+            "HEARTBEAT gps_online=%d gps_fix=%d sat=%d fix_age_ms=%u wifi=%d ip=%s rssi=%d mqtt=%d binding_known=%d bound=%d utc=%d queue=%u dropped=%u "
             "stack_gps=%u stack_telemetry=%u stack_ui=%u stack_voice=%u stack_heartbeat=%u heap=%u",
-            current.fix_valid, current.satellites, current.fix_age_ms,
-            current.wifi_connected, current.mqtt_connected, current.time_trusted,
+            current.gnss_online, current.fix_valid, current.satellites, current.fix_age_ms,
+            current.wifi_connected, current.wifi_connected ? current.wifi_ip : "-", current.wifi_rssi,
+            current.mqtt_connected, current.binding_known, current.binding_bound, current.time_trusted,
             current.queue_depth, current.queue_dropped,
             (unsigned)uxTaskGetStackHighWaterMark(gps_task_handle),
             (unsigned)uxTaskGetStackHighWaterMark(telemetry_task_handle),
             ui_stack_high_water_mark(), binding_announcement_stack_high_water_mark(),
             (unsigned)uxTaskGetStackHighWaterMark(NULL),
             (unsigned)esp_get_free_heap_size());
-        vTaskDelay(pdMS_TO_TICKS(10000));
+            next_log_ms = now_ms + 10000;
+        }
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 

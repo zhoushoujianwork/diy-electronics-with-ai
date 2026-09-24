@@ -70,18 +70,23 @@ Tingting system voice and `ffmpeg` when the wording or audio processing needs to
 
 ## Bind with the MotoBox mini program
 
-1. Wait for `Wi-Fi UP` and `MQTT UP`. After the authenticated MQTT session is ready, the StickS3 requests a
-   six-digit one-time code from MotoBox, opens the binding page, and says “绑定验证码” followed by the six
-   digits. The announcement plays once for each new code; restart the device to request and hear the current
-   code again if it was missed.
-2. Open the MotoBox mini program, select **添加设备**, and enter the code spoken or shown by the StickS3. The
-   code is valid for ten minutes and can be used once. Press A to switch between the code and status pages.
-3. Open the MotoBox WeChat mini program and sign in. Its availability may be limited to the current official or
+1. The status page shows the Wi-Fi SSID, assigned IP address and RSSI; `GPS MODULE ONLINE` means valid NMEA
+   sentences are arriving, while `FIX READY` requires a usable location. `GPS MODULE NO DATA` means the
+   receiver has not sent a valid sentence in five seconds. These are independent of Wi-Fi and binding.
+2. Wait for `Wi-Fi UP` and `MQTT UP`. The StickS3 asks MotoBox whether this device already has an owner. If
+   it is already bound, the screen shows `BIND BOUND` and does not request or announce another code. If the
+   server confirms it is unbound, the StickS3 requests a six-digit one-time code, opens the binding page,
+   and says “绑定验证码” followed by the six digits. `BIND CHECK` means the state has not yet been verified;
+   it does not mean a new binding is required. Press A to switch between status and code pages.
+3. Only if the device is unbound, open the MotoBox mini program, select **添加设备**, and enter the code spoken
+   or shown by the StickS3. The code is valid for ten minutes and can be used once.
+4. Open the MotoBox WeChat mini program and sign in. Its availability may be limited to the current official or
    invited experience release; use the access route supplied with the demonstration. The latest repository
    evidence only confirms an uploaded development build. It does not claim that every WeChat user can open a
    formal or experience release.
-4. Optionally name the device and finish binding.
-5. Move outdoors for the first fix. The device page distinguishes an online device waiting for a first fix from
+5. Optionally name the device and finish binding. The StickS3 checks binding state about every ten seconds and
+   changes to `BIND BOUND` after the server confirms it. A reconnect or reboot does not require rebinding.
+6. Move outdoors for the first fix. The device page distinguishes an online device waiting for a first fix from
    an offline device. After valid points arrive, open **实时位置**, **历史轨迹**, or **分享位置**.
 
 MotoBox is the hosted companion service for this project. The firmware, protocol example and reproduction steps
@@ -113,19 +118,23 @@ POWER_READY lcd=on grove_5v=on pm1=0x6e
 AUDIO_READY amp=off format=0x0c volume=0xbf
 BINDING_VOICE_READY sample_rate=16000 task_stack=4096
 GNSS_READY uart=1 baud=115200 rx=10 tx=9
-WIFI_CONNECTED
+WIFI_CONNECTED ip=... rssi=...
 MQTT_CONNECTED uri=wss://...
-BINDING_REQUESTED msg_id=...
+BINDING_STATUS_REQUESTED msg_id=...
+BINDING_STATUS bound=0
+BINDING_CODE_REQUESTED msg_id=...
 BINDING_CODE_READY expires_ms=...
 BINDING_VOICE_START digits=6
 BINDING_VOICE_DONE stack_free=...
 GNSS_FIX ... sat=8 hdop=1.1 ...
 MQTT_ACK seq=1 ...
-HEARTBEAT gps=1 ... queue=0 dropped=0 ...
+HEARTBEAT gps_online=1 gps_fix=1 wifi=1 binding_known=1 bound=1 ... queue=0 dropped=0 ...
 ```
 
-The binding request uses `vehicle/v1/{device_id}/binding/request`; the server responds only to the authenticated
-device on `vehicle/v1/{device_id}/binding/response`. Run host tests with `./tests/run.sh`. See
+The binding status and code requests use `vehicle/v1/{device_id}/binding/request`; the server responds only to the authenticated
+device on `vehicle/v1/{device_id}/binding/response`. The new status response requires the MotoBox backend
+binding-status protocol; an older backend leaves `BIND CHECK` and the firmware ignores an unsolicited code.
+Run host tests with `./tests/run.sh`. See
 [validation](docs/validation.md) for the required real-device run and
 the distinction between build and hardware verification.
 

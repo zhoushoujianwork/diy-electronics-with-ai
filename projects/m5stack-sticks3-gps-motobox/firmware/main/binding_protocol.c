@@ -53,6 +53,44 @@ size_t binding_request_build(char *buffer, size_t capacity,
     return written > 0 && (size_t)written < capacity ? (size_t)written : 0;
 }
 
+size_t binding_status_request_build(char *buffer, size_t capacity,
+                                    const char *device_id, const char *request_id)
+{
+    if (!buffer || capacity == 0 || !device_id || !request_id ||
+        strlen(request_id) != BINDING_REQUEST_ID_LENGTH) return 0;
+    int written = snprintf(buffer, capacity,
+                           "{\"device_id\":\"%s\",\"request_id\":\"%s\",\"op\":\"status\"}",
+                           device_id, request_id);
+    return written > 0 && (size_t)written < capacity ? (size_t)written : 0;
+}
+
+bool binding_status_parse(const char *json, size_t length,
+                          const char *expected_device_id,
+                          const char *expected_request_id, bool *bound)
+{
+    if (!json || length == 0 || length >= 384 || !expected_device_id ||
+        !expected_request_id || !bound) return false;
+    char copy[384];
+    memcpy(copy, json, length);
+    copy[length] = '\0';
+    char device_id[32];
+    char request_id[BINDING_REQUEST_ID_LENGTH + 1];
+    const char *value = find_value(copy, "bound");
+    if (!get_string(copy, "device_id", device_id, sizeof(device_id)) ||
+        !get_string(copy, "request_id", request_id, sizeof(request_id)) ||
+        strcmp(device_id, expected_device_id) != 0 ||
+        strcmp(request_id, expected_request_id) != 0 || !value) return false;
+    if (strncmp(value, "true", 4) == 0 && (value[4] == ',' || value[4] == '}' || isspace((unsigned char)value[4]))) {
+        *bound = true;
+        return true;
+    }
+    if (strncmp(value, "false", 5) == 0 && (value[5] == ',' || value[5] == '}' || isspace((unsigned char)value[5]))) {
+        *bound = false;
+        return true;
+    }
+    return false;
+}
+
 bool binding_response_parse(const char *json, size_t length,
                             const char *expected_device_id,
                             const char *expected_request_id,

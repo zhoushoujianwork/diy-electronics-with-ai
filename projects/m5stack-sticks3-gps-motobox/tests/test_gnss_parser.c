@@ -25,7 +25,10 @@ int main(void)
     gnss_fix_t fix;
     gnss_parser_init(&parser);
 
+    assert(!parse(&parser, "GNRMC,123519.00,V,,,,,,,220926,,,N", &fix));
+    assert(parser.nmea_sentence_count == 1); /* NMEA received without a position fix */
     assert(!parse(&parser, "GNGGA,123519.00,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,", &fix));
+    assert(parser.nmea_sentence_count == 2);
     assert(parse(&parser, "GNRMC,123519.00,A,4807.038,N,01131.000,E,10.0,84.4,220926,,,A", &fix));
     assert(fix.valid);
     assert(fabs(fix.latitude - 48.1173) < 0.00001);
@@ -53,6 +56,7 @@ int main(void)
     bad[strlen(bad) - 1] = bad[strlen(bad) - 1] == '0' ? '1' : '0';
     gnss_parser_init(&parser);
     assert(!gnss_parse_sentence(&parser, bad, &fix));
+    assert(parser.nmea_sentence_count == 0);
     assert(!gnss_parse_sentence(&parser,
         "$GNRMC,123519.00,A,4807.038,N,01131.000,E,10.0,84.4,220926,,,A*ZZ", &fix));
     strcat(bad, "00");

@@ -29,8 +29,8 @@ static lv_obj_t *bind_page;
 static lv_obj_t *gps_label;
 static lv_obj_t *speed_label;
 static lv_obj_t *network_label;
-static lv_obj_t *queue_label;
-static lv_obj_t *time_label;
+static lv_obj_t *ip_label;
+static lv_obj_t *binding_label;
 static lv_obj_t *binding_code_label;
 static lv_obj_t *binding_expiry_label;
 static bool bind_page_visible;
@@ -57,27 +57,39 @@ static void refresh_timer(lv_timer_t *timer)
     status = latest_status;
     portEXIT_CRITICAL(&status_lock);
 
-    lv_label_set_text_fmt(gps_label, "GPS  %s  SAT %d  HDOP %.1f",
-                          status.fix_valid ? "FIX" : "WAIT", status.satellites, status.hdop);
-    lv_label_set_text_fmt(speed_label, "%.1f km/h   AGE %ums", status.speed_kmh,
-                          (unsigned)status.fix_age_ms);
-    lv_label_set_text_fmt(network_label, "Wi-Fi %s   MQTT %s",
-                          status.wifi_connected ? "UP" : "DOWN",
-                          status.mqtt_connected ? "UP" : "DOWN");
-    lv_label_set_text_fmt(queue_label, "QUEUE %u/120   DROP %u",
-                          status.queue_depth, status.queue_dropped);
-    lv_label_set_text(time_label, status.time_trusted ? "UTC READY" : "WAITING FOR UTC");
+    lv_label_set_text_fmt(gps_label, "GPS MODULE %s", status.gnss_online ? "ONLINE" : "NO DATA");
+    if (status.fix_valid) {
+        lv_label_set_text_fmt(speed_label, "FIX READY  SAT %d  %.1f km/h",
+                              status.satellites, status.speed_kmh);
+    } else {
+        lv_label_set_text(speed_label, status.gnss_online ? "FIX WAITING" : "CHECK GPS POWER / CABLE");
+    }
+    lv_label_set_text_fmt(network_label, "Wi-Fi %s  %.17s",
+                          status.wifi_connected ? "UP" : "DOWN", status.wifi_ssid);
+    if (status.wifi_connected) {
+        lv_label_set_text_fmt(ip_label, "IP %s  %d dBm", status.wifi_ip, status.wifi_rssi);
+    } else {
+        lv_label_set_text(ip_label, "IP --  CONNECTING");
+    }
+    lv_label_set_text_fmt(binding_label, "MQTT %s  BIND %s",
+                          status.mqtt_connected ? "UP" : "DOWN",
+                          status.binding_known ? (status.binding_bound ? "BOUND" : "UNBOUND") : "CHECK");
 
-    lv_label_set_text(binding_code_label, status.binding_ready ? status.binding_code : "------");
-    lv_label_set_text(binding_expiry_label,
-                      status.binding_ready ? "ENTER IN MOTOBOX - 10 MIN" : "WAITING FOR SERVER CODE");
-    if (status.binding_ready && !binding_was_ready) {
+    if (status.binding_known && status.binding_bound) {
+        lv_label_set_text(binding_code_label, "BOUND");
+        lv_label_set_text(binding_expiry_label, "DEVICE BOUND TO MOTOBOX");
+    } else {
+        lv_label_set_text(binding_code_label, status.binding_ready ? status.binding_code : "------");
+        lv_label_set_text(binding_expiry_label, status.binding_ready ? "ENTER CODE IN MOTOBOX" :
+                          status.mqtt_connected ? "CHECKING BINDING" : "WAITING FOR MQTT");
+    }
+    if (status.binding_ready && !status.binding_bound && !binding_was_ready) {
         bind_page_visible = true;
         lv_obj_add_flag(status_page, LV_OBJ_FLAG_HIDDEN);
         lv_obj_remove_flag(bind_page, LV_OBJ_FLAG_HIDDEN);
         ESP_LOGI(TAG, "PAGE bind reason=code_ready");
     }
-    binding_was_ready = status.binding_ready;
+    binding_was_ready = status.binding_ready && !status.binding_bound;
 
     bool pressed = gpio_get_level(STICKS3_BUTTON_A_GPIO) == 0;
     if (pressed && !button_previous) {
@@ -106,11 +118,11 @@ static void create_pages(void)
     lv_obj_t *title = make_label(status_page, 7, 4, 226, &lv_font_montserrat_14, 0x2de2a6);
     lv_label_set_text(title, "MotoBox GPS");
     gps_label = make_label(status_page, 7, 28, 226, &lv_font_montserrat_14, 0xe5edf5);
-    speed_label = make_label(status_page, 7, 50, 226, &lv_font_montserrat_14, 0xe5edf5);
-    network_label = make_label(status_page, 7, 72, 226, &lv_font_montserrat_12, 0x92a7bc);
-    queue_label = make_label(status_page, 7, 91, 226, &lv_font_montserrat_12, 0x92a7bc);
-    time_label = make_label(status_page, 7, 110, 160, &lv_font_montserrat_12, 0x92a7bc);
-    lv_obj_t *hint = make_label(status_page, 181, 110, 52, &lv_font_montserrat_12, 0x2de2a6);
+    speed_label = make_label(status_page, 7, 48, 226, &lv_font_montserrat_14, 0xe5edf5);
+    network_label = make_label(status_page, 7, 70, 226, &lv_font_montserrat_12, 0x92a7bc);
+    ip_label = make_label(status_page, 7, 88, 226, &lv_font_montserrat_12, 0x92a7bc);
+    binding_label = make_label(status_page, 7, 108, 165, &lv_font_montserrat_12, 0x2de2a6);
+    lv_obj_t *hint = make_label(status_page, 181, 108, 52, &lv_font_montserrat_12, 0x2de2a6);
     lv_label_set_text(hint, "A: CODE");
 
     bind_page = lv_obj_create(screen);

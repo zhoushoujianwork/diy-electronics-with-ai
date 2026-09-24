@@ -234,6 +234,7 @@ bool gnss_parse_sentence(gnss_parser_t *parser, const char *sentence, gnss_fix_t
             parser->altitude_m = (float)altitude;
         }
     }
+    if (recognized) parser->nmea_sentence_count++;
     emit_if_paired(parser, out);
     return recognized && out->valid;
 }
