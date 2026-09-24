@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #define TELEMETRY_QUEUE_CAPACITY 120
-#define TELEMETRY_PAYLOAD_MAX 640
+#define TELEMETRY_PAYLOAD_MAX 1024
 
 typedef struct {
     char payload[TELEMETRY_PAYLOAD_MAX];

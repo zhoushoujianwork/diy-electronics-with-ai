@@ -2,6 +2,13 @@
 
 ## Current state
 
+- The user placed the powered unit outdoors on 2026-09-24. A read-only production SQL check at 14:17 UTC
+  found consecutive five-second telemetry frames through sequence 228 but no valid location. The running
+  firmware does not yet report satellite diagnostics over MQTT, so this observation establishes only that
+  uplink continued without a fix; it does not establish outdoor satellite visibility. A new diagnostic
+  payload records `ext.gnss_online`, `gnss_rmc_status`, `gnss_gga_quality`, `gnss_satellites`, `gnss_hdop`
+  and `position_source` (`GNSS` or `NONE`). Host tests and an ESP-IDF build passed, but this version has not
+  been flashed because the unit is still outside. Outdoor satellite and task-stack verification remain pending.
 - 2026-09-24 status-screen firmware `a743599` was built with ESP-IDF 5.5.2 and flashed with hash verification
   to the StickS3 K150 + Unit GPS v1.1, powered by USB-C with Grove 5 V enabled. A 75-second serial capture
   after flashing recorded eight uninterrupted ten-second heartbeats, `gps_online=1` from valid NMEA traffic,

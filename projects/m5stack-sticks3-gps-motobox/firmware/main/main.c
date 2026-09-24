@@ -421,13 +421,17 @@ static size_t build_payload(char *buffer, size_t capacity, uint64_t sequence, in
     demo_status_t current;
     gnss_fix_t fix;
     int64_t fix_monotonic;
+    int64_t nmea_monotonic;
     portENTER_CRITICAL(&state_lock);
     current = status;
     fix = latest_fix;
     fix_monotonic = latest_fix_monotonic_ms;
+    nmea_monotonic = latest_nmea_monotonic_ms;
     portEXIT_CRITICAL(&state_lock);
-    uint32_t age = fix_monotonic ? (uint32_t)(esp_timer_get_time() / 1000 - fix_monotonic) : UINT32_MAX;
+    int64_t monotonic_now = esp_timer_get_time() / 1000;
+    uint32_t age = fix_monotonic ? (uint32_t)(monotonic_now - fix_monotonic) : UINT32_MAX;
     bool fresh = current.fix_valid && age <= FIX_MAX_AGE_MS;
+    bool gnss_online = nmea_monotonic && monotonic_now - nmea_monotonic <= GNSS_ONLINE_MAX_AGE_MS;
     telemetry_payload_input_t input = {
         .device_id = device_id,
         .firmware = esp_app_get_description()->version,
@@ -436,6 +440,11 @@ static size_t build_payload(char *buffer, size_t capacity, uint64_t sequence, in
         .uptime_s = (uint32_t)(esp_timer_get_time() / 1000000),
         .free_heap = (uint32_t)esp_get_free_heap_size(),
         .wifi_connected = current.wifi_connected,
+        .gnss_online = gnss_online,
+        .gnss_rmc_status = current.gnss_rmc_status,
+        .gnss_gga_quality = current.gnss_gga_seen ? current.gnss_gga_quality : -1,
+        .gnss_satellites = current.satellites,
+        .gnss_hdop = current.hdop,
         .has_fix = fresh,
         .fix_age_ms = age,
         .fix = fix,

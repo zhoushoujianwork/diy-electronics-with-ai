@@ -14,6 +14,11 @@ typedef struct {
     uint32_t uptime_s;
     uint32_t free_heap;
     bool wifi_connected;
+    bool gnss_online;
+    char gnss_rmc_status;
+    int gnss_gga_quality;
+    int gnss_satellites;
+    float gnss_hdop;
     bool has_fix;
     uint32_t fix_age_ms;
     gnss_fix_t fix;
