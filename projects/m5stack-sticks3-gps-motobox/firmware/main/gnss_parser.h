@@ -21,6 +21,12 @@ typedef struct {
     size_t line_length;
     bool rmc_valid;
     bool gga_valid;
+    bool rmc_seen;
+    bool gga_seen;
+    char rmc_status;
+    int gga_quality;
+    int reported_satellites;
+    float reported_hdop;
     int rmc_second;
     int gga_second;
     double rmc_latitude;

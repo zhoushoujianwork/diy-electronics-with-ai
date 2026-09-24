@@ -6,6 +6,9 @@
 typedef struct {
     bool fix_valid;
     bool gnss_online;
+    bool gnss_gga_seen;
+    char gnss_rmc_status;
+    int gnss_gga_quality;
     bool wifi_connected;
     bool mqtt_connected;
     bool time_trusted;
