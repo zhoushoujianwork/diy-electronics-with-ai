@@ -8,7 +8,7 @@ from pathlib import Path
 import serial
 
 
-def summarize(text, require_streaming=False):
+def summarize(text, require_streaming=False, exercise=False):
     fatal = re.findall(r".*(?:Guru Meditation|panic'ed|stack overflow|TASK_START_FAILED|Brownout|assert failed).*", text, re.I)
     heartbeats = [dict(re.findall(r"(\w+)=(\S+)", line)) for line in text.splitlines() if "HEARTBEAT ms=" in line]
     stats = [dict(re.findall(r"(\w+)=(\d+)", line)) for line in text.splitlines() if "AUDIO_STATS " in line]
@@ -16,8 +16,14 @@ def summarize(text, require_streaming=False):
     failures = []
     if fatal:
         failures.append("fatal/reset symptoms in log")
+    if "unhandled event" in text.lower():
+        failures.append("unhandled Bluetooth stack event")
+    if re.search(r"^E \(\d+\)", text, re.M):
+        failures.append("ESP-IDF error log present")
     if len(heartbeats) < 10:
         failures.append("fewer than 10 heartbeats")
+    if len(stats) < len(heartbeats)-1:
+        failures.append("missing audio statistics")
     for a, b in zip(heartbeats, heartbeats[1:]):
         delta = int(b["ms"]) - int(a["ms"])
         if delta <= 0 or delta > 2500:
@@ -32,13 +38,29 @@ def summarize(text, require_streaming=False):
     streamed = [h for h in heartbeats if h["connected"] == "1" and h["streaming"] == "1"]
     if require_streaming and len(streamed) < 30:
         failures.append("fewer than 30 streaming heartbeats")
+    if require_streaming and len(streamed) != len(heartbeats):
+        failures.append("stream disconnected or suspended during stable capture")
+    if require_streaming and (not stacks or min(int(s["callback"]) for s in stacks) < 512):
+        failures.append("missing encoder callback measurement or insufficient stack margin")
+    if require_streaming and any(int(b["bytes"]) <= int(a["bytes"]) for a,b in zip(stats,stats[1:])):
+        failures.append("PCM consumption stalled")
     if require_streaming and len(stats)>1 and int(stats[-1]["underrun_bytes"]) > int(stats[0]["underrun_bytes"]):
         failures.append("PCM underrun during capture")
+    if exercise:
+        expected = ["CMD throttle 100 result=OK", "CMD profile v12 result=OK", "AUTO_OFF idle_ms=3000",
+                    "CMD rejected: profile invalid", "CMD rejected: throttle 101", "CMD rejected: volume nan"]
+        if any(s not in text for s in expected):
+            failures.append("control exercise acknowledgements missing")
+        if max((int(h["rpm"]) for h in heartbeats),default=0)<15900:
+            failures.append("V12 did not reach 15900 RPM")
+        if not heartbeats or heartbeats[-1]["running"]!="0" or int(heartbeats[-1]["rpm"])>40:
+            failures.append("exercise did not finish stopped")
     return {"pass": not failures, "failures": sorted(set(failures)), "heartbeats": len(heartbeats),
             "streaming_heartbeats": len(streamed), "stack_min_bytes": minimum,
             "render_max_us": max((int(s["render_max_us"]) for s in stats), default=0),
             "heap_min_bytes": min((int(s["heap"]) for s in stats), default=0),
             "peak_max": max((int(h["peak"]) for h in heartbeats), default=0),
+            "rpm_max": max((int(h["rpm"]) for h in heartbeats), default=0),
             "boot_presses": text.count("BOOT_BUTTON PRESS"), "boot_releases": text.count("BOOT_BUTTON RELEASE"),
             "final": heartbeats[-1] if heartbeats else {}, "fatal": fatal[:3]}
 
@@ -49,9 +71,12 @@ def main():
     p.add_argument("--log", type=Path, required=True)
     p.add_argument("--seconds", type=float, default=120)
     p.add_argument("--exercise", action="store_true", help="run serial throttle/profile sequence")
+    p.add_argument("--pulse-boot", action="store_true", help="test GPIO0 via USB-UART DTR; not a physical-button test")
     p.add_argument("--reset", action="store_true", help="pulse EN before capture; release physical BOOT first")
     p.add_argument("--require-streaming", action="store_true")
     args = p.parse_args()
+    if args.exercise and args.pulse_boot:
+        p.error("run serial exercise and DTR input checks separately")
     args.log.parent.mkdir(parents=True, exist_ok=True)
     port = serial.Serial(port=None, baudrate=115200, timeout=.05, write_timeout=1)
     port.dtr = False
@@ -59,6 +84,7 @@ def main():
     port.port = args.port
     port.open()
     schedule = [(1, "tasks")]
+    pulses = [(3,True),(6,False),(15,True),(18,False)] if args.pulse_boot else []
     if args.exercise:
         schedule += [(3, "profile twin270\nvolume 20\nstart\nthrottle 100"), (10, "throttle 0"),
                      (17, "profile v12\nredline 16000\nstart\nthrottle 100"), (28, "throttle 0"),
@@ -75,6 +101,12 @@ def main():
         with args.log.open("wb") as f:
             while time.monotonic() - start < args.seconds:
                 elapsed = time.monotonic() - start
+                while pulses and elapsed >= pulses[0][0]:
+                    _, low = pulses.pop(0)
+                    port.dtr = low
+                    marker = f"\nHOST GPIO0 via USB-UART DTR low={int(low)}\n".encode()
+                    f.write(marker)
+                    collected.extend(marker)
                 while schedule and elapsed >= schedule[0][0]:
                     _, cmd = schedule.pop(0)
                     port.write((cmd + "\n").encode())
@@ -84,9 +116,15 @@ def main():
                     f.flush()
                     collected.extend(data)
     finally:
+        port.dtr = False
         port.write(b"stop\n")
         port.close()
-    summary = summarize(collected.decode(errors="replace"), args.require_streaming)
+    summary = summarize(collected.decode(errors="replace"), args.require_streaming, args.exercise)
+    if args.pulse_boot:
+        summary["boot_input_origin"] = "USB-UART DTR, not mechanical button"
+        if summary["boot_presses"]<2 or summary["boot_releases"]<2 or summary["rpm_max"]<8000:
+            summary["pass"] = False
+            summary["failures"].append("DTR GPIO0 input did not produce two throttle cycles")
     args.log.with_suffix(".summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2))
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     raise SystemExit(0 if summary["pass"] else 1)

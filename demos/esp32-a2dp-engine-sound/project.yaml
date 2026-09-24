@@ -17,8 +17,10 @@ modules:
   - boot-button-throttle
 validation:
   build: passed
-  hardware: pending
+  hardware: partial
 notes:
   - Firmware targets original ESP32 only, not ESP32-S3.
+  - USB flashing, boot, discovery and a 120-second offline synthesis/control soak passed on ESP32-D0WD-V3 rev v3.1.
+  - Two GPIO0 throttle cycles passed via USB-UART DTR stimulation; manual mechanical BOOT acceptance remains pending.
   - JBL Go 3 pairing, audible output, reconnection and end-to-end latency await the speaker.
   - Exact measured scope and pending physical checks are recorded in docs/validation.md.

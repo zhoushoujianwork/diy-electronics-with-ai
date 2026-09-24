@@ -7,6 +7,7 @@ Source 发给蓝牙音箱。复用 [EV Engine Sound](../../projects/ev-engine-so
 ![BOOT 控制 ESP32 声浪合成，经 A2DP 发给蓝牙音箱的原理示意，非实机照片](docs/assets/signal-path.svg)
 
 **开发中，蓝牙实听待验收。** 构建及具体实机检查范围以 [验证记录](docs/validation.md) 为准。
+已烧录原版 ESP32，120 秒无音箱扫描/合成/串口控制检查通过；这不包括蓝牙音频传输。
 
 ## 硬件与接线
 
@@ -54,7 +55,7 @@ python3 tools/verify_device.py /dev/cu.YOUR_DEVICE \
 设备路径不能在不同电脑间照抄。上面脚本需要 `pyserial`；原始日志、固件备份保持在
 本地忽略目录/仓库外，不要提交。
 
-音箱就绪后的测试，先确认串口 `connection=2`、`AUDIO state=2` 及 PCM 回调持续递增；
+音箱就绪后的测试，先确认串口 `connection=2`、`AUDIO state=1` 及 PCM 回调持续递增；
 连接稳定后捕获，避免将刚连接时的初始化与稳定段混在一起：
 
 ```sh
@@ -64,6 +65,11 @@ python3 tools/verify_device.py /dev/cu.YOUR_DEVICE \
 
 实际声音、BOOT 实体按键、断电重连和延迟还须按验证记录完成验收。
 工具结束时发送 `stop`，不会在后台占用串口。
+
+可选 `--pulse-boot --seconds 40` 用 CP2102N 的 DTR/板上自动下载电路触发 GPIO0，
+检查固件油门输入路径；须与 `--exercise` 分开运行，并松开实体 BOOT。输入脉冲不主动控制 EN；
+本机驱动打开串口时曾触发一次启动复位，日志会记录。它不能替代手指按压机械按键的验收。
+其他 USB-UART 接线未验证，不应盲用该选项。
 
 ## 串口命令
 
