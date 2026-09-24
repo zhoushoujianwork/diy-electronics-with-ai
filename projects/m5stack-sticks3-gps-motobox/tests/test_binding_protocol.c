@@ -14,6 +14,10 @@ int main(void)
     assert(strstr(payload, device));
     assert(strstr(payload, request));
 
+    length = binding_status_request_build(payload, sizeof(payload), device, request);
+    assert(length == strlen(payload));
+    assert(strstr(payload, "\"op\":\"status\""));
+
     const char *response =
         "{\"device_id\":\"BOX-001122334455\",\"request_id\":"
         "\"00112233445566778899aabbccddeeff\",\"code\":\"042731\","
@@ -22,6 +26,20 @@ int main(void)
     assert(binding_response_parse(response, strlen(response), device, request, &parsed));
     assert(strcmp(parsed.code, "042731") == 0);
     assert(parsed.expires_ms == 1790064000000LL);
+
+    bool bound = false;
+    const char *status_response =
+        "{\"device_id\":\"BOX-001122334455\",\"request_id\":"
+        "\"00112233445566778899aabbccddeeff\",\"bound\":true}";
+    assert(binding_status_parse(status_response, strlen(status_response), device, request, &bound));
+    assert(bound);
+    const char *unbound_response =
+        "{\"device_id\":\"BOX-001122334455\",\"request_id\":"
+        "\"00112233445566778899aabbccddeeff\",\"bound\":false}";
+    assert(binding_status_parse(unbound_response, strlen(unbound_response), device, request, &bound));
+    assert(!bound);
+    assert(!binding_status_parse(response, strlen(response), device, request, &bound));
+    assert(!binding_status_parse(status_response, strlen(status_response), "BOX-OTHER", request, &bound));
 
     assert(!binding_response_parse(response, strlen(response), "BOX-OTHER", request, &parsed));
     assert(!binding_response_parse(response, strlen(response), device,

@@ -14,6 +14,11 @@ typedef struct {
 
 size_t binding_request_build(char *buffer, size_t capacity,
                              const char *device_id, const char *request_id);
+size_t binding_status_request_build(char *buffer, size_t capacity,
+                                    const char *device_id, const char *request_id);
+bool binding_status_parse(const char *json, size_t length,
+                          const char *expected_device_id,
+                          const char *expected_request_id, bool *bound);
 
 bool binding_response_parse(const char *json, size_t length,
                             const char *expected_device_id,

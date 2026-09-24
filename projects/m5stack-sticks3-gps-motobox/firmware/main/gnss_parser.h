@@ -33,6 +33,7 @@ typedef struct {
     float altitude_m;
     float hdop;
     int satellites;
+    uint32_t nmea_sentence_count;
 } gnss_parser_t;
 
 void gnss_parser_init(gnss_parser_t *parser);
