@@ -12,12 +12,17 @@
   USB reconnect was observed. Lowest free stack: GPS 1504 B, telemetry 3128 B, UI 4212 B, voice 3308 B and
   heartbeat 1560 B, all above the 25%/1024 B acceptance threshold. The full log remains outside Git at
   `/tmp/sticks3-status-final2-20260924.log`.
-- The new server-side `bound` response is implemented and host-tested in MotoBox commit `38ca40e` (130 Go
-  tests and `make build` passed), but is not deployed. Therefore this hardware run confirms safe behavior
-  with the old server and live GNSS/Wi-Fi telemetry, not an on-device `BIND BOUND` indication. After deployment,
-  verify this already-bound device changes from `BIND CHECK` to `BIND BOUND` without issuing or speaking a
-  code, and repeat the check after a reboot and MQTT reconnect. The LCD text layout has not been visually
-  inspected; serial state is the primary evidence for this run.
+- MotoBox binding-status backend commit `38ca40e` passed 130 Go tests and `make build`; only the
+  `daboluo-telemetry-ingest` production binary was deployed after backing up its prior binary. The running
+  binary SHA-256 is `317b7139e1674910dd7aa07de10ae205fa0e3e084d7f4298c51a8abdd5783329`; its health
+  endpoint stayed healthy. Before reboot the device received four consecutive `BINDING_STATUS bound=1`
+  responses. A controlled reboot then produced `WIFI_CONNECTED`, `MQTT_CONNECTED`, eight more `bound=1`
+  responses and seven continuous heartbeats during a 70-second serial capture. No code request, code-ready
+  event or voice announcement occurred. GPS NMEA traffic resumed, no indoor fix was claimed, seven telemetry
+  frames received PUBACKs, and all task free-stack minima remained above 25%/1024 B. No panic, Guru
+  Meditation, stack overflow or task-start failure appeared. The reboot log stays outside Git at
+  `/tmp/sticks3-bound-reboot-20260924.log`. The firmware passes `bound=1` to the LCD every second; the
+  physical LCD text layout has not been visually inspected.
 - Host parser, telemetry payload and queue tests: passed on 2026-09-22, including checksum failures and
   malformed checksum digits, invalid dates and fixes, mismatched sentence times, midnight rollover, protocol
   fields and units, omission of location without a fix, queue overflow with an in-flight head, PUBACK removal
@@ -97,9 +102,8 @@ recorded in repository commit `c8085cb`; the speaker playback and voice-task mea
 The indoor run does not prove GNSS positioning or the mini-program location views. Move the powered unit outdoors
 with an open sky view and complete the movement and sharing checks below. Do not change the manifest to
 `hardware-verified` until those checks succeed.
-Deploy the MotoBox binding-status backend and confirm the already-bound unit displays `BIND BOUND` after boot
-and after MQTT reconnect, without a new code or voice prompt. Unbinding and re-binding should return
-`BIND UNBOUND`, then a single new code, then `BIND BOUND`.
+Unbinding and re-binding should return `BIND UNBOUND`, then a single new code, then `BIND BOUND`. The
+physical LCD layout and status transitions during a deliberate MQTT outage also remain to be inspected.
 
 ## Hardware acceptance procedure
 
