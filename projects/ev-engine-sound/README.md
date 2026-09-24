@@ -222,6 +222,7 @@ stop
 - [LVGL 界面说明](docs/lvgl-ui.md)
 - [UI 开发模式与 SquareLine 自动化调研](docs/ui-development-research.md)
 - [项目介绍与预览素材索引](docs/project-preview.md)
+- [立创开源七周年活动参与方式与准备清单](docs/oshwhub-seventh-participation.md)
 - [验证记录](docs/validation.md)
 
 车辆电源和油门、速度或 CAN 信号需要经过匹配的降压、隔离与电平保护后再接入。
