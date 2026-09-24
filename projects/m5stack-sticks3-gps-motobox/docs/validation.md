@@ -2,6 +2,22 @@
 
 ## Current state
 
+- 2026-09-24 status-screen firmware `a743599` was built with ESP-IDF 5.5.2 and flashed with hash verification
+  to the StickS3 K150 + Unit GPS v1.1, powered by USB-C with Grove 5 V enabled. A 75-second serial capture
+  after flashing recorded eight uninterrupted ten-second heartbeats, `gps_online=1` from valid NMEA traffic,
+  `gps_fix=0` indoors, Wi-Fi and MQTT connected, an assigned local IP and RSSI around -35 to -37 dBm,
+  15 telemetry PUBACKs and queue depth zero. All eight replies from the currently deployed older MotoBox
+  backend to status probes were ignored as `BINDING_CODE_IGNORED reason=status_probe`; no code-ready or voice
+  event appeared in that capture. No panic, Guru Meditation, stack overflow, task-start failure, reset loop or
+  USB reconnect was observed. Lowest free stack: GPS 1504 B, telemetry 3128 B, UI 4212 B, voice 3308 B and
+  heartbeat 1560 B, all above the 25%/1024 B acceptance threshold. The full log remains outside Git at
+  `/tmp/sticks3-status-final2-20260924.log`.
+- The new server-side `bound` response is implemented and host-tested in MotoBox commit `38ca40e` (130 Go
+  tests and `make build` passed), but is not deployed. Therefore this hardware run confirms safe behavior
+  with the old server and live GNSS/Wi-Fi telemetry, not an on-device `BIND BOUND` indication. After deployment,
+  verify this already-bound device changes from `BIND CHECK` to `BIND BOUND` without issuing or speaking a
+  code, and repeat the check after a reboot and MQTT reconnect. The LCD text layout has not been visually
+  inspected; serial state is the primary evidence for this run.
 - Host parser, telemetry payload and queue tests: passed on 2026-09-22, including checksum failures and
   malformed checksum digits, invalid dates and fixes, mismatched sentence times, midnight rollover, protocol
   fields and units, omission of location without a fix, queue overflow with an in-flight head, PUBACK removal
@@ -81,6 +97,9 @@ recorded in repository commit `c8085cb`; the speaker playback and voice-task mea
 The indoor run does not prove GNSS positioning or the mini-program location views. Move the powered unit outdoors
 with an open sky view and complete the movement and sharing checks below. Do not change the manifest to
 `hardware-verified` until those checks succeed.
+Deploy the MotoBox binding-status backend and confirm the already-bound unit displays `BIND BOUND` after boot
+and after MQTT reconnect, without a new code or voice prompt. Unbinding and re-binding should return
+`BIND UNBOUND`, then a single new code, then `BIND BOUND`.
 
 ## Hardware acceptance procedure
 
