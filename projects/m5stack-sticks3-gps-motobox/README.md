@@ -11,6 +11,15 @@ and a stationary outdoor GNSS fix have been validated. Moving tracks and mini-pr
 The first public demonstration uses a platform-managed device account. MotoBox broker access is issued
 separately; cloning this repository does not automatically create a cloud device or MQTT credential.
 
+## 中文简介：一套设备到微信端的定位 Demo
+
+外接 **Unit GPS v1.1** 接收卫星信号，**StickS3** 校验定位数据并显示状态，再经 **Wi-Fi / 手机热点**
+使用 MQTT TLS 上传到 **MotoBox**。微信小程序提供账号登录、设备绑定以及位置/轨迹查看与分享入口。
+这是一个可复现的端云原型：USB 5 V 电源、可联网热点、单独开通的设备凭据和小程序访问资格都是前提。
+
+已有室内联网、断网补传、验证码播报、小程序绑定和户外静止定位记录；移动轨迹、定位精度与微信位置分享完整链路仍待验收。
+从下面的图解手册入门，再按本页步骤构建运行；精确版本与实测范围以[验证记录](docs/validation.md)为准。
+
 ## Illustrated user manual / 中文图解手册
 
 [中文图解使用手册](docs/manual/README.md) explains the StickS3 controls, GPS wiring, screen states,
@@ -18,6 +27,9 @@ network prerequisites, binding flow and troubleshooting in three illustrated pag
 of GNSS, platform registration/device enrollment and WeChat location sharing. It follows the documented
 firmware version and distinguishes implemented behavior from completed hardware validation. The illustrations are
 AI-generated diagrams, not device screenshots; the project remains a `prototype`.
+
+该手册由仓库独立技能 `m5-product-manual` 组织。想为自己的 M5 项目制作类似文档，可阅读
+[技能介绍、灵感来源与调用示例](../../docs/m5-product-manual.md)。
 
 ## Hardware
 
