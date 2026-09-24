@@ -23,4 +23,5 @@ validation:
 notes:
   - Exact board-level validation details are in docs/validation.md.
   - Firmware 0.4.0 adds the dual-panel engine/exhaust UI, pull-down settings, hold-to-rev, and idle auto-off; device validation remains version-specific.
-  - A shared custom PCB for AUX, A2DP source, external throttle grip and battery power is planned in docs/shared-core-hardware-plan.md; XPENG X9 OBD data access and Bluetooth compatibility are unverified and excluded from current hardware validation.
+  - A shared custom PCB for AUX, A2DP source, external throttle grip and battery power is planned in docs/shared-core-hardware-plan.md; model-year 2026 XPENG X9 data access and Bluetooth compatibility remain unverified.
+  - Tesla and wired, Wi-Fi, BLE and Bluetooth Classic vehicle inputs are compared in docs/vehicle-input-wireless-research.md; all new vehicle and PCB routes are excluded from current hardware validation.
