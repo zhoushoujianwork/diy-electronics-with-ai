@@ -243,6 +243,21 @@ bool gnss_parse_sentence(gnss_parser_t *parser, const char *sentence, gnss_fix_t
             parser->hdop = (float)hdop;
             parser->altitude_m = (float)altitude;
         }
+    } else if (count >= 4 && sentence_type(fields[0], "GSV")) {
+        recognized = true;
+        parser->gsv_seen = true;
+        int in_view = 0;
+        if (parse_nonnegative_int(fields[3], &in_view) && in_view <= 64 &&
+            in_view > parser->gsv_peak_in_view) {
+            parser->gsv_peak_in_view = in_view;
+        }
+        for (int index = 7; index < count; index += 4) {
+            int snr = 0;
+            if (parse_nonnegative_int(fields[index], &snr) && snr <= 99 &&
+                snr > parser->gsv_peak_snr) {
+                parser->gsv_peak_snr = snr;
+            }
+        }
     }
     if (recognized) parser->nmea_sentence_count++;
     emit_if_paired(parser, out);

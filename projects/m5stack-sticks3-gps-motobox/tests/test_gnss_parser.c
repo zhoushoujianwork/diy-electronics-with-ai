@@ -31,8 +31,10 @@ int main(void)
     assert(!parse(&parser, "GNGGA,123519.00,,,,,0,03,2.4,,,,,,", &fix));
     assert(parser.gga_seen && parser.gga_quality == 0 && parser.reported_satellites == 3);
     assert(fabs(parser.reported_hdop - 2.4) < 0.01 && !parser.gga_valid);
+    assert(!parse(&parser, "GPGSV,1,1,08,01,45,180,31,02,25,100,22,03,10,050,,04,15,210,19", &fix));
+    assert(parser.gsv_seen && parser.gsv_peak_in_view == 8 && parser.gsv_peak_snr == 31);
     assert(!parse(&parser, "GNGGA,123519.00,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,", &fix));
-    assert(parser.nmea_sentence_count == 3);
+    assert(parser.nmea_sentence_count == 4);
     assert(parse(&parser, "GNRMC,123519.00,A,4807.038,N,01131.000,E,10.0,84.4,220926,,,A", &fix));
     assert(fix.valid);
     assert(fabs(fix.latitude - 48.1173) < 0.00001);
