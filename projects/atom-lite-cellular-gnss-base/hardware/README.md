@@ -11,6 +11,7 @@
 - [PCB 设计调研](../docs/pcb-design-research.md)：板级资料与裸模组要求、电源方案、机械限制、缺口及官方来源。
 - [pcb-interface-plan.csv](pcb-interface-plan.csv)：两款主机 GPIO 分配提案；官方逻辑针号不等于 PCB pad 编号，空值表示未核实。
 - [pcb-part-candidates.csv](pcb-part-candidates.csv)：已查数据手册的器件候选；未冻结 BOM、库器件或采购状态。
+- [EasyEDA 原生工程准备](easyeda/README.md)：内置浏览器中的工程框架、五个草稿页及候选库身份；尚未接线或布板。
 
 ## 坐标与封装
 
@@ -26,13 +27,14 @@ StickS3 变体另需顶部 Hat2 观察方向、配对高度、壳体卡位与屏
 ## EasyEDA 实施路径
 
 当前环境使用已安装的 `easyeda` typed CLI，不进行 GUI 落图或任意脚本注入。
-2026-09-27 查询结果：CLI/daemon `v1.6.0-dirty`，daemon 可用，`windows: []`。
-没有连接器/宿主版本证据；尚未创建原生 EDA 工程，也没有 DRC 或保存回读结果。
+2026-09-27 初始查询没有编辑器连接；随后已在用户指定的内置浏览器完成工程准备。
+当前 CLI/daemon `v1.6.0-dirty`、Connector `1.6.0`、Web `4.1.60`；五个草稿页保存重开后回读通过，
+原生电路、板框、布线及 DRC 仍待实施。工程身份和证据见上方 EasyEDA 入口。
 
-恢复连接后，在新工程中开展以下工作，不把任何当前打开的其他工程当作本项目：
+后续沿用已创建的独立工程，只连接内置浏览器，不启动桌面 EDA 客户端：
 
 1. `easyeda health` 读到实际编辑器/连接器，记录版本。
-2. 通过 `easyeda project create --help` 核实参数，再创建独立工程；记录返回的项目 UUID。
+2. 核对已有项目、页面和 Board UUID；新变体确实需要独立工程时再用 `project create`，避免重复创建。
 3. 按精确型号取得器件、符号、真实引脚表和封装；完成 pin→net 审核。
 4. 参数化生成原理图，先 dry-run，再 apply；核对实际连接并保存。
 5. 创建并关联 PCB，机械尺寸冻结后建立板框、连接器和固定结构，再布局/布线。

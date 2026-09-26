@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "configure-existing-atom-scaffold",
+    "project": "247f2261614c4e20861e8a96a79cb7ba"
+  },
+  "defaults": {
+    "retry": 0,
+    "continueOnError": false
+  },
+  "steps": [
+    {
+      "id": "name-page-1",
+      "run": "sch page-rename",
+      "flags": {
+        "page": "9bb2a5485117e258",
+        "name": "01 Power - DRAFT",
+        "doc": "9bb2a5485117e258"
+      }
+    },
+    {
+      "id": "label-draft-1",
+      "run": "sch titleblock",
+      "flags": {
+        "data": "{\"Description\": {\"value\": \"DRAFT - NOT WIRED\", \"showValue\": true}, \"Version\": {\"value\": \"A0-inputs\", \"showValue\": true}}",
+        "doc": "9bb2a5485117e258"
+      }
+    },
+    {
+      "id": "save-page-1",
+      "run": "sch save",
+      "flags": {
+        "doc": "9bb2a5485117e258"
+      },
+      "checkpoint": true
+    },
+    {
+      "id": "name-page-2",
+      "run": "sch page-rename",
+      "flags": {
+        "page": "08c508a46de0eba7",
+        "name": "02 ATOM Host - DRAFT",
+        "doc": "08c508a46de0eba7"
+      }
+    },
+    {
+      "id": "label-draft-2",
+      "run": "sch titleblock",
+      "flags": {
+        "data": "{\"Description\": {\"value\": \"DRAFT - NOT WIRED\", \"showValue\": true}, \"Version\": {\"value\": \"A0-inputs\", \"showValue\": true}}",
+        "doc": "08c508a46de0eba7"
+      }
+    },
+    {
+      "id": "save-page-2",
+      "run": "sch save",
+      "flags": {
+        "doc": "08c508a46de0eba7"
+      },
+      "checkpoint": true
+    },
+    {
+      "id": "name-page-3",
+      "run": "sch page-rename",
+      "flags": {
+        "page": "ba5508e7a4983dd6",
+        "name": "03 Tiny Interface - DRAFT",
+        "doc": "ba5508e7a4983dd6"
+      }
+    },
+    {
+      "id": "label-draft-3",
+      "run": "sch titleblock",
+      "flags": {
+        "data": "{\"Description\": {\"value\": \"DRAFT - NOT WIRED\", \"showValue\": true}, \"Version\": {\"value\": \"A0-inputs\", \"showValue\": true}}",
+        "doc": "ba5508e7a4983dd6"
+      }
+    },
+    {
+      "id": "save-page-3",
+      "run": "sch save",
+      "flags": {
+        "doc": "ba5508e7a4983dd6"
+      },
+      "checkpoint": true
+    },
+    {
+      "id": "name-page-4",
+      "run": "sch page-rename",
+      "flags": {
+        "page": "176a6afa07803c76",
+        "name": "04 GNSS Interface - DRAFT",
+        "doc": "176a6afa07803c76"
+      }
+    },
+    {
+      "id": "label-draft-4",
+      "run": "sch titleblock",
+      "flags": {
+        "data": "{\"Description\": {\"value\": \"DRAFT - NOT WIRED\", \"showValue\": true}, \"Version\": {\"value\": \"A0-inputs\", \"showValue\": true}}",
+        "doc": "176a6afa07803c76"
+      }
+    },
+    {
+      "id": "save-page-4",
+      "run": "sch save",
+      "flags": {
+        "doc": "176a6afa07803c76"
+      },
+      "checkpoint": true
+    },
+    {
+      "id": "name-page-5",
+      "run": "sch page-rename",
+      "flags": {
+        "page": "e80ae91542c0a9bb",
+        "name": "05 Test Points - DRAFT",
+        "doc": "e80ae91542c0a9bb"
+      }
+    },
+    {
+      "id": "label-draft-5",
+      "run": "sch titleblock",
+      "flags": {
+        "data": "{\"Description\": {\"value\": \"DRAFT - NOT WIRED\", \"showValue\": true}, \"Version\": {\"value\": \"A0-inputs\", \"showValue\": true}}",
+        "doc": "e80ae91542c0a9bb"
+      }
+    },
+    {
+      "id": "save-page-5",
+      "run": "sch save",
+      "flags": {
+        "doc": "e80ae91542c0a9bb"
+      },
+      "checkpoint": true
+    }
+  ]
+}

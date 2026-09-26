@@ -69,10 +69,12 @@
     "battery_in_scope": false
   },
   "eda": {
-    "project_uuid": null,
-    "schematic_uuid": null,
-    "pcb_uuid": null,
-    "native_design_status": "not-created"
+    "project_uuid": "247f2261614c4e20861e8a96a79cb7ba",
+    "schematic_uuid": "ea2ad4292979849d",
+    "pcb_uuid": "eb8b5e3ad6c98f5f",
+    "native_design_status": "scaffold-created; no circuit or PCB layout",
+    "host_requirement": "Codex in-app browser only; no desktop EDA client",
+    "reference": "easyeda/README.md"
   },
   "pcb_research": {
     "recorded_on": "2026-09-27",

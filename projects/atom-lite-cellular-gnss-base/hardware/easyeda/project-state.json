@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "recorded_on": "2026-09-27",
+  "host_requirement": "Codex in-app browser only; EasyEDA Pro web; no desktop EDA client",
+  "project_name": "ATOM Lite Cellular GNSS Base",
+  "project_uuid": "247f2261614c4e20861e8a96a79cb7ba",
+  "editor_url": "https://pro.lceda.cn/editor#id=247f2261614c4e20861e8a96a79cb7ba",
+  "board_name": "ATOM Adapter Rev A - DRAFT",
+  "schematic_name": "Schematic1",
+  "schematic_uuid": "ea2ad4292979849d",
+  "pcb_name": "PCB1",
+  "pcb_uuid": "eb8b5e3ad6c98f5f",
+  "pages": [
+    {
+      "page_uuid": "9bb2a5485117e258",
+      "name": "01 Power - DRAFT",
+      "saved_and_reloaded": true,
+      "description": "DRAFT - NOT WIRED",
+      "version": "A0-inputs",
+      "electrical_components": 0,
+      "wires": 0
+    },
+    {
+      "page_uuid": "08c508a46de0eba7",
+      "name": "02 ATOM Host - DRAFT",
+      "saved_and_reloaded": true,
+      "description": "DRAFT - NOT WIRED",
+      "version": "A0-inputs",
+      "electrical_components": 0,
+      "wires": 0
+    },
+    {
+      "page_uuid": "ba5508e7a4983dd6",
+      "name": "03 Tiny Interface - DRAFT",
+      "saved_and_reloaded": true,
+      "description": "DRAFT - NOT WIRED",
+      "version": "A0-inputs",
+      "electrical_components": 0,
+      "wires": 0
+    },
+    {
+      "page_uuid": "176a6afa07803c76",
+      "name": "04 GNSS Interface - DRAFT",
+      "saved_and_reloaded": true,
+      "description": "DRAFT - NOT WIRED",
+      "version": "A0-inputs",
+      "electrical_components": 0,
+      "wires": 0
+    },
+    {
+      "page_uuid": "e80ae91542c0a9bb",
+      "name": "05 Test Points - DRAFT",
+      "saved_and_reloaded": true,
+      "description": "DRAFT - NOT WIRED",
+      "version": "A0-inputs",
+      "electrical_components": 0,
+      "wires": 0
+    }
+  ],
+  "pcb": {
+    "components": 0,
+    "outline_primitives": 0,
+    "saved": true,
+    "layout_status": "not-started",
+    "saved_and_reloaded": true
+  },
+  "runtime": {
+    "cli": "v1.6.0-dirty",
+    "daemon": "v1.6.0-dirty",
+    "connector": "1.6.0",
+    "web_editor": "4.1.60",
+    "loaded_skill": "1.5.3-dev.3",
+    "release_consistency": "not-verified; mixed development versions; no update performed"
+  },
+  "scope": "native document scaffold only; no electrical circuit or manufactured PCB",
+  "schematic_coordinates": {
+    "units": "raw, 0.01 inch",
+    "y_direction": "up",
+    "grid": 5,
+    "geometry_source": "official A4 template; no circuit geometry authored"
+  },
+  "pcb_coordinates": {
+    "cli_units": "mil",
+    "origin": null,
+    "anchor_semantics": null,
+    "outline": null
+  },
+  "findings": [
+    {
+      "action": "schematic.rename",
+      "requested_name": "ATOM Adapter Rev A - DRAFT",
+      "observed_result_ok": false,
+      "readback_name": "Schematic1",
+      "resolution": "retain original schematic name; ineffective rename removed from final configuration playbook"
+    }
+  ],
+  "native_snapshot": {
+    "path": "local/atom-adapter-a0-scaffold.epro2",
+    "bytes": 134983,
+    "sha256": "54f6a962cfececac31fe239510fe5a39f0161bf97c4e6f005770f803c58547e9",
+    "zip_integrity_verified": true,
+    "restore_verified": false,
+    "tracked_in_git": false
+  }
+}
