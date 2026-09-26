@@ -17,10 +17,14 @@
   or independently sourced catalog facts. The user first reported StickS3 Hat2 EXT_5V to Tiny VIN,
   then moved Tiny BAT to StickS3 Hat2 BAT pin 11 with Tiny VIN disconnected. Neither StickS3 rail
   has a documented 4G transmit-current allowance; the latter connection was flagged for removal.
-  Network testing is deferred until Tiny uses a separately rated supply branch and the exact PCB
-  labels and voltage are checked. EN is unconnected. No 4G firmware has been flashed or
-  run. The existing Wi-Fi firmware and
-  all hardware evidence below remain rollback references.
+  The user later disconnected Tiny BAT and reported an independent roughly 5 V VIN supply,
+  a blinking indicator and EN unconnected. The exact PCB markings, UART idle voltage and
+  transmit current remain unverified. The independent AT/TCP Demo was flashed on 2026-09-27;
+  StickS3 booted, but no valid AT response was detected in the initial serial windows.
+  Registration, TCP and the integrated GPS/MotoBox 4G firmware have not been hardware-verified.
+  The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
+  Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and
+  all hardware evidence below remain software rollback references.
 - Pending 4G acceptance: 30-minute real-device run with cold start, GNSS/LCD/button concurrency,
   two-minute cellular outage/recovery and outdoor movement; MotoBox sequence and original sample-time
   check; wrong certificate and wrong credential rejection; signal 99 when unknown; voltage/current

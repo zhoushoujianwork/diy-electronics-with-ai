@@ -4,6 +4,8 @@
 #include <string>
 
 #include "at_modem.h"
+#include "driver/uart.h"
+#include "esp_err.h"
 #include "esp_log.h"
 #include "esp_system.h"
 #include "freertos/FreeRTOS.h"
@@ -20,13 +22,68 @@ unsigned free_stack(const char *name) {
     return handle ? uxTaskGetStackHighWaterMark(handle) : 0;
 }
 
+void raw_at_probe() {
+    uart_config_t config = {};
+    config.baud_rate = 115200;
+    config.data_bits = UART_DATA_8_BITS;
+    config.parity = UART_PARITY_DISABLE;
+    config.stop_bits = UART_STOP_BITS_1;
+    config.flow_ctrl = UART_HW_FLOWCTRL_DISABLE;
+    config.source_clk = UART_SCLK_DEFAULT;
+    esp_err_t err = uart_param_config(UART_NUM_1, &config);
+    if (err == ESP_OK) err = uart_set_pin(UART_NUM_1, GPIO_NUM_5, GPIO_NUM_6,
+                                         UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+    if (err == ESP_OK) err = uart_driver_install(UART_NUM_1, 512, 0, 0, nullptr, 0);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "RAW_AT_INIT_FAILED reason=%s", esp_err_to_name(err));
+        return;
+    }
+
+    constexpr int rates[] = {115200, 921600, 460800, 57600, 9600};
+    for (int rate : rates) {
+        err = uart_set_baudrate(UART_NUM_1, rate);
+        if (err != ESP_OK) {
+            ESP_LOGE(TAG, "RAW_AT_BAUD_FAILED rate=%d reason=%s", rate, esp_err_to_name(err));
+            continue;
+        }
+        for (int attempt = 1; attempt <= 2; ++attempt) {
+            uart_flush_input(UART_NUM_1);
+            int sent = uart_write_bytes(UART_NUM_1, "AT\r\n", 4);
+            err = uart_wait_tx_done(UART_NUM_1, pdMS_TO_TICKS(200));
+            uint8_t data[1024] = {};
+            int received = std::max(0, uart_read_bytes(UART_NUM_1, data, sizeof(data),
+                                                        pdMS_TO_TICKS(300)));
+            bool ok = received >= 2 && std::search(data, data + received,
+                        reinterpret_cast<const uint8_t *>("OK"),
+                        reinterpret_cast<const uint8_t *>("OK") + 2) != data + received;
+            int printable = std::count_if(data, data + received, [](uint8_t c) {
+                return (c >= 32 && c <= 126) || c == '\r' || c == '\n';
+            });
+            int zeros = std::count(data, data + received, 0);
+            int all_ones = std::count(data, data + received, 0xff);
+            ESP_LOGI(TAG, "RAW_AT_PROBE rate=%d attempt=%d tx_bytes=%d rx_bytes=%d ok=%d printable=%d zero=%d ff=%d tx_done=%s",
+                     rate, attempt, sent, received, ok, printable, zeros, all_ones, esp_err_to_name(err));
+            if (ok) {
+                uart_driver_delete(UART_NUM_1);
+                return;
+            }
+        }
+    }
+    uart_driver_delete(UART_NUM_1);
+}
+
 void bringup_task(void *) {
+    bool probed_raw_uart = false;
     uint32_t retry_ms = 2000;
     for (;;) {
         bool tcp_ok = false;
         auto detected = AtModem::Detect(GPIO_NUM_5, GPIO_NUM_6, GPIO_NUM_NC, 115200, 10000);
         if (!detected) {
             ESP_LOGW(TAG, "MODEM_DETECT_FAILED reason=%s", detected.error().ToString().c_str());
+            if (!probed_raw_uart) {
+                raw_at_probe();
+                probed_raw_uart = true;
+            }
         } else {
             auto modem = std::move(*detected);
             std::string model = modem->GetModuleRevision();
@@ -53,10 +110,10 @@ void bringup_task(void *) {
             } else {
                 ESP_LOGE(TAG, "MODEM_UNSUPPORTED model=%s", model.c_str());
             }
-            ESP_LOGI(TAG, "STACK_FREE bringup=%u modem_receive=%u modem_event=%u",
-                     (unsigned)uxTaskGetStackHighWaterMark(nullptr), free_stack("modem_receive"),
-                     free_stack("modem_event"));
         }
+        ESP_LOGI(TAG, "STACK_FREE bringup=%u modem_receive=%u modem_event=%u",
+                 (unsigned)uxTaskGetStackHighWaterMark(nullptr), free_stack("modem_receive"),
+                 free_stack("modem_event"));
         vTaskDelay(pdMS_TO_TICKS(tcp_ok ? 30000 : retry_ms));
         retry_ms = tcp_ok ? 2000 : std::min<uint32_t>(retry_ms * 2, 60000);
     }

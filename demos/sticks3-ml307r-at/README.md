@@ -2,8 +2,8 @@
 
 This focused Demo checks whether an ML307R-DL Tiny **AT** carrier can be detected over
 StickS3 UART1, register on a cellular network and open a TCP socket. It does not use
-Wi-Fi, GPS, MQTT or MotoBox credentials. It is build-verified only; the Tiny carrier
-voltage levels, power input and 4G operation still need real-device checks.
+Wi-Fi, GPS, MQTT or MotoBox credentials. It remains build-verified: a first hardware
+run booted StickS3 but received no valid AT reply, so cellular operation is unverified.
 The `78/esp-ml307` 3.7.5 dependency is licensed under
 [Apache-2.0](https://github.com/78/esp-ml307/blob/main/LICENSE).
 
@@ -54,6 +54,10 @@ the modem data path. A registration response can precede PDP/IP readiness.
 `MODEM_DETECT_FAILED` means the UART, level, power or AT firmware needs checking;
 `NETWORK_WAIT_FAILED` points to SIM, antenna or registration; `TCP_CONNECT_FAILED`
 also points to PDP/APN or data service after registration.
+After the first AT detection failure, the Demo makes one raw UART probe at common
+baud rates. `RAW_AT_PROBE` reports byte counts and whether `OK` was seen, without
+printing the modem response. A nonzero byte count without `OK` is inconclusive;
+check the TX/RX wiring and UART timing before attempting network diagnosis.
 
 ## Limits and acceptance
 
