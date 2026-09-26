@@ -41,10 +41,11 @@ separately; cloning this repository does not automatically create a cloud device
 | Cellular | ML307R-DL Tiny 核心板（芯引者购买记录） | 1 | 需核对实物丝印、AT 固件和 UART 电平 |
 | SIM / antenna | 中国大陆物联网卡与匹配的 4G 天线 | 1 each | 测试前核对激活、流量、频段及天线接头 |
 | Cable | HY2.0-4P Grove cable | 1 | Included with the GNSS Unit |
-| Power | StickS3 USB + Tiny 板独立电源 | 2 | Tiny 输入规格按实物资料核对；共地 |
+| Power | StickS3 USB + Tiny 独立 5 V 支路，或一只足额电源分两路 | 1–2 | Tiny 单支路至少 2 A；共用电源先按 5 V/3 A 预算并实测 |
 
 Unit GPS 文档给出 5 V 下典型 31.64 mA。StickS3 官方给出 Grove 5 V 负载能力约 0.38 A；
-4G 发射峰值不可由该接口供电。
+其 [EXT_5V_EN 说明](https://docs.m5stack.com/en/core/StickS3) 指出 Grove 和 Hat2 EXT_5V
+共用输出模式。该接口不能作为尚未测得发射峰值的 4G 供电支路。
 
 ## Wiring and power
 
@@ -62,30 +63,42 @@ wire. Confirm the connector key and labels before power-on; ESP32-S3 GPIO is not
 
 ### ML307R-DL Tiny 接线
 
-![StickS3、GPS Unit 和 ML307R-DL Tiny 接线示意；Tiny 右侧六孔按商品图标号，电压待实物确认](docs/assets/ml307r-tiny-wiring.svg)
+![StickS3、GPS Unit 和 ML307R-DL Tiny 接线示意；区分商品图从上数孔位与接口表引脚序号](docs/assets/ml307r-tiny-wiring.svg)
 
 GPS 仍占用 Grove 的 GPIO9/10；固件将 GPS 设为 UART2。4G 使用 UART1，StickS3
 Hat2 排针位置以 [M5Stack StickS3 官方 PinMap](https://docs.m5stack.com/en/core/StickS3) 为依据：
 
 用户提供的芯引者商品图显示：**金属屏蔽罩文字正向、六孔排针在右侧时，从上到下依次是
-BAT、EN、RX、TX、GND、VIN**。按这个视角接 UART 三线：
+BAT、EN、RX、TX、GND、VIN**。新提供的接口表则从底部 **VIN=引脚 1** 向上编号，
+依次为 GND=2、TXD=3、RXD=4、EN=5、BAT=6。下表同时给出两种编号，接线时优先认实物丝印：
 
-| StickS3 Hat2 | StickS3 信号 | Tiny 右侧六孔（从上数） |
-| --- | --- | --- |
-| 1 脚 | GND | 第 5 孔 **GND**，共地 |
-| 2 脚 | GPIO5 / UART1 TX | 第 3 孔 **RX** |
-| 6 脚 | GPIO6 / UART1 RX | 第 4 孔 **TX** |
+| StickS3 Hat2 | StickS3 信号 | Tiny 实物信号 | 商品图从上数 | 接口表引脚序号 |
+| --- | --- | --- | --- | --- |
+| 1 脚 | GND | **GND**，共地 | 第 5 孔 | 2 |
+| 2 脚 | GPIO5 / UART1 TX | **RX / RXD** | 第 3 孔 | 4 |
+| 6 脚 | GPIO6 / UART1 RX | **TX / TXD** | 第 4 孔 | 3 |
 
-上面的 Tiny 孔位来自**商品图**，尚未与手中载板实物交叉核对；接线前按相同视角复核
-丝印和孔位。第 1 孔 BAT、第 2 孔 EN 不属于 UART 三线连接，启动方式仍待核实。
-第 6 孔标为 VIN，但图片没有给出允许输入电压，不能仅凭名称接 5 V。
-先测 Tiny 板 UART 高电平；若与 StickS3 的 3.3 V GPIO 不相容，两根数据线需适配电平。
-Tiny 板单独供电，电源地与 StickS3 共地；确认 VIN 确实接受 5 V 后可用独立
-5 V/2 A 电源。Hat2 的 EXT_5V 及 Grove 红线均不接 4G 供电端。
+接口表标称 VIN 为 **5–16 V**、TXD/RXD 为 **3.3 V 电平**；这是用户提供的板卡资料，
+尚未与手中 PCB 版本、电压实测交叉核对。首次通电仍要核对实物丝印和空闲 TXD 电平。
+Tiny 的 VIN 用独立 5 V/至少 2 A 供电支路，电源地与 StickS3 共地；不要从 Hat2
+EXT_5V 或 Grove 红线给 4G 模组供电。若要共用一只电源，先以 5 V/至少 3 A 为台架
+预算，从电源端分两路，分别接 StickS3 Hat2 **15 脚 5V_IN（输入）**和 Tiny **VIN**，
+电源地接 StickS3 Hat2 **1 脚 GND**及 Tiny GND。5V_IN 不是可控输出；接外部
+5V_IN 时，先不要同时接 USB 电源，直到核对具体供电路径及防反灌设计。实际额定电流
+仍以注册/发射峰值测量为准。接口表标 BAT 为 3.4–4.2 V 电池输入，
+**不可与 VIN 同时供电**。StickS3 Hat2 **11 脚标为 BAT**；官方仅给出
+250 mAh 电池容量，没有给出 Hat2 BAT 可承受的 4G 发射峰值，当前联网验证
+不可从此脚给 Tiny BAT 供电。
+
+接口表写明 EN 默认上拉至 VIN。VIN 为 5 V 时，**EN 不可直接接 StickS3 的 3.3 V GPIO**；
+本阶段让 EN 保持未接，由载板默认上拉启动。后续需要软件开关时，先核对 EN 电路，再用
+适合 VIN 电压的开漏/开集电极隔离驱动，并验证低电平关断及上电默认状态。仅共用
+5 V 电源不会让 Tiny 随 StickS3 休眠或关机；需要可靠的同步断电时，应在 Tiny VIN
+支路加入适合 4G 峰值电流、默认关断的负载开关，并先验证启动时序。
 
 先用独立的 [AT/TCP 接入 Demo](../../demos/sticks3-ml307r-at/) 核对模组检测、注册和
-数据连接，再验收本项目的 GPS 与 4G 并行运行。Tiny 实物丝印、电源规格、UART 电平
-和 EN 启动方式确认后，才可进行第一次通电接线。
+数据连接，再验收本项目的 GPS 与 4G 并行运行。Tiny 实物丝印、供电电压和 UART 空闲
+电平确认后，再进行上电验证。
 
 ## Configure, build and flash
 

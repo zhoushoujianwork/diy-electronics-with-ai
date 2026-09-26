@@ -7,9 +7,16 @@
   verification, cellular UDP SNTP, GPS on UART2, and separate five-second sampling and MQTT uplink
   tasks. Build output and host tests do not prove electrical or network operation.
 - A user-supplied seller image of the ML307R-DL Tiny shows six right-side holes labelled, top to bottom
-  with the shield text upright, BAT/EN/RX/TX/GND/VIN. The screenshot includes device identifiers and is
-  kept outside Git. This identifies the advertised layout, not the user's physical PCB revision or
-  supply/UART electrical levels. No 4G firmware has been flashed or run. The existing Wi-Fi firmware and
+  with the shield text upright, BAT/EN/RX/TX/GND/VIN. A later user-supplied interface table numbers
+  these in reverse from VIN=1 to BAT=6, specifies VIN 5–16 V and 3.3 V TXD/RXD, and says EN is pulled
+  up to VIN; BAT takes 3.4–4.2 V and must not be powered with VIN. The screenshot includes device
+  identifiers and stays outside Git. These are supplied carrier documents, not physical measurements
+  or independently sourced catalog facts. The user first reported StickS3 Hat2 EXT_5V to Tiny VIN,
+  then moved Tiny BAT to StickS3 Hat2 BAT pin 11 with Tiny VIN disconnected. Neither StickS3 rail
+  has a documented 4G transmit-current allowance; the latter connection was flagged for removal.
+  Network testing is deferred until Tiny uses a separately rated supply branch and the exact PCB
+  labels and voltage are checked. EN is unconnected. No 4G firmware has been flashed or
+  run. The existing Wi-Fi firmware and
   all hardware evidence below remain rollback references.
 - Pending 4G acceptance: 30-minute real-device run with cold start, GNSS/LCD/button concurrency,
   two-minute cellular outage/recovery and outdoor movement; MotoBox sequence and original sample-time

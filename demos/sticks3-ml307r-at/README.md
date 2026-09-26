@@ -13,21 +13,27 @@ The `78/esp-ml307` 3.7.5 dependency is licensed under
   matching LTE antenna.
 - In the supplied seller image, hold the modem's printed text upright with the
   six-hole header on the right. Its labels run top to bottom **BAT, EN, RX, TX,
-  GND, VIN**. StickS3 Hat2 pin 1 (GND) → Tiny hole 5 **GND**; pin 2 (GPIO5/TX)
-  → hole 3 **RX**; pin 6 (GPIO6/RX) ← hole 4 **TX**. Confirm the same labels on
-  the actual carrier before attaching wires.
+  GND, VIN**. The supplied interface table numbers these pins in reverse,
+  starting with VIN as pin 1: GND=2, TXD=3, RXD=4, EN=5, BAT=6. StickS3 Hat2
+  pin 1 (GND) → Tiny **GND** (table pin 2, fifth hole from the top); pin 2
+  (GPIO5/TX) → **RXD** (table pin 4, third hole); pin 6 (GPIO6/RX) ← **TXD**
+  (table pin 3, fourth hole). Confirm the same labels on the actual carrier.
 - Supply StickS3 by USB. Supply Tiny separately and connect the grounds. Confirm
-  the Tiny carrier's marked power input, accepted voltage, UART high level and
-  startup method against its exact board revision before connecting. A verified
-  5 V input may use an independent 5 V/2 A bench source; never power the modem
-  from StickS3 Grove or Hat2 EXT_5V.
-- Measure Tiny TXD idle high level before attaching GPIO6. StickS3 GPIO is 3.3 V;
-  add bidirectional logic-level adaptation when the carrier's UART levels require it.
+  the Tiny carrier's exact revision and marked power input before connecting.
+  The supplied interface table specifies VIN 5–16 V and TXD/RXD 3.3 V. Use an
+  independent 5 V supply branch rated at least 2 A, not StickS3 Grove or Hat2
+  EXT_5V. Measure Tiny TXD idle high level before attaching GPIO6.
+- The supplied table says EN is pulled up to VIN. Leave EN unconnected for this
+  bring-up; at 5 V VIN it must not connect directly to a 3.3 V StickS3 GPIO.
+  BAT is a separate 3.4–4.2 V battery input and must not be powered with VIN.
+  StickS3 Hat2 pin 11 is labelled BAT and its onboard battery is 250 mAh; its
+  allowable cellular transmit load is undocumented, so do not use it to power
+  Tiny BAT.
 
 [StickS3 Hat2 numbering](https://docs.m5stack.com/en/core/StickS3) is official.
-The Tiny hole order is read from the supplied product image and is not yet
-verified on the physical board. BAT and EN are outside this three-wire UART link;
-the VIN label alone does not establish its allowed supply voltage or startup method.
+The carrier's hole order and electrical values come from user-supplied seller
+material, not an independently verified public source or physical measurement.
+The table's pin numbers must not be confused with counting holes from the top.
 
 ## Build and run
 
