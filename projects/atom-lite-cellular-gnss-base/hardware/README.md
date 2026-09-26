@@ -8,6 +8,9 @@
 - [主机适配方案](../docs/host-adapters.md)：ATOM 底座、StickS3 顶部适配、电源分配与 3D 打印外壳。
 - [Tiny 完整卡扣外壳](enclosure/README.md)：底壳、可拆盖与两种排针出口，几何检查通过，待打印试装。
 - [GNSS 四线接口与双 UART](../docs/gnss-uart-expansion.md)：现成接收板的电源、针序、信号方向和兼容边界。
+- [PCB 设计调研](../docs/pcb-design-research.md)：板级资料与裸模组要求、电源方案、机械限制、缺口及官方来源。
+- [pcb-interface-plan.csv](pcb-interface-plan.csv)：两款主机 GPIO 分配提案；官方逻辑针号不等于 PCB pad 编号，空值表示未核实。
+- [pcb-part-candidates.csv](pcb-part-candidates.csv)：已查数据手册的器件候选；未冻结 BOM、库器件或采购状态。
 
 ## 坐标与封装
 

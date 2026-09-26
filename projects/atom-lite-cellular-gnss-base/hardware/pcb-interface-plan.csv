@@ -1,0 +1,16 @@
+variant,function,host_gpio,host_connector,official_contact_reference,host_direction,external_endpoint,voltage_rule,status,source
+atom-lite,MODEM_TX,19,bottom expansion,,output,Tiny RX via interface circuit,Tiny logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,MODEM_RX,22,bottom expansion,,input,Tiny TX via interface circuit,Tiny logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,GNSS_TX,23,bottom expansion,,output,GNSS RX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,GNSS_RX,33,bottom expansion,,input,GNSS TX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,MODEM_CTRL,25,bottom expansion,,reserved-output,Tiny EN through circuit defined after verification,EN domain and polarity unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,SPARE,21,bottom expansion,,unassigned,unassigned,host logic domain; no external connection,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,HOST_POWER,,bottom expansion,,input,isolated carrier host branch,5 V path and actual board revision to verify,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,GND,,bottom expansion,,reference,common ground,return-current path to design,proposal-not-for-wiring,../docs/pcb-design-research.md
+sticks3,MODEM_TX,5,Hat2,2,output,Tiny RX via interface circuit,Tiny logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+sticks3,MODEM_RX,6,Hat2,6,input,Tiny TX via interface circuit,Tiny logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+sticks3,GNSS_TX,7,Hat2,8,output,GNSS RX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+sticks3,GNSS_RX,8,Hat2,9,input,GNSS TX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+sticks3,MODEM_CTRL,4,Hat2,4,reserved-output,Tiny EN through circuit defined after verification,EN domain and polarity unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+sticks3,HOST_POWER,,Hat2 5V_IN,15,input,isolated carrier host branch,5 V path and USB/battery interaction to verify,proposal-not-for-wiring,../docs/pcb-design-research.md
+sticks3,GND,,Hat2,1,reference,common ground,return-current path to design,proposal-not-for-wiring,../docs/pcb-design-research.md

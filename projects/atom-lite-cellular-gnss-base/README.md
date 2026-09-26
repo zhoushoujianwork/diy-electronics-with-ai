@@ -34,6 +34,10 @@
 外形暂定 24 × 24 × 11.8 mm。STEP/STL 几何检查通过；含针尺寸、板托接触区与打印实物配合仍需验证。
 GNSS 首版提议采用[独立四线接口与第二路 UART](docs/gnss-uart-expansion.md)接现成接收板。
 
+已完成[首轮 PCB 设计调研](docs/pcb-design-research.md)，包含两款主机 GPIO 分配提案、电源路径、
+电平转换候选与落图前缺口。ML307R 裸模组使用 1.8 V UART，不能据此认定 Tiny 已有 3.3 V 转换；
+Tiny 板级资料及 GNSS 当前修订电平确认后，再冻结接线与原理图。
+
 电子功能先用 **ATOM Lite + Tiny Cat.1 + 独立 GNSS** 的最小实验核验，再完成自研载板和项目固件。
 首版用“现有 Tiny + 一块主机适配 PCB”，两种主机尽量复用通信电路与软件协议，分别处理接口与结构。
 StickS3 可以做顶帽，或由顶部接入后将模块沿背面放置，详见[主机适配方案](docs/host-adapters.md)。
@@ -53,6 +57,7 @@ StickS3 可以做顶帽，或由顶部接入后将模块沿背面放置，详见
 6. [PCB 与结构设计输入](hardware/README.md)
 7. [需求到量产的教学路线](docs/teaching-plan.md)
 8. [验证记录](docs/validation.md)与[测试计划](tests/README.md)
+9. [PCB 设计调研与来源](docs/pcb-design-research.md)、[接口分配提案](hardware/pcb-interface-plan.csv)及[器件候选](hardware/pcb-part-candidates.csv)
 
 ## 接线与供电
 

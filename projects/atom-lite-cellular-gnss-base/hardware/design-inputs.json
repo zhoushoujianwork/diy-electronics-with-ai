@@ -74,6 +74,16 @@
     "pcb_uuid": null,
     "native_design_status": "not-created"
   },
+  "pcb_research": {
+    "recorded_on": "2026-09-27",
+    "status": "source review complete; interface allocations and parts are proposals",
+    "reference": "../docs/pcb-design-research.md",
+    "interface_proposals": "pcb-interface-plan.csv",
+    "part_candidates": "pcb-part-candidates.csv",
+    "enclosure_baseline_commit": "6e60b92",
+    "ready_for_schematic_freeze": false,
+    "open_inputs": ["Tiny board-level power and logic specification", "Tiny EN definition", "exact connector geometry and physical pin numbering", "GNSS current-revision electrical evidence", "power budget and host power isolation"]
+  },
   "adapter_strategy": {
     "status": "complete Tiny snap-case Rev B CAD geometry verified; physical fit and native PCB pending",
     "first_host": "M5Stack ATOM Lite C008",
