@@ -4,8 +4,9 @@
 
 - ESP-IDF 5.5.2 build: passed on 2026-09-27 with `78/esp-ml307` 3.7.5 and
   `78/uart-uhci` 0.4.0. The initial application binary was `0x80870` bytes;
-  the raw-UART diagnostic build was `0x84210` bytes, leaving 48% of the 1 MiB
-  app partition. Both were hash-verified when flashed to the StickS3.
+  the first raw-UART diagnostic build was `0x84210` bytes, and the eight-rate
+  diagnostic build was `0x84220` bytes, leaving 48% of the 1 MiB app partition.
+  These builds were hash-verified when flashed to the StickS3.
 - Static driver review found that its network wait can return registration-ready
   without PDP/IP readiness. The Demo now logs `CELL_REGISTERED` separately from
   `TCP_CONNECTED` and backs off when TCP fails; this behavior is build-verified
@@ -37,10 +38,11 @@
   verify either Tiny pin or its AT firmware. With Tiny alone on its independent
   supply and UART disconnected, the user measured EN at about 5 V and TXD idle
   at about 3.6 V relative to Tiny GND. The latter exceeds the seller table's
-  3.3 V claim, so direct Tiny TXD → StickS3 G6 wiring is suspended until a
-  suitable level shifter or measured divider is installed. The exact carrier
-  PCB revision, power-source current rating and measured peak current have not
-  been independently recorded. Real modem detection, SIM registration and TCP
+  3.3 V claim; it prompted a pause in direct Tiny TXD → StickS3 G6 wiring.
+  The user later questioned this meter reading and requested the direct retest
+  recorded below. The exact carrier PCB revision, power-source current rating
+  and measured peak current have not been independently recorded. Real modem
+  detection, SIM registration and TCP
   through StickS3 remain pending.
 - A separate short DAPLink UART test used `/dev/cu.usbmodem212402` at 115200 bps.
   The user wired Tiny directly to LCKFB DAPLink and used its 5 V pin for this
@@ -54,6 +56,19 @@
   in that short setup. DAPLink 5 V output current and RX input tolerance were
   not verified, so the run does not establish a suitable long-term modem power
   or logic interface, cellular TCP, or StickS3 interoperability.
+- With StickS3 powered by USB-C, the user reported reconnecting G5 to Tiny RXD,
+  Tiny TXD directly to G6, and common GND. Tiny's power source and whether its
+  DAPLink RX/TX wires were removed were not reconfirmed for this run. Demo app
+  `0cf41d4` was flashed and hash-verified. A deliberate reset reported reason
+  11; AT detection timed out. The raw probe transmitted four bytes per attempt
+  but received **zero bytes** in two attempts at each of 115200, 921600, 460800,
+  230400, 57600, 38400, 19200 and 9600 bps. A 120-second post-flash capture
+  and 65-second reset capture showed no panic, stack overflow, task-start
+  failure or unexpected USB reconnect. Lowest observed `bringup` free stack
+  was 8940/12288 B (73%); modem receive/event margins remain unmeasured. This
+  rules out a simple baud-rate mismatch for the observed zero-byte path but
+  does not yet locate the open or contended connection. No StickS3-side modem
+  detection, registration or TCP was observed. Raw logs remain outside Git.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
   be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom
