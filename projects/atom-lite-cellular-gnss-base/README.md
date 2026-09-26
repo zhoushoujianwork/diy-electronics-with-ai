@@ -1,8 +1,9 @@
 # ATOM Lite 4G/GNSS 堆叠扩展底座
 
 为 ATOM Lite 制作一款 **24 × 24 mm 外轮廓**的堆叠底座，参考 ATOMIC ECHO BASE 的安装形态，
+采用通信核心板、主机适配 PCB 与 3D 打印外壳，评估以同一核心板扩展 StickS3 顶部适配版本。
 通过 Type-C 供电，实现开机自动联网、定位并上报 MotoBox。完整保留需求、调研、原理图、PCB、
-固件、验证、试产和量产准备过程，作为 DIY Lab 的开放教学项目。
+固件、验证、试产和量产准备过程，作为 DIY Lab 的开放教学项目；ATOM 是首个实现目标。
 
 **当前状态：`idea`，已立项，正在确认硬件输入。没有已完成的原理图、PCB、固件或实机验收。**
 24 × 24 mm 是外设外轮廓目标，PCB 板框和底座高度尚未确定。
@@ -16,6 +17,8 @@
 | 主控 | M5Stack ATOM Lite / C008；ESP32-PICO-D4 | [产品目录](../../catalog/vendors/m5stack/products/atom-lite-c008.yaml)；不是 AtomS3 |
 | 主控外壳 | 用户实测 24 × 24 × 9.6 mm；官方 24 × 24 × 9.5 mm | 两组值分别保留，不把官方标称替换成实测值 |
 | 底座形态 | 与主控相同的 24 × 24 mm 外轮廓，上下堆叠 | 参考 ECHO BASE 的形态；不承诺与其他底座同时叠加 |
+| 外壳路线 | 主机专用 3D 打印外壳，承担固定与插拔受力 | 打印模型、材料、尺寸公差与装配均未验证 |
+| 第二主机候选 | StickS3 K150，官方 48 × 24 × 15 mm，顶部 16P Hat2 | [板卡接口资料](../../boards/m5stack-sticks3-k150/README.md)；另做适配 PCB 与外壳，尚不列为已支持主机 |
 | 通信候选 | 芯引者 ML307R-DL Tiny 核心板 | 用户提供的商品图识别；实物修订、供电与电平仍待核对 |
 | Tiny 尺寸 | 用户实测约 20 × 20 mm；商品图标注 20 × 19 × 6 mm | 尚不清楚商品高度是否包含插针，测量基准和公差未给出 |
 | Tiny 接口 | 单排 6P；用户报告节距 2.54 mm | 商品图正向右侧上→下：BAT、EN、RX、TX、GND、VIN；不是已核实的封装 Pin 1 定义 |
@@ -27,7 +30,9 @@
 ## 设计方向
 
 先完成 **ATOM Lite + Tiny Cat.1 + 独立 GNSS** 的最小实验，再做自研载板、外壳和固件。
-Tiny 载板路线用于降低第一轮风险；将蜂窝模组、SIM、GNSS 和电源全部放进一块 PCB 是后续选项，
+首版用“现有 Tiny + 一块主机适配 PCB”，两种主机尽量复用通信电路与软件协议，分别处理接口与结构。
+StickS3 可以做顶帽，或由顶部接入后将模块沿背面放置，详见[主机适配方案](docs/host-adapters.md)。
+将蜂窝模组、SIM、GNSS 和电源全部放进一块 PCB 是后续选项，
 需要重新评估 24 mm 轮廓内的空间、射频、电源和制造成本。
 
 这是独立工程。既有 [StickS3 GPS → MotoBox](../m5stack-sticks3-gps-motobox/) 提供协议与解析经验；
@@ -39,9 +44,10 @@ Tiny 载板路线用于降低第一轮风险；将蜂窝模组、SIM、GNSS 和�
 2. [需求与验收条件](docs/requirements.md)
 3. [蜂窝通信与 GNSS 选型调研](../../docs/research/m5stack-cellular-gnss-selection.md)
 4. [系统架构与设计决策](docs/architecture.md)
-5. [PCB 与结构设计输入](hardware/README.md)
-6. [需求到量产的教学路线](docs/teaching-plan.md)
-7. [验证记录](docs/validation.md)与[测试计划](tests/README.md)
+5. [ATOM / StickS3 适配 PCB 与打印外壳](docs/host-adapters.md)
+6. [PCB 与结构设计输入](hardware/README.md)
+7. [需求到量产的教学路线](docs/teaching-plan.md)
+8. [验证记录](docs/validation.md)与[测试计划](tests/README.md)
 
 ## 接线与供电
 
@@ -51,6 +57,8 @@ ATOM 的 5V、3V3 和 GPIO 不应按接口名称直接与 Tiny 连接。
 
 单 Type-C 是使用体验目标。初步建议由底座进行供电分配，但仍需与“从 ATOM 的 Type-C 输入”方案
 比较空间和载流能力。ATOM 调试口与底座供电同时插入时必须验证防倒灌。
+StickS3 版本需区分 Hat2 的 `5V_IN` 与 `EXT_5V`；初步评估从前者给主机输入电源，4G 独立分路。
+其 Grove 标称带载最大 4.88 V @ 0.38 A，不作为蜂窝电源能力保证。
 
 ## 构建、烧录与运行
 
@@ -75,7 +83,8 @@ python3 catalog/tools/validate_catalog.py
 
 - Tiny 商品图不能证明供电、电平、GNSS 或精确机械兼容性；需要实物和板级资料。
 - 24 × 24 mm 内容纳 Tiny、连接器和结构件尚未验证；天线与线缆是否允许伸出由结构方案记录。
-- 当前 EasyEDA daemon 可用，但没有连接的编辑器，原生原理图/PCB 创建与回读尚未进行。
+- 2026-09-27 立项时 EasyEDA daemon 可用但没有连接的编辑器；原生原理图/PCB 创建与回读尚未进行。
+- StickS3 仅完成公开接口与供电资料核对，尚无适配器原理图、打印模型或实物兼容测试。
 - 量产是项目目标；批量、单价、良率、认证和制造文件均未定，尚不能投产。
 
 本阶段回退点是保留原始需求和已有独立模块；后续用硬件修订与固件提交关联每次实验，不覆盖旧证据。

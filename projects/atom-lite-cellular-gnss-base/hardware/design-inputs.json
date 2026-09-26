@@ -73,5 +73,40 @@
     "schematic_uuid": null,
     "pcb_uuid": null,
     "native_design_status": "not-created"
-  }
+  },
+  "adapter_strategy": {
+    "status": "proposal; no native PCB or enclosure model created",
+    "first_host": "M5Stack ATOM Lite C008",
+    "reuse": "Existing Tiny core board with a host-specific adapter PCB; custom shared daughterboard only after evaluation",
+    "enclosure_process": "3D printing; material, print orientation and tolerances pending",
+    "common_connector_pinout": null,
+    "host_adapters_electrically_or_mechanically_interchangeable": false,
+    "reference": "../docs/host-adapters.md"
+  },
+  "candidate_host_variants": [
+    {
+      "id": "sticks3-k150",
+      "model": "M5Stack StickS3 K150",
+      "validation": "official documentation reviewed; adapter unbuilt and untested",
+      "official_enclosure_length_width_depth": [48, 24, 15],
+      "official_source": "https://docs.m5stack.com/zh_CN/core/StickS3",
+      "official_source_accessed_on": "2026-09-27",
+      "connector": {
+        "name": "top Hat2-Bus",
+        "contacts": 16,
+        "pitch": 2.54,
+        "footprint_pin1_orientation": null,
+        "pad_coordinates": null,
+        "mating_height": null
+      },
+      "candidate_layouts": ["top cap", "top adapter with back-mounted module"],
+      "preferred_first_layout": "top cap; subject to mechanical fit check",
+      "adapter_pcb_outline": null,
+      "enclosure_dimensions": null,
+      "candidate_host_power_input": "Hat2 5V_IN, official pin 15; physical orientation and power path review pending",
+      "cellular_power": "separate branch from external Type-C supply; not assumed available from host Grove",
+      "power_mode_and_reverse_current_validation": "pending",
+      "firmware_target": "esp32s3; separate board configuration"
+    }
+  ]
 }

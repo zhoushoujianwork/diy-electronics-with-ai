@@ -5,6 +5,7 @@
 - [design-inputs.json](design-inputs.json)：单位、来源、实测/标称值及未知尺寸；不是可执行 EDA playbook。
 - [interface-review.csv](interface-review.csv)：Tiny 商品图中的丝印和待核实电气项。
 - [preliminary-bom.csv](preliminary-bom.csv)：功能级 BOM 候选；未定料号明确留空，不可直接下单。
+- [主机适配方案](../docs/host-adapters.md)：ATOM 底座、StickS3 顶部适配、电源分配与 3D 打印外壳。
 
 ## 坐标与封装
 
@@ -14,6 +15,8 @@
 
 需要补齐的工程图必须包含：ATOM 底面视图、Tiny 元件面及焊接面、板框、基准原点、孔坐标、
 插针高度、壳壁、SIM/USB/天线接头可达空间和各层最高件。
+StickS3 变体另需顶部 Hat2 观察方向、配对高度、壳体卡位与屏幕/按键/USB 避让；不复用 ATOM 板框。
+先制作占位和配合试片，再冻结适配 PCB 与打印模型，记录打印材料、方向、公差和温升验证。
 
 ## EasyEDA 实施路径
 
@@ -35,6 +38,7 @@
 
 **载板版本（当前提议）**：复用 Tiny，设计 ATOM 接口、Tiny 连接、电源和测试点，GNSS 可先外接。
 连接器高度和 Tiny 自身布局会约束壳体；不要在未核实 RF/地结构前为了压高度强行改焊模组。
+同一核心板后续可配第二块 StickS3 适配 PCB；先共用电路和核心板侧接口，不预设两种主机共用同一块 PCB。
 
 **一体版本（后续选项）**：直接使用蜂窝模组并集成 GNSS、SIM、电源和天线接口。
 需要重新设计参考电路和 RF/电源布局，不能把载板的验证直接升级成该版支持。

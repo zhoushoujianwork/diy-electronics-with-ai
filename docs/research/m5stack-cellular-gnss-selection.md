@@ -59,6 +59,20 @@ M5 SMA 页面对比表列出同条件北斗卫星数量 18 对 8；未给出完�
 局部储能与回流路径。选择 5 V / 3 A 适配器只能作为预算提议，不能代替整机峰值测量。
 若主控 USB 与底座 USB 可以同时插入，要明确防倒灌和电源优先关系。
 
+### ATOM 与 StickS3 扩展形态
+
+StickS3 / K150 [10] 官方外壳为 48 × 24 × 15 mm，顶部采用 Hat2-Bus（2.54 mm、16P），
+与 ATOM 的底部接口位置和几何不同。精确针号见[StickS3 板卡档案](../../boards/m5stack-sticks3-k150/README.md)。
+
+StickS3 外部 5 V 接口默认输入模式；切换输出模式后，只允许从 USB 或 Hat2 `5V_IN` 输入供电，
+不能向 Grove/`EXT_5V` 再输入。M5Unified 默认初始化关闭 `EXT_5V_EN`，可通过
+`M5.Power.setExtOutput(true)` 开启输出。官方给出的 Grove 带载能力最大为 4.88 V @ 0.38 A，
+不应把该数值外推为 Hat2 额定电流或任意蜂窝扩展的可用功率。
+
+**工程建议**：不同主机可以复用已核实的通信核心与协议，但要分别核对适配 PCB 的信号、电源和机械固定。
+扩展头的位置不要求模块主体必须在同一位置，可通过符合电气与机械约束的互连放置在顶部或背面。
+3D 打印便于修改卡位和开口，仍需验证壁厚、材料、温升和天线环境；不能仅凭两台设备同为 24 mm 宽就声称兼容。
+
 ## 4. 成本与结论边界
 
 未读取到可核实的淘宝现价，不记录具体“贵多少”、套件优惠或长期流量赠送承诺。
@@ -78,3 +92,4 @@ M5 SMA 页面对比表列出同条件北斗卫星数量 18 对 8；未给出完�
 7. [合宙 Air780EG 说明](https://docs.openluat.com/air780eg/)。
 8. [合宙 Air780EG 产品资料](https://docs.openluat.com/air780eg/product/)；该页提示旧 PDF 与当前产品定义不一致时应查当前硬件指南。
 9. [Atomic Voice Base，原 ECHO BASE 路径](https://docs.m5stack.com/zh_CN/atom/Atomic%20Echo%20Base)。
+10. [StickS3 中文文档](https://docs.m5stack.com/zh_CN/core/StickS3) / [英文文档](https://docs.m5stack.com/en/core/StickS3)。

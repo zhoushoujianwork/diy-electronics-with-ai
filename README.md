@@ -26,7 +26,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 
 | [ATOM Lite 4G/GNSS 堆叠底座](projects/atom-lite-cellular-gnss-base/README.md) · Project | 进度与验证 |
 | --- | --- |
-| [<img src="projects/atom-lite-cellular-gnss-base/docs/assets/stack-concept.svg" width="380" alt="ATOM Lite 24毫米同轮廓底座与Tiny通信板的尺寸和功能分工概念图，连接器位置与PCB尚未定型，非实机证据">](projects/atom-lite-cellular-gnss-base/README.md)<br>设计概念示意 · 非 PCB 或实机照片 | 制作 Type-C 供电、自动定位上报的堆叠底座，并记录需求、调研、PCB/固件、验证与量产准备全过程。<br>**规划中 · 已立项** · [`idea`](projects/atom-lite-cellular-gnss-base/project.yaml)<br>已核对：公开选型资料；已记录用户测量与商品图尺寸差异。<br>待完成：电气/机械核验、原生原理图与 PCB、固件、实机和试产验收。<br>[验证范围与前置条件](projects/atom-lite-cellular-gnss-base/docs/validation.md) |
+| [<img src="projects/atom-lite-cellular-gnss-base/docs/assets/stack-concept.svg" width="380" alt="ATOM Lite 24毫米同轮廓底座与Tiny通信板的尺寸和功能分工概念图，连接器位置与PCB尚未定型，非实机证据">](projects/atom-lite-cellular-gnss-base/README.md)<br>设计概念示意 · 非 PCB 或实机照片 | 制作 Type-C 供电、自动定位上报的堆叠底座，采用通信核心板、适配 PCB 与打印外壳；ATOM 先行，评估 StickS3 顶部变体，并记录需求到量产准备全过程。<br>**规划中 · 已立项** · [`idea`](projects/atom-lite-cellular-gnss-base/project.yaml)<br>已核对：公开选型资料；已记录用户测量与商品图尺寸差异。<br>待完成：电气/机械核验、原生原理图与 PCB、固件、实机和试产验收。<br>[验证范围与前置条件](projects/atom-lite-cellular-gnss-base/docs/validation.md) |
 
 更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)。
 状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。

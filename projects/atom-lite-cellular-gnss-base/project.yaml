@@ -3,7 +3,7 @@ id: atom-lite-cellular-gnss-base
 name: ATOM Lite Cellular GNSS Stack Base
 kind: project
 status: idea
-summary: Develop a 24 mm stackable cellular and GNSS base for ATOM Lite, with a reproducible path from requirements to production preparation.
+summary: Develop an ATOM Lite cellular GNSS base using a core board, host adapter PCB and 3D printed enclosure; evaluate a StickS3 variant and document the path to production preparation.
 owners:
   - human-ai-lab
 toolchains: []

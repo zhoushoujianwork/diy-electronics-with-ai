@@ -35,10 +35,23 @@ specifications:
     - type: USB Type-C
       count: 1
       source_refs: [official-docs]
+    - type: Hat2-Bus 2.54 mm 16P
+      count: 1
+      notes: Top expansion interface; exact pin mapping and power direction are documented in the board profile.
+      source_refs: [official-docs, official-docs-zh]
+    - type: Grove HY2.0-4P
+      count: 1
+      notes: Manufacturer lists maximum Grove load capability as 4.88 V at 0.38 A; this is not a Hat2 current rating.
+      source_refs: [official-docs, official-docs-zh]
   power:
     input_voltage_nominal_v: 5
     logic_voltage_v: 3.3
     source_refs: [official-docs]
+  mechanical:
+    width_mm: 24
+    height_mm: 48
+    depth_mm: 15
+    source_refs: [official-docs, official-docs-zh]
 software:
   toolchains: [ESP-IDF, Arduino]
   frameworks: [M5Unified, M5GFX]
@@ -49,9 +62,20 @@ sources:
     title: StickS3 documentation
     publisher: M5Stack
     url: https://docs.m5stack.com/en/core/StickS3
-    accessed_on: 2026-09-21
+    accessed_on: 2026-09-27
+    official: true
+  - id: official-docs-zh
+    type: documentation
+    title: StickS3 中文文档
+    publisher: M5Stack
+    url: https://docs.m5stack.com/zh_CN/core/StickS3
+    accessed_on: 2026-09-27
     official: true
 validation:
   level: cataloged
 notes:
   - Repository-specific pin assignments and hardware evidence are maintained in the linked board profile.
+  - External 5 V interfaces default to input mode. In output mode, DC 5 V input is permitted only through USB or Hat2 5V_IN, not Grove or EXT_5V.
+  - M5Unified initialization disables EXT_5V_EN; M5.Power.setExtOutput(true) enables external output mode.
+  - Official dimensions are 48 x 24 x 15 mm, recorded here as height x width x depth; they do not define an adapter PCB outline.
+  - M5Stack explicitly lists Hat Mini JoyC U156, Hat Mini EncoderC U157 and Hat 18650C U080 as mechanically incompatible.
