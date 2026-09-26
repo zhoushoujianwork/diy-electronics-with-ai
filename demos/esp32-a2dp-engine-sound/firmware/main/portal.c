@@ -13,6 +13,7 @@
 #include "esp_wifi.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/portmacro.h"
+#include "nvs.h"
 
 static const char *TAG = "a2dp_portal";
 static const char *SSID = "EV-Engine-Setup";
@@ -28,6 +29,12 @@ typedef struct {
     int64_t seen_us;
 } device_t;
 static device_t devices[MAX_DEVICES];
+
+static bool valid_ap_pin(const char *pin) {
+    if(strlen(pin)!=8) return false;
+    for(int i=0;i<8;i++) if(pin[i]<'0' || pin[i]>'9') return false;
+    return true;
+}
 
 /* The page contains no external assets and is available only on the local AP. */
 static const char PAGE[] =
@@ -146,8 +153,14 @@ esp_err_t portal_start(portal_connect_fn fn) {
     wifi_init_config_t init=WIFI_INIT_CONFIG_DEFAULT();
     rc=esp_wifi_init(&init); if(rc!=ESP_OK) return rc;
     rc=esp_wifi_set_mode(WIFI_MODE_AP); if(rc!=ESP_OK) return rc;
-    char password[16];
-    snprintf(password,sizeof(password),"EV%08" PRIX32,esp_random());
+    char password[16]; bool saved_pin=false;
+    nvs_handle_t nvs;
+    if(nvs_open("a2dp_demo",NVS_READONLY,&nvs)==ESP_OK) {
+        size_t length=sizeof(password);
+        saved_pin=nvs_get_str(nvs,"ap_pin",password,&length)==ESP_OK && valid_ap_pin(password);
+        nvs_close(nvs);
+    }
+    if(!saved_pin) snprintf(password,sizeof(password),"EV%08" PRIX32,esp_random());
     wifi_config_t config={0};
     memcpy(config.ap.ssid,SSID,strlen(SSID));
     config.ap.ssid_len=strlen(SSID);
@@ -171,6 +184,7 @@ esp_err_t portal_start(portal_connect_fn fn) {
     for(size_t i=0;i<sizeof(routes)/sizeof(routes[0]);i++) {
         rc=httpd_register_uri_handler(server,&routes[i]); if(rc!=ESP_OK) return rc;
     }
-    ESP_LOGI(TAG,"AP_READY ssid=%s password=%s url=http://192.168.4.1/",SSID,password);
+    if(saved_pin) ESP_LOGI(TAG,"AP_READY ssid=%s password_source=NVS url=http://192.168.4.1/",SSID);
+    else ESP_LOGI(TAG,"AP_READY ssid=%s password=%s url=http://192.168.4.1/",SSID,password);
     return ESP_OK;
 }

@@ -38,7 +38,8 @@ static TaskHandle_t synth_handle, bt_handle, console_handle, heartbeat_handle;
 /* Static PCM/engine/task-status storage: no large arrays on task stacks.
  * synth 6144 B: ev_render + scalar local state + transition logging.
  * manager 6144 B: small event + BT API dispatch + error formatting.
- * main 8192 B: initialization/NVS + 160-byte command + parser/printf.
+ * main 8192 B: initialization/NVS + 160-byte command + parser/printf;
+ * AP PIN update adds NVS write/commit and restart (measure in that path).
  * heartbeat 4096 B: snapshots + logging; task-status array is static.
  * BTC/BTU 6144 B each: GAP/A2DP callback, local name buffers (<=313 B),
  * inquiry counters/logging and protocol call paths. Offline scan previously
@@ -344,6 +345,27 @@ static void heartbeat_task(void *unused) {
 static void command(char *line, int64_t *idle_deadline) {
     if(!strcmp(line,"tasks") || !strcmp(line,"status")) {
         portENTER_CRITICAL(&lock); want_tasks=true; portEXIT_CRITICAL(&lock); return;
+    }
+    if(!strncmp(line,"ap_pin",6)) {
+        const char *pin=line+6;
+        if(*pin++!=' ' || strlen(pin)!=8) {
+            ESP_LOGW(TAG,"CMD ap_pin rejected: expected eight digits"); return;
+        }
+        for(int i=0;i<8;i++) if(pin[i]<'0' || pin[i]>'9') {
+            ESP_LOGW(TAG,"CMD ap_pin rejected: expected eight digits"); return;
+        }
+        nvs_handle_t nvs;
+        if(!checked("ap_pin_nvs_open",nvs_open("a2dp_demo",NVS_READWRITE,&nvs))) return;
+        bool ok=checked("ap_pin_nvs_set",nvs_set_str(nvs,"ap_pin",pin)) &&
+                checked("ap_pin_nvs_commit",nvs_commit(nvs));
+        nvs_close(nvs);
+        if(ok) {
+            ESP_LOGI(TAG,"CMD ap_pin saved; console_stack_min=%u bytes; restarting",
+                     (unsigned)uxTaskGetStackHighWaterMark(NULL));
+            vTaskDelay(pdMS_TO_TICKS(100));
+            esp_restart();
+        }
+        return;
     }
     if(!strncmp(line,"peer ",5)) {
         bool online;
