@@ -14,9 +14,9 @@ PCM feed 固定为 44.1 kHz / 16 bit / 2 channels。这样无需将原项目 32 
 不调用自定义 SEP 注册：该版本只有 external-codec 模式处理注册事件，内置模式即使 API
 返回 ESP_OK，底层仍会报告 unhandled event。滤波常数尚未重新标定，听感以实测为准。
 
-蓝牙回调用有界队列把状态送到 manager；队列满会计数，心跳报告而不阻塞。自动发现目标采用
-精确名称匹配；本地 SoftAP 页面也可列出最近 30 秒的经典蓝牙扫描结果并按列表索引点选。
-页面不暴露蓝牙地址，点选请求进入同一个 manager 队列；配对与 MAC 保存在蓝牙栈/NVS，
+蓝牙回调用有界队列把状态送到 manager；队列满会计数，心跳报告而不阻塞。SoftAP 页面
+列出最近 30 秒内发现的所有经典蓝牙设备（最多 20 台），只有用户点选才请求连接。
+页面不暴露蓝牙地址，点选请求进入 manager 队列；配对与 MAC 保存在蓝牙栈/NVS，
 不进仓库。WPA2 AP 密码默认每次开机随机生成，仅在 USB 串口输出；用户也可通过串口
 `ap_pin` 将八位数字密码保存在板上 NVS，之后重启沿用，日志不回显该本地密码。
 页面不接入互联网。
@@ -25,7 +25,7 @@ UDP 53 将标准 IPv4 A 查询回答为 AP 地址；HTTP 未知路径返回带�
 只处理有界、未压缩的单问题 A/IN DNS 报文，并忽略可选 EDNS 尾部；不会拦截 HTTPS。
 系统弹窗取决于手机实现，仍保留直接访问 IP 的路径。参考
 [ESP-IDF 5.5.2 captive portal 示例](https://github.com/espressif/esp-idf/tree/v5.5.2/examples/protocols/http_server/captive_portal)。
-断连立即清空 PCM 并停机。
+断连立即清空 PCM 并停机，清除手动选择，不自动重连。
 manager 按状态发起发现/连接/媒体启动，连接超时先请求断开，避免同时发起多次连接。
 SoftAP 客户端关联后，按客户端 MAC 记录 DHCP 分配；至少一个客户端取得地址、最近一次关联
 过去 5 秒且最近一次分配过去 2 秒后，manager 才启动下一轮 Classic inquiry，避免共用射频

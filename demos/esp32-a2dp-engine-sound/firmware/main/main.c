@@ -24,12 +24,10 @@
 static const char *TAG = "a2dp_engine";
 static portMUX_TYPE lock = portMUX_INITIALIZER_UNLOCKED;
 static ev_control_t desired = {.profile=2, .volume=.20f};
-static char peer_name[64] = "JBL Go 3";
 static bool connected, streaming, boot_pressed, want_tasks;
 static bool link_busy;
-static unsigned target_generation;
 static uint32_t errors, dropped_events, callback_hwm, pcm_callbacks, pcm_bytes, underrun_bytes;
-static uint32_t inquiry_results, inquiry_named, inquiry_beats;
+static uint32_t inquiry_results, inquiry_named;
 static uint32_t render_max_us, generated, nonzero_blocks;
 static int rpm_now, peak_now;
 static ev_phase_t phase_now;
@@ -54,8 +52,8 @@ static uint8_t pcm_ring[RING_BYTES];
 static size_t ring_read, ring_write, ring_used;
 static TaskStatus_t task_status[32];
 
-enum { EV_READY, EV_FOUND, EV_DISCOVERY, EV_CONNECTION, EV_AUDIO, EV_ACK, EV_RESCAN, EV_SELECT };
-typedef struct { int kind, value, cmd; unsigned generation; uint8_t bda[6]; } bt_event_t;
+enum { EV_READY, EV_DISCOVERY, EV_CONNECTION, EV_AUDIO, EV_ACK, EV_SELECT };
+typedef struct { int kind, value, cmd; uint8_t bda[6]; } bt_event_t;
 static QueueHandle_t events;
 
 static bool checked(const char *op, esp_err_t rc) {
@@ -100,7 +98,7 @@ static int32_t audio_data(uint8_t *data, int32_t len) {
 
 static void gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *p) {
     if (event == ESP_BT_GAP_DISC_RES_EVT) {
-        char name[ESP_BT_GAP_MAX_BDNAME_LEN+1] = {0}, target[sizeof(peer_name)];
+        char name[ESP_BT_GAP_MAX_BDNAME_LEN+1] = {0};
         portENTER_CRITICAL(&lock); ++inquiry_results; portEXIT_CRITICAL(&lock);
         int rssi=-127, name_rank=0;
         for (int i=0; i<p->disc_res.num_prop; ++i) {
@@ -122,29 +120,22 @@ static void gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *p) 
                 name_rank=rank;
             }
         }
-        unsigned generation;
         portENTER_CRITICAL(&lock);
         if (name[0]) ++inquiry_named;
-        if (!strncmp(name,"Beats",5)) ++inquiry_beats;
-        memcpy(target, peer_name, sizeof(target)); generation=target_generation;
         portEXIT_CRITICAL(&lock);
         portal_record_device(p->disc_res.bda,name,rssi);
-        /* Do not log names or addresses of unrelated nearby devices. */
-        if (name[0] && !strcmp(name, target)) {
-            bt_event_t e = {.kind=EV_FOUND, .generation=generation}; memcpy(e.bda, p->disc_res.bda, 6); post(e);
-        }
+        /* List every discoverable Classic device; only a page selection may connect. */
     } else if (event == ESP_BT_GAP_DISC_STATE_CHANGED_EVT) {
         if (p->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STARTED) {
             portENTER_CRITICAL(&lock);
-            inquiry_results=inquiry_named=inquiry_beats=0;
+            inquiry_results=inquiry_named=0;
             portEXIT_CRITICAL(&lock);
         } else {
-            uint32_t results,named,beats;
+            uint32_t results,named;
             portENTER_CRITICAL(&lock);
-            results=inquiry_results; named=inquiry_named; beats=inquiry_beats;
+            results=inquiry_results; named=inquiry_named;
             portEXIT_CRITICAL(&lock);
-            ESP_LOGI(TAG,"INQUIRY results=%" PRIu32 " named=%" PRIu32 " beats_named=%" PRIu32,
-                     results,named,beats);
+            ESP_LOGI(TAG,"INQUIRY results=%" PRIu32 " named=%" PRIu32,results,named);
         }
         post((bt_event_t){.kind=EV_DISCOVERY, .value=p->disc_st_chg.state});
     } else if (event == ESP_BT_GAP_AUTH_CMPL_EVT) {
@@ -198,15 +189,6 @@ static void bluetooth_task(void *unused) {
                 ESP_LOGI(TAG, "A2DP_READY source PCM=44100Hz/16bit/stereo");
                 break;
             }
-            case EV_FOUND: {
-                portENTER_CRITICAL(&lock); bool current=e.generation==target_generation; portEXIT_CRITICAL(&lock);
-                if (!found && discovering && current) {
-                    memcpy(peer,e.bda,6); found=true;
-                    ESP_LOGI(TAG, "TARGET_FOUND exact_name_match=1");
-                    checked("cancel_discovery",esp_bt_gap_cancel_discovery());
-                }
-                break;
-            }
             case EV_DISCOVERY:
                 discovering=e.value==ESP_BT_GAP_DISCOVERY_STARTED;
                 portal_set_state(discovering,connected,streaming);
@@ -216,6 +198,8 @@ static void bluetooth_task(void *unused) {
             case EV_CONNECTION: {
                 bool online=e.value==ESP_A2D_CONNECTION_STATE_CONNECTED;
                 connecting=e.value==ESP_A2D_CONNECTION_STATE_CONNECTING || e.value==ESP_A2D_CONNECTION_STATE_DISCONNECTING;
+                if(e.value==ESP_A2D_CONNECTION_STATE_CONNECTED ||
+                   e.value==ESP_A2D_CONNECTION_STATE_DISCONNECTED) found=false;
                 portENTER_CRITICAL(&lock);
                 connected=online; link_busy=connecting;
                 if (!online) { streaming=false; ring_read=ring_write=ring_used=0; desired.running=false; desired.throttle=0; desired.rpm=0; }
@@ -233,13 +217,6 @@ static void bluetooth_task(void *unused) {
                 ESP_LOGI(TAG,"MEDIA_ACK cmd=%d status=%d",e.cmd,e.value);
                 if (e.cmd==ESP_A2D_MEDIA_CTRL_CHECK_SRC_RDY && e.value==ESP_A2D_MEDIA_CTRL_ACK_SUCCESS)
                     checked("media_start",esp_a2d_media_ctrl(ESP_A2D_MEDIA_CTRL_START));
-                break;
-            case EV_RESCAN:
-                if (!connecting) {
-                    found=false;
-                    if (discovering) checked("cancel_discovery",esp_bt_gap_cancel_discovery());
-                    next=esp_timer_get_time()+500000;
-                }
                 break;
             case EV_SELECT:
                 if (!connected && !connecting) {
@@ -370,21 +347,6 @@ static void command(char *line, int64_t *idle_deadline) {
         }
         return;
     }
-    if(!strncmp(line,"peer ",5)) {
-        bool online;
-        portENTER_CRITICAL(&lock); online=connected || link_busy; portEXIT_CRITICAL(&lock);
-        size_t len=strlen(line+5);
-        if(online || !len || len>=sizeof(peer_name)) { ESP_LOGW(TAG,"CMD peer rejected: connected or invalid name length"); return; }
-        nvs_handle_t nvs;
-        if(!checked("nvs_open",nvs_open("a2dp_demo",NVS_READWRITE,&nvs))) return;
-        bool ok=checked("nvs_set",nvs_set_str(nvs,"peer",line+5)) && checked("nvs_commit",nvs_commit(nvs));
-        nvs_close(nvs);
-        if(ok) {
-            portENTER_CRITICAL(&lock); strcpy(peer_name,line+5); ++target_generation; portEXIT_CRITICAL(&lock);
-            post((bt_event_t){.kind=EV_RESCAN}); ESP_LOGI(TAG,"CMD peer saved; exact name matching enabled");
-        }
-        return;
-    }
     ev_control_t c;
     portENTER_CRITICAL(&lock); c=desired; portEXIT_CRITICAL(&lock);
     int rc=ev_command(&c,line);
@@ -409,16 +371,7 @@ void app_main(void) {
              esp_app_get_description()->version,esp_get_idf_version(),esp_reset_reason(),EV_RATE);
     /* Preserve pre-existing NVS on failure; do not silently erase user data. */
     ESP_ERROR_CHECK(nvs_flash_init());
-    nvs_handle_t nvs;
-    esp_err_t rc=nvs_open("a2dp_demo",NVS_READONLY,&nvs);
-    if(rc==ESP_OK) {
-        size_t len=sizeof(peer_name); char saved[sizeof(peer_name)];
-        rc=nvs_get_str(nvs,"peer",saved,&len);
-        if(rc==ESP_OK && saved[0]) strcpy(peer_name,saved);
-        else if(rc!=ESP_ERR_NVS_NOT_FOUND) checked("nvs_get",rc);
-        nvs_close(nvs);
-    } else if(rc!=ESP_ERR_NVS_NOT_FOUND) checked("nvs_open",rc);
-    ESP_LOGI(TAG,"TARGET name=%s; USB power; hold BOOT=throttle, release=idle then stop after 3s",peer_name);
+    ESP_LOGI(TAG,"PAIRING_MODE=manual; USB power; hold BOOT=throttle, release=idle then stop after 3s");
     gpio_config_t gpio={.pin_bit_mask=1ULL<<GPIO_NUM_0,.mode=GPIO_MODE_INPUT,.pull_up_en=GPIO_PULLUP_ENABLE};
     ESP_ERROR_CHECK(gpio_config(&gpio));
     uart_config_t uart={.baud_rate=115200,.data_bits=UART_DATA_8_BITS,.parity=UART_PARITY_DISABLE,
