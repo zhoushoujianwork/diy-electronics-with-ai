@@ -4,6 +4,7 @@
 #include <string.h>
 #include "controls.h"
 #include "engine_voice.h"
+#include "portal.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
 #include "esp_a2dp_api.h"
@@ -28,6 +29,7 @@ static bool connected, streaming, boot_pressed, want_tasks;
 static bool link_busy;
 static unsigned target_generation;
 static uint32_t errors, dropped_events, callback_hwm, pcm_callbacks, pcm_bytes, underrun_bytes;
+static uint32_t inquiry_results, inquiry_named, inquiry_beats;
 static uint32_t render_max_us, generated, nonzero_blocks;
 static int rpm_now, peak_now;
 static ev_phase_t phase_now;
@@ -38,7 +40,9 @@ static TaskHandle_t synth_handle, bt_handle, console_handle, heartbeat_handle;
  * manager 6144 B: small event + BT API dispatch + error formatting.
  * main 8192 B: initialization/NVS + 160-byte command + parser/printf.
  * heartbeat 4096 B: snapshots + logging; task-status array is static.
- * BTC/BTU 6144 B each: GAP/A2DP callback and protocol call paths.
+ * BTC/BTU 6144 B each: GAP/A2DP callback, local name buffers (<=313 B),
+ * inquiry counters/logging and protocol call paths. Offline scan previously
+ * left >=4544 B; remeasure after this change and again with SBC load.
  * IDF's own encoder task stack is measured along with these at runtime.
  * Sizes are budgets; actual loaded high-water marks must be recorded.
  */
@@ -49,7 +53,7 @@ static uint8_t pcm_ring[RING_BYTES];
 static size_t ring_read, ring_write, ring_used;
 static TaskStatus_t task_status[32];
 
-enum { EV_READY, EV_FOUND, EV_DISCOVERY, EV_CONNECTION, EV_AUDIO, EV_ACK, EV_RESCAN };
+enum { EV_READY, EV_FOUND, EV_DISCOVERY, EV_CONNECTION, EV_AUDIO, EV_ACK, EV_RESCAN, EV_SELECT };
 typedef struct { int kind, value, cmd; unsigned generation; uint8_t bda[6]; } bt_event_t;
 static QueueHandle_t events;
 
@@ -64,6 +68,15 @@ static void post(bt_event_t e) {
     if (xQueueSend(events, &e, 0) != pdTRUE) {
         portENTER_CRITICAL(&lock); ++dropped_events; portEXIT_CRITICAL(&lock);
     }
+}
+
+static bool portal_connect_selected(const uint8_t address[6]) {
+    bool busy;
+    portENTER_CRITICAL(&lock); busy=connected || link_busy; portEXIT_CRITICAL(&lock);
+    if(busy) return false;
+    bt_event_t e={.kind=EV_SELECT};
+    memcpy(e.bda,address,6);
+    return xQueueSend(events,&e,0)==pdTRUE;
 }
 
 /* Called by the SBC encoder task: copy only, never synthesize, log or wait. */
@@ -87,31 +100,51 @@ static int32_t audio_data(uint8_t *data, int32_t len) {
 static void gap_callback(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *p) {
     if (event == ESP_BT_GAP_DISC_RES_EVT) {
         char name[ESP_BT_GAP_MAX_BDNAME_LEN+1] = {0}, target[sizeof(peer_name)];
+        portENTER_CRITICAL(&lock); ++inquiry_results; portEXIT_CRITICAL(&lock);
+        int rssi=-127, name_rank=0;
         for (int i=0; i<p->disc_res.num_prop; ++i) {
             esp_bt_gap_dev_prop_t *prop = &p->disc_res.prop[i];
-            const uint8_t *s = NULL; size_t n = 0;
+            const uint8_t *s = NULL; size_t n = 0; int rank=0;
+            if (prop->type == ESP_BT_GAP_DEV_PROP_RSSI && prop->len) rssi=*(int8_t *)prop->val;
             if (prop->type == ESP_BT_GAP_DEV_PROP_BDNAME && prop->len > 0) {
-                s = prop->val; n = prop->len;
+                s = prop->val; n = prop->len; rank=2;
             } else if (prop->type == ESP_BT_GAP_DEV_PROP_EIR) {
                 uint8_t count = 0;
                 s = esp_bt_gap_resolve_eir_data(prop->val, ESP_BT_EIR_TYPE_CMPL_LOCAL_NAME, &count);
-                if (!s) s = esp_bt_gap_resolve_eir_data(prop->val, ESP_BT_EIR_TYPE_SHORT_LOCAL_NAME, &count);
+                if (s) rank=2;
+                else { s = esp_bt_gap_resolve_eir_data(prop->val, ESP_BT_EIR_TYPE_SHORT_LOCAL_NAME, &count); rank=1; }
                 n = count;
             }
-            if (s && n) {
+            if (s && n && rank>=name_rank) {
                 if (n >= sizeof(name)) n = sizeof(name)-1;
                 memcpy(name, s, n); name[n] = 0;
+                name_rank=rank;
             }
         }
         unsigned generation;
         portENTER_CRITICAL(&lock);
+        if (name[0]) ++inquiry_named;
+        if (!strncmp(name,"Beats",5)) ++inquiry_beats;
         memcpy(target, peer_name, sizeof(target)); generation=target_generation;
         portEXIT_CRITICAL(&lock);
+        portal_record_device(p->disc_res.bda,name,rssi);
         /* Do not log names or addresses of unrelated nearby devices. */
         if (name[0] && !strcmp(name, target)) {
             bt_event_t e = {.kind=EV_FOUND, .generation=generation}; memcpy(e.bda, p->disc_res.bda, 6); post(e);
         }
     } else if (event == ESP_BT_GAP_DISC_STATE_CHANGED_EVT) {
+        if (p->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STARTED) {
+            portENTER_CRITICAL(&lock);
+            inquiry_results=inquiry_named=inquiry_beats=0;
+            portEXIT_CRITICAL(&lock);
+        } else {
+            uint32_t results,named,beats;
+            portENTER_CRITICAL(&lock);
+            results=inquiry_results; named=inquiry_named; beats=inquiry_beats;
+            portEXIT_CRITICAL(&lock);
+            ESP_LOGI(TAG,"INQUIRY results=%" PRIu32 " named=%" PRIu32 " beats_named=%" PRIu32,
+                     results,named,beats);
+        }
         post((bt_event_t){.kind=EV_DISCOVERY, .value=p->disc_st_chg.state});
     } else if (event == ESP_BT_GAP_AUTH_CMPL_EVT) {
         ESP_LOGI(TAG, "AUTH status=%d", p->auth_cmpl.stat);
@@ -175,8 +208,9 @@ static void bluetooth_task(void *unused) {
             }
             case EV_DISCOVERY:
                 discovering=e.value==ESP_BT_GAP_DISCOVERY_STARTED;
+                portal_set_state(discovering,connected,streaming);
                 ESP_LOGI(TAG,"STATE_TRANSITION: discovery -> %s", discovering?"SCANNING":"STOPPED");
-                if (!discovering) next=esp_timer_get_time()+(found?0:3000000);
+                if (!discovering) next=esp_timer_get_time()+(found?0:250000);
                 break;
             case EV_CONNECTION: {
                 bool online=e.value==ESP_A2D_CONNECTION_STATE_CONNECTED;
@@ -185,12 +219,14 @@ static void bluetooth_task(void *unused) {
                 connected=online; link_busy=connecting;
                 if (!online) { streaming=false; ring_read=ring_write=ring_used=0; desired.running=false; desired.throttle=0; desired.rpm=0; }
                 portEXIT_CRITICAL(&lock);
+                portal_set_state(discovering,online,false);
                 ESP_LOGI(TAG,"STATE_TRANSITION: A2DP connection=%d",e.value);
                 next=esp_timer_get_time()+(online?500000:5000000);
                 break;
             }
             case EV_AUDIO:
                 portENTER_CRITICAL(&lock); streaming=e.value==ESP_A2D_AUDIO_STATE_STARTED; portEXIT_CRITICAL(&lock);
+                portal_set_state(discovering,connected,streaming);
                 ESP_LOGI(TAG,"STATE_TRANSITION: AUDIO state=%d",e.value); break;
             case EV_ACK:
                 ESP_LOGI(TAG,"MEDIA_ACK cmd=%d status=%d",e.cmd,e.value);
@@ -202,6 +238,14 @@ static void bluetooth_task(void *unused) {
                     found=false;
                     if (discovering) checked("cancel_discovery",esp_bt_gap_cancel_discovery());
                     next=esp_timer_get_time()+500000;
+                }
+                break;
+            case EV_SELECT:
+                if (!connected && !connecting) {
+                    memcpy(peer,e.bda,6); found=true;
+                    ESP_LOGI(TAG,"USER_SELECT: manual Bluetooth target accepted");
+                    if(discovering) checked("cancel_discovery",esp_bt_gap_cancel_discovery());
+                    else next=esp_timer_get_time();
                 }
                 break;
             default: break;
@@ -375,6 +419,7 @@ void app_main(void) {
     ESP_ERROR_CHECK(esp_a2d_register_callback(a2dp_callback));
     ESP_ERROR_CHECK(esp_a2d_source_register_data_callback(audio_data));
     ESP_ERROR_CHECK(esp_a2d_source_init());
+    checked("portal_start",portal_start(portal_connect_selected));
     char line[160]; size_t used=0; bool overflow=false;
     boot_button_t button={0}; int64_t idle_deadline=0;
     for(;;) {
