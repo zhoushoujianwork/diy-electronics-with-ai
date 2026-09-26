@@ -13,6 +13,7 @@ boards:
   - espressif-esp32-devkitc-32e
 modules:
   - bluetooth-classic-a2dp-source
+  - wifi-softap-pairing-portal
   - procedural-audio
   - boot-button-throttle
 validation:
@@ -22,5 +23,7 @@ notes:
   - Firmware targets original ESP32 only, not ESP32-S3.
   - USB flashing, boot, discovery and a 120-second offline synthesis/control soak passed on ESP32-D0WD-V3 rev v3.1.
   - Two GPIO0 throttle cycles passed via USB-UART DTR stimulation; manual mechanical BOOT acceptance remains pending.
-  - JBL Go 3 pairing, audible output, reconnection and end-to-end latency await the speaker.
+  - Beats Flex is saved as the exact NVS target; a 90-second scan and a 120-second pairing-window rescan did not discover it.
+  - A temporary WPA2 SoftAP portal can list recent Bluetooth inquiry results and request a manual connection; 120 seconds of AP plus scanning passed without audio load.
+  - Audible output, reconnection and end-to-end latency await a discoverable headset.
   - Exact measured scope and pending physical checks are recorded in docs/validation.md.

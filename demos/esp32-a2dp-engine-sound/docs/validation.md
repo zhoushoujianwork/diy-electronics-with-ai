@@ -8,7 +8,7 @@
   1500 KiB 应用分区余约 37%。运行时版本为 `v5.5.2-dirty`：本机 IDF 的未使用 OpenThread
   子模块指向不同提交，`git diff` 未显示 IDF 主仓库源码改动；本固件不使用 OpenThread。
 - 主机测试 2/2：BOOT 去抖/长按/释放/64 位计时，44.1 kHz 全配置音频过渡。
-- 实际音箱尚未到场，计划使用 JBL Go 3。配对、SBC 传输、实际出声、重连、端到端延迟未验证。
+- 此时实际音箱尚未到场，原计划使用 JBL Go 3。配对、SBC 传输、实际出声、重连、端到端延迟未验证。
 
 ## 2026-09-25 初版 USB 烧录与无音箱实机检查
 
@@ -67,8 +67,47 @@
 - 唯一预期的 BT 启动提示为 `A2DP Enable without AVRC`：本 Demo 有意不启用 AVRCP
   遥控/音量功能，乐鑫 A2DP API 说明支持独立运行；此提示不等于已验证音箱兼容性。
 - 最终原始日志位于本地忽略目录的 `offline-final.log`、`boot-gpio-final.log` 及对应摘要。
-  **GPIO0 电气触发不代替机械按键验收；JBL Go 3 配对、实际出声、持续播放、重连和延迟仍待测。**
+  **GPIO0 电气触发不代替机械按键验收；蓝牙接收设备的配对、实际出声、持续播放、重连和延迟仍待测。**
   Manifest 保持 `build-verified`、`validation.hardware: partial`，不升级为完整蓝牙硬件验证。
+
+## 2026-09-26 Beats Flex 首轮扫描
+
+- 沿用当前板上固件提交 `52bd4d24f6a74c133ce0ace374efe56fd430b438` 与上文应用 SHA；
+  原版 ESP32-DevKitC / ESP32-WROOM-32E，ROM ESP32-D0WD-V3 v3.1，CP2102N，电脑 USB 供电。
+  PCB 丝印版本仍待人工核对。接收设备改为截图标示的 `Beats Flex` 蓝牙耳机。
+- 通过 USB 串口发送 `peer Beats Flex`，收到 `CMD peer saved; exact name matching enabled`；
+  名称写入板上 NVS。捕获约 90 秒，87 个连续心跳、8 次扫描开始、7 次扫描结束；
+  没有 `TARGET_FOUND`、A2DP 连接或音频状态事件，PCM 回调为 0。
+- 该段无 ESP-IDF 错误日志、panic、Guru Meditation、栈溢出或任务启动失败，心跳未回退。
+  这只证明目标已保存且扫描运行，**不证明耳机进入配对模式、蓝牙连接或声音外放**。
+  测试时耳机的可发现状态尚未确认，待其指示灯闪烁后复测。
+- 原始串口记录保存在本地忽略目录 `build-evidence/beats-flex-probe.log`；没有提交设备日志。
+
+## 2026-09-26 配对窗口复扫与 AP 原型
+
+- 用户确认 Beats Flex 指示灯闪烁后，沿用前版固件再次捕获 **120 秒**：
+  `TARGET_FOUND=0`、A2DP 连接事件为 0、PCM 回调为 0；无 fatal。用户观察到耳机的
+  配对闪烁会自行结束，因此不能假定整段捕获都在可发现窗口内。原始记录为本地
+  `build-evidence/beats-flex-pairing.log`。电脑的独立 Classic Bluetooth inquiry 也未发现
+  新设备；电脑已保存的“未连接”耳机记录不能替代实时可发现性证据。
+- 改造固件：扫描轮次间隔由 3 秒缩为 250 毫秒，每轮汇总收到的 Classic 设备数/有名称数/
+  Beats 名称候选数；优先使用完整广播名。新增临时 WPA2 SoftAP 配网页面，展示最近 30 秒
+  扫描结果，点选后通过 manager 队列请求连接；页面不显示蓝牙地址。AP 密码每次启动随机
+  生成，只在私有串口日志输出，不进仓库。
+- AP 固件源码提交：`39a57f1c43f1d2f25b830c7a4051f85700e07fb5`；应用 SHA-256：
+  `1b788d8993102978d9b8d0e77caedcece9557b67e8be499b0e8b09f648401657`；
+  4 MB Flash、电脑 USB 供电、同一 DevKitC 板；以 115200 波特率烧录，应用 Hash 验证通过。
+  应用大小 **1495056 B**，1.5 MB 应用分区余约 **40944 B（3%）**。
+- 烧录后 AP 在串口报告 `AP_READY`，本次临时 SSID 为 `EV-Engine-Setup`，页面地址
+  `http://192.168.4.1/`；密码只在本地日志中保留。**120 秒 AP + 持续扫描**检查通过：
+  116 次连续心跳，无 reset loop、fatal、ESP-IDF 错误、事件队列丢失或 API 错误。
+  11 轮 `INQUIRY` 均为 `results=0 named=0 beats_named=0`，所以尚不能验证页面列表和点选路径。
+- 无音频负载期间最低堆 **37248 B**，最低剩余栈：synth **5364 B**、manager **4236 B**、
+  console **5496 B**、heartbeat **2004 B**。最大合成墙钟 **126146 µs**，发生于 AP 启动
+  附近且随后最大值未增长；它超过 256 帧约 5805 µs 预算，故 AP + A2DP 同时播放的连续性
+  与 Wi-Fi/HTTP/SBC 任务栈仍需带载验证。没有连接、音频状态或 PCM 回调，不能认定出声。
+- 页面实际从手机打开、列表显示、手动点选、Beats Flex 配对与人耳听感均待用户联测。
+  AP 联测日志为本地忽略文件 `build-evidence/ap-soak.log`，不提交临时密码或设备地址。
 
 ## 实机验收标准
 

@@ -22,7 +22,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 
 | [ESP32 蓝牙声浪原型](demos/esp32-a2dp-engine-sound/) · Demo | 进度与验证 |
 | --- | --- |
-| [<img src="demos/esp32-a2dp-engine-sound/docs/assets/signal-path.svg" width="380" alt="BOOT 按键控制原版 ESP32 合成声浪，再经 A2DP 向蓝牙音箱发送的原理示意，非实机照片">](demos/esp32-a2dp-engine-sound/)<br>原理示意 · 非实机照片 | 原版 ESP32-DevKitC 使用 BOOT 给油，目标是经 A2DP 向音箱播放程序化声浪。<br>**开发中 · 蓝牙外放待验证** · [`build-verified`](demos/esp32-a2dp-engine-sound/project.yaml)<br>已验证：构建/烧录、主机测试、120 秒无音箱扫描与声浪合成/串口控制。<br>待完成：实体 BOOT、音箱配对/出声、持续播放、重连与延迟验收。<br>[验证记录](demos/esp32-a2dp-engine-sound/docs/validation.md) |
+| [<img src="demos/esp32-a2dp-engine-sound/docs/assets/signal-path.svg" width="380" alt="BOOT 按键控制原版 ESP32 合成声浪，再经 A2DP 向蓝牙音箱发送的原理示意，非实机照片">](demos/esp32-a2dp-engine-sound/)<br>原理示意 · 非实机照片 | 原版 ESP32-DevKitC 使用 BOOT 给油，经 A2DP 向蓝牙耳机或音箱播放程序化声浪；本轮用 Beats Flex 试配。<br>**开发中 · 蓝牙外放待验证** · [`build-verified`](demos/esp32-a2dp-engine-sound/project.yaml)<br>已验证：构建/烧录、主机测试、120 秒无接收设备合成/控制，以及 120 秒 AP 与蓝牙扫描共存。<br>待完成：页面选配、实体 BOOT、耳机实际出声、持续播放、重连与延迟验收。<br>[验证记录](demos/esp32-a2dp-engine-sound/docs/validation.md) |
 
 更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)。
 状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。
