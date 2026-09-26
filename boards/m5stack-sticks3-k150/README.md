@@ -40,6 +40,16 @@ Grove 5V 默认处于输入/关闭状态。使用板载电池或 USB 给 Grove �
 M5PM1 `POWER_CONFIG.BOOST_EN` 开启 5V 输出；开启后不得再从 Grove 红线反向输入 5V。
 UART 外设通常把主机 GPIO9 作为 TX、GPIO10 作为 RX，但仍须按外设连接器丝印确认交叉方向。
 
+官方 Hat2 PinMap 将 **1 脚标为 GND、3 脚标为 EXT_5V、11 脚标为 BAT、
+15 脚标为 5V_IN**。板载电池标称容量为 250 mAh；官方页面没有给出 Hat2 BAT
+可承受的外接负载峰值，因此不能把 BAT 标签或容量当作蜂窝模组供电能力。
+Grove 5V 与 Hat2 EXT_5V 是可配置输入/输出接口；配置为输出后，官方仅允许从 USB 或
+Hat2 5V_IN 输入电源，不可再从 Grove 或 EXT_5V 反向输入。5V_IN 是供电输入，
+不是由 StickS3 开关控制的 5V 输出。官方列出的 Grove 负载能力为 4.88 V / 0.38 A；
+不能据此把 Hat2 EXT_5V 当作蜂窝模组的高峰值电流电源。以上接口模式依据
+[StickS3 官方电源说明与 PinMap](https://docs.m5stack.com/en/core/StickS3)，
+未在本档案中验证外接高电流负载。
+
 ## 验证状态
 
 - 状态：`hardware-verified`。
