@@ -109,6 +109,21 @@
 - 页面实际从手机打开、列表显示、手动点选、Beats Flex 配对与人耳听感均待用户联测。
   AP 联测日志为本地忽略文件 `build-evidence/ap-soak.log`，不提交临时密码或设备地址。
 
+## 2026-09-26 本地数字 AP 密码
+
+- 固件源码提交：`8a05655a3386b151da9c4362ff9f4f12e3527b15`；应用 SHA-256：
+  `cd769a7de5488bed780a672daf12a714080035e496178df833e7e486eb5082a7`。
+  同一 ESP32-DevKitC、电脑 USB 供电，115200 波特率只更新应用分区，写入 Hash 验证通过；
+  NVS、bootloader 和分区表未覆盖。应用大小 **1495744 B**，分区余 **40256 B（约 3%）**。
+- 用户要求的八位数字密码经串口 `ap_pin` 设置到板上 NVS，日志收到 `CMD ap_pin saved`；
+  设置路径中 console 最低剩余栈 **5496 B**。固件按设计软件重启一次，随后日志出现
+  `AP_READY ... password_source=NVS`，确认 AP 已加载本地密码。实际密码值不记入仓库或
+  验证记录，原始串口日志只留在本地忽略文件 `build-evidence/ap-pin-config.log`。
+- 重启后持续观察 **111 个心跳**，没有额外重启、fatal、ESP-IDF 错误；最低堆 **37260 B**。
+  最低剩余栈：synth **5360 B**、manager **4280 B**、console **5496 B**、heartbeat
+  **2144 B**。10 轮扫描的设备数仍为 0，尚未验证手机使用该密码成功加入 AP、页面交互、
+  Beats Flex 配对或音频播放。
+
 ## 实机验收标准
 
 1. 保存固件提交、应用 SHA、芯片/PCB 修订、USB 供电方式及捕获时长。
