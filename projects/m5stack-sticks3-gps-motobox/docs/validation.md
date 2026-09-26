@@ -1,5 +1,20 @@
 # Validation record
 
+## ML307R-DL Tiny 4G revision
+
+- ESP-IDF 5.5.2 firmware build and host GNSS, telemetry queue/payload and binding tests passed on
+  2026-09-27. This build uses ML307R-DL Tiny AT/TCP, ESP32-side TLS hostname and public-chain
+  verification, cellular UDP SNTP, GPS on UART2, and separate five-second sampling and MQTT uplink
+  tasks. Build output and host tests do not prove electrical or network operation.
+- The Tiny carrier's PCB revision, power input, UART levels and actual header positions are not yet
+  verified. No 4G firmware has been flashed or run in this record. The existing Wi-Fi firmware and
+  all hardware evidence below remain rollback references.
+- Pending 4G acceptance: 30-minute real-device run with cold start, GNSS/LCD/button concurrency,
+  two-minute cellular outage/recovery and outdoor movement; MotoBox sequence and original sample-time
+  check; wrong certificate and wrong credential rejection; signal 99 when unknown; voltage/current
+  peaks; task margins of at least 25% and 1024 B for GPS, sampler, uplink, MQTT, modem orchestration,
+  modem receive/event, UI, voice and heartbeat. Capture full serial and private route outside Git.
+
 ## Current state
 
 - On the second outdoor run on 2026-09-24, the `fec6e12` firmware reached its first backend-confirmed

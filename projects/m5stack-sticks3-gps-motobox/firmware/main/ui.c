@@ -69,8 +69,10 @@ static void refresh_timer(lv_timer_t *timer)
         }
     }
 #if CONFIG_DEMO_CELLULAR
+    const char *cell_detail = status.cellular_data_ready ? status.cellular_carrier :
+                              status.cellular_error[0] ? status.cellular_error : status.cellular_carrier;
     lv_label_set_text_fmt(network_label, "4G %s  %.18s",
-                          status.cellular_data_ready ? "UP" : "WAIT", status.cellular_carrier);
+                          status.cellular_data_ready ? "UP" : "WAIT", cell_detail);
     lv_label_set_text_fmt(ip_label, "CSQ %d  BACKLOG %u",
                           status.cellular_csq, status.queue_depth);
 #else
@@ -96,8 +98,8 @@ static void refresh_timer(lv_timer_t *timer)
     }
     if (status.binding_ready && !status.binding_bound && !binding_was_ready) {
         bind_page_visible = true;
-        lv_obj_add_flag(status_page, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_remove_flag(bind_page, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_hidden(status_page, true);
+        lv_obj_set_hidden(bind_page, false);
         ESP_LOGI(TAG, "PAGE bind reason=code_ready");
     }
     binding_was_ready = status.binding_ready && !status.binding_bound;
@@ -105,8 +107,8 @@ static void refresh_timer(lv_timer_t *timer)
     bool pressed = gpio_get_level(STICKS3_BUTTON_A_GPIO) == 0;
     if (pressed && !button_previous) {
         bind_page_visible = !bind_page_visible;
-        lv_obj_set_flag(status_page, LV_OBJ_FLAG_HIDDEN, bind_page_visible);
-        lv_obj_set_flag(bind_page, LV_OBJ_FLAG_HIDDEN, !bind_page_visible);
+        lv_obj_set_hidden(status_page, bind_page_visible);
+        lv_obj_set_hidden(bind_page, !bind_page_visible);
         ESP_LOGI(TAG, "PAGE %s", bind_page_visible ? "bind" : "status");
     }
     button_previous = pressed;
@@ -115,11 +117,11 @@ static void refresh_timer(lv_timer_t *timer)
 static void create_pages(void)
 {
     lv_obj_t *screen = lv_screen_active();
-    lv_obj_remove_flag(screen, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_scrollable(screen, false);
     lv_obj_set_style_bg_color(screen, lv_color_hex(0x090e15), 0);
 
     status_page = lv_obj_create(screen);
-    lv_obj_remove_flag(status_page, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_scrollable(status_page, false);
     lv_obj_set_size(status_page, LCD_WIDTH, LCD_HEIGHT);
     lv_obj_set_pos(status_page, 0, 0);
     lv_obj_set_style_border_width(status_page, 0, 0);
@@ -137,7 +139,7 @@ static void create_pages(void)
     lv_label_set_text(hint, "A: CODE");
 
     bind_page = lv_obj_create(screen);
-    lv_obj_remove_flag(bind_page, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_scrollable(bind_page, false);
     lv_obj_set_size(bind_page, LCD_WIDTH, LCD_HEIGHT);
     lv_obj_set_pos(bind_page, 0, 0);
     lv_obj_set_style_border_width(bind_page, 0, 0);
@@ -159,7 +161,7 @@ static void create_pages(void)
     lv_label_set_text_fmt(device, "DEVICE %s", suffix);
     lv_obj_t *back = make_label(bind_page, 184, 120, 52, &lv_font_montserrat_12, 0x18181b);
     lv_label_set_text(back, "A: BACK");
-    lv_obj_add_flag(bind_page, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_set_hidden(bind_page, true);
     lv_timer_create(refresh_timer, 200, NULL);
 }
 

@@ -1,6 +1,7 @@
 #include "cellular_transport.h"
 
 #include <algorithm>
+#include <atomic>
 #include <cctype>
 #include <cstring>
 #include <memory>
@@ -30,6 +31,7 @@ constexpr int64_t MIN_UTC_MS = 1735689600000LL;
 constexpr uint32_t NTP_TO_UNIX = 2208988800U;
 std::unique_ptr<AtModem> modem;
 EventGroupHandle_t modem_events;
+std::atomic<bool> network_online{false};
 cellular_status_callback_t status_callback;
 cellular_time_callback_t time_callback;
 cellular_status_t current{};
@@ -39,8 +41,8 @@ struct TlsTransport {
     StreamBufferHandle_t rx = nullptr;
     mbedtls_ssl_config config;
     mbedtls_ssl_context ssl;
-    bool disconnected = true;
-    bool overflow = false;
+    std::atomic<bool> disconnected{true};
+    std::atomic<bool> overflow{false};
     bool handshook = false;
 
     TlsTransport() {
@@ -61,8 +63,8 @@ struct TlsTransport {
         mbedtls_ssl_init(&ssl);
         mbedtls_ssl_config_init(&config);
         if (rx) xStreamBufferReset(rx);
-        disconnected = true;
-        overflow = false;
+        disconnected.store(true);
+        overflow.store(false);
         handshook = false;
     }
 };
@@ -140,6 +142,10 @@ void modem_task(void *) {
                 continue;
             }
             modem = std::move(*result);
+            modem->OnNetworkStateChanged([](bool ready) {
+                network_online.store(ready);
+                if (!ready) xEventGroupClearBits(modem_events, MODEM_READY);
+            });
             copy_field(current.model, sizeof(current.model), modem->GetModuleRevision());
             ESP_LOGI(TAG, "MODEM_DETECTED model=%s uart=1 tx=5 rx=6", current.model);
         }
@@ -175,7 +181,20 @@ void modem_task(void *) {
         ntp_sync();
         for (int i = 0; i < 30; ++i) {
             vTaskDelay(pdMS_TO_TICKS(1000));
-            if (!modem->network_ready()) break;
+            if (!network_online.load()) break;
+        }
+        if (!network_online.load()) {
+            current.registered = false;
+            current.data_ready = false;
+            current.csq = 99;
+            copy_field(current.error, sizeof(current.error), "network_lost");
+            xEventGroupClearBits(modem_events, MODEM_READY);
+            publish_status();
+            ESP_LOGW(TAG, "NETWORK_LOST");
+        } else {
+            int csq = modem->GetCsq();
+            current.csq = csq >= 0 && csq <= 31 ? csq : 99;
+            publish_status();
         }
     }
 }
@@ -187,16 +206,16 @@ int random_bytes(void *, unsigned char *output, size_t size) {
 
 int bio_send(void *opaque, const unsigned char *data, size_t size) {
     auto *c = static_cast<TlsTransport *>(opaque);
-    if (!c->tcp || c->disconnected) return MBEDTLS_ERR_NET_CONN_RESET;
+    if (!c->tcp || c->disconnected.load()) return MBEDTLS_ERR_NET_CONN_RESET;
     int sent = c->tcp->Send(std::string(reinterpret_cast<const char *>(data), size));
-    return sent < 0 ? MBEDTLS_ERR_NET_SEND_FAILED : sent;
+    return sent <= 0 ? MBEDTLS_ERR_NET_SEND_FAILED : sent;
 }
 
 int bio_recv(void *opaque, unsigned char *data, size_t size) {
     auto *c = static_cast<TlsTransport *>(opaque);
     size_t count = xStreamBufferReceive(c->rx, data, size, pdMS_TO_TICKS(200));
     if (count) return static_cast<int>(count);
-    if (c->disconnected || c->overflow) return MBEDTLS_ERR_NET_CONN_RESET;
+    if (c->disconnected.load() || c->overflow.load()) return MBEDTLS_ERR_NET_CONN_RESET;
     return MBEDTLS_ERR_SSL_WANT_READ;
 }
 
@@ -208,20 +227,25 @@ int close_tls(esp_transport_handle_t t) {
 int connect_tls(esp_transport_handle_t t, const char *host, int port, int timeout_ms) {
     auto *c = ctx(t);
     c->reset_tls();
-    if (!c->rx || !host || port != 8883) return -1;
+    if (!c->rx || !host || port <= 0 || port > 65535) return -1;
     if (!(xEventGroupWaitBits(modem_events, MODEM_READY, pdFALSE, pdTRUE,
                               pdMS_TO_TICKS(timeout_ms)) & MODEM_READY)) return -1;
     c->tcp = modem->CreateTcp(0);
     c->tcp->OnStream([c](const std::string &data) {
-        if (xStreamBufferSend(c->rx, data.data(), data.size(), 0) != data.size()) c->overflow = true;
+        if (xStreamBufferSend(c->rx, data.data(), data.size(), 0) != data.size()) c->overflow.store(true);
     });
-    c->tcp->OnDisconnected([c]() { c->disconnected = true; });
+    c->tcp->OnDisconnected([c]() { c->disconnected.store(true); });
+    c->disconnected.store(false);
     if (auto result = c->tcp->Connect(host, port); !result) {
         ESP_LOGE(TAG, "TCP_CONNECT_FAILED reason=%s", result.error().ToString().c_str());
         c->reset_tls();
         return -1;
     }
-    c->disconnected = false;
+    if (c->disconnected.load()) {
+        ESP_LOGE(TAG, "TCP_DISCONNECTED_DURING_CONNECT");
+        c->reset_tls();
+        return -1;
+    }
     int rc = mbedtls_ssl_config_defaults(&c->config, MBEDTLS_SSL_IS_CLIENT,
                                           MBEDTLS_SSL_TRANSPORT_STREAM,
                                           MBEDTLS_SSL_PRESET_DEFAULT);
@@ -261,7 +285,7 @@ int read_tls(esp_transport_handle_t t, char *buffer, int len, int timeout_ms) {
         rc = mbedtls_ssl_read(&c->ssl, reinterpret_cast<unsigned char *>(buffer), len);
     } while ((rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE) &&
              esp_timer_get_time() / 1000 < deadline);
-    return rc == MBEDTLS_ERR_SSL_WANT_READ ? 0 : rc;
+    return rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE ? 0 : rc;
 }
 
 int write_tls(esp_transport_handle_t t, const char *buffer, int len, int timeout_ms) {
@@ -273,7 +297,7 @@ int write_tls(esp_transport_handle_t t, const char *buffer, int len, int timeout
         rc = mbedtls_ssl_write(&c->ssl, reinterpret_cast<const unsigned char *>(buffer), len);
     } while ((rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE) &&
              esp_timer_get_time() / 1000 < deadline);
-    return rc;
+    return rc == MBEDTLS_ERR_SSL_WANT_READ || rc == MBEDTLS_ERR_SSL_WANT_WRITE ? -1 : rc;
 }
 
 int poll_read(esp_transport_handle_t t, int timeout_ms) {
@@ -281,7 +305,7 @@ int poll_read(esp_transport_handle_t t, int timeout_ms) {
     int64_t deadline = esp_timer_get_time() / 1000 + timeout_ms;
     do {
         if (mbedtls_ssl_get_bytes_avail(&c->ssl) || xStreamBufferBytesAvailable(c->rx)) return 1;
-        if (c->disconnected || c->overflow) return -1;
+        if (c->disconnected.load() || c->overflow.load()) return -1;
         vTaskDelay(pdMS_TO_TICKS(20));
     } while (esp_timer_get_time() / 1000 < deadline);
     return 0;
@@ -289,7 +313,7 @@ int poll_read(esp_transport_handle_t t, int timeout_ms) {
 
 int poll_write(esp_transport_handle_t t, int) {
     auto *c = ctx(t);
-    return c->handshook && !c->disconnected ? 1 : -1;
+    return c->handshook && !c->disconnected.load() && !c->overflow.load() ? 1 : -1;
 }
 
 int destroy_tls(esp_transport_handle_t t) {

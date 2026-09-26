@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="610" viewBox="0 0 1100 610" role="img" aria-labelledby="title desc">
+  <title id="title">StickS3, GPS Unit and ML307R-DL Tiny functional wiring</title>
+  <desc id="desc">GPS Unit v1.1 remains on the StickS3 Grove connector. StickS3 Hat2 pin 2 GPIO5 TX connects to Tiny AT RXD; Hat2 pin 6 GPIO6 RX connects to Tiny AT TXD; Hat2 pin 1 GND connects to Tiny GND. Tiny has an independent power supply. Tiny header positions and voltage are not yet verified.</desc>
+  <rect width="1100" height="610" fill="#f7fafc"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="38" y="54" fill="#142738" font-size="30" font-weight="700">StickS3 + GPS Unit + ML307R-DL Tiny</text>
+    <text x="38" y="86" fill="#a13b27" font-size="18" font-weight="700">功能接线示意 · Tiny 端排针位置、供电输入和 UART 电平待核实</text>
+    <g fill="#fff" stroke="#55728d" stroke-width="3">
+      <rect x="38" y="143" width="245" height="220" rx="16"/>
+      <rect x="356" y="143" width="340" height="350" rx="16"/>
+      <rect x="772" y="143" width="290" height="350" rx="16"/>
+      <rect x="772" y="525" width="290" height="62" rx="12"/>
+    </g>
+    <g fill="#142738" font-size="23" font-weight="700">
+      <text x="59" y="183">GPS Unit v1.1</text>
+      <text x="379" y="183">StickS3 K150</text>
+      <text x="795" y="183">ML307R-DL Tiny</text>
+    </g>
+    <g fill="#36536d" font-size="18">
+      <text x="59" y="226">Grove 黑线 · GND</text>
+      <text x="59" y="265">Grove 红线 · 5 V</text>
+      <text x="59" y="304">Grove 黄线 · RX</text>
+      <text x="59" y="343">Grove 白线 · TX</text>
+      <text x="379" y="221">Grove GND / 5 V</text>
+      <text x="379" y="247">GPIO9 TX / GPIO10 RX</text>
+      <text x="379" y="300">Hat2 #1 GND</text>
+      <text x="379" y="365">Hat2 #2 GPIO5 · UART1 TX</text>
+      <text x="379" y="430">Hat2 #6 GPIO6 · UART1 RX</text>
+      <text x="795" y="300">GND</text>
+      <text x="795" y="365">AT RXD</text>
+      <text x="795" y="430">AT TXD</text>
+      <text x="795" y="550" font-size="16">独立电源 → Tiny 电源口</text>
+      <text x="795" y="574" font-size="16">输入电压先按板卡核实</text>
+    </g>
+    <g stroke-width="4" fill="none">
+      <path d="M283 249 H356" stroke="#59a481"/>
+      <path d="M696 293 H772" stroke="#4a647b"/>
+      <path d="M696 358 H772" stroke="#c47d35"/>
+      <path d="M772 423 H696" stroke="#407ab1"/>
+      <path d="M920 493 V525" stroke="#a13b27" stroke-dasharray="8 7"/>
+    </g>
+    <g fill="#5d7182" font-size="17">
+      <text x="314" y="237" text-anchor="middle">原线</text>
+      <text x="733" y="285" text-anchor="middle">共地</text>
+      <text x="733" y="349" text-anchor="middle">TX → RX</text>
+      <text x="733" y="452" text-anchor="middle">RX ← TX</text>
+      <text x="38" y="548">StickS3 USB 供电；4G 天线先接好。仅当 Tiny UART 已确认兼容 3.3 V 时直连数据线。</text>
+      <text x="38" y="578">若 Tiny 使用其他逻辑电平，在两根 UART 数据线之间加入匹配的电平转换。</text>
+    </g>
+  </g>
+</svg>

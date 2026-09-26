@@ -3,7 +3,7 @@ id: m5stack-sticks3-gps-motobox
 name: M5Stack StickS3 GPS to MotoBox
 kind: project
 status: prototype
-summary: Read an AT6668 GNSS Unit on StickS3 and upload location telemetry to MotoBox over MQTT TLS.
+summary: Read an AT6668 GNSS Unit on StickS3 and upload location telemetry through ML307R-DL Tiny 4G to MotoBox over MQTT TLS.
 owners:
   - human-ai-lab
 toolchains:
@@ -12,6 +12,7 @@ boards:
   - m5stack-sticks3-k150
 modules:
   - m5stack-unit-gps-v1.1-at6668
+  - ml307r-dl-tiny-at-carrier
 validation:
   build: passed
   hardware: partial

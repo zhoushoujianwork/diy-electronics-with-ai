@@ -16,6 +16,7 @@
 | Demo | 目的 | 状态与验证 |
 | --- | --- | --- |
 | [ESP32 A2DP Engine Sound](esp32-a2dp-engine-sound/) | 原版 ESP32 用 BOOT 控制声浪，经 A2DP 发给蓝牙耳机/音箱；本轮用 Beats Flex 试配 | 开发中，`build-verified`；已构建/烧录，120 秒 AP 与蓝牙扫描共存检查通过；页面选配、耳机出声待验证。[证据](esp32-a2dp-engine-sound/docs/validation.md) |
+| [StickS3 ML307R-DL Tiny AT/TCP](sticks3-ml307r-at/) | StickS3 UART1 检测 Tiny AT 板、等待蜂窝注册并打开 TCP socket | 开发中，`build-verified`；固件构建通过，Tiny 接线、电平、电源和实机联网待验证。[证据](sticks3-ml307r-at/docs/validation.md) |
 
 [StickS3 GPS → MotoBox](../projects/m5stack-sticks3-gps-motobox/) 按完整定位终端的功能范围
 归入 `projects/`，验证状态仍为 `prototype`。

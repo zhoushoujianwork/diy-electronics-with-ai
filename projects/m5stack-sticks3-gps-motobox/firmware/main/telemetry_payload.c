@@ -14,6 +14,7 @@ size_t telemetry_payload_build(char *buffer, size_t capacity,
     const char *model = input->cellular_model ? input->cellular_model : "";
     int csq = input->cellular_csq >= 0 && input->cellular_csq <= 31
         ? input->cellular_csq : 99;
+    int signal = input->cellular_enabled ? csq : input->wifi_rssi;
     int written;
     if (input->has_fix) {
         written = snprintf(buffer, capacity,
@@ -35,7 +36,7 @@ size_t telemetry_payload_build(char *buffer, size_t capacity,
             input->fix.latitude, input->fix.longitude, input->fix.altitude_m,
             input->fix.speed_kmh, input->fix.course_deg, input->fix.satellites,
             input->fix.hdop, input->fix_age_ms, input->fix.utc_ms / 1000,
-            input->uptime_s, input->free_heap, csq,
+            input->uptime_s, input->free_heap, signal,
             input->wifi_connected ? "true" : "false",
             input->cellular_data_ready ? "true" : "false",
             input->sequence, input->fix.utc_ms, input->fix.speed_kmh,
@@ -60,7 +61,7 @@ size_t telemetry_payload_build(char *buffer, size_t capacity,
             "\"cell_model\":\"%s\",\"cell_registered\":%s,\"cell_data\":%s,"
             "\"cell_reconnects\":%" PRIu32 ",\"cell_sampled_ms\":%" PRId64 "}}",
             input->device_id, input->now_ms / 1000, input->firmware, caps,
-            input->uptime_s, input->free_heap, csq,
+            input->uptime_s, input->free_heap, signal,
             input->wifi_connected ? "true" : "false",
             input->cellular_data_ready ? "true" : "false",
             input->gnss_online ? "true" : "false",

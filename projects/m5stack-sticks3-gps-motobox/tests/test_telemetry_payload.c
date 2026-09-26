@@ -21,6 +21,7 @@ int main(void)
         .uptime_s = 12,
         .free_heap = 345678,
         .wifi_connected = true,
+        .wifi_rssi = -55,
         .gnss_online = true,
         .gnss_rmc_status = 'V',
         .gnss_gga_quality = 0,
@@ -35,6 +36,7 @@ int main(void)
     contains(payload, "\"model\":\"m5stack-sticks3-gps\"");
     contains(payload, "\"caps\":[\"gps\",\"wifi\"]");
     contains(payload, "\"wifi\":true");
+    contains(payload, "\"signal\":-55");
     contains(payload, "\"gnss\":true");
     contains(payload, "\"position_source\":\"NONE\"");
     contains(payload, "\"gnss_online\":true");

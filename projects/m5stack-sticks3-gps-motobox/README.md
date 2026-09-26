@@ -62,6 +62,8 @@ wire. Confirm the connector key and labels before power-on; ESP32-S3 GPIO is not
 
 ### ML307R-DL Tiny 接线
 
+![StickS3、GPS Unit 和 ML307R-DL Tiny 功能接线示意；Tiny 排针位置与电压待实物确认](docs/assets/ml307r-tiny-wiring.svg)
+
 GPS 仍占用 Grove 的 GPIO9/10；固件将 GPS 设为 UART2。4G 使用 UART1，StickS3
 Hat2 排针位置以 [M5Stack StickS3 官方 PinMap](https://docs.m5stack.com/en/core/StickS3) 为依据：
 
@@ -76,6 +78,10 @@ Hat2 排针位置以 [M5Stack StickS3 官方 PinMap](https://docs.m5stack.com/en
 先测 Tiny 板 UART 高电平；若与 StickS3 的 3.3 V GPIO 不相容，两根数据线需适配电平。
 Tiny 板单独供电，电源地与 StickS3 共地；确认其输入端确实接受 5 V 后可用独立
 5 V/2 A 电源。Hat2 的 EXT_5V 及 Grove 红线均不接 4G 供电端。
+
+先用独立的 [AT/TCP 接入 Demo](../../demos/sticks3-ml307r-at/) 核对模组检测、注册和
+数据连接，再验收本项目的 GPS 与 4G 并行运行。Tiny 载板电源、UART 电平和排针位置
+确认后，才可进行第一次通电接线。
 
 ## Configure, build and flash
 
@@ -176,13 +182,14 @@ BINDING_VOICE_START digits=6
 BINDING_VOICE_DONE stack_free=...
 GNSS_FIX ... sat=8 hdop=1.1 ...
 MQTT_ACK seq=1 ...
-HEARTBEAT gps_online=1 gps_fix=1 cell_data=1 cell_csq=... binding_known=1 bound=1 ... queue=0 dropped=0 ...
+HEARTBEAT gps_online=1 gps_fix=1 cell_data=1 cell_csq=... binding_known=1 bound=1 ... queue=0 dropped=0 stack_uplink=... ...
 ```
 
 The binding status and code requests use `vehicle/v1/{device_id}/binding/request`; the server responds only to the authenticated
 device on `vehicle/v1/{device_id}/binding/response`. The new status response requires the MotoBox backend
 binding-status protocol; an older backend leaves `BIND CHECK` and the firmware ignores an unsolicited code.
 Run host tests with `./tests/run.sh`. See
+[cellular design and task stacks](docs/cellular-design.md) and
 [validation](docs/validation.md) for the required real-device run and
 the distinction between build and hardware verification.
 
