@@ -28,6 +28,10 @@ device and `ext.seq`. A restart loses the RAM backlog.
 keeps its RSSI dBm semantics. Cellular frames advertise `caps: ["gps", "gsm"]`,
 set `modules.gsm` from data readiness, and add `ext.cell_model`,
 `cell_registered`, `cell_data`, `cell_reconnects` and `cell_sampled_ms`.
+The upstream ML307 wait call may report `Ready` after cellular registration even
+if PDP has no IP. The application therefore waits for `MIPCALL` to
+report an active, nonzero IP before setting `cell_data` and opening sockets;
+registration and data failure reasons remain distinct.
 
 ## Task stack sizing and observability
 
@@ -39,10 +43,10 @@ path and local buffers; real margins remain unverified until a loaded 4G run.
 | GPS | 4096 | UART read, NMEA parser, fix snapshot |
 | Telemetry sampler | 6144 | 1024-byte payload, status/fix structs, JSON formatting and queue push |
 | Uplink | 8192 | 1024-byte payload copy, binding status publish and MQTT enqueue |
-| Cellular orchestration | 12288 | modem detection, registration, CSQ and UDP SNTP |
+| Cellular orchestration | 12288 | modem detection, registration, PDP status queries, CSQ and UDP SNTP |
 | ESP-MQTT | 12288 | custom TCP transport, mbedTLS handshake/read/write and MQTT events |
 | Modem receive | 2048 | upstream `78/esp-ml307` UHCI DMA receive task |
-| Modem event | 6144 | upstream AT parse, TCP URC and UDP SNTP callback |
+| Modem event | 6144 | upstream AT parse, PDP status callback, TCP URC and UDP SNTP callback |
 | UI | 8192 | LVGL screen refresh and button handling |
 | Binding voice | 4096 | PCM clip playback |
 | Heartbeat | 4096 | status snapshot and task high-water queries |

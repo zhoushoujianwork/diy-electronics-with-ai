@@ -5,7 +5,10 @@
 - ESP-IDF 5.5.2 firmware build and host GNSS, telemetry queue/payload and binding tests passed on
   2026-09-27. This build uses ML307R-DL Tiny AT/TCP, ESP32-side TLS hostname and public-chain
   verification, cellular UDP SNTP, GPS on UART2, and separate five-second sampling and MQTT uplink
-  tasks. Build output and host tests do not prove electrical or network operation.
+  tasks. Static driver review found that registration-ready can be returned before PDP receives an IP;
+  the application now requires an active `MIPCALL` context with a nonzero IP before reporting
+  `cell_data` or opening sockets. This change builds, but has no real-modem serial evidence.
+  Build output and host tests do not prove electrical or network operation.
 - A user-supplied seller image of the ML307R-DL Tiny shows six right-side holes labelled, top to bottom
   with the shield text upright, BAT/EN/RX/TX/GND/VIN. A later user-supplied interface table numbers
   these in reverse from VIN=1 to BAT=6, specifies VIN 5–16 V and 3.3 V TXD/RXD, and says EN is pulled

@@ -32,6 +32,7 @@ constexpr uint32_t NTP_TO_UNIX = 2208988800U;
 std::unique_ptr<AtModem> modem;
 EventGroupHandle_t modem_events;
 std::atomic<bool> network_online{false};
+std::atomic<bool> pdp_online{false};
 cellular_status_callback_t status_callback;
 cellular_time_callback_t time_callback;
 cellular_status_t current{};
@@ -144,6 +145,21 @@ void modem_task(void *) {
             modem = std::move(*result);
             modem->OnNetworkStateChanged([](bool ready) {
                 network_online.store(ready);
+                if (!ready) {
+                    pdp_online.store(false);
+                    xEventGroupClearBits(modem_events, MODEM_READY);
+                }
+            });
+            modem->GetAtUart()->RegisterUrcCallback([](const std::string &command,
+                                                        const std::vector<AtArgumentValue> &args) {
+                if (command != "MIPCALL" || args.size() < 2 ||
+                    args[0].type != AtArgumentValue::Type::Int ||
+                    args[1].type != AtArgumentValue::Type::Int) return;
+                bool ready = args[1].int_value == 1 &&
+                             args.size() >= 3 &&
+                             args[2].type == AtArgumentValue::Type::String &&
+                             !args[2].string_value.empty() && args[2].string_value != "0.0.0.0";
+                pdp_online.store(ready);
                 if (!ready) xEventGroupClearBits(modem_events, MODEM_READY);
             });
             copy_field(current.model, sizeof(current.model), modem->GetModuleRevision());
@@ -156,10 +172,11 @@ void modem_task(void *) {
             vTaskDelay(pdMS_TO_TICKS(60000));
             continue;
         }
+        pdp_online.store(false);
         NetworkStatus network = modem->WaitForNetworkReady(30000);
         current.sim_ready = modem->pin_ready();
         current.registered = network == NetworkStatus::Ready;
-        current.data_ready = network == NetworkStatus::Ready;
+        current.data_ready = false;
         current.csq = network == NetworkStatus::Ready ? modem->GetCsq() : 99;
         if (current.csq < 0 || current.csq > 31) current.csq = 99;
         if (network != NetworkStatus::Ready) {
@@ -173,6 +190,21 @@ void modem_task(void *) {
             continue;
         }
         copy_field(current.carrier, sizeof(current.carrier), modem->GetCarrierName());
+        for (int attempt = 0; attempt < 4 && !pdp_online.load(); ++attempt) {
+            static_cast<void>(modem->GetAtUart()->SendCommand("AT+MIPCALL?"));
+            vTaskDelay(pdMS_TO_TICKS(500));
+        }
+        current.data_ready = pdp_online.load();
+        if (!current.data_ready) {
+            copy_field(current.error, sizeof(current.error), "pdp_not_ready");
+            xEventGroupClearBits(modem_events, MODEM_READY);
+            publish_status();
+            ESP_LOGW(TAG, "PDP_NOT_READY retry_ms=%u", backoff_ms);
+            vTaskDelay(pdMS_TO_TICKS(backoff_ms));
+            backoff_ms = std::min<uint32_t>(backoff_ms * 2, 60000);
+            current.reconnects++;
+            continue;
+        }
         current.error[0] = 0;
         xEventGroupSetBits(modem_events, MODEM_READY);
         backoff_ms = 2000;
@@ -181,17 +213,23 @@ void modem_task(void *) {
         ntp_sync();
         for (int i = 0; i < 30; ++i) {
             vTaskDelay(pdMS_TO_TICKS(1000));
-            if (!network_online.load()) break;
+            if (!network_online.load() || !pdp_online.load()) break;
         }
-        if (!network_online.load()) {
-            current.registered = false;
+        pdp_online.store(false);
+        static_cast<void>(modem->GetAtUart()->SendCommand("AT+MIPCALL?"));
+        vTaskDelay(pdMS_TO_TICKS(100));
+        if (!network_online.load() || !pdp_online.load()) {
+            current.registered = network_online.load();
             current.data_ready = false;
-            current.csq = 99;
-            copy_field(current.error, sizeof(current.error), "network_lost");
+            current.csq = current.registered ? modem->GetCsq() : 99;
+            if (current.csq < 0 || current.csq > 31) current.csq = 99;
+            copy_field(current.error, sizeof(current.error),
+                       current.registered ? "pdp_lost" : "network_lost");
             xEventGroupClearBits(modem_events, MODEM_READY);
             publish_status();
-            ESP_LOGW(TAG, "NETWORK_LOST");
+            ESP_LOGW(TAG, "DATA_LOST reason=%s", current.error);
         } else {
+            current.data_ready = true;
             int csq = modem->GetCsq();
             current.csq = csq >= 0 && csq <= 31 ? csq : 99;
             publish_status();
