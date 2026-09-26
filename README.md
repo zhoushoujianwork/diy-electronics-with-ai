@@ -11,7 +11,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 ## 项目与 Demo 展示
 
 从下面的设备项目了解这里能做什么；点击小图或名称查看硬件清单、接线和运行步骤。
-**目前两个项目和一个独立 Demo 都仍在开发中**，已验证范围和待完成项分别列出。
+**目前三个项目和一个独立 Demo 均未完成验收**：两个项目与一个 Demo 在开发，ATOM Lite 底座处于规划阶段。已验证范围和待完成项分别列出。
 
 | [摩托声浪模拟器 · EV Engine Sound](projects/ev-engine-sound/) · Project | [车辆定位终端 · StickS3 GPS → MotoBox](projects/m5stack-sticks3-gps-motobox/) · Project |
 | --- | --- |
@@ -23,6 +23,10 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 | [ESP32 蓝牙声浪原型](demos/esp32-a2dp-engine-sound/) · Demo | 进度与验证 |
 | --- | --- |
 | [<img src="demos/esp32-a2dp-engine-sound/docs/assets/signal-path.svg" width="380" alt="BOOT 按键控制原版 ESP32 合成声浪，再经 A2DP 向蓝牙音箱发送的原理示意，非实机照片">](demos/esp32-a2dp-engine-sound/)<br>原理示意 · 非实机照片 | 原版 ESP32-DevKitC 使用 BOOT 给油，经 A2DP 向蓝牙耳机或音箱播放程序化声浪；本轮用 Beats Flex 试配。<br>**开发中 · 蓝牙外放待验证** · [`build-verified`](demos/esp32-a2dp-engine-sound/project.yaml)<br>已验证：构建/烧录、主机测试、120 秒无接收设备合成/控制，以及 120 秒 AP 与蓝牙扫描共存。<br>待完成：页面选配、实体 BOOT、耳机实际出声、持续播放、重连与延迟验收。<br>[验证记录](demos/esp32-a2dp-engine-sound/docs/validation.md) |
+
+| [ATOM Lite 4G/GNSS 堆叠底座](projects/atom-lite-cellular-gnss-base/README.md) · Project | 进度与验证 |
+| --- | --- |
+| [<img src="projects/atom-lite-cellular-gnss-base/docs/assets/stack-concept.svg" width="380" alt="ATOM Lite 24毫米同轮廓底座与Tiny通信板的尺寸和功能分工概念图，连接器位置与PCB尚未定型，非实机证据">](projects/atom-lite-cellular-gnss-base/README.md)<br>设计概念示意 · 非 PCB 或实机照片 | 制作 Type-C 供电、自动定位上报的堆叠底座，并记录需求、调研、PCB/固件、验证与量产准备全过程。<br>**规划中 · 已立项** · [`idea`](projects/atom-lite-cellular-gnss-base/project.yaml)<br>已核对：公开选型资料；已记录用户测量与商品图尺寸差异。<br>待完成：电气/机械核验、原生原理图与 PCB、固件、实机和试产验收。<br>[验证范围与前置条件](projects/atom-lite-cellular-gnss-base/docs/validation.md) |
 
 更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)。
 状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。

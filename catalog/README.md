@@ -135,6 +135,8 @@ independent of the validation level.
 
 ## 选型比较
 
+- [M5Stack 蜂窝通信、GNSS 与 Air780EG](../docs/research/m5stack-cellular-gnss-selection.md)：
+  Cat.1 / Cat-M / NB-IoT 的联网边界、GPS v1.1 与 SMA 天线区别、ATOM 底座尺寸及供电与成本比较方法。
 - [大夏龙雀 DX-GP10 与 M5Stack GPS Unit v1.1](../docs/research/gnss-dx-gp10-vs-m5stack-gps-v1-1.md)：
   默认与最高定位更新率、单模/双模限制、精度比较边界，以及 MG-902 高频能力的待核实项。
 - [PDM MEMS 与 MAX9814 模拟音频前端](../docs/research/pdm-vs-max9814-audio-frontends.md)：

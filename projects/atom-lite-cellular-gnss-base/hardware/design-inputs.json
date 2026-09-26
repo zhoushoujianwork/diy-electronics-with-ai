@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "purpose": "Non-executable engineering inputs; not a PCB footprint or manufacturing release",
+  "recorded_on": "2026-09-27",
+  "units": "mm",
+  "release_ready": false,
+  "coordinate_system": {
+    "view": "not-frozen",
+    "origin": null,
+    "x_direction": null,
+    "y_direction": null
+  },
+  "host": {
+    "model": "M5Stack ATOM Lite C008",
+    "reported_enclosure_xyz": [24, 24, 9.6],
+    "reported_source": "user measurement; tool and tolerance not recorded",
+    "official_enclosure_xyz": [24, 24, 9.5],
+    "official_source": "https://docs.m5stack.com/zh_CN/core/ATOM%20Lite",
+    "stack_connector_pin1": null,
+    "stack_connector_coordinates": null,
+    "mounting_hole_coordinates": null
+  },
+  "base_target": {
+    "outer_xy": [24, 24],
+    "source": "user requirement",
+    "height": null,
+    "wall_thickness": null,
+    "assembly_clearance": null,
+    "pcb_xy": null,
+    "pcb_thickness": null,
+    "corner_radius": null,
+    "antenna_protrusion_allowed": null,
+    "reference": "ATOMIC ECHO BASE style; not electrical or multi-base stacking compatibility"
+  },
+  "tiny_candidate": {
+    "vendor_label": "芯引者",
+    "module_label_in_product_image": "ML307R-DL",
+    "physical_revision": null,
+    "reported_board_xy": [20, 20],
+    "reported_source": "user measurement",
+    "advertised_xyz": [20, 19, 6],
+    "advertised_source": "user-supplied product image; identifiers and original image excluded from Git",
+    "advertised_height_includes_headers": null,
+    "connector": {
+      "contacts": 6,
+      "rows": 1,
+      "rows_source": "product image observation",
+      "reported_pitch": 2.54,
+      "pitch_source": "user report",
+      "labels_top_to_bottom_in_upright_component_view": ["BAT", "EN", "RX", "TX", "GND", "VIN"],
+      "official_pin_numbers": null,
+      "pad_coordinates": null,
+      "drill_diameter": null,
+      "mating_height": null
+    },
+    "vin_voltage_range_v": null,
+    "bat_voltage_range_v": null,
+    "uart_logic_voltage_v": null,
+    "en_active_level": null,
+    "peak_current_a": null,
+    "gnss_support": "not-established"
+  },
+  "power": {
+    "user_goal": "Type-C input; automatic operation after provisioning",
+    "input_location": "pending",
+    "candidate_nominal_input_v": 5,
+    "available_current_a": null,
+    "reverse_current_protection": "to-be-designed",
+    "battery_in_scope": false
+  },
+  "eda": {
+    "project_uuid": null,
+    "schematic_uuid": null,
+    "pcb_uuid": null,
+    "native_design_status": "not-created"
+  }
+}

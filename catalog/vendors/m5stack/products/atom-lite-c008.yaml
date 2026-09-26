@@ -1,0 +1,57 @@
+schema_version: 1
+id: atom-lite-c008
+vendor_id: m5stack
+name: M5Stack ATOM Lite
+family: Atom
+model: ATOM Lite
+sku: C008
+category: development-board
+lifecycle: unknown
+summary: ESP32-PICO-D4 controller with USB Type-C, Grove, an RGB LED and expansion GPIO.
+specifications:
+  processor:
+    manufacturer: Espressif Systems
+    model: ESP32-PICO-D4
+    cores: 2
+    max_frequency_hz: 240000000
+    source_refs: [official-docs, official-docs-zh]
+  memory:
+    flash_bytes: 4194304
+    ram_bytes: 532480
+    source_refs: [official-docs, official-docs-zh]
+  power:
+    input_voltage_nominal_v: 5
+    source_refs: [official-docs, official-docs-zh]
+  mechanical:
+    width_mm: 24
+    height_mm: 24
+    depth_mm: 9.5
+    source_refs: [official-docs, official-docs-zh]
+  connectors:
+    - type: USB Type-C
+      count: 1
+      source_refs: [official-docs, official-docs-zh]
+    - type: Grove HY2.0-4P
+      count: 1
+      source_refs: [official-docs, official-docs-zh]
+sources:
+  - id: official-docs
+    type: documentation
+    title: ATOM Lite documentation
+    publisher: M5Stack
+    url: https://docs.m5stack.com/en/core/ATOM%20Lite
+    accessed_on: 2026-09-27
+    official: true
+  - id: official-docs-zh
+    type: documentation
+    title: ATOM Lite 中文文档
+    publisher: M5Stack
+    url: https://docs.m5stack.com/zh_CN/core/ATOM%20Lite
+    accessed_on: 2026-09-27
+    official: true
+validation:
+  level: cataloged
+notes:
+  - The documented 5 V at 500 mA input rating does not establish current available to peripherals.
+  - Case dimensions are manufacturer nominal values, not PCB dimensions or a connector footprint.
+  - Do not reuse AtomS3 pin maps or firmware targets for this ESP32-PICO-D4 product.
