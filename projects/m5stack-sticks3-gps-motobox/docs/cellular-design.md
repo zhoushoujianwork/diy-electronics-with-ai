@@ -55,8 +55,10 @@ dependency or replace its task configuration before claiming hardware support.
 
 ## Hardware and rollback
 
-The [functional wiring diagram](assets/ml307r-tiny-wiring.svg) names Tiny signals,
-not unverified Tiny header positions. Keep modem power separate from StickS3
+The [functional wiring diagram](assets/ml307r-tiny-wiring.svg) includes the
+seller image's right-side order: BAT, EN, RX, TX, GND, VIN from top to bottom
+with the shield text upright. Confirm the same order on the actual carrier.
+Keep modem power separate from StickS3
 Grove/Hat2 output, share ground, confirm 3.3 V-compatible UART or add level
 adaptation, attach antenna before power, and verify Tiny startup method. The
 prior Wi-Fi firmware commits and hardware records remain available as rollback;

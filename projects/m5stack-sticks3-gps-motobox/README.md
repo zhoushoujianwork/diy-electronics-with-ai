@@ -62,26 +62,30 @@ wire. Confirm the connector key and labels before power-on; ESP32-S3 GPIO is not
 
 ### ML307R-DL Tiny 接线
 
-![StickS3、GPS Unit 和 ML307R-DL Tiny 功能接线示意；Tiny 排针位置与电压待实物确认](docs/assets/ml307r-tiny-wiring.svg)
+![StickS3、GPS Unit 和 ML307R-DL Tiny 接线示意；Tiny 右侧六孔按商品图标号，电压待实物确认](docs/assets/ml307r-tiny-wiring.svg)
 
 GPS 仍占用 Grove 的 GPIO9/10；固件将 GPS 设为 UART2。4G 使用 UART1，StickS3
 Hat2 排针位置以 [M5Stack StickS3 官方 PinMap](https://docs.m5stack.com/en/core/StickS3) 为依据：
 
-| StickS3 Hat2 | StickS3 信号 | Tiny 板功能端 |
-| --- | --- | --- |
-| 1 脚 | GND | GND，共地 |
-| 2 脚 | GPIO5 / UART1 TX | 模块 AT 串口 RXD |
-| 6 脚 | GPIO6 / UART1 RX | 模块 AT 串口 TXD |
+用户提供的芯引者商品图显示：**金属屏蔽罩文字正向、六孔排针在右侧时，从上到下依次是
+BAT、EN、RX、TX、GND、VIN**。按这个视角接 UART 三线：
 
-这是**功能连接表**，不是 Tiny 板的排针序号：购买记录只确认型号，没有提供该载板的可靠针脚图。
-在实物丝印或卖家原理图确认 RXD、TXD、GND 和电源输入之前，不要按排针位置盲插。
+| StickS3 Hat2 | StickS3 信号 | Tiny 右侧六孔（从上数） |
+| --- | --- | --- |
+| 1 脚 | GND | 第 5 孔 **GND**，共地 |
+| 2 脚 | GPIO5 / UART1 TX | 第 3 孔 **RX** |
+| 6 脚 | GPIO6 / UART1 RX | 第 4 孔 **TX** |
+
+上面的 Tiny 孔位来自**商品图**，尚未与手中载板实物交叉核对；接线前按相同视角复核
+丝印和孔位。第 1 孔 BAT、第 2 孔 EN 不属于 UART 三线连接，启动方式仍待核实。
+第 6 孔标为 VIN，但图片没有给出允许输入电压，不能仅凭名称接 5 V。
 先测 Tiny 板 UART 高电平；若与 StickS3 的 3.3 V GPIO 不相容，两根数据线需适配电平。
-Tiny 板单独供电，电源地与 StickS3 共地；确认其输入端确实接受 5 V 后可用独立
+Tiny 板单独供电，电源地与 StickS3 共地；确认 VIN 确实接受 5 V 后可用独立
 5 V/2 A 电源。Hat2 的 EXT_5V 及 Grove 红线均不接 4G 供电端。
 
 先用独立的 [AT/TCP 接入 Demo](../../demos/sticks3-ml307r-at/) 核对模组检测、注册和
-数据连接，再验收本项目的 GPS 与 4G 并行运行。Tiny 载板电源、UART 电平和排针位置
-确认后，才可进行第一次通电接线。
+数据连接，再验收本项目的 GPS 与 4G 并行运行。Tiny 实物丝印、电源规格、UART 电平
+和 EN 启动方式确认后，才可进行第一次通电接线。
 
 ## Configure, build and flash
 

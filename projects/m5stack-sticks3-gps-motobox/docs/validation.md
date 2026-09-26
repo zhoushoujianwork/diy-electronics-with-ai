@@ -6,8 +6,10 @@
   2026-09-27. This build uses ML307R-DL Tiny AT/TCP, ESP32-side TLS hostname and public-chain
   verification, cellular UDP SNTP, GPS on UART2, and separate five-second sampling and MQTT uplink
   tasks. Build output and host tests do not prove electrical or network operation.
-- The Tiny carrier's PCB revision, power input, UART levels and actual header positions are not yet
-  verified. No 4G firmware has been flashed or run in this record. The existing Wi-Fi firmware and
+- A user-supplied seller image of the ML307R-DL Tiny shows six right-side holes labelled, top to bottom
+  with the shield text upright, BAT/EN/RX/TX/GND/VIN. The screenshot includes device identifiers and is
+  kept outside Git. This identifies the advertised layout, not the user's physical PCB revision or
+  supply/UART electrical levels. No 4G firmware has been flashed or run. The existing Wi-Fi firmware and
   all hardware evidence below remain rollback references.
 - Pending 4G acceptance: 30-minute real-device run with cold start, GNSS/LCD/button concurrency,
   two-minute cellular outage/recovery and outdoor movement; MotoBox sequence and original sample-time

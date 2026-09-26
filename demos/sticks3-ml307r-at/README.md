@@ -3,7 +3,7 @@
 This focused Demo checks whether an ML307R-DL Tiny **AT** carrier can be detected over
 StickS3 UART1, register on a cellular network and open a TCP socket. It does not use
 Wi-Fi, GPS, MQTT or MotoBox credentials. It is build-verified only; the Tiny carrier
-pinout, voltage levels and 4G operation still need real-device checks.
+voltage levels, power input and 4G operation still need real-device checks.
 The `78/esp-ml307` 3.7.5 dependency is licensed under
 [Apache-2.0](https://github.com/78/esp-ml307/blob/main/LICENSE).
 
@@ -11,9 +11,11 @@ The `78/esp-ml307` 3.7.5 dependency is licensed under
 
 - StickS3 K150, ML307R-DL Tiny AT carrier, activated mainland-China IoT SIM and
   matching LTE antenna.
-- StickS3 Hat2 pin 1 (GND) → Tiny **GND**; pin 2 (GPIO5/TX) → Tiny **AT RXD**;
-  pin 6 (GPIO6/RX) ← Tiny **AT TXD**. These are StickS3 pin numbers and Tiny
-  **signal names**, not unverified Tiny header positions.
+- In the supplied seller image, hold the modem's printed text upright with the
+  six-hole header on the right. Its labels run top to bottom **BAT, EN, RX, TX,
+  GND, VIN**. StickS3 Hat2 pin 1 (GND) → Tiny hole 5 **GND**; pin 2 (GPIO5/TX)
+  → hole 3 **RX**; pin 6 (GPIO6/RX) ← hole 4 **TX**. Confirm the same labels on
+  the actual carrier before attaching wires.
 - Supply StickS3 by USB. Supply Tiny separately and connect the grounds. Confirm
   the Tiny carrier's marked power input, accepted voltage, UART high level and
   startup method against its exact board revision before connecting. A verified
@@ -23,8 +25,9 @@ The `78/esp-ml307` 3.7.5 dependency is licensed under
   add bidirectional logic-level adaptation when the carrier's UART levels require it.
 
 [StickS3 Hat2 numbering](https://docs.m5stack.com/en/core/StickS3) is official.
-The purchased Tiny carrier's header pinout is not yet verified; follow the physical
-silkscreen or seller schematic for its connector orientation.
+The Tiny hole order is read from the supplied product image and is not yet
+verified on the physical board. BAT and EN are outside this three-wire UART link;
+the VIN label alone does not establish its allowed supply voltage or startup method.
 
 ## Build and run
 
