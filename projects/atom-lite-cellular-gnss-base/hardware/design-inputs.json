@@ -75,7 +75,7 @@
     "native_design_status": "not-created"
   },
   "adapter_strategy": {
-    "status": "proposal; no native PCB or enclosure model created",
+    "status": "proposal; planar fit coupon geometry verified; no native PCB or complete enclosure",
     "first_host": "M5Stack ATOM Lite C008",
     "reuse": "Existing Tiny core board with a host-specific adapter PCB; custom shared daughterboard only after evaluation",
     "enclosure_process": "3D printing; material, print orientation and tolerances pending",
@@ -108,5 +108,26 @@
       "power_mode_and_reverse_current_validation": "pending",
       "firmware_target": "esp32s3; separate board configuration"
     }
-  ]
+  ],
+  "enclosure_first_stage": {
+    "user_priority": "Tiny printed enclosure before ATOM and StickS3 adapter PCBs",
+    "source": "enclosure/tiny-fit-ring.py",
+    "artifact_scope": "planar clearance coupon only; not a final electronics holder",
+    "outer_xyz_mm": [24, 24, 3],
+    "inner_xy_mm": [20.6, 20.6],
+    "clearance_per_side_mm": 0.3,
+    "dimensions_basis": "engineering test assumptions around user-reported 20x20 mm board; unprinted",
+    "header_exit_direction": null,
+    "assembled_total_height_mm": null,
+    "component_support_regions": null
+  },
+  "gnss_expansion": {
+    "proposal": "market-available receiver board on separate UART with module-specific cable mapping",
+    "logical_signals": ["power with verified voltage", "GND", "HOST_RX / GNSS_TX", "HOST_TX / GNSS_RX"],
+    "connector_mpn": null,
+    "pin_order": null,
+    "supply_voltage_v": null,
+    "modem_and_gnss_tx_directly_paralleled": false,
+    "reference": "../docs/gnss-uart-expansion.md"
+  }
 }

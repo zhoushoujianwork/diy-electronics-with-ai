@@ -6,6 +6,8 @@
 - [interface-review.csv](interface-review.csv)：Tiny 商品图中的丝印和待核实电气项。
 - [preliminary-bom.csv](preliminary-bom.csv)：功能级 BOM 候选；未定料号明确留空，不可直接下单。
 - [主机适配方案](../docs/host-adapters.md)：ATOM 底座、StickS3 顶部适配、电源分配与 3D 打印外壳。
+- [Tiny 外壳与配合试片](enclosure/README.md)：按用户新顺序先做机械配合，再推进两款适配 PCB。
+- [GNSS 四线接口与双 UART](../docs/gnss-uart-expansion.md)：现成接收板的电源、针序、信号方向和兼容边界。
 
 ## 坐标与封装
 

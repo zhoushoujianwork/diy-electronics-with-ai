@@ -1,0 +1,7 @@
+# Derived CAD artifacts are regenerated from the adjacent Python source.
+*.step
+*.stp
+*.stl
+*.3mf
+*.glb
+*.topology.json

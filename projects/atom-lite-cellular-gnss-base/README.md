@@ -29,7 +29,11 @@
 
 ## 设计方向
 
-先完成 **ATOM Lite + Tiny Cat.1 + 独立 GNSS** 的最小实验，再做自研载板、外壳和固件。
+用户已确定顺序：**先做 Tiny 打印外壳，再设计 ATOM / StickS3 两款适配 PCB**。
+当前从[外壳平面配合试片](hardware/enclosure/README.md)开始；完整壳体的排针开口、总高与板托还需补测。
+GNSS 首版提议采用[独立四线接口与第二路 UART](docs/gnss-uart-expansion.md)接现成接收板。
+
+电子功能先用 **ATOM Lite + Tiny Cat.1 + 独立 GNSS** 的最小实验核验，再完成自研载板和项目固件。
 首版用“现有 Tiny + 一块主机适配 PCB”，两种主机尽量复用通信电路与软件协议，分别处理接口与结构。
 StickS3 可以做顶帽，或由顶部接入后将模块沿背面放置，详见[主机适配方案](docs/host-adapters.md)。
 将蜂窝模组、SIM、GNSS 和电源全部放进一块 PCB 是后续选项，
