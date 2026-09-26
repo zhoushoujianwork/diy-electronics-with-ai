@@ -20,8 +20,17 @@ PCM feed 固定为 44.1 kHz / 16 bit / 2 channels。这样无需将原项目 32 
 不进仓库。WPA2 AP 密码默认每次开机随机生成，仅在 USB 串口输出；用户也可通过串口
 `ap_pin` 将八位数字密码保存在板上 NVS，之后重启沿用，日志不回显该本地密码。
 页面不接入互联网。
+为让手机在加入热点后发现页面，DHCP option 114 通告 `http://192.168.4.1/`，本地
+UDP 53 将标准 IPv4 A 查询回答为 AP 地址；HTTP 未知路径返回带页面链接的 302。
+只处理有界、未压缩的单问题 A/IN DNS 报文，并忽略可选 EDNS 尾部；不会拦截 HTTPS。
+系统弹窗取决于手机实现，仍保留直接访问 IP 的路径。参考
+[ESP-IDF 5.5.2 captive portal 示例](https://github.com/espressif/esp-idf/tree/v5.5.2/examples/protocols/http_server/captive_portal)。
 断连立即清空 PCM 并停机。
 manager 按状态发起发现/连接/媒体启动，连接超时先请求断开，避免同时发起多次连接。
+SoftAP 客户端关联后，按客户端 MAC 记录 DHCP 分配；至少一个客户端取得地址、最近一次关联
+过去 5 秒且最近一次分配过去 2 秒后，manager 才启动下一轮 Classic inquiry，避免共用射频
+干扰手机入网和弹页检测。静态 IP 客户端不申请 DHCP，不会单独启动扫描，也不会阻挡已取得
+DHCP 地址的客户端。
 心跳独立于蓝牙操作；没有 SD/FAT/BLE/4G 路径，因此没有 SD 启动日志或这些并发负载的证据。
 
 | 任务 | 栈预算（字节） | 最大路径与静态存储 |
@@ -32,6 +41,7 @@ manager 按状态发起发现/连接/媒体启动，连接超时先请求断开�
 | heartbeat | 4096 | 控制/计数快照、格式化、任务栈查询；32 项 TaskStatus_t 静态 |
 | BTC / BTU | 各 6144 | GAP 名称缓冲约 313 B + 应用回调/日志；协议栈路径 |
 | HTTP 服务器 | 8192 | 扫描结果复制、cJSON 编码、HTTP 响应；需带浏览器请求测高水位 |
+| portal_dns | 4096 | UDP socket 收发、272 B DNS 报文和地址结构；记录应答后的低水位 |
 | Wi-Fi 驱动 | IDF 默认 | SoftAP 收发与蓝牙共存；需带 AP 客户端测高水位 |
 | IDF 音频编码等任务 | 保持 IDF 默认 | 用 `tasks` 检查全部任务；数据回调另记录自身低水位 |
 

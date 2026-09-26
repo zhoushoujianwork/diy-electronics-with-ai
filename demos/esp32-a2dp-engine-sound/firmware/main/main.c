@@ -211,7 +211,7 @@ static void bluetooth_task(void *unused) {
                 discovering=e.value==ESP_BT_GAP_DISCOVERY_STARTED;
                 portal_set_state(discovering,connected,streaming);
                 ESP_LOGI(TAG,"STATE_TRANSITION: discovery -> %s", discovering?"SCANNING":"STOPPED");
-                if (!discovering) next=esp_timer_get_time()+(found?0:250000);
+                if (!discovering) next=esp_timer_get_time()+(found?0:1000000);
                 break;
             case EV_CONNECTION: {
                 bool online=e.value==ESP_A2D_CONNECTION_STATE_CONNECTED;
@@ -270,9 +270,12 @@ static void bluetooth_task(void *unused) {
             connecting=checked("connect",esp_a2d_source_connect(peer));
             if(!connecting) { portENTER_CRITICAL(&lock); link_busy=false; portEXIT_CRITICAL(&lock); }
             attempt_started=now; next=now+5000000;
-        } else {
-            discovering=checked("discovery",esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY,8,0));
+        } else if (portal_scan_ready()) {
+            discovering=checked("discovery",esp_bt_gap_start_discovery(ESP_BT_INQ_MODE_GENERAL_INQUIRY,2,0));
             next=now+5000000;
+        } else {
+            /* Let Wi-Fi association finish before Bluetooth inquiry uses the shared radio. */
+            next=now+500000;
         }
     }
 }

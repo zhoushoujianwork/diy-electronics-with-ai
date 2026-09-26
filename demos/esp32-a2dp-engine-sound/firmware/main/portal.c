@@ -14,12 +14,17 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/portmacro.h"
 #include "nvs.h"
+#include "portal_dns.h"
 
 static const char *TAG = "a2dp_portal";
 static const char *SSID = "EV-Engine-Setup";
 static portMUX_TYPE portal_lock = portMUX_INITIALIZER_UNLOCKED;
 static portal_connect_fn connect_device;
 static bool scan_active, link_connected, audio_streaming;
+static unsigned ap_clients;
+static int64_t last_join_us, last_dhcp_us;
+typedef struct { bool joined, has_ip; uint8_t mac[6]; } ap_station_t;
+static ap_station_t ap_stations[2];
 enum { MAX_DEVICES = 20, DEVICE_AGE_US = 30000000 };
 typedef struct {
     bool used;
@@ -29,6 +34,55 @@ typedef struct {
     int64_t seen_us;
 } device_t;
 static device_t devices[MAX_DEVICES];
+
+static void wifi_event(void *arg, esp_event_base_t base, int32_t id, void *data) {
+    (void)arg; (void)base;
+    unsigned count;
+    portENTER_CRITICAL(&portal_lock);
+    if(id==WIFI_EVENT_AP_STACONNECTED) {
+        const wifi_event_ap_staconnected_t *event=data;
+        for(size_t i=0;i<2;i++) if(!ap_stations[i].joined) {
+            ap_stations[i].joined=true; ap_stations[i].has_ip=false;
+            memcpy(ap_stations[i].mac,event->mac,6);
+            last_join_us=esp_timer_get_time();
+            ++ap_clients; break;
+        }
+    } else if(id==WIFI_EVENT_AP_STADISCONNECTED) {
+        const wifi_event_ap_stadisconnected_t *event=data;
+        for(size_t i=0;i<2;i++) if(ap_stations[i].joined && !memcmp(ap_stations[i].mac,event->mac,6)) {
+            ap_stations[i].joined=false; ap_stations[i].has_ip=false;
+            --ap_clients; break;
+        }
+    }
+    count=ap_clients;
+    portEXIT_CRITICAL(&portal_lock);
+    if(id==WIFI_EVENT_AP_STACONNECTED) ESP_LOGI(TAG,"AP_CLIENT joined count=%u",count);
+    else if(id==WIFI_EVENT_AP_STADISCONNECTED) ESP_LOGI(TAG,"AP_CLIENT left count=%u",count);
+}
+
+static void ip_event(void *arg, esp_event_base_t base, int32_t id, void *data) {
+    (void)arg; (void)base; (void)id;
+    const ip_event_ap_staipassigned_t *event=data;
+    unsigned count=0,joined;
+    portENTER_CRITICAL(&portal_lock);
+    for(size_t i=0;i<2;i++) if(ap_stations[i].joined && !memcmp(ap_stations[i].mac,event->mac,6)) {
+        ap_stations[i].has_ip=true; last_dhcp_us=esp_timer_get_time(); break;
+    }
+    for(size_t i=0;i<2;i++) if(ap_stations[i].joined && ap_stations[i].has_ip) ++count;
+    joined=ap_clients;
+    portEXIT_CRITICAL(&portal_lock);
+    ESP_LOGI(TAG,"AP_CLIENT dhcp_ready=%u joined=%u",count,joined);
+}
+
+bool portal_scan_ready(void) {
+    bool ready=false;
+    portENTER_CRITICAL(&portal_lock);
+    for(size_t i=0;i<2;i++) if(ap_stations[i].joined && ap_stations[i].has_ip) ready=true;
+    int64_t joined=last_join_us, assigned=last_dhcp_us;
+    portEXIT_CRITICAL(&portal_lock);
+    int64_t now=esp_timer_get_time();
+    return ready && now-joined>=5000000 && now-assigned>=2000000;
+}
 
 static bool valid_ap_pin(const char *pin) {
     if(strlen(pin)!=8) return false;
@@ -80,9 +134,20 @@ void portal_set_state(bool scanning, bool connected, bool streaming) {
 }
 
 static esp_err_t page_get(httpd_req_t *req) {
+    ESP_LOGI(TAG,"HTTP_PORTAL page");
     httpd_resp_set_type(req,"text/html; charset=utf-8");
     httpd_resp_set_hdr(req,"Cache-Control","no-store");
     return httpd_resp_send(req,PAGE,HTTPD_RESP_USE_STRLEN);
+}
+
+static esp_err_t portal_redirect(httpd_req_t *req, httpd_err_code_t error) {
+    (void)error;
+    ESP_LOGI(TAG,"HTTP_PORTAL probe redirected");
+    httpd_resp_set_status(req,"302 Found");
+    httpd_resp_set_hdr(req,"Location","http://192.168.4.1/");
+    httpd_resp_set_type(req,"text/html; charset=utf-8");
+    httpd_resp_set_hdr(req,"Cache-Control","no-store");
+    return httpd_resp_sendstr(req,"<html><body><a href='http://192.168.4.1/'>EV Engine 蓝牙配对</a></body></html>");
 }
 
 static esp_err_t status_get(httpd_req_t *req) {
@@ -149,7 +214,8 @@ esp_err_t portal_start(portal_connect_fn fn) {
     connect_device=fn;
     esp_err_t rc=esp_netif_init(); if(rc!=ESP_OK) return rc;
     rc=esp_event_loop_create_default(); if(rc!=ESP_OK) return rc;
-    if(!esp_netif_create_default_wifi_ap()) return ESP_FAIL;
+    esp_netif_t *ap_netif=esp_netif_create_default_wifi_ap();
+    if(!ap_netif) return ESP_FAIL;
     wifi_init_config_t init=WIFI_INIT_CONFIG_DEFAULT();
     rc=esp_wifi_init(&init); if(rc!=ESP_OK) return rc;
     rc=esp_wifi_set_mode(WIFI_MODE_AP); if(rc!=ESP_OK) return rc;
@@ -169,7 +235,20 @@ esp_err_t portal_start(portal_connect_fn fn) {
     config.ap.max_connection=2;
     config.ap.authmode=WIFI_AUTH_WPA2_PSK;
     rc=esp_wifi_set_config(WIFI_IF_AP,&config); if(rc!=ESP_OK) return rc;
+    rc=esp_event_handler_register(WIFI_EVENT,WIFI_EVENT_AP_STACONNECTED,wifi_event,NULL);
+    if(rc!=ESP_OK) return rc;
+    rc=esp_event_handler_register(WIFI_EVENT,WIFI_EVENT_AP_STADISCONNECTED,wifi_event,NULL);
+    if(rc!=ESP_OK) return rc;
+    rc=esp_event_handler_register(IP_EVENT,IP_EVENT_AP_STAIPASSIGNED,ip_event,NULL);
+    if(rc!=ESP_OK) return rc;
     rc=esp_wifi_start(); if(rc!=ESP_OK) return rc;
+    /* DHCP option 114 advertises the page even on clients that skip DNS probes. */
+    static char captive_url[]="http://192.168.4.1/";
+    rc=esp_netif_dhcps_stop(ap_netif); if(rc!=ESP_OK) return rc;
+    rc=esp_netif_dhcps_option(ap_netif,ESP_NETIF_OP_SET,ESP_NETIF_CAPTIVEPORTAL_URI,
+                              captive_url,strlen(captive_url));
+    if(rc!=ESP_OK) return rc;
+    rc=esp_netif_dhcps_start(ap_netif); if(rc!=ESP_OK) return rc;
     httpd_config_t server_config=HTTPD_DEFAULT_CONFIG();
     server_config.stack_size=8192; /* cJSON/list handler + HTTP parser + status helpers. */
     server_config.max_open_sockets=4;
@@ -184,6 +263,10 @@ esp_err_t portal_start(portal_connect_fn fn) {
     for(size_t i=0;i<sizeof(routes)/sizeof(routes[0]);i++) {
         rc=httpd_register_uri_handler(server,&routes[i]); if(rc!=ESP_OK) return rc;
     }
+    rc=httpd_register_err_handler(server,HTTPD_404_NOT_FOUND,portal_redirect);
+    if(rc!=ESP_OK) return rc;
+    rc=portal_dns_start(ap_netif); if(rc!=ESP_OK) return rc;
+    ESP_LOGI(TAG,"CAPTIVE_PORTAL_READY dhcp_option=114 dns=53 http=80");
     if(saved_pin) ESP_LOGI(TAG,"AP_READY ssid=%s password_source=NVS url=http://192.168.4.1/",SSID);
     else ESP_LOGI(TAG,"AP_READY ssid=%s password=%s url=http://192.168.4.1/",SSID,password);
     return ESP_OK;

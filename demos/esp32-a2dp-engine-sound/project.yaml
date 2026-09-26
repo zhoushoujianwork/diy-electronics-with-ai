@@ -26,5 +26,6 @@ notes:
   - Beats Flex is saved as the exact NVS target; a 90-second scan and a 120-second pairing-window rescan did not discover it.
   - A temporary WPA2 SoftAP portal can list recent Bluetooth inquiry results and request a manual connection; 120 seconds of AP plus scanning passed without audio load.
   - The AP password defaults to a per-boot random value; a local eight-digit PIN can be saved in device NVS without committing the credential.
+  - Captive portal DNS, DHCP page advertisement, HTTP redirect and page responses passed a local AP client check; automatic phone popup awaits user confirmation.
   - Audible output, reconnection and end-to-end latency await a discoverable headset.
   - Exact measured scope and pending physical checks are recorded in docs/validation.md.

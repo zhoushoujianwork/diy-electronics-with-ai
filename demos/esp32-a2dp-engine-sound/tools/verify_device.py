@@ -74,9 +74,13 @@ def main():
     p.add_argument("--pulse-boot", action="store_true", help="test GPIO0 via USB-UART DTR; not a physical-button test")
     p.add_argument("--reset", action="store_true", help="pulse EN before capture; release physical BOOT first")
     p.add_argument("--require-streaming", action="store_true")
+    p.add_argument("--task-interval", type=int, default=0,
+                   help="request all-task stack snapshots every N seconds")
     args = p.parse_args()
     if args.exercise and args.pulse_boot:
         p.error("run serial exercise and DTR input checks separately")
+    if args.task_interval < 0:
+        p.error("--task-interval must be zero or positive")
     args.log.parent.mkdir(parents=True, exist_ok=True)
     port = serial.Serial(port=None, baudrate=115200, timeout=.05, write_timeout=1)
     port.dtr = False
@@ -84,6 +88,8 @@ def main():
     port.port = args.port
     port.open()
     schedule = [(1, "tasks")]
+    if args.task_interval:
+        schedule += [(second, "tasks") for second in range(args.task_interval, int(args.seconds), args.task_interval)]
     pulses = [(3,True),(6,False),(15,True),(18,False)] if args.pulse_boot else []
     if args.exercise:
         schedule += [(3, "profile twin270\nvolume 20\nstart\nthrottle 100"), (10, "throttle 0"),
@@ -91,6 +97,7 @@ def main():
                      (35, "exhaust tin_can\nstart\nthrottle 60"), (43, "exhaust straight"),
                      (50, "stop"), (54, "profile invalid\nthrottle 101\nvolume nan"),
                      (57, "profile twin270\nexhaust stock\nvolume 20\nstop\ntasks")]
+    schedule.sort()
     collected = bytearray()
     try:
         if args.reset:
