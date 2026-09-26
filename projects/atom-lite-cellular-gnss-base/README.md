@@ -6,7 +6,7 @@
 固件、验证、试产和量产准备过程，作为 DIY Lab 的开放教学项目；ATOM 是首个实现目标。
 
 **当前状态：`idea`，已立项，正在确认硬件输入。没有已完成的原理图、PCB、固件或实机验收。**
-24 × 24 mm 是外设外轮廓目标，PCB 板框和底座高度尚未确定。
+24 × 24 mm 是外设外轮廓目标；Tiny 独立卡扣外壳已建模，暂高 11.8 mm，完整底座的 PCB 板框和高度尚未确定。
 
 ![ATOM Lite 与 Tiny 通信板的尺寸及功能分工示意，未定型的设计概念，不是 PCB 或实机证据](docs/assets/stack-concept.svg)
 
@@ -30,7 +30,8 @@
 ## 设计方向
 
 用户已确定顺序：**先做 Tiny 打印外壳，再设计 ATOM / StickS3 两款适配 PCB**。
-当前从[外壳平面配合试片](hardware/enclosure/README.md)开始；完整壳体的排针开口、总高与板托还需补测。
+已完成[底壳＋卡扣上盖 Rev B](hardware/enclosure/README.md)，提供朝下和侧向两种 6P 排针出口，
+外形暂定 24 × 24 × 11.8 mm。STEP/STL 几何检查通过；含针尺寸、板托接触区与打印实物配合仍需验证。
 GNSS 首版提议采用[独立四线接口与第二路 UART](docs/gnss-uart-expansion.md)接现成接收板。
 
 电子功能先用 **ATOM Lite + Tiny Cat.1 + 独立 GNSS** 的最小实验核验，再完成自研载板和项目固件。

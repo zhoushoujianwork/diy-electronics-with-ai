@@ -75,10 +75,10 @@
     "native_design_status": "not-created"
   },
   "adapter_strategy": {
-    "status": "proposal; planar fit coupon geometry verified; no native PCB or complete enclosure",
+    "status": "complete Tiny snap-case Rev B CAD geometry verified; physical fit and native PCB pending",
     "first_host": "M5Stack ATOM Lite C008",
     "reuse": "Existing Tiny core board with a host-specific adapter PCB; custom shared daughterboard only after evaluation",
-    "enclosure_process": "3D printing; material, print orientation and tolerances pending",
+    "enclosure_process": "3D printing; Rev B base bottom-down and lid outer-face-down; PETG proposed, material and fit unverified",
     "common_connector_pinout": null,
     "host_adapters_electrically_or_mechanically_interchangeable": false,
     "reference": "../docs/host-adapters.md"
@@ -120,6 +120,44 @@
     "header_exit_direction": null,
     "assembled_total_height_mm": null,
     "component_support_regions": null
+  },
+  "enclosure_rev_b": {
+    "source": "enclosure/tiny_case.py",
+    "scope": "standalone Tiny full base and removable snap lid; not the complete host adapter base",
+    "status": "geometry-checked; unprinted; physical fit unverified",
+    "outer_xyz_mm": [24, 24, 11.8],
+    "inner_xy_mm": [20.6, 20.6],
+    "base_height_mm": 10.2,
+    "floor_mm": 1.4,
+    "lid_roof_mm": 1.6,
+    "normal_wall_mm": 1.7,
+    "pcb_thickness_assumed_mm": 1.0,
+    "pcb_bottom_z_assumed_mm": 2.4,
+    "header_x_assumed_mm": 8.8,
+    "corner_support_centres_assumed_xy_mm": [[-9.4, -9.4], [-9.4, 9.4], [9.4, -9.4], [9.4, 9.4]],
+    "corner_contact_square_mm": 1.2,
+    "board_vertical_play_mm": 0.4,
+    "header_exit_variants": {
+      "bottom": {"slot_xy_mm": [3.6, 16.4], "base_source": "enclosure/tiny_case_base.py"},
+      "side": {"opening_width_height_mm": [16.4, 4.2], "opening_bottom_z_mm": 1.9, "base_source": "enclosure/tiny_case_side_base.py"}
+    },
+    "lid_source": "enclosure/tiny_case_lid.py",
+    "snap_arm_width_thickness_length_mm": [4.8, 0.8, 6.0],
+    "snap_insertion_deflection_mm": 0.25,
+    "antenna_port": {
+      "diameter_assumed_mm": 3.0,
+      "centre_on_outer_wall_xyz_mm": [12, 0, 8],
+      "construction": "complete round hole in base sidewall; no exterior seam or lid opening",
+      "material_above_hole_to_seam_mm": 0.7,
+      "material_below_hole_to_side_header_opening_mm": 0.4,
+      "plug_passage": "unverified; resize after measuring RF plug envelope",
+      "strain_relief": "not implemented",
+      "reference": "../docs/antenna-interface.md"
+    },
+    "m3_option": "not implemented; requires larger outline or external ears",
+    "verified": ["valid solids", "watertight STL", "assembled bbox", "no seated overlap", "assumed header and antenna probes", "mate alignment", "geometric latch retention"],
+    "pending": ["board revision and exact dimensions", "header housing and mating clearance", "support keepouts", "printed fit", "snap durability", "thermal and RF tests", "host attachment"],
+    "reference": "enclosure/README.md"
   },
   "gnss_expansion": {
     "proposal": "market-available receiver board on separate UART with module-specific cable mapping",

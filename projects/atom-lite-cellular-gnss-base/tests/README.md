@@ -3,6 +3,12 @@
 本目录目前只有测试计划，没有固件/硬件通过记录。[validation.md](../docs/validation.md) 是实际结果入口。
 文档与 JSON/CSV 可解析只证明记录可读，不证明 PCB、电源或通信功能。
 
+## 已有 CAD 检查
+
+[check_case.py](../hardware/enclosure/check_case.py) 检查导出的 STEP/STL、合盖干涉、原朝下排针通道、
+天线圆孔和卡扣几何止退。重建与执行命令见[外壳说明](../hardware/enclosure/README.md)。
+该检查没有覆盖实物接头、板底器件、材料弹性或打印装配。
+
 ## 实施后添加的自动检查
 
 - GNSS：有效/无效 NMEA、校验和、RMC/GGA 时间匹配、陈旧 fix、无定位状态；复用既有测试经验。

@@ -1,12 +1,12 @@
 # PCB 与结构设计输入
 
-当前交付物是设计输入和接口核对表，**不是原理图、已布线 PCB、生产封装或 Gerber**。
+当前交付物包括设计输入、接口核对表与 Tiny 完整卡扣外壳 CAD；原理图、布线 PCB 和制造发布包尚未完成。
 
 - [design-inputs.json](design-inputs.json)：单位、来源、实测/标称值及未知尺寸；不是可执行 EDA playbook。
 - [interface-review.csv](interface-review.csv)：Tiny 商品图中的丝印和待核实电气项。
 - [preliminary-bom.csv](preliminary-bom.csv)：功能级 BOM 候选；未定料号明确留空，不可直接下单。
 - [主机适配方案](../docs/host-adapters.md)：ATOM 底座、StickS3 顶部适配、电源分配与 3D 打印外壳。
-- [Tiny 外壳与配合试片](enclosure/README.md)：按用户新顺序先做机械配合，再推进两款适配 PCB。
+- [Tiny 完整卡扣外壳](enclosure/README.md)：底壳、可拆盖与两种排针出口，几何检查通过，待打印试装。
 - [GNSS 四线接口与双 UART](../docs/gnss-uart-expansion.md)：现成接收板的电源、针序、信号方向和兼容边界。
 
 ## 坐标与封装
