@@ -3,9 +3,13 @@
 ## Build
 
 - ESP-IDF 5.5.2 build: passed on 2026-09-27 with `78/esp-ml307` 3.7.5 and
-  `78/uart-uhci` 0.4.0. The application binary was `0x80860` bytes, leaving
+  `78/uart-uhci` 0.4.0. The revised application binary was `0x80870` bytes, leaving
   50% of the 1 MiB app partition. Rebuilt successfully after the wiring review;
   firmware commit will be recorded when flashed.
+- Static driver review found that its network wait can return registration-ready
+  without PDP/IP readiness. The Demo now logs `CELL_REGISTERED` separately from
+  `TCP_CONNECTED` and backs off when TCP fails; this behavior is build-verified
+  but awaits real-device serial evidence.
 - Real ML307R-DL Tiny carrier detection, SIM registration and TCP: pending.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not

@@ -48,9 +48,12 @@ idf.py -p /dev/cu.usbmodemXXXX flash monitor
 The default TCP probe opens `example.com:80`; set `CONFIG_BRINGUP_TCP_HOST` and
 `CONFIG_BRINGUP_TCP_PORT` in menuconfig if a different allowed endpoint is needed.
 The probe sends no personal data. A successful serial run should contain
-`MODEM_DETECTED`, `NETWORK_READY` and `TCP_CONNECTED`, followed by stack margins.
+`MODEM_DETECTED`, `CELL_REGISTERED` and `TCP_CONNECTED`, followed by stack margins.
+`CELL_REGISTERED` only confirms cellular registration; `TCP_CONNECTED` confirms
+the modem data path. A registration response can precede PDP/IP readiness.
 `MODEM_DETECT_FAILED` means the UART, level, power or AT firmware needs checking;
-`NETWORK_WAIT_FAILED` points to SIM, antenna, registration or data service.
+`NETWORK_WAIT_FAILED` points to SIM, antenna or registration; `TCP_CONNECT_FAILED`
+also points to PDP/APN or data service after registration.
 
 ## Limits and acceptance
 
