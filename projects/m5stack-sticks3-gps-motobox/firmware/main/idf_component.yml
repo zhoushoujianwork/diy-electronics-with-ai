@@ -1,4 +1,5 @@
 dependencies:
+  78/esp-ml307: "==3.7.5"
   espressif/esp_lvgl_port: "^2.7.0"
   lvgl/lvgl:
     version: "^9.2.0"

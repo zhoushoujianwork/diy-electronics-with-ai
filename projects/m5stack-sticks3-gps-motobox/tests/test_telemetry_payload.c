@@ -80,6 +80,30 @@ int main(void)
     contains(payload, "\"gnss_rmc_status\":\"A\"");
     contains(payload, "\"ts_ms\":1790017179000");
 
+    telemetry_payload_input_t cellular = status;
+    cellular.wifi_connected = false;
+    cellular.cellular_enabled = true;
+    cellular.cellular_registered = true;
+    cellular.cellular_data_ready = true;
+    cellular.cellular_csq = 21;
+    cellular.cellular_reconnects = 2;
+    cellular.cellular_sampled_ms = 123456;
+    cellular.cellular_model = "ML307R-DL";
+    assert(telemetry_payload_build(payload, sizeof(payload), &cellular) > 0);
+    contains(payload, "\"caps\":[\"gps\",\"gsm\"]");
+    contains(payload, "\"signal\":21");
+    contains(payload, "\"wifi\":false");
+    contains(payload, "\"gsm\":true");
+    contains(payload, "\"cell_model\":\"ML307R-DL\"");
+    contains(payload, "\"cell_registered\":true");
+    contains(payload, "\"cell_reconnects\":2");
+    contains(payload, "\"cell_sampled_ms\":123456");
+    cellular.cellular_csq = 99;
+    cellular.cellular_data_ready = false;
+    assert(telemetry_payload_build(payload, sizeof(payload), &cellular) > 0);
+    contains(payload, "\"signal\":99");
+    contains(payload, "\"gsm\":false");
+
     assert(telemetry_payload_build(payload, 32, &fix) == 0);
     puts("telemetry payload tests passed");
     return 0;

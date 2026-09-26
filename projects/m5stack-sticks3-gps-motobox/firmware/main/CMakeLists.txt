@@ -4,6 +4,7 @@ idf_component_register(
         "board.c"
         "binding_announcement.c"
         "binding_protocol.c"
+        "cellular_transport.cpp"
         "gnss_parser.c"
         "telemetry_payload.c"
         "telemetry_queue.c"
@@ -32,9 +33,14 @@ idf_component_register(
         esp_event
         esp_lcd
         esp_netif
+        esp_system
         esp_timer
         esp_wifi
+        mbedtls
         mqtt
         nvs_flash
+        tcp_transport
+        78__esp-ml307
+        78__uart-uhci
         esp_lvgl_port
         lvgl)

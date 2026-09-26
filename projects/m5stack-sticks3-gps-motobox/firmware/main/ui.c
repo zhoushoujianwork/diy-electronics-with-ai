@@ -68,6 +68,12 @@ static void refresh_timer(lv_timer_t *timer)
             lv_label_set_text(speed_label, status.gnss_online ? "FIX WAITING" : "CHECK GPS POWER / CABLE");
         }
     }
+#if CONFIG_DEMO_CELLULAR
+    lv_label_set_text_fmt(network_label, "4G %s  %.18s",
+                          status.cellular_data_ready ? "UP" : "WAIT", status.cellular_carrier);
+    lv_label_set_text_fmt(ip_label, "CSQ %d  BACKLOG %u",
+                          status.cellular_csq, status.queue_depth);
+#else
     lv_label_set_text_fmt(network_label, "Wi-Fi %s  %.17s",
                           status.wifi_connected ? "UP" : "DOWN", status.wifi_ssid);
     if (status.wifi_connected) {
@@ -75,6 +81,7 @@ static void refresh_timer(lv_timer_t *timer)
     } else {
         lv_label_set_text(ip_label, "IP --  CONNECTING");
     }
+#endif
     lv_label_set_text_fmt(binding_label, "MQTT %s  BIND %s",
                           status.mqtt_connected ? "UP" : "DOWN",
                           status.binding_known ? (status.binding_bound ? "BOUND" : "UNBOUND") : "CHECK");

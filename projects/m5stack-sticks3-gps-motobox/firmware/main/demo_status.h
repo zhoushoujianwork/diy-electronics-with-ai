@@ -20,6 +20,15 @@ typedef struct {
     char wifi_ssid[33];
     char wifi_ip[16];
     int wifi_rssi;
+    bool sim_ready;
+    bool cellular_registered;
+    bool cellular_data_ready;
+    int cellular_csq;
+    uint32_t cellular_reconnects;
+    int64_t cellular_sampled_ms;
+    char cellular_model[40];
+    char cellular_carrier[24];
+    char cellular_error[40];
     int satellites;
     float hdop;
     bool gsv_seen;
