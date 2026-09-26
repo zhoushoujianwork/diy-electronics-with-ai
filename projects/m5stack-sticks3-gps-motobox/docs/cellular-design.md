@@ -63,9 +63,12 @@ The [functional wiring diagram](assets/ml307r-tiny-wiring.svg) includes the
 seller image's right-side order: BAT, EN, RX, TX, GND, VIN from top to bottom
 with the shield text upright. The supplied interface table numbers the same
 signals in reverse from VIN=1 to BAT=6; it specifies VIN 5–16 V, 3.3 V UART,
-and EN pulled up to VIN. These carrier-specific claims still need physical
-revision and voltage checks. Keep modem power separate from StickS3 Grove/Hat2
+and EN pulled up to VIN. The user's first meter reading found Tiny TXD idle
+around 3.6 V, so this UART claim is not confirmed for the board in use. Keep
+Tiny TXD off StickS3 GPIO6 until a UART-suitable level shifter or measured
+divider is in place. Keep modem power separate from StickS3 Grove/Hat2
 output, share ground, leave EN unconnected for bring-up, attach antenna before
 power, and do not power BAT at the same time as VIN. The
 prior Wi-Fi firmware commits and hardware records remain available as rollback;
-the current 4G firmware has not been flashed.
+the independent AT/TCP Demo was flashed, while the integrated 4G project
+firmware has not been flashed.

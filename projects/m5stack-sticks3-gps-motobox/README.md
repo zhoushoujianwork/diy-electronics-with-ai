@@ -76,10 +76,13 @@ BAT、EN、RX、TX、GND、VIN**。新提供的接口表则从底部 **VIN=引�
 | --- | --- | --- | --- | --- |
 | 1 脚 | GND | **GND**，共地 | 第 5 孔 | 2 |
 | 2 脚 | GPIO5 / UART1 TX | **RX / RXD** | 第 3 孔 | 4 |
-| 6 脚 | GPIO6 / UART1 RX | **TX / TXD** | 第 4 孔 | 3 |
+| 6 脚 | GPIO6 / UART1 RX | **TX / TXD**，经电平转换 | 第 4 孔 | 3 |
 
 接口表标称 VIN 为 **5–16 V**、TXD/RXD 为 **3.3 V 电平**；这是用户提供的板卡资料，
-尚未与手中 PCB 版本、电压实测交叉核对。首次通电仍要核对实物丝印和空闲 TXD 电平。
+但用户在独立 5 V 供电、UART 断开时测得 Tiny TXD 空闲约 **3.6 V**。目前不要将
+Tiny TXD 直接接到 StickS3 GPIO6；先用适用于 UART 的电平转换器，或经实测符合
+3.3 V GPIO 输入范围的分压电路，再恢复串口联调。Tiny 的准确 PCB 版本和电平
+波形仍待确认。
 Tiny 的 VIN 用独立 5 V/至少 2 A 供电支路，电源地与 StickS3 共地；不要从 Hat2
 EXT_5V 或 Grove 红线给 4G 模组供电。若要共用一只电源，先以 5 V/至少 3 A 为台架
 预算，从电源端分两路，分别接 StickS3 Hat2 **15 脚 5V_IN（输入）**和 Tiny **VIN**，

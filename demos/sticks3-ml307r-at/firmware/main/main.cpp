@@ -39,7 +39,7 @@ void raw_at_probe() {
         return;
     }
 
-    constexpr int rates[] = {115200, 921600, 460800, 57600, 9600};
+    constexpr int rates[] = {115200, 921600, 460800, 230400, 57600, 38400, 19200, 9600};
     for (int rate : rates) {
         err = uart_set_baudrate(UART_NUM_1, rate);
         if (err != ESP_OK) {

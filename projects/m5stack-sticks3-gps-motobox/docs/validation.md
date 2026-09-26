@@ -21,6 +21,22 @@
   a blinking indicator and EN unconnected. The exact PCB markings, UART idle voltage and
   transmit current remain unverified. The independent AT/TCP Demo was flashed on 2026-09-27;
   StickS3 booted, but no valid AT response was detected in the initial serial windows.
+  The user corrected reversed TX/RX wiring and connected a shared GND, but a new
+  120-second serial capture with Demo `eb20f6b` still received zero raw UART
+  bytes and timed out on AT detection. With Tiny UART disconnected, a Hat2 G5/G6
+  loopback returned all four sent bytes at every tested baud rate, verifying
+  the StickS3-side UART path; Tiny-side AT communication remains unverified.
+  With Tiny independently powered and UART disconnected, the user measured
+  EN≈5 V and Tiny TXD idle≈3.6 V relative to Tiny GND. Direct Tiny TXD to
+  StickS3 GPIO6 is suspended pending UART-suitable level shifting or a measured
+  divider; the seller's 3.3 V UART claim has not matched this first reading.
+  In a separate short DAPLink UART check at 115200 bps, the same Tiny answered
+  `AT`, identified as `ML307R`, had SIM READY, registered to CHINA MOBILE, and
+  returned CSQ 31/99 plus CESQ RSRQ/RSRP codes 29/67 in three samples. Its data
+  context was active with a nonzero IP. The user powered Tiny from DAPLink 5 V
+  for that check; neither the DAPLink output current nor RX input tolerance was
+  verified. This establishes module-side AT, SIM and signal only for that short
+  setup, not StickS3 4G uplink or sustained transmit power.
   Registration, TCP and the integrated GPS/MotoBox 4G firmware have not been hardware-verified.
   The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
   Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and

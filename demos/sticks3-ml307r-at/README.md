@@ -2,8 +2,10 @@
 
 This focused Demo checks whether an ML307R-DL Tiny **AT** carrier can be detected over
 StickS3 UART1, register on a cellular network and open a TCP socket. It does not use
-Wi-Fi, GPS, MQTT or MotoBox credentials. It remains build-verified: a first hardware
-run booted StickS3 but received no valid AT reply, so cellular operation is unverified.
+Wi-Fi, GPS, MQTT or MotoBox credentials. It remains build-verified: StickS3
+booted and its UART pins passed loopback, while its direct Tiny connection did
+not receive AT. A separate DAPLink UART test confirmed Tiny AT, SIM registration
+and signal; the StickS3 cellular path remains unverified.
 The `78/esp-ml307` 3.7.5 dependency is licensed under
 [Apache-2.0](https://github.com/78/esp-ml307/blob/main/LICENSE).
 
@@ -22,7 +24,10 @@ The `78/esp-ml307` 3.7.5 dependency is licensed under
   the Tiny carrier's exact revision and marked power input before connecting.
   The supplied interface table specifies VIN 5–16 V and TXD/RXD 3.3 V. Use an
   independent 5 V supply branch rated at least 2 A, not StickS3 Grove or Hat2
-  EXT_5V. Measure Tiny TXD idle high level before attaching GPIO6.
+  EXT_5V. The user's first meter reading found Tiny TXD idle around **3.6 V**,
+  above the supplied table's 3.3 V claim. Do not reconnect it directly to
+  StickS3 GPIO6. Use a UART-suitable level shifter or a measured divider that
+  presents a valid 3.3 V logic high without exceeding the GPIO limit.
 - The supplied table says EN is pulled up to VIN. Leave EN unconnected for this
   bring-up; at 5 V VIN it must not connect directly to a 3.3 V StickS3 GPIO.
   BAT is a separate 3.4–4.2 V battery input and must not be powered with VIN.

@@ -25,11 +25,35 @@
   (73%); modem receive/event task margins remain unmeasured because modem
   detection never succeeded. Raw logs remain outside Git.
 - The user reports Tiny BAT disconnected, Tiny VIN supplied independently at
-  about 5 V, EN unconnected and its indicator blinking. The exact carrier PCB
-  revision, UART idle voltage, power-source current rating and measured peak
-  current have not been independently recorded. Physical TX/RX and common-ground
-  confirmation is pending. Real modem detection, SIM registration and TCP are
-  still pending; the first hardware attempt did not pass them.
+  about 5 V, EN unconnected and its indicator blinking. They found the original
+  TX/RX wiring reversed, corrected it, and subsequently connected the grounds.
+  A fresh 120-second capture with Demo app version `eb20f6b` after both changes
+  still showed five AT-detection timeouts; the raw UART probe received zero
+  bytes at 115200, 921600, 460800, 57600 and 9600 bps. There was no panic,
+  unexpected reset or USB reconnect. With Tiny UART disconnected and StickS3
+  Hat2 G5 shorted to G6, the same build received all four transmitted `AT\r\n`
+  bytes at every tested baud rate; `OK` was absent as expected for a wire loop.
+  This verifies the StickS3 UART1 pins and firmware TX/RX path, but does not
+  verify either Tiny pin or its AT firmware. With Tiny alone on its independent
+  supply and UART disconnected, the user measured EN at about 5 V and TXD idle
+  at about 3.6 V relative to Tiny GND. The latter exceeds the seller table's
+  3.3 V claim, so direct Tiny TXD → StickS3 G6 wiring is suspended until a
+  suitable level shifter or measured divider is installed. The exact carrier
+  PCB revision, power-source current rating and measured peak current have not
+  been independently recorded. Real modem detection, SIM registration and TCP
+  through StickS3 remain pending.
+- A separate short DAPLink UART test used `/dev/cu.usbmodem212402` at 115200 bps.
+  The user wired Tiny directly to LCKFB DAPLink and used its 5 V pin for this
+  bench check. `AT` replied `OK`; `AT+CGMM` returned `ML307R`; `AT+CPIN?`
+  returned `READY`; `AT+CEREG?` reported registration state 1 and `AT+COPS?`
+  reported CHINA MOBILE. Three signal samples about five seconds apart all
+  returned `+CSQ: 31,99` for `AT+CSQ` and `AT+CESQ` RSRQ/RSRP codes
+  29/67. `AT+MIPCALL?`
+  reported context 1 active with a nonzero IP; the IP was not recorded in Git.
+  This confirms the module's AT interface, SIM registration and reported signal
+  in that short setup. DAPLink 5 V output current and RX input tolerance were
+  not verified, so the run does not establish a suitable long-term modem power
+  or logic interface, cellular TCP, or StickS3 interoperability.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
   be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom
