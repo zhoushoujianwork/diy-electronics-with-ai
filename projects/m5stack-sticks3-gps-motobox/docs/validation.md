@@ -56,6 +56,18 @@
   received zero AT bytes during a 120-second capture without abnormal resets
   or panic. These tests have not identified a functional StickS3-to-Tiny UART
   connection; the integrated GPS/MotoBox 4G build remains unflashed.
+  A following one-way check connected StickS3 G7 to DAPLink RX. Tiny UART
+  removal was not reconfirmed. DAPLink received 22 exact `AT\r\n` sequences
+  at 115200 bps over 30 seconds, verifying the Demo's physical G7 transmit
+  path. Both USB devices were on the same computer without a direct GND jumper;
+  the return
+  path was not traced. At that point G4 receive and the Tiny interconnect
+  remained unverified.
+  A following DAPLink TX→StickS3 G4 injection sent 144 bytes of synthetic
+  `OK` responses after the first modem timeout. The 115200-bps raw probe
+  received all 144 bytes and reported `ok=1`, verifying G4 receive separately.
+  This is an injected response, not a modem reply. Tiny communication remains
+  unverified.
   Registration, TCP and the integrated GPS/MotoBox 4G firmware have not been hardware-verified.
   The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
   Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and

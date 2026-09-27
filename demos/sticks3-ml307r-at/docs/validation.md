@@ -88,6 +88,24 @@
   panic, stack overflow or unexpected reset was observed. This direction swap
   did not establish UART communication; the exact inter-board path is still
   unverified. A DAPLink check of the physical StickS3 TX/RX paths is next.
+- The user connected StickS3 Hat2 G7 to DAPLink RX for a one-way check. Tiny
+  UART wire removal was requested but not independently reconfirmed. Both USB
+  devices were on the same computer, but no separate GND jumper was installed.
+  At 115200 bps, DAPLink received 22 exact `AT\r\n` sequences during a
+  30-second StickS3 reset capture; the StickS3 log confirmed
+  `UART_PINS uart=1 tx=7 rx=4` and still timed out without a modem. Other
+  captured bytes overlapped the Demo's alternate-baud probes and are not
+  interpreted. This verifies the firmware-to-Hat2 G7 TX path and DAPLink RX
+  observation. The USB-ground return path was not independently traced; at
+  this point the G4 receive path and Tiny interconnect remained unverified.
+- For a separate G4 receive check, the user reported connecting DAPLink TX
+  to StickS3 Hat2 G4 after removing Tiny TXD from that pin. The direct GND
+  jumper was not reconfirmed. On the first `MODEM_DETECT_FAILED` after reset,
+  the host sent a synthetic `\r\nOK\r\n` response through DAPLink for two
+  seconds. At 115200 bps, the raw probe reported `rx_bytes=144 ok=1`, exactly
+  matching the number of bytes DAPLink transmitted. This validates the
+  physical G4 receive path and firmware UART input, **not** Tiny detection.
+  The modem detect operation still timed out before and after this injection.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
   be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom
