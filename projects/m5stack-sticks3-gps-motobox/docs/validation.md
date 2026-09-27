@@ -68,6 +68,12 @@
   received all 144 bytes and reported `ok=1`, verifying G4 receive separately.
   This is an injected response, not a modem reply. Tiny communication remains
   unverified.
+  In a subsequent one-way test, StickS3 G7 drove the Tiny socket formerly
+  used by DAPLink TX while DAPLink RX monitored Tiny's reply socket. With
+  StickS3 G4 left open, DAPLink read 11 complete `OK` responses in the first
+  11 seconds and 22 over 30 seconds at 115200 bps. This proves the modem
+  receives StickS3 AT and replies on that Tiny pin; StickS3 receiving the reply
+  is the remaining UART check.
   Registration, TCP and the integrated GPS/MotoBox 4G firmware have not been hardware-verified.
   The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
   Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and

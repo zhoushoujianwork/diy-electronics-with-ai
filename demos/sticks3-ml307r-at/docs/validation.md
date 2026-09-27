@@ -106,6 +106,14 @@
   matching the number of bytes DAPLink transmitted. This validates the
   physical G4 receive path and firmware UART input, **not** Tiny detection.
   The modem detect operation still timed out before and after this injection.
+- The user then wired StickS3 G7 to the Tiny socket previously driven by
+  DAPLink TX, and connected DAPLink RX to the Tiny response socket. DAPLink TX
+  and StickS3 G4 were left disconnected, with the three grounds reported
+  connected. A 30-second reset capture saw 11 complete `OK` responses during
+  the first 11 seconds and 22 total on DAPLink at 115200 bps. StickS3 still
+  timed out as expected because G4/RX was open. This verifies that Tiny
+  receives StickS3's AT commands and sends replies on the socket watched by
+  DAPLink. The complete StickS3-to-Tiny receive connection remains to be tested.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
   be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom
