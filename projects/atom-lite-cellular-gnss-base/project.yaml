@@ -3,7 +3,7 @@ id: atom-lite-cellular-gnss-base
 name: ATOM Lite Cellular GNSS Stack Base
 kind: project
 status: idea
-summary: Develop an ATOM Lite Tiny 4G adapter base with Type-C power and external GPS through the host Grove; evaluate a separate StickS3 adapter and document the path to production preparation.
+summary: Develop an ATOM Lite Tiny 4G adapter base powered through stack headers from the host, with a future separate power module and external GPS through the host Grove; evaluate a separate StickS3 adapter and document the path to production preparation.
 owners:
   - human-ai-lab
 toolchains: []

@@ -12,7 +12,7 @@
 - [PCB 设计调研](../docs/pcb-design-research.md)：板级资料与裸模组要求、电源方案、机械限制、缺口及官方来源。
 - [pcb-interface-plan.csv](pcb-interface-plan.csv)：两款主机 GPIO 分配提案；官方逻辑针号不等于 PCB pad 编号，空值表示未核实。
 - [pcb-part-candidates.csv](pcb-part-candidates.csv)：已查数据手册的器件候选；未冻结 BOM、库器件或采购状态。
-- [EasyEDA A1 原理图草稿](easyeda/README.md)：已接线的 UART 电平转换候选子电路、五页设计备注和参数源；尚未布板。
+- [EasyEDA Header A4 原理图草稿](easyeda/README.md)：一张 A4 图纸，排针受电逻辑示意与 UART 候选子电路；尚未布板。
 
 ## 坐标与封装
 
@@ -29,9 +29,10 @@ StickS3 变体另需顶部 Hat2 观察方向、配对高度、壳体卡位与屏
 
 当前环境使用已安装的 `easyeda` typed CLI，不进行 GUI 落图或任意脚本注入。
 2026-09-27 初始查询没有编辑器连接；随后已在用户指定的内置浏览器完成工程准备。
-当前操作固定到 CLI/daemon/Connector `1.8.0` 与 Web `4.1.60`。Tiny 页已有四个器件的候选子电路，
-五页备注采用无边框普通文字。完整供电和接口、PCB、官方 DRC 警告处理仍待完成。工程身份与证据见上方入口。
-最新范围收敛为一张 A4，GNSS 使用主机现有 Grove G26/G32；本轮只更新选型与设计输入，未迁移原生页面。
+当前操作使用 CLI/daemon/Connector `1.8.0` 与 Web `4.1.60`。原生工程已重建为 Header A4 单页，
+包含一个不进 BOM/PCB 的排针供电参考符号及四器件 UART 候选电路，18 条普通中文说明。
+适配板无 Type-C，GNSS 使用主机现有 Grove G26/G32；5 个器件的 16 个引脚网络经保存重开核对。
+完整供电和接口、PCB、5 条官方 DRC warning 的逐项原因仍待完成。工程身份与证据见上方入口。
 
 后续沿用已创建的独立工程，只连接内置浏览器，不启动桌面 EDA 客户端：
 

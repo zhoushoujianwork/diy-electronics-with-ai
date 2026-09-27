@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "documentId": "53dcd402e09040a2",
+  "frames": [
+    {
+      "id": "header-power-a4",
+      "title": "排针供电接口（逻辑示意）",
+      "rect": {
+        "minX": 25,
+        "minY": 490,
+        "maxX": 635,
+        "maxY": 800
+      },
+      "titleX": 40,
+      "titleY": 790,
+      "fontSize": 20,
+      "color": "#AA00AA",
+      "lineType": 1
+    }
+  ]
+}

@@ -222,6 +222,39 @@ TI 引脚映射、14 条连接、布局重算一致性、原生 ZIP/哈希与差
 项目仍为 `idea`。这轮仅更新设计记录与可追溯选型，不宣称完整原理图或可下单生产 BOM 已完成。
 回退点为 `91ce47b` 与本机 A1 快照；原生电路和结构模型本轮均未写入。
 
+## 2026-09-27：重建单页原理图与 Header A4 排针供电
+
+用户删除旧页面后复用保留的工程容器，在新页面重建；随后按用户要求取消适配板 Type-C，
+改为主机经排针供电，记录后续独立电源模块。只使用内置浏览器 Web 4.1.60 与 typed CLI/daemon/Connector 1.8.0。
+项目仍为 `idea`；当前[原生状态](../hardware/easyeda/project-state.json)已替换失效的五页 UUID。
+
+- 用 fresh inventory 精确删除 46 个旧电源相关图元，包含 USB-C、CC 下拉、LM66100 和两颗电源电容。
+  比较前后 UART 四器件的完整数据、14 个引脚网络和导线几何，一致；没有清空整页。
+- 添加 J1 供电逻辑参考，1=STACK_5V、2=GND；不进 BOM/PCB。正式 ATOM 针号仍未知。
+  宿主把放置时 J2 重编号为 J1，回读后同步目标，canonical ID `cmp-J2` 保持稳定。
+- 当前 5 个器件、16 个引脚网络、12 个导线图元；18 条普通文字与两个功能标题。
+  保存 → 有界重开 → fresh 回读后，独立逐脚对账通过，J1 排除制造属性保留，未用 NC 掩盖缺失接口。
+- layout-lint、clusters、check、bridge-check 通过；唯一 check info 为已验证无接点的内部交叉。
+  **官方 DRC 为 0 fatal、0 error、5 warning，严格检查失败；SDK 无逐项明细，原因未定。**
+  [脱敏对账摘要](../hardware/easyeda/verification-a4.json)与[官方整页 PNG](assets/carrier-a4-schematic.png)已保存。
+- 本机 `local/atom-adapter-a4-header.epro2` 备份 486740 字节，ZIP 完整性通过；
+  SHA-256 `e2f899e43a0cd1431da7549d2071dbf11311066e520a4ed265ec983e201758ab`，未测试导入恢复。
+
+工具限制：`sch plan` 首步因 `sch read` 的空网证据不足而拒绝，未重放队列；
+`sch list --include-pins` 提供显式空网和 `noConnected:false` 后，改用已有 typed `sch autoconnect`
+完成 strict dry-run 与连接，再独立对账。组检查必须使用注册时相同的 project UUID，
+窗口路由按名称查询组时曾漏掉既有 UART 组；最终 UUID 路由检查通过。
+
+重建早期 A3 的 `compose --preserve-instances` 因缺唯一标识而拒绝，清页也因孤立属性而拒绝，均未执行。
+后续先定位本轮未接线的器件，再从 fresh 数据生成仅修改/连线的队列完成子电路；旧 A3 参数留在本机历史目录。
+这些失败没有通过 GUI 或任意 JS 绕过。原理图图片导入仍待工具支持，见 Issue #272。
+
+未覆盖：Tiny VIN/BAT/EN、VIO 来源、真实连接器与封装、主机 1 A PTC 路径的蜂窝峰值带载、
+独立电源模块、PCB、固件及全部实物测试。没有硬件测试时长或上电通过结果。
+提交前解析 21 份 JSON、5 份 CSV 和项目 YAML，检查 125 处本地文档/图片链接；
+BOM 数量、18 条备注与 Apply 参数一致，Apply dry-run 通过。主机、Tiny 与外壳机械输入语义未变。
+外壳、朝下排针出口和天线圆孔保持 `6e60b92`；仓库回退基线为 `f9f110b`，原生前后快照留本机。
+
 ## 后续报告字段
 
 每次追加日期、板/模块修订、固件提交、EDA 修订、工具链、供电/线材/天线、测试时长、

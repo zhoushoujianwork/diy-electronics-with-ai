@@ -1,0 +1,368 @@
+{
+  "schemaVersion": "1.4",
+  "projectId": "247f2261614c4e20861e8a96a79cb7ba",
+  "documentId": "53dcd402e09040a2",
+  "components": [
+    {
+      "id": "cmp-C3",
+      "ref": "C3",
+      "role": "vcca_decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "96b39256cc3f4d80bd3b503deb4f3328",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "x": 940,
+          "y": 680
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "x": 980,
+          "y": 680
+        }
+      ],
+      "placement": {
+        "x": 960,
+        "y": 680,
+        "bbox": {
+          "minX": 949.5,
+          "minY": 671.5,
+          "maxX": 970.5,
+          "maxY": 688.5
+        }
+      }
+    },
+    {
+      "id": "cmp-C4",
+      "ref": "C4",
+      "role": "vccb_decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "96b39256cc3f4d80bd3b503deb4f3328",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "x": 935,
+          "y": 645
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "x": 975,
+          "y": 645
+        }
+      ],
+      "placement": {
+        "x": 955,
+        "y": 645,
+        "bbox": {
+          "minX": 944.5,
+          "minY": 636.5,
+          "maxX": 965.5,
+          "maxY": 653.5
+        }
+      }
+    },
+    {
+      "id": "cmp-J2",
+      "ref": "J1",
+      "role": "logical_header_power_input",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "232ae76e43074f68bf72aebb8ada545c",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "x": 220,
+          "y": 650
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "x": 220,
+          "y": 640
+        }
+      ],
+      "placement": {
+        "x": 240,
+        "y": 650,
+        "bbox": {
+          "minX": 229.5,
+          "minY": 634.5,
+          "maxX": 250.5,
+          "maxY": 660.5
+        }
+      }
+    },
+    {
+      "id": "cmp-R3",
+      "ref": "R3",
+      "role": "oe_default_disabled",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "x": 800,
+          "y": 660
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "x": 840,
+          "y": 660
+        }
+      ],
+      "placement": {
+        "x": 820,
+        "y": 660,
+        "bbox": {
+          "minX": 809.5,
+          "minY": 655.5,
+          "maxX": 830.5,
+          "maxY": 664.5
+        }
+      }
+    },
+    {
+      "id": "cmp-U2",
+      "ref": "U2",
+      "role": "conditional_modem_uart_translator",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "493798d782f842239c2500d2396f07aa",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "B2",
+          "x": 930,
+          "y": 630
+        },
+        {
+          "number": "2",
+          "name": "GND",
+          "x": 930,
+          "y": 600
+        },
+        {
+          "number": "3",
+          "name": "VCCA",
+          "x": 930,
+          "y": 680
+        },
+        {
+          "number": "4",
+          "name": "A2Y",
+          "x": 850,
+          "y": 620
+        },
+        {
+          "number": "5",
+          "name": "A1",
+          "x": 850,
+          "y": 630
+        },
+        {
+          "number": "6",
+          "name": "OE",
+          "x": 850,
+          "y": 660
+        },
+        {
+          "number": "7",
+          "name": "VCCB",
+          "x": 930,
+          "y": 670
+        },
+        {
+          "number": "8",
+          "name": "B1Y",
+          "x": 930,
+          "y": 640
+        }
+      ],
+      "placement": {
+        "x": 890,
+        "y": 640,
+        "bbox": {
+          "minX": 859.5,
+          "minY": 589.5,
+          "maxX": 920.5,
+          "maxY": 690.5
+        }
+      }
+    }
+  ],
+  "nets": [
+    {
+      "id": "net-1bd2024705993cdca6ce907448d424ed08310cc29fbb160b00460e68264720d5",
+      "name": "MODEM_VIO_TBD",
+      "scope": "local",
+      "role": "signal"
+    },
+    {
+      "id": "net-359f2012bfc2337d3fbecb1db9d3976f123a96b05784a5a51ca82c267bbd63fb",
+      "name": "MODEM_RX",
+      "scope": "local",
+      "role": "signal"
+    },
+    {
+      "id": "net-4cba358417223065963310363ecc342001dde30e4b307a47b606533f813f1553",
+      "name": "HOST_3V3",
+      "scope": "global",
+      "role": "power"
+    },
+    {
+      "id": "net-595f0fa80734cc87fbf9622891d50930acf700953d5ebb2129fcda2930671eb9",
+      "name": "UART_OE",
+      "scope": "local",
+      "role": "signal"
+    },
+    {
+      "id": "net-ccdd8d41edbac58e6d53310d1fccffd0f92fee7ae510446f885743c5226f1b30",
+      "name": "GND",
+      "scope": "global",
+      "role": "ground"
+    },
+    {
+      "id": "net-e48ca12cd59de0efdc8603dd65502ab3d59d2343ab0903028c71a1882cb7bc52",
+      "name": "MODEM_TX",
+      "scope": "local",
+      "role": "signal"
+    },
+    {
+      "id": "net-eed8dd5db3a0df67ee6768b3288a9014d00b85403b8037f5b84d6d5f180dee7a",
+      "name": "HOST_RX",
+      "scope": "local",
+      "role": "signal"
+    },
+    {
+      "id": "net-fdfc2b439a80568060b143ee458f0ba9ccb070dd71270f8761a23a374b00311c",
+      "name": "HOST_TX",
+      "scope": "local",
+      "role": "signal"
+    },
+    {
+      "id": "net-stack-5v",
+      "name": "STACK_5V",
+      "scope": "global",
+      "role": "power"
+    }
+  ],
+  "connections": [
+    {
+      "componentId": "cmp-C3",
+      "pinNumber": "1",
+      "netId": "net-4cba358417223065963310363ecc342001dde30e4b307a47b606533f813f1553",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C3",
+      "pinNumber": "2",
+      "netId": "net-ccdd8d41edbac58e6d53310d1fccffd0f92fee7ae510446f885743c5226f1b30",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C4",
+      "pinNumber": "1",
+      "netId": "net-1bd2024705993cdca6ce907448d424ed08310cc29fbb160b00460e68264720d5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C4",
+      "pinNumber": "2",
+      "netId": "net-ccdd8d41edbac58e6d53310d1fccffd0f92fee7ae510446f885743c5226f1b30",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R3",
+      "pinNumber": "1",
+      "netId": "net-ccdd8d41edbac58e6d53310d1fccffd0f92fee7ae510446f885743c5226f1b30",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R3",
+      "pinNumber": "2",
+      "netId": "net-595f0fa80734cc87fbf9622891d50930acf700953d5ebb2129fcda2930671eb9",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "1",
+      "netId": "net-e48ca12cd59de0efdc8603dd65502ab3d59d2343ab0903028c71a1882cb7bc52",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "2",
+      "netId": "net-ccdd8d41edbac58e6d53310d1fccffd0f92fee7ae510446f885743c5226f1b30",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "3",
+      "netId": "net-4cba358417223065963310363ecc342001dde30e4b307a47b606533f813f1553",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "4",
+      "netId": "net-eed8dd5db3a0df67ee6768b3288a9014d00b85403b8037f5b84d6d5f180dee7a",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "5",
+      "netId": "net-fdfc2b439a80568060b143ee458f0ba9ccb070dd71270f8761a23a374b00311c",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "6",
+      "netId": "net-595f0fa80734cc87fbf9622891d50930acf700953d5ebb2129fcda2930671eb9",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "7",
+      "netId": "net-1bd2024705993cdca6ce907448d424ed08310cc29fbb160b00460e68264720d5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U2",
+      "pinNumber": "8",
+      "netId": "net-359f2012bfc2337d3fbecb1db9d3976f123a96b05784a5a51ca82c267bbd63fb",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J2",
+      "pinNumber": "1",
+      "netId": "net-stack-5v",
+      "kind": "power"
+    },
+    {
+      "componentId": "cmp-J2",
+      "pinNumber": "2",
+      "netId": "net-ccdd8d41edbac58e6d53310d1fccffd0f92fee7ae510446f885743c5226f1b30",
+      "kind": "ground"
+    }
+  ],
+  "issues": []
+}

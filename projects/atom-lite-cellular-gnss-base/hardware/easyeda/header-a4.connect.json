@@ -1,0 +1,19 @@
+{
+  "connections": [
+    {
+      "pin": "J1:1",
+      "kind": "power",
+      "net": "STACK_5V"
+    },
+    {
+      "pin": "J1:2",
+      "kind": "ground",
+      "net": "GND"
+    }
+  ],
+  "rules": {
+    "offsetMin": 10,
+    "offsetMax": 80,
+    "offsetStep": 5
+  }
+}

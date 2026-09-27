@@ -62,22 +62,25 @@
     "gnss_support": "not-established"
   },
   "power": {
-    "user_goal": "Type-C input; automatic operation after provisioning",
-    "input_location": "carrier Type-C selected for Rev A; physical placement pending",
+    "user_goal": "Host Type-C input; adapter receives power through stack headers; automatic operation after provisioning",
+    "input_location": "STACK_5V/GND through host stack header; no Type-C connector on adapter",
     "candidate_nominal_input_v": 5,
     "available_current_a": null,
-    "reverse_current_protection": "LM66100 preferred for host/GPS branch; full power and transient design pending",
-    "battery_in_scope": false
+    "reverse_current_protection": "future independent power module must define source isolation and switching; no direct dual-source connection",
+    "battery_in_scope": false,
+    "host_path_validation": "official reviewed ATOM path includes 1 A PTC; cellular peak load through host remains unverified",
+    "future_separate_power_module": true
   },
   "eda": {
     "project_uuid": "247f2261614c4e20861e8a96a79cb7ba",
-    "schematic_uuid": "ea2ad4292979849d",
-    "pcb_uuid": "eb8b5e3ad6c98f5f",
-    "native_design_status": "A1 four-part conditional UART circuit and five note pages; complete board and PCB pending",
+    "schematic_uuid": "1de898fb6a790d5a",
+    "pcb_uuid": "dd45696ef897c110",
+    "native_design_status": "Header A4 one-page draft: reference power header plus conditional four-part UART circuit; 16 pin nets verified after reload; 5 native DRC warnings unresolved",
     "target_schematic_pages": 1,
-    "page_consolidation_status": "planned; native A1 pages unchanged during selection review",
+    "page_consolidation_status": "implemented on new page; old five-page native design deleted by user",
     "host_requirement": "Codex in-app browser only; no desktop EDA client",
-    "reference": "easyeda/README.md"
+    "reference": "easyeda/README.md",
+    "page_uuid": "53dcd402e09040a2"
   },
   "pcb_research": {
     "recorded_on": "2026-09-27",
@@ -87,7 +90,7 @@
     "part_candidates": "pcb-part-candidates.csv",
     "enclosure_baseline_commit": "6e60b92",
     "ready_for_schematic_freeze": false,
-    "open_inputs": ["Tiny board-level power and logic specification", "Tiny EN definition", "exact connector geometry and physical pin numbering", "GNSS current-revision electrical evidence", "power budget and host power isolation"]
+    "open_inputs": ["Tiny board-level power and logic specification", "Tiny EN definition", "exact connector geometry and physical pin numbering", "GNSS current-revision electrical evidence", "power budget through host path and future independent power-module isolation"]
   },
   "rev_a_selection": {
     "reference": "../docs/rev-a-product-and-bom.md",
@@ -95,8 +98,9 @@
     "product": "ATOM Lite Tiny 4G adapter base with external GNSS through existing host Grove",
     "full_bom_frozen": false,
     "generic_part_identities_reviewed": true,
-    "new_parts_placed_in_eda": false,
-    "critical_inputs": ["Tiny VIN BAT UART EN and automatic startup", "mating connector geometry and current rating", "GNSS revision logic and cable", "input protection and current/inrush budget"]
+    "new_parts_placed_in_eda": true,
+    "critical_inputs": ["Tiny VIN BAT UART EN and automatic startup", "mating connector geometry and current rating", "GNSS revision logic and cable", "host path peak load and voltage drop; future power-module source isolation"],
+    "placement_scope": "five current instances: four conditional UART parts and one non-manufacturing header reference; old USB-C power parts removed"
   },
   "adapter_strategy": {
     "status": "complete Tiny snap-case Rev B CAD geometry verified; physical fit and native PCB pending",
@@ -128,7 +132,7 @@
       "adapter_pcb_outline": null,
       "enclosure_dimensions": null,
       "candidate_host_power_input": "Hat2 5V_IN, official pin 15; physical orientation and power path review pending",
-      "cellular_power": "separate branch from external Type-C supply; not assumed available from host Grove",
+      "cellular_power": "header-based input proposed; Hat2 source direction and peak capability require separate review; future independent power module",
       "power_mode_and_reverse_current_validation": "pending",
       "firmware_target": "esp32s3; separate board configuration"
     }

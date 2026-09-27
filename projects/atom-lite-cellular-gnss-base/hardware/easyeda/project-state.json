@@ -5,74 +5,31 @@
   "project_name": "ATOM Lite Cellular GNSS Base",
   "project_uuid": "247f2261614c4e20861e8a96a79cb7ba",
   "editor_url": "https://pro.lceda.cn/editor#id=247f2261614c4e20861e8a96a79cb7ba",
-  "board_name": "ATOM Adapter Rev A - DRAFT",
+  "board_name": "Board1",
   "schematic_name": "Schematic1",
-  "schematic_uuid": "ea2ad4292979849d",
+  "schematic_uuid": "1de898fb6a790d5a",
   "pcb_name": "PCB1",
-  "pcb_uuid": "eb8b5e3ad6c98f5f",
+  "pcb_uuid": "dd45696ef897c110",
   "pages": [
     {
-      "page_uuid": "9bb2a5485117e258",
-      "name": "01 Power - DRAFT",
+      "page_uuid": "53dcd402e09040a2",
+      "name": "ATOM Tiny 4G - Header A4 DRAFT",
       "saved_and_reloaded": true,
-      "description": "DESIGN NOTES - NOT WIRED",
-      "version": "A1",
-      "electrical_components": 0,
-      "wires": 0,
-      "notes": 7,
-      "note_frames": 0
-    },
-    {
-      "page_uuid": "08c508a46de0eba7",
-      "name": "02 ATOM Host - DRAFT",
-      "saved_and_reloaded": true,
-      "description": "DESIGN NOTES - NOT WIRED",
-      "version": "A1",
-      "electrical_components": 0,
-      "wires": 0,
-      "notes": 7,
-      "note_frames": 0
-    },
-    {
-      "page_uuid": "ba5508e7a4983dd6",
-      "name": "03 Tiny Interface - DRAFT",
-      "saved_and_reloaded": true,
-      "description": "UART CANDIDATE - VIO TBD",
-      "version": "A1",
-      "electrical_components": 4,
-      "wires": 10,
-      "notes": 5,
-      "note_frames": 0
-    },
-    {
-      "page_uuid": "176a6afa07803c76",
-      "name": "04 GNSS Interface - DRAFT",
-      "saved_and_reloaded": true,
-      "description": "DESIGN NOTES - NOT WIRED",
-      "version": "A1",
-      "electrical_components": 0,
-      "wires": 0,
-      "notes": 7,
-      "note_frames": 0
-    },
-    {
-      "page_uuid": "e80ae91542c0a9bb",
-      "name": "05 Test Points - DRAFT",
-      "saved_and_reloaded": true,
-      "description": "DESIGN NOTES - NOT WIRED",
-      "version": "A1",
-      "electrical_components": 0,
-      "wires": 0,
-      "notes": 7,
+      "description": "HEADER POWER DRAFT - INPUTS PENDING",
+      "version": "A4",
+      "electrical_components": 5,
+      "manufacturing_candidate_components": 4,
+      "reference_components": 1,
+      "wires": 12,
+      "notes": 18,
+      "module_titles": 2,
       "note_frames": 0
     }
   ],
   "pcb": {
-    "components": 0,
-    "outline_primitives": 0,
-    "saved": true,
+    "status": "not-modified-this-revision",
     "layout_status": "not-started",
-    "saved_and_reloaded": true
+    "fresh_geometry_validation": "not-run-in-A4"
   },
   "runtime": {
     "cli": "v1.8.0",
@@ -80,9 +37,9 @@
     "connector": "1.8.0",
     "web_editor": "4.1.60",
     "loaded_skill": "1.8.0",
-    "release_consistency": "selected window aligned; separate 1.6.0 connector session excluded by explicit window routing"
+    "release_consistency": "CLI/daemon/connector 1.8.0 aligned; one target Web window at final health check"
   },
-  "scope": "Four-part conditional UART translator with 14 verified pin nets; 33 plain-text design notes on five pages; no complete board design or PCB implementation",
+  "scope": "One-page Header A4 draft: non-manufacturing header reference plus conditional four-part UART circuit; complete power and mating interfaces pending",
   "schematic_coordinates": {
     "units": "raw, 0.01 inch",
     "y_direction": "up",
@@ -97,24 +54,27 @@
   },
   "findings": [
     {
-      "action": "schematic.rename",
-      "requested_name": "ATOM Adapter Rev A - DRAFT",
-      "observed_result_ok": false,
-      "readback_name": "Schematic1",
-      "resolution": "retain original schematic name; ineffective rename removed from final configuration playbook"
+      "action": "sch plan / sch autoconnect",
+      "observed": "plan refused empty-net evidence from sch read; fresh sch list exposed explicit net empty and noConnected false",
+      "resolution": "did not retry stale queue; typed autoconnect strict dry-run and execution succeeded; independent 16-pin comparison passed"
+    },
+    {
+      "action": "sch group / gate",
+      "observed": "window-only group query used project name; existing group registered by project UUID",
+      "resolution": "all final group checks use matching project UUID"
     }
   ],
   "native_snapshot": {
-    "path": "local/atom-adapter-a1-uart-notes.epro2",
-    "bytes": 396676,
-    "sha256": "515fc6c140e8924894674a7eb4ad2142800e5e4591af0863d0ccaa812f094074",
+    "path": "local/atom-adapter-a4-header.epro2",
+    "bytes": 486740,
+    "sha256": "e2f899e43a0cd1431da7549d2071dbf11311066e520a4ed265ec983e201758ab",
     "zip_integrity_verified": true,
     "restore_verified": false,
     "tracked_in_git": false
   },
   "schematic_validation": {
-    "pin_nets_matched": 14,
-    "parts": 4,
+    "pin_nets_matched": 16,
+    "parts": 5,
     "layout_lint": "pass",
     "clusters": "pass",
     "check": "pass; one verified non-junction crossing info",
@@ -123,10 +83,17 @@
     "native_drc": {
       "fatal": 0,
       "error": 0,
-      "warning": 4,
+      "warning": 5,
+      "details_available": false,
       "details": "aggregate only; individual causes unresolved"
     },
     "hardware": "not-run",
-    "annotation_style": "33 plain text notes; no note rectangles; one circuit frame retained"
+    "annotation_style": "18 plain-text notes and two module titles; no note rectangles",
+    "saved_and_reloaded": true
+  },
+  "preview": {
+    "path": "../../docs/assets/carrier-a4-schematic.png",
+    "sha256": "c1357a98be8d153e468ff9a6345d704eb27c58c8332873131cc7a0131cf212e8",
+    "kind": "official whole-sheet PNG; visual review only"
   }
 }
