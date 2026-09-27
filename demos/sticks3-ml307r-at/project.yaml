@@ -14,4 +14,4 @@ modules:
   - ml307r-dl-tiny-at-carrier
 validation:
   build: passed
-  hardware: pending
+  hardware: partial

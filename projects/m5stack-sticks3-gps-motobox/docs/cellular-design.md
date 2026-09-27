@@ -3,9 +3,12 @@
 ## Scope and data path
 
 The existing GPS Unit stays on Grove GPIO9/10 (UART2). ML307R-DL Tiny AT uses
-Hat2 GPIO5/6 (UART1) through `78/esp-ml307` 3.7.5 (Apache-2.0). The modem
-provides TCP and UDP data sockets. ESP32 mbedTLS handles the MQTT TLS handshake,
-public certificate chain and hostname verification. The application retains the
+Hat2 GPIO7/4 (UART1 TX/RX) through `78/esp-ml307` 3.7.5 (Apache-2.0). The modem
+provides TCP and UDP data sockets. ESP32 mbedTLS handles the TLS handshake,
+public certificate chain and hostname verification. The custom transport also
+supports the MQTT WebSocket framing used by MotoBox's port 443 WSS endpoint;
+raw MQTT/TLS remains available for reachable `mqtts://` brokers. The application
+retains the
 device identity, `vehicle/v1/{device_id}/telemetry`, binding request/response
 topics, QoS 1 PUBACK and 120-frame RAM queue. Wi-Fi is not started in cellular mode.
 
@@ -36,7 +39,8 @@ registration and data failure reasons remain distinct.
 ## Task stack sizing and observability
 
 Stack sizes are in ESP-IDF bytes. The configured size covers the largest known
-path and local buffers; real margins remain unverified until a loaded 4G run.
+path and local buffers. Short integrated GPS/4G/WSS runs met the stated free-stack
+margin; the 30-minute loaded run remains pending.
 
 | Task | Stack | Largest relevant path |
 | --- | ---: | --- |
@@ -64,10 +68,11 @@ seller image's right-side order: BAT, EN, RX, TX, GND, VIN from top to bottom
 with the shield text upright. The supplied interface table numbers the same
 signals in reverse from VIN=1 to BAT=6; it specifies VIN 5–16 V, 3.3 V UART,
 and EN pulled up to VIN. The user's first meter reading found Tiny TXD idle
-around 3.6 V, so this UART claim is not confirmed for the board in use. Keep
-Tiny TXD off StickS3 GPIO6 until a UART-suitable level shifter or measured
-divider is in place. Keep modem power separate from StickS3 Grove/Hat2
-output, share ground, leave EN unconnected for bring-up, attach antenna before
+around 3.6 V, but the user later questioned that reading. GPIO7/4 short-window
+AT, registration and TCP tests worked with direct UART wiring. Repeat the
+logic-level measurement before prolonged use and add level adaptation if the
+actual TXD high exceeds StickS3 input limits. Keep modem power separate from
+StickS3 Grove/Hat2 output, share ground, leave EN unconnected for bring-up, attach antenna before
 power, and do not power BAT at the same time as VIN. The
 prior Wi-Fi firmware commits and hardware records remain available as rollback;
 the independent AT/TCP Demo was flashed, while the integrated 4G project

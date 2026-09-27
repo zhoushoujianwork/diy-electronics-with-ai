@@ -74,7 +74,37 @@
   11 seconds and 22 over 30 seconds at 115200 bps. This proves the modem
   receives StickS3 AT and replies on that Tiny pin; StickS3 receiving the reply
   is the remaining UART check.
-  Registration, TCP and the integrated GPS/MotoBox 4G firmware have not been hardware-verified.
+  After GPIO4/RX was connected to Tiny TXD, the independent Demo `1c8dc1a`
+  completed four AT identification, CHINA MOBILE registration (CSQ 31) and
+  TCP connections to its public test endpoint over a 120-second serial run.
+  A follow-up Demo `324d9ef` completed two more cycles in 50 seconds and
+  measured active free stack at 9580/12288 B for `bringup`, 1096/2048 B for
+  `modem_receive` and 3364/6144 B for `modem_event`. No panic, unexpected
+  reset or USB reconnect was observed. This is hardware evidence for the
+  isolated modem path only; power/current peaks and integrated GPS/MQTT
+  behavior remain unmeasured.
+  At that point, registration and TCP had been verified only in the isolated
+  Demo; the integrated GPS/MotoBox 4G uplink had not been flashed.
+  The first integrated cellular build used `mqtts://` on port 8883. In a
+  150-second capture it registered and obtained UDP network time, but all 12
+  MQTT TCP connection attempts failed; 27 telemetry frames accumulated in RAM.
+  A development-computer check also timed out on public port 8883, while the
+  MotoBox port 443 `/mqtt` WebSocket upgrade returned HTTP 101. The firmware
+  then gained a WSS wrapper around the existing ESP32-side, certificate-verified
+  TLS transport; this preserves MQTT QoS 1 and requires no Wi-Fi.
+  With that build flashed on StickS3 K150, GPS Unit v1.1 and the same separately
+  powered ML307R-DL Tiny, a 150-second follow-up serial capture observed
+  sequences 3–32 sampled, published and PUBACKed in order. Fifteen heartbeats
+  reported GPS NMEA online, no indoor fix, trusted time, MQTT connected, zero
+  queue and zero drops at the end. No panic, stack overflow, task-start failure,
+  abnormal reset or USB reconnect appeared. Lowest observed free stacks in
+  bytes were GPS 1480, cellular 9552, modem receive 1276, modem event 3336,
+  MQTT 8784, telemetry 2400, uplink 4936, UI 4204, voice 3308 and heartbeat
+  1264; each exceeded 25% of its configured stack and 1024 B. A read-only
+  MotoBox SQL query later found the first 128 frames of the cold-reset run in
+  continuous ingestion order with original `ext.ts_ms` preserved and `gsm`
+  capability/state present. Raw serial, device ID and SQL details stay outside Git.
+  Longer stability, deliberate outage/recovery and outdoor motion remain pending.
   The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
   Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and
   all hardware evidence below remain software rollback references.

@@ -22,9 +22,12 @@
 #include "sdkconfig.h"
 #include "tcp.h"
 #include "udp.h"
+#include "esp_transport_ws.h"
 
 namespace {
 constexpr auto TAG = "cellular";
+constexpr gpio_num_t MODEM_TX_PIN = GPIO_NUM_7;
+constexpr gpio_num_t MODEM_RX_PIN = GPIO_NUM_4;
 constexpr EventBits_t MODEM_READY = BIT0;
 constexpr size_t RX_CAPACITY = 32768;  // Full TLS record plus AT URC bursts.
 constexpr int64_t MIN_UTC_MS = 1735689600000LL;
@@ -132,7 +135,7 @@ void modem_task(void *) {
     uint32_t backoff_ms = 2000;
     for (;;) {
         if (!modem) {
-            auto result = AtModem::Detect(GPIO_NUM_5, GPIO_NUM_6, GPIO_NUM_NC, 115200, 10000);
+            auto result = AtModem::Detect(MODEM_TX_PIN, MODEM_RX_PIN, GPIO_NUM_NC, 115200, 10000);
             if (!result) {
                 copy_field(current.error, sizeof(current.error), result.error().ToString());
                 publish_status();
@@ -163,7 +166,8 @@ void modem_task(void *) {
                 if (!ready) xEventGroupClearBits(modem_events, MODEM_READY);
             });
             copy_field(current.model, sizeof(current.model), modem->GetModuleRevision());
-            ESP_LOGI(TAG, "MODEM_DETECTED model=%s uart=1 tx=5 rx=6", current.model);
+            ESP_LOGI(TAG, "MODEM_DETECTED model=%s uart=1 tx=%d rx=%d", current.model,
+                     static_cast<int>(MODEM_TX_PIN), static_cast<int>(MODEM_RX_PIN));
         }
         if (strncmp(current.model, "ML307R", 6) != 0) {
             copy_field(current.error, sizeof(current.error), "unexpected_modem");
@@ -372,7 +376,10 @@ extern "C" esp_err_t cellular_start(cellular_status_callback_t status_cb,
     return ok == pdPASS ? ESP_OK : ESP_ERR_NO_MEM;
 }
 
-extern "C" esp_transport_handle_t cellular_tls_transport_create(void) {
+extern "C" esp_transport_handle_t cellular_mqtt_transport_create(const char *uri) {
+    if (!uri || (strncmp(uri, "mqtts://", 8) != 0 && strncmp(uri, "wss://", 6) != 0)) {
+        return nullptr;
+    }
     esp_transport_handle_t handle = esp_transport_init();
     if (!handle) return nullptr;
     auto *context = new TlsTransport;
@@ -384,5 +391,23 @@ extern "C" esp_transport_handle_t cellular_tls_transport_create(void) {
     esp_transport_set_context_data(handle, context);
     esp_transport_set_func(handle, connect_tls, read_tls, write_tls, close_tls,
                            poll_read, poll_write, destroy_tls);
-    return handle;
+    esp_transport_set_default_port(handle, 8883);
+    if (strncmp(uri, "mqtts://", 8) == 0) return handle;
+
+    esp_transport_handle_t ws = esp_transport_ws_init(handle);
+    if (!ws) {
+        esp_transport_destroy(handle);
+        return nullptr;
+    }
+    const char *path = strchr(uri + 6, '/');
+    esp_transport_ws_set_path(ws, path ? path : "/");
+    if (esp_transport_ws_set_subprotocol(ws, "mqtt") != ESP_OK) {
+        esp_transport_destroy(ws);
+        esp_transport_destroy(handle);
+        return nullptr;
+    }
+    esp_transport_set_default_port(ws, 443);
+    // ESP-MQTT keeps the custom handle for its lifetime. The WebSocket handle
+    // uses the TLS handle as its parent; both live until the device restarts.
+    return ws;
 }

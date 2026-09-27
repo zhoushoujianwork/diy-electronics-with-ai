@@ -2,13 +2,14 @@
 
 StickS3 K150 reads Unit GPS v1.1 and uploads MotoBox telemetry through an ML307R-DL Tiny 4G board.
 The ESP32 validates the MQTT TLS certificate and hostname, then displays and speaks a server-generated
-one-time binding code. This 4G revision builds, but its wiring, signal level, power and end-to-end
-operation await hardware verification. Earlier Wi-Fi verification is recorded separately in
+one-time binding code. A short 4G bench run verified GPS input, cellular time, TLS/WSS MQTT,
+QoS 1 acknowledgements and MotoBox ingestion. Long-run stability, outage recovery, signal level,
+power and outdoor movement remain open. Earlier Wi-Fi verification is recorded separately in
 [validation](docs/validation.md).
 
 The project remains a `prototype`. The earlier Wi-Fi configuration passed indoor connectivity,
-offline recovery, mini-program binding and a stationary outdoor GNSS fix. This 4G configuration has
-only passed a firmware build and host tests.
+offline recovery, mini-program binding and a stationary outdoor GNSS fix. The 4G configuration
+has passed a short integrated bench run and still needs the acceptance checks below.
 
 The first public demonstration uses a platform-managed device account. MotoBox broker access is issued
 separately; cloning this repository does not automatically create a cloud device or MQTT credential.
@@ -20,8 +21,8 @@ separately; cloning this repository does not automatically create a cloud device
 设备绑定以及位置/轨迹查看与分享入口。需要已激活且可用的物联网卡、分别满足负载的电源、
 设备专属 MotoBox 凭据和小程序访问资格。
 
-这些联网和定位记录来自先前 Wi-Fi 固件；4G 实机联网、断网补传、移动轨迹、
-定位精度与微信位置分享完整链路仍待验收。
+4G 实机已在室内完成 GPS 数据接收、蜂窝授时和 MotoBox 状态帧入库；两分钟断网补传、
+移动轨迹、定位精度与微信位置分享完整链路仍待验收。先前 Wi-Fi 固件的验证单独记录。
 从下面的图解手册入门，再按本页步骤构建运行；精确版本与实测范围以[验证记录](docs/validation.md)为准。
 
 ## Illustrated user manual / 中文图解手册
@@ -75,14 +76,14 @@ BAT、EN、RX、TX、GND、VIN**。新提供的接口表则从底部 **VIN=引�
 | StickS3 Hat2 | StickS3 信号 | Tiny 实物信号 | 商品图从上数 | 接口表引脚序号 |
 | --- | --- | --- | --- | --- |
 | 1 脚 | GND | **GND**，共地 | 第 5 孔 | 2 |
-| 2 脚 | GPIO5 / UART1 TX | **RX / RXD** | 第 3 孔 | 4 |
-| 6 脚 | GPIO6 / UART1 RX | **TX / TXD**，经电平转换 | 第 4 孔 | 3 |
+| 8 脚 | GPIO7 / UART1 TX | **RX / RXD** | 第 3 孔 | 4 |
+| 4 脚 | GPIO4 / UART1 RX | **TX / TXD** | 第 4 孔 | 3 |
 
 接口表标称 VIN 为 **5–16 V**、TXD/RXD 为 **3.3 V 电平**；这是用户提供的板卡资料，
-但用户在独立 5 V 供电、UART 断开时测得 Tiny TXD 空闲约 **3.6 V**。目前不要将
-Tiny TXD 直接接到 StickS3 GPIO6；先用适用于 UART 的电平转换器，或经实测符合
-3.3 V GPIO 输入范围的分压电路，再恢复串口联调。Tiny 的准确 PCB 版本和电平
-波形仍待确认。
+但用户首次测得 Tiny TXD 空闲约 **3.6 V**，后来怀疑读数不准；电平尚未复测。
+短窗实机试验以直连方式在 GPIO7/4 上完成 AT、注册和 TCP，但这不能代替接口
+电平确认。长期使用前应复测 TXD 高电平，并按实测值决定是否加入电平转换。
+Tiny 的准确 PCB 版本和波形仍待确认。
 Tiny 的 VIN 用独立 5 V/至少 2 A 供电支路，电源地与 StickS3 共地；不要从 Hat2
 EXT_5V 或 Grove 红线给 4G 模组供电。若要共用一只电源，先以 5 V/至少 3 A 为台架
 预算，从电源端分两路，分别接 StickS3 Hat2 **15 脚 5V_IN（输入）**和 Tiny **VIN**，
@@ -113,7 +114,7 @@ cp sdkconfig.local.defaults.example sdkconfig.local.defaults
 ```
 
 Fill in the device-specific MotoBox MQTT TLS values. Keep the ML307R-DL AT firmware and active
-SIM ready; the default cellular build uses `mqtts://` on port 8883 and does not start Wi-Fi.
+SIM ready; the default cellular build uses MQTT over WSS/TLS on port 443 and does not start Wi-Fi.
 Do not commit the local configuration. Build and
 flash with both defaults files:
 
@@ -128,8 +129,11 @@ idf.py -B build -p /dev/cu.usbmodemXXXX flash monitor
 If you previously built this project under `demos/`, use a fresh build directory after the move to `projects/`;
 the old CMake cache contains absolute paths. Keep your ignored local configuration when rebuilding.
 
-The cellular build rejects empty credentials and requires `mqtts://`. It validates the server
-hostname and public certificate chain on the ESP32. Cellular UDP SNTP supplies time indoors;
+The cellular build rejects empty credentials and requires `wss://` or `mqtts://`. The default
+MotoBox endpoint is `wss://emqx.daboluo.cc/mqtt`; port 8883 timed out in the 2026-09-27
+bench check, while the port 443 WebSocket handshake succeeded from the development computer.
+The ESP32 validates the server hostname and public certificate chain for either scheme.
+Cellular UDP SNTP supplies time indoors;
 valid GNSS time remains another source. TLS errors leave the queue pending.
 
 The Mandarin binding prompt and digit clips are checked in as 16 kHz mono PCM, so normal firmware builds do
@@ -189,11 +193,11 @@ POWER_READY lcd=on grove_5v=on pm1=0x6e
 AUDIO_READY amp=off format=0x0c volume=0xbf
 BINDING_VOICE_READY sample_rate=16000 task_stack=4096
 GNSS_READY uart=2 baud=115200 rx=10 tx=9
-MODEM_DETECTED model=ML307R-DL... uart=1 tx=5 rx=6
+MODEM_DETECTED model=ML307R-DL... uart=1 tx=7 rx=4
 NETWORK_READY carrier=... csq=...
 TIME_TRUSTED source=CELLULAR_SNTP ...
 TLS_VERIFIED host=...
-MQTT_CONNECTED uri=mqtts://...
+MQTT_CONNECTED uri=wss://...
 BINDING_STATUS_REQUESTED msg_id=...
 BINDING_STATUS bound=0
 BINDING_CODE_REQUESTED msg_id=...

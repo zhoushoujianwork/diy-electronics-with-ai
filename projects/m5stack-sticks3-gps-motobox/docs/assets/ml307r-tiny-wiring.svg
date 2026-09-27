@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="610" viewBox="0 0 1100 610" role="img" aria-labelledby="title desc">
   <title id="title">StickS3, GPS Unit and ML307R-DL Tiny functional wiring</title>
-  <desc id="desc">GPS Unit v1.1 remains on the StickS3 Grove connector. With the modem shield text upright and its six-hole header on the right, the seller image labels the holes from top to bottom BAT, EN, RX, TX, GND and VIN. A supplied interface table numbers pins in the opposite direction from VIN pin 1 to BAT pin 6. StickS3 Hat2 pin 2 GPIO5 TX connects to Tiny RXD, table pin 4; Hat2 pin 6 GPIO6 RX must receive Tiny TXD, table pin 3, through a UART-suitable level shifter or measured divider because Tiny TXD idle was measured around 3.6 V. Hat2 pin 1 GND connects to Tiny GND, table pin 2. Tiny VIN uses a separate 5 V supply branch with common ground. EN stays unconnected because it is pulled up to VIN and must not be wired directly to a 3.3 V GPIO.</desc>
+  <desc id="desc">GPS Unit v1.1 remains on the StickS3 Grove connector. With the modem shield text upright and its six-hole header on the right, the seller image labels the holes from top to bottom BAT, EN, RX, TX, GND and VIN. A supplied interface table numbers pins in the opposite direction from VIN pin 1 to BAT pin 6. StickS3 Hat2 pin 8 GPIO7 TX connects to Tiny RXD, table pin 4; Hat2 pin 4 GPIO4 RX receives Tiny TXD, table pin 3. Hat2 pin 1 GND connects to Tiny GND, table pin 2. Direct UART wiring passed a short AT, registration and TCP test, while a disputed first Tiny TXD idle measurement around 3.6 V still requires verification before long-term use. Tiny VIN uses a separate 5 V supply branch with common ground. EN stays unconnected because it is pulled up to VIN and must not be wired directly to a 3.3 V GPIO.</desc>
   <rect width="1100" height="610" fill="#f7fafc"/>
   <g font-family="Arial, Helvetica, sans-serif">
     <text x="38" y="54" fill="#142738" font-size="30" font-weight="700">StickS3 + GPS Unit + ML307R-DL Tiny</text>
     <text x="38" y="86" fill="#a13b27" font-size="18" font-weight="700">Tiny 按商品图从上数孔位；接口表从底部 VIN=1 反向编号</text>
-    <text x="38" y="116" fill="#a13b27" font-size="18" font-weight="700">Tiny TXD 实测约 3.6 V；经电平转换后才接 StickS3 GPIO6</text>
+    <text x="38" y="116" fill="#a13b27" font-size="18" font-weight="700">GPIO7/4 短窗直连已通；Tiny TXD 电平待复测，长期使用前确认</text>
     <g fill="#fff" stroke="#55728d" stroke-width="3">
       <rect x="38" y="143" width="245" height="220" rx="16"/>
       <rect x="356" y="143" width="340" height="350" rx="16"/>
@@ -25,8 +25,8 @@
       <text x="379" y="221">Grove GND / 5 V</text>
       <text x="379" y="247">GPIO9 TX / GPIO10 RX</text>
       <text x="379" y="300">Hat2 #1 GND</text>
-      <text x="379" y="365">Hat2 #2 GPIO5 · UART1 TX</text>
-      <text x="379" y="430">Hat2 #6 GPIO6 · UART1 RX</text>
+      <text x="379" y="365">Hat2 #8 GPIO7 · UART1 TX</text>
+      <text x="379" y="430">Hat2 #4 GPIO4 · UART1 RX</text>
       <text x="795" y="300">GND · 表#2</text>
       <text x="795" y="365">RXD · 表#4</text>
       <text x="795" y="430">TXD · 表#3</text>
@@ -60,14 +60,14 @@
       <path d="M283 249 H356" stroke="#59a481"/>
       <path d="M696 293 H772" stroke="#4a647b"/>
       <path d="M696 358 H772" stroke="#c47d35"/>
-      <path d="M772 423 H696" stroke="#407ab1" stroke-dasharray="9 6"/>
+      <path d="M772 423 H696" stroke="#407ab1"/>
       <path d="M920 493 V525" stroke="#a13b27" stroke-dasharray="8 7"/>
     </g>
     <g fill="#5d7182" font-size="17">
       <text x="314" y="237" text-anchor="middle">原线</text>
       <text x="733" y="285" text-anchor="middle">共地</text>
       <text x="733" y="349" text-anchor="middle">TX → RX</text>
-      <text x="733" y="452" text-anchor="middle">需转换</text>
+      <text x="733" y="452" text-anchor="middle">RX ← TX</text>
       <text x="38" y="548">StickS3 USB + Tiny 独立 5 V/≥2 A；Tiny 不接 Hat2 EXT_5V/BAT。4G 天线先接好。</text>
       <text x="38" y="578">或外部 5 V/≥3 A 分路接 Hat2 #15 5V_IN 与 Tiny VIN；两板共地，EN 留空。</text>
     </g>

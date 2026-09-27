@@ -114,6 +114,26 @@
   timed out as expected because G4/RX was open. This verifies that Tiny
   receives StickS3's AT commands and sends replies on the socket watched by
   DAPLink. The complete StickS3-to-Tiny receive connection remains to be tested.
+- The user then connected StickS3 GPIO4/RX to the same Tiny TXD node while
+  leaving DAPLink RX as a passive listener; GPIO7/TX remained on Tiny RXD and
+  the grounds were shared. Tiny's current supply rating and voltage under
+  transmit load were not reconfirmed. With Demo firmware `1c8dc1a`, a
+  120-second reset capture completed four successive cycles of
+  `MODEM_DETECTED` (`ML307R-DL-MBRH0S01`), `CELL_REGISTERED` (CHINA MOBILE,
+  CSQ 31), and `TCP_CONNECTED` to the configured public test endpoint on port
+  80. No panic, task-start failure, stack overflow, unexpected reset or USB
+  reconnect appeared. The lowest observed `bringup` free stack was
+  9580/12288 B. This validates the StickS3↔Tiny AT, registration and TCP path
+  for the short run, not MQTT TLS, GPS concurrency or 30-minute stability.
+- The Demo was rebuilt, hash-verified and flashed as `324d9ef` to measure
+  driver stacks before the modem object was destroyed. A 50-second reset
+  capture completed two more AT/registration/TCP cycles. Active free-stack
+  high-water marks were `bringup` 9580/12288 B, `modem_receive` 1096/2048 B
+  and `modem_event` 3364/6144 B. All meet the project's minimum of at least
+  25% and 1024 B under this AT/TCP load. The receive margin exceeds the
+  absolute minimum by only 72 B; integrated load still needs measurement.
+  Logs after the local modem object was destroyed correctly reported zero for
+  its no-longer-running worker tasks. Raw logs remain outside Git.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
   be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom

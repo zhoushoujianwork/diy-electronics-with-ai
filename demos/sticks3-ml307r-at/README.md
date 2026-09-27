@@ -2,10 +2,10 @@
 
 This focused Demo checks whether an ML307R-DL Tiny **AT** carrier can be detected over
 StickS3 UART1, register on a cellular network and open a TCP socket. It does not use
-Wi-Fi, GPS, MQTT or MotoBox credentials. It remains build-verified: StickS3
-booted and its UART pins passed loopback, while its direct Tiny connection did
-not receive AT. A separate DAPLink UART test confirmed Tiny AT, SIM registration
-and signal; the StickS3 cellular path remains unverified.
+Wi-Fi, GPS, MQTT or MotoBox credentials. Its GPIO7/TX and GPIO4/RX wiring has
+now detected the Tiny, confirmed cellular registration and opened a TCP socket
+in a two-minute run. Longer stability and power tests remain pending, so its
+manifest remains `build-verified`.
 The `78/esp-ml307` 3.7.5 dependency is licensed under
 [Apache-2.0](https://github.com/78/esp-ml307/blob/main/LICENSE).
 
@@ -17,22 +17,22 @@ The `78/esp-ml307` 3.7.5 dependency is licensed under
   six-hole header on the right. Its labels run top to bottom **BAT, EN, RX, TX,
   GND, VIN**. The supplied interface table numbers these pins in reverse,
   starting with VIN as pin 1: GND=2, TXD=3, RXD=4, EN=5, BAT=6. The current
-  **direction-swapped diagnostic build** uses StickS3 Hat2 pin 1 (GND) → Tiny
+  **validated GPIO7/4 mapping** uses StickS3 Hat2 pin 1 (GND) → Tiny
   **GND** (table pin 2, fifth hole from the top); Hat2 pin 8 (GPIO7/UART1 TX)
   → Tiny **RXD** (table pin 4, third hole); Hat2 pin 4 (GPIO4/UART1 RX) ← Tiny
-  **TXD** (table pin 3, fourth hole). Remove DAPLink TX/RX when moving its
-  previously successful Tiny UART sockets to StickS3. Confirm the same labels
-  on the actual carrier. The integrated project still uses GPIO5/6 until this
-  alternate-pin test establishes a working connection.
+  **TXD** (table pin 3, fourth hole). Disconnect DAPLink TX before attaching
+  StickS3 TX; DAPLink RX may remain as a passive monitor if all grounds are shared.
+  Confirm the same labels on the actual carrier. The integrated project uses this GPIO7/4
+  mapping as well.
 - Supply StickS3 by USB. Supply Tiny separately and connect the grounds. Confirm
   the Tiny carrier's exact revision and marked power input before connecting.
   The supplied interface table specifies VIN 5–16 V and TXD/RXD 3.3 V. Use an
   independent 5 V supply branch rated at least 2 A, not StickS3 Grove or Hat2
   EXT_5V. The user's first meter reading found Tiny TXD idle around **3.6 V**,
   above the supplied table's 3.3 V claim. The user questioned this reading;
-  it has not been independently repeated. Use a UART-suitable level shifter or
-  a measured divider that presents a valid 3.3 V logic high without exceeding
-  the GPIO limit.
+  it has not been independently repeated. Before long-term use, measure the
+  actual TXD high level again; if it exceeds StickS3's GPIO input range, add a
+  UART-suitable level shifter or a measured divider.
 - The supplied table says EN is pulled up to VIN. Leave EN unconnected for this
   bring-up; at 5 V VIN it must not connect directly to a 3.3 V StickS3 GPIO.
   BAT is a separate 3.4–4.2 V battery input and must not be powered with VIN.

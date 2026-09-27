@@ -18,7 +18,7 @@ config DEMO_WIFI_PASSWORD
 
 config DEMO_MQTT_URI
     string "MotoBox MQTT TLS URI"
-    default "mqtts://emqx.daboluo.cc:8883"
+    default "wss://emqx.daboluo.cc/mqtt"
 
 config DEMO_MQTT_USERNAME
     string "Device MQTT username"

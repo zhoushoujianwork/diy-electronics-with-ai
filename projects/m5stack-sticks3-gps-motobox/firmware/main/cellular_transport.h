@@ -26,7 +26,7 @@ typedef void (*cellular_status_callback_t)(const cellular_status_t *status);
 typedef void (*cellular_time_callback_t)(int64_t utc_ms);
 
 esp_err_t cellular_start(cellular_status_callback_t status_cb, cellular_time_callback_t time_cb);
-esp_transport_handle_t cellular_tls_transport_create(void);
+esp_transport_handle_t cellular_mqtt_transport_create(const char *uri);
 
 #ifdef __cplusplus
 }

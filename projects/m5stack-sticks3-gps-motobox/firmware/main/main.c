@@ -470,7 +470,7 @@ static esp_err_t mqtt_init(void)
 #endif
     };
 #if CONFIG_DEMO_CELLULAR
-    config.network.transport = cellular_tls_transport_create();
+    config.network.transport = cellular_mqtt_transport_create(CONFIG_DEMO_MQTT_URI);
     ESP_RETURN_ON_FALSE(config.network.transport, ESP_ERR_NO_MEM, TAG, "cellular transport");
 #endif
     mqtt_client = esp_mqtt_client_init(&config);
@@ -699,7 +699,8 @@ void app_main(void)
     if ((!CELLULAR_ENABLED && strlen(CONFIG_DEMO_WIFI_SSID) == 0) ||
         strlen(CONFIG_DEMO_MQTT_USERNAME) == 0 ||
         strlen(CONFIG_DEMO_MQTT_PASSWORD) == 0 ||
-        (CELLULAR_ENABLED && strncmp(CONFIG_DEMO_MQTT_URI, "mqtts://", 8) != 0) ||
+        (CELLULAR_ENABLED && strncmp(CONFIG_DEMO_MQTT_URI, "mqtts://", 8) != 0 &&
+         strncmp(CONFIG_DEMO_MQTT_URI, "wss://", 6) != 0) ||
         (!CELLULAR_ENABLED && strncmp(CONFIG_DEMO_MQTT_URI, "mqtts://", 8) != 0 &&
          strncmp(CONFIG_DEMO_MQTT_URI, "wss://", 6) != 0)) {
         ESP_LOGE(TAG, "CONFIG_INVALID require device MQTT credentials and supported TLS URI");
