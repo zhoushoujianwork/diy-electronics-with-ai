@@ -7,6 +7,10 @@ Tiny 页已实现 **UART 电平转换候选子电路**，五个功能页已添�
 备注采用深灰色普通文字，不加 zone 边框；Tiny 页的备注放在电路右侧。
 项目仍为 `idea`，完整供电、连接器、PCB 和实机验证尚未完成。
 
+**后续整板目标已收敛为一张 A4**，依据[首版产品目标和 BOM](../../docs/rev-a-product-and-bom.md)。
+本目录的五页 A1 是历史草稿，本轮尚未执行页面合并；旧 G23/G33 GNSS 备注由现有 Grove G26/G32 方案替代。
+[选型库身份](selection-a2-library.json)仅是 read-only 查询结果，新器件没有放入原理图。
+
 ![原生 UART 候选电路和右侧无框设计备注，A1 草稿，非实机验证](../../docs/assets/uart-a1-schematic.png)
 
 ## 已实现的子电路

@@ -34,6 +34,7 @@
   },
   "tiny_candidate": {
     "vendor_label": "芯引者",
+    "public_product_url": "https://item.taobao.com/item.htm?id=1055078978369",
     "module_label_in_product_image": "ML307R-DL",
     "physical_revision": null,
     "reported_board_xy": [20, 20],
@@ -62,17 +63,19 @@
   },
   "power": {
     "user_goal": "Type-C input; automatic operation after provisioning",
-    "input_location": "pending",
+    "input_location": "carrier Type-C selected for Rev A; physical placement pending",
     "candidate_nominal_input_v": 5,
     "available_current_a": null,
-    "reverse_current_protection": "to-be-designed",
+    "reverse_current_protection": "LM66100 preferred for host/GPS branch; full power and transient design pending",
     "battery_in_scope": false
   },
   "eda": {
     "project_uuid": "247f2261614c4e20861e8a96a79cb7ba",
     "schematic_uuid": "ea2ad4292979849d",
     "pcb_uuid": "eb8b5e3ad6c98f5f",
-    "native_design_status": "scaffold-created; no circuit or PCB layout",
+    "native_design_status": "A1 four-part conditional UART circuit and five note pages; complete board and PCB pending",
+    "target_schematic_pages": 1,
+    "page_consolidation_status": "planned; native A1 pages unchanged during selection review",
     "host_requirement": "Codex in-app browser only; no desktop EDA client",
     "reference": "easyeda/README.md"
   },
@@ -85,6 +88,15 @@
     "enclosure_baseline_commit": "6e60b92",
     "ready_for_schematic_freeze": false,
     "open_inputs": ["Tiny board-level power and logic specification", "Tiny EN definition", "exact connector geometry and physical pin numbering", "GNSS current-revision electrical evidence", "power budget and host power isolation"]
+  },
+  "rev_a_selection": {
+    "reference": "../docs/rev-a-product-and-bom.md",
+    "bom": "rev-a-bom.csv",
+    "product": "ATOM Lite Tiny 4G adapter base with external GNSS through existing host Grove",
+    "full_bom_frozen": false,
+    "generic_part_identities_reviewed": true,
+    "new_parts_placed_in_eda": false,
+    "critical_inputs": ["Tiny VIN BAT UART EN and automatic startup", "mating connector geometry and current rating", "GNSS revision logic and cable", "input protection and current/inrush budget"]
   },
   "adapter_strategy": {
     "status": "complete Tiny snap-case Rev B CAD geometry verified; physical fit and native PCB pending",
@@ -172,7 +184,10 @@
     "reference": "enclosure/README.md"
   },
   "gnss_expansion": {
-    "proposal": "market-available receiver board on separate UART with module-specific cable mapping",
+    "proposal": "Rev A external U032-V11 on ATOM existing Grove with separate UART and verified module-specific cable mapping",
+    "atom_host_tx_gpio": 26,
+    "atom_host_rx_gpio": 32,
+    "carrier_connector_required_rev_a": false,
     "logical_signals": ["power with verified voltage", "GND", "HOST_RX / GNSS_TX", "HOST_TX / GNSS_RX"],
     "connector_mpn": null,
     "pin_order": null,

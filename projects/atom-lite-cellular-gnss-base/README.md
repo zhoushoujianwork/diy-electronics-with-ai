@@ -5,7 +5,9 @@
 通过 Type-C 供电，实现开机自动联网、定位并上报 MotoBox。完整保留需求、调研、原理图、PCB、
 固件、验证、试产和量产准备过程，作为 DIY Lab 的开放教学项目；ATOM 是首个实现目标。
 
-**当前状态：`idea`，已完成 UART 电平转换候选子电路，正在确认 Tiny 板级输入。整板原理图、PCB、固件和实机验收仍未完成。**
+**当前状态：`idea`。首版收敛为 Tiny 4G 适配底座，GNSS 复用 ATOM 自带 Grove 外接 GPS Unit，整板原理图目标为一页。**
+已核对通用器件料号与库身份；Tiny 板级输入、连接器几何与完整电源设计仍待补齐。
+原生工程保留 A1 UART 候选电路和五页历史草稿，尚未执行单页重绘；PCB、固件和实机验收未完成。
 24 × 24 mm 是外设外轮廓目标；Tiny 独立卡扣外壳已建模，暂高 11.8 mm，完整底座的 PCB 板框和高度尚未确定。
 
 ![ATOM Lite 与 Tiny 通信板的尺寸及功能分工示意，未定型的设计概念，不是 PCB 或实机证据](docs/assets/stack-concept.svg)
@@ -32,13 +34,15 @@
 用户已确定顺序：**先做 Tiny 打印外壳，再设计 ATOM / StickS3 两款适配 PCB**。
 已完成[底壳＋卡扣上盖 Rev B](hardware/enclosure/README.md)，提供朝下和侧向两种 6P 排针出口，
 外形暂定 24 × 24 × 11.8 mm。STEP/STL 几何检查通过；含针尺寸、板托接触区与打印实物配合仍需验证。
-GNSS 首版提议采用[独立四线接口与第二路 UART](docs/gnss-uart-expansion.md)接现成接收板。
+GNSS 首版采用[主机现有 Grove 与第二路 UART](docs/rev-a-product-and-bom.md)接现成 GPS Unit，
+优先分配 G26/G32，节省载板插座占位；实际电平与线束尚待核验。
 
 已完成[首轮 PCB 设计调研](docs/pcb-design-research.md)，包含两款主机 GPIO 分配提案、电源路径、
 电平转换候选与落图前缺口。ML307R 裸模组使用 1.8 V UART，不能据此认定 Tiny 已有 3.3 V 转换；
 Tiny 板级资料及 GNSS 当前修订电平确认后，再冻结接线与原理图。
 已在内置浏览器实现 [EasyEDA A1 草稿](hardware/easyeda/README.md)：Tiny 页包含 TXU0202、两颗去耦电容和 OE 下拉的候选电路，五页添加普通中文设计备注。
 Tiny 电压域仍标为待定；PCB 尚无板框、器件或布线。
+最新[产品目标与选型](docs/rev-a-product-and-bom.md)以一张 A4 表达整板，旧草稿中的 G23/G33 GNSS 提案由 Grove G26/G32 替代。
 
 电子功能先用 **ATOM Lite + Tiny Cat.1 + 独立 GNSS** 的最小实验核验，再完成自研载板和项目固件。
 首版用“现有 Tiny + 一块主机适配 PCB”，两种主机尽量复用通信电路与软件协议，分别处理接口与结构。
@@ -50,6 +54,8 @@ StickS3 可以做顶帽，或由顶部接入后将模块沿背面放置，详见
 其 ESP32-S3 固件、PSRAM 设置、板级引脚和硬件验证不能直接用于本项目。
 
 ## 文档入口
+
+先看[首版产品目标、单页原理图安排与器件选型](docs/rev-a-product-and-bom.md)，以及[Rev A BOM](hardware/rev-a-bom.csv)。
 
 1. [原始需求与测量记录](docs/brief.md)
 2. [需求与验收条件](docs/requirements.md)
@@ -67,8 +73,9 @@ StickS3 可以做顶帽，或由顶部接入后将模块沿背面放置，详见
 连接 Tiny 之前需要查清 VIN/BAT 的范围、EN 有效电平、UART 电压域及插针正反面。
 ATOM 的 5V、3V3 和 GPIO 不应按接口名称直接与 Tiny 连接。
 
-单 Type-C 是使用体验目标。初步建议由底座进行供电分配，但仍需与“从 ATOM 的 Type-C 输入”方案
-比较空间和载流能力。ATOM 调试口与底座供电同时插入时必须验证防倒灌。
+首版选择由底座 Type-C 进行供电分配，Tiny 与主机各自分路；主机支路首选 LM66100 防倒灌，
+使用已核实的 5 V / 3 A 电源完成受控原型实验。ATOM 调试口与底座供电同插仍须实测。
+Tiny 输入、总负载、浪涌与输入保护尚未冻结，不能据此直接接线。
 StickS3 版本需区分 Hat2 的 `5V_IN` 与 `EXT_5V`；初步评估从前者给主机输入电源，4G 独立分路。
 其 Grove 标称带载最大 4.88 V @ 0.38 A，不作为蜂窝电源能力保证。
 

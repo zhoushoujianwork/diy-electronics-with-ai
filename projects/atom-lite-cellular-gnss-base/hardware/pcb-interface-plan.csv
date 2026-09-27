@@ -1,8 +1,8 @@
 variant,function,host_gpio,host_connector,official_contact_reference,host_direction,external_endpoint,voltage_rule,status,source
 atom-lite,MODEM_TX,19,bottom expansion,,output,Tiny RX via interface circuit,Tiny logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
 atom-lite,MODEM_RX,22,bottom expansion,,input,Tiny TX via interface circuit,Tiny logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
-atom-lite,GNSS_TX,23,bottom expansion,,output,GNSS RX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
-atom-lite,GNSS_RX,33,bottom expansion,,input,GNSS TX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,GNSS_TX,26,existing Grove,,output,external GPS Unit RX through verified cable,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/rev-a-product-and-bom.md
+atom-lite,GNSS_RX,32,existing Grove,,input,external GPS Unit TX through verified cable,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/rev-a-product-and-bom.md
 atom-lite,MODEM_CTRL,25,bottom expansion,,reserved-output,Tiny EN through circuit defined after verification,EN domain and polarity unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
 atom-lite,UART_OE_CANDIDATE,21,bottom expansion,,reserved-output,optional TXU0202 OE; host connector not yet drawn,HOST_3V3 logic; default disabled by 100k pull-down,proposal-not-for-wiring,easyeda/README.md
 atom-lite,HOST_POWER,,bottom expansion,,input,isolated carrier host branch,5 V path and actual board revision to verify,proposal-not-for-wiring,../docs/pcb-design-research.md

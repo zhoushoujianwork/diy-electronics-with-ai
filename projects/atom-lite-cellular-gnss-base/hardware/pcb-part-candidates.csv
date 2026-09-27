@@ -1,4 +1,4 @@
 function,manufacturer,mpn,package,condition,unresolved,selection_status,datasheet
 UART level translation,Texas Instruments,TXU0202DCUR,VSSOP-8 DCU,only if receiver or Tiny UART requires translation,low-side supply and OE sequencing and library pin mapping,candidate-not-final,https://www.ti.com/lit/ds/symlink/txu0202.pdf
-dual-input power selection,Texas Instruments,TPS2121RUXR,VQFN-HR-12 RUX,only if two independent inputs require source selection,host power path and current limit and thermal budget and library pin mapping,candidate-not-final,https://www.ti.com/lit/ds/symlink/tps2121.pdf
+dual-input power selection,Texas Instruments,TPS2121RUXR,VQFN-HR-12 RUX,only if future two independent inputs require source selection,Rev A uses one base input and isolated host branch,not-in-rev-a,https://www.ti.com/lit/ds/symlink/tps2121.pdf
 Type-C current advertisement detection,Texas Instruments,TUSB320IRWBR,X2QFN-12 RWB,if source current must be detected before enabling modem,UFP configuration and load enable logic and termination and library pin mapping,candidate-not-final,https://www.ti.com/lit/ds/symlink/tusb320.pdf

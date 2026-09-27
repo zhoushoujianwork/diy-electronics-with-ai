@@ -43,7 +43,8 @@ Espressif 官方文档分别确认 ESP32 和 ESP32-S3 具有 3 个 UART 控制�
 | ATOM Lite / ESP32 | UART0 保留下载/日志；另两路用于 Tiny 和 GNSS | 显式路由到可用外露 GPIO；不能照用可能连接 Flash 的默认 UART1 引脚 |
 | StickS3 / ESP32-S3 | 为 Tiny、GNSS 分别分配 UART；调试接口单独保留 | Hat2/Grove 实际针位、启动脚、日志占用、板载功能与供电切换 |
 
-对于第一轮模块实验，可优先评估 GNSS 从主机 Grove 接入，Tiny 从主机扩展口接入。
+首版已选择 GNSS 从 ATOM 现有 Grove 接入（主机 TX=G26、RX=G32），Tiny 从主机扩展口接入。
+载板无需重复放置 GNSS 插座；当前修订电平和线束仍需核对。范围收敛见[首版产品目标](rev-a-product-and-bom.md)。
 “芯片有 3 路 UART”只证明资源数量足够，最终 GPIO、电平转换和接线表仍需完成板级审核。
 4G 与 GNSS 不要求使用相同波特率；GNSS 定位更新率也不等于串口波特率。
 

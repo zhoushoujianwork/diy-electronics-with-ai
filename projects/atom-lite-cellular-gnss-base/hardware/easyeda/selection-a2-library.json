@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "recorded_on": "2026-09-27",
+  "verification_scope": "Read-only LCSC identity lookup; no schematic placement or footprint-pin validation",
+  "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+  "components": [
+    {
+      "footprintName": "F1206",
+      "lcsc": "C14165",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "manufacturer": "Littelfuse(美国力特)",
+      "manufacturerId": "0466003.NRHF",
+      "uuid": "74d482ce14884c46994c6e8174171e19",
+      "selection": "conditional-current-and-thermal-budget"
+    },
+    {
+      "footprintName": "C0805",
+      "lcsc": "C15850",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "manufacturer": "SAMSUNG(三星)",
+      "manufacturerId": "CL21A106KAYNNNE",
+      "uuid": "8c1f4a9e9d204b148b36ce719c891bd1",
+      "value": "10uF",
+      "selection": "preferred-see-rev-a-bom"
+    },
+    {
+      "footprintName": "USB-C_SMD-TYPE-C-31-M-12_1",
+      "lcsc": "C165948",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "manufacturer": "韩国韩荣",
+      "manufacturerId": "TYPE-C-31-M-12",
+      "uuid": "74d31c19993b4b9581f3175a7da4b280",
+      "selection": "preferred-see-rev-a-bom"
+    },
+    {
+      "footprintName": "R0603",
+      "lcsc": "C23186",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "manufacturer": "UNI-ROYAL(厚声)",
+      "manufacturerId": "0603WAF5101T5E",
+      "uuid": "b5d09b57bc354a60b86d6a6308651647",
+      "value": "5.1kΩ",
+      "selection": "preferred-see-rev-a-bom"
+    },
+    {
+      "footprintName": "SC-70-6_L2.0-W1.3-P0.65-LS2.1-BL",
+      "lcsc": "C2869734",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "manufacturer": "TI(德州仪器)",
+      "manufacturerId": "LM66100DCKR",
+      "uuid": "0a1cdd72600e437fb12b108f5a84fa68",
+      "selection": "preferred-see-rev-a-bom"
+    },
+    {
+      "footprintName": "CONN-SMD_HY2.0-4P",
+      "lcsc": "C722729",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "manufacturer": "CAX(创都)",
+      "manufacturerId": "HY2.0-4P-WT",
+      "uuid": "e85cb22706294c8198880a30d324359b",
+      "selection": "not-used",
+      "reason": "Catalog HY title but returned drawing says PH2.0; M5 Grove mating compatibility unverified; Rev A reuses host Grove."
+    }
+  ]
+}

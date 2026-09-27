@@ -1,11 +1,11 @@
 function,candidate,quantity_per_prototype,selection_status,remaining_evidence
 controller,M5Stack ATOM Lite C008,1,user-selected,physical revision and stack connector geometry
 cellular daughterboard,芯引者 Tiny with ML307R-DL marking,1,candidate,exact board revision and electrical specification
-GNSS,M5Stack Unit GPS v1.1 U032-V11,1,bench-prototype proposal,final internal or external placement
+GNSS,M5Stack Unit GPS v1.1 U032-V11,1,external via existing ATOM Grove selected,current revision logic and cable mapping
 carrier PCB,custom ATOM stack carrier,1,planned,schematic and footprint and layout and DRC
 stack connector,,1,pending,host geometry and mating height and current rating
 Tiny connector,,1,pending,1x6 pitch 2.54 mm to verify with physical pads
-Type-C power circuit,,1,pending,input location and power budget and reverse-current protection
+Type-C power circuit,HRO TYPE-C-31-M-12 and LM66100 host branch,1,preferred see rev-a-bom.csv,Tiny input and full protection and current budget pending
 LTE antenna,,1,pending,connector and band coverage and installation
 GNSS antenna,integrated in Unit GPS v1.1 for the bench proposal,1,included with receiver,avoid double counting; final receiver and antenna placement pending
 enclosure and fasteners,,1,pending,24x24 mm target and internal clearance and retention

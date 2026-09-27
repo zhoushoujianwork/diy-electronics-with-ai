@@ -1,7 +1,7 @@
 # 适配 PCB 设计调研
 
-日期：2026-09-27。阶段：原理图前的设计输入。公开资料已查阅，GPIO 分配和器件仍是候选；
-没有原生原理图、PCB、通电或装配验证。项目保持 `idea`。
+日期：2026-09-27。本文保存首轮调研依据；已有 A1 UART 候选子电路，整板原理图、PCB、通电或装配验证未完成。
+项目保持 `idea`。当前首版范围、单页安排与料号以[产品目标和 BOM](rev-a-product-and-bom.md)为准。
 
 ## 1. 首版建议
 
@@ -50,14 +50,14 @@ BAT 保持未分配，不接电池、不与 VIN 短接；原理图中也不能�
 | --- | --- | --- | --- |
 | MODEM_TX | G19 | G5，Hat2 文档针 2 | Tiny RX，电平待核 |
 | MODEM_RX | G22 | G6，Hat2 文档针 6 | Tiny TX，电平待核 |
-| GNSS_TX | G23 | G7，Hat2 文档针 8 | GNSS RX，配置输出 |
-| GNSS_RX | G33 | G8，Hat2 文档针 9 | GNSS TX，NMEA 输入 |
+| GNSS_TX | G26，现有 Grove | G7，Hat2 文档针 8 | GNSS RX，配置输出 |
+| GNSS_RX | G32，现有 Grove | G8，Hat2 文档针 9 | GNSS TX，NMEA 输入 |
 | MODEM_CTRL 预留 | G25 | G4，Hat2 文档针 4 | 经确认后的 EN 控制电路，不预设直连 |
 | 备用 | G21 | 本轮不分配 | 后续按实际需要使用 |
 
 ATOM 保留 UART0 下载/日志，避免使用 ESP32 UART1 的默认 Flash 相关引脚，固件显式设置路由。
 G21/G25 在官方例子中也用于 I²C，使用本提案时不可同时初始化该 I²C 映射。
-Grove G26/G32 可作台架 GNSS 接入备选；它与上述底座 GNSS 方案是不同配置。
+首版现选择 Grove G26/G32 作为 GNSS 入口；早期 G23/G33 提案留作备用，A1 原生草稿备注尚未重绘。
 
 StickS3 提案避开 Boot、G3 启动相关信号及 G43/G44 调试串口。
 官方 Hat2 逻辑针号已记录在[板卡档案](../../../boards/m5stack-sticks3-k150/README.md)，

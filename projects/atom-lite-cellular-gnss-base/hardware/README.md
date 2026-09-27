@@ -5,6 +5,7 @@
 - [design-inputs.json](design-inputs.json)：单位、来源、实测/标称值及未知尺寸；不是可执行 EDA playbook。
 - [interface-review.csv](interface-review.csv)：Tiny 商品图中的丝印和待核实电气项。
 - [preliminary-bom.csv](preliminary-bom.csv)：功能级 BOM 候选；未定料号明确留空，不可直接下单。
+- [首版产品目标与选型](../docs/rev-a-product-and-bom.md)、[rev-a-bom.csv](rev-a-bom.csv)：首选料号、条件式器件、未决项与单页原理图目标。
 - [主机适配方案](../docs/host-adapters.md)：ATOM 底座、StickS3 顶部适配、电源分配与 3D 打印外壳。
 - [Tiny 完整卡扣外壳](enclosure/README.md)：底壳、可拆盖与两种排针出口，几何检查通过，待打印试装。
 - [GNSS 四线接口与双 UART](../docs/gnss-uart-expansion.md)：现成接收板的电源、针序、信号方向和兼容边界。
@@ -30,6 +31,7 @@ StickS3 变体另需顶部 Hat2 观察方向、配对高度、壳体卡位与屏
 2026-09-27 初始查询没有编辑器连接；随后已在用户指定的内置浏览器完成工程准备。
 当前操作固定到 CLI/daemon/Connector `1.8.0` 与 Web `4.1.60`。Tiny 页已有四个器件的候选子电路，
 五页备注采用无边框普通文字。完整供电和接口、PCB、官方 DRC 警告处理仍待完成。工程身份与证据见上方入口。
+最新范围收敛为一张 A4，GNSS 使用主机现有 Grove G26/G32；本轮只更新选型与设计输入，未迁移原生页面。
 
 后续沿用已创建的独立工程，只连接内置浏览器，不启动桌面 EDA 客户端：
 
