@@ -19,8 +19,9 @@ M5Stack 的紧凑型 ESP32-S3 开发套件，SKU 为 K150。仓库使用完整 I
 | 外壳标称尺寸 | 长 × 宽 × 厚：48 × 24 × 15 mm；不是 PCB 板框 |
 | 顶部扩展 | Hat2-Bus，2.54 mm、16P，官方针号分为奇/偶两列 |
 
-项目固件使用内部 RAM，不依赖 PSRAM。USB 烧录前需确认目标为 8 MB Flash，不能加载立创板的
-16 MB 配置。
+[EV Engine Sound](../../projects/ev-engine-sound/) 的 StickS3 固件使用内部 RAM；
+[GPS/4G 定位终端](../../projects/m5stack-sticks3-gps-motobox/) 则启用板载 PSRAM 供离线队列和 TLS 分配使用。
+USB 烧录前需确认目标为 8 MB Flash，不能加载立创板的 16 MB 配置。
 
 ## 项目使用的板级连接
 
@@ -63,6 +64,7 @@ UART 外设通常把主机 GPIO9 作为 TX、GPIO10 作为 RX，但仍须按外�
 - M5Unified 默认初始化关闭 `EXT_5V_EN`；`M5.Power.setExtOutput(true)` 切换为外部输出。
   这与直接操作 M5PM1 的实现属于不同软件层级，固件需按实际库版本核对。
 - 官方 Grove 带载能力为最大 **4.88 V @ 0.38 A**；这不是顶部 Hat2 的额定电流，也不能证明足以供给蜂窝负载。
+- 板载电池标称容量为 250 mAh；官方未给出 Hat2 BAT 可承受的蜂窝发射峰值，不能据此向模组供电。
 - `EXT_5V`、`5V_IN`、`BAT`、`3V3_L2` 是不同电源网络，不能并接或用同一个“5V”符号代替。
   GPIO 分配前还需核对启动配置、串口调试和其他板载功能；此表没有分配任何项目 UART。
 

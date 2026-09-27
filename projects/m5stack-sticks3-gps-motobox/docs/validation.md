@@ -1,5 +1,159 @@
 # Validation record
 
+## ML307R-DL Tiny 4G revision
+
+- ESP-IDF 5.5.2 firmware build and host GNSS, telemetry queue/payload and binding tests passed on
+  2026-09-27. This build uses ML307R-DL Tiny AT/TCP, ESP32-side TLS hostname and public-chain
+  verification, cellular UDP SNTP, GPS on UART2, and separate five-second sampling and MQTT uplink
+  tasks. Static driver review found that registration-ready can be returned before PDP receives an IP;
+  the application now requires an active `MIPCALL` context with a nonzero IP before reporting
+  `cell_data` or opening sockets. This change builds, but has no real-modem serial evidence.
+  Build output and host tests do not prove electrical or network operation.
+- A user-supplied seller image of the ML307R-DL Tiny shows six right-side holes labelled, top to bottom
+  with the shield text upright, BAT/EN/RX/TX/GND/VIN. A later user-supplied interface table numbers
+  these in reverse from VIN=1 to BAT=6, specifies VIN 5–16 V and 3.3 V TXD/RXD, and says EN is pulled
+  up to VIN; BAT takes 3.4–4.2 V and must not be powered with VIN. The screenshot includes device
+  identifiers and stays outside Git. These are supplied carrier documents, not physical measurements
+  or independently sourced catalog facts. The user first reported StickS3 Hat2 EXT_5V to Tiny VIN,
+  then moved Tiny BAT to StickS3 Hat2 BAT pin 11 with Tiny VIN disconnected. Neither StickS3 rail
+  has a documented 4G transmit-current allowance; the latter connection was flagged for removal.
+  The user later disconnected Tiny BAT and reported an independent roughly 5 V VIN supply,
+  a blinking indicator and EN unconnected. The exact PCB markings, UART idle voltage and
+  transmit current remain unverified. The independent AT/TCP Demo was flashed on 2026-09-27;
+  StickS3 booted, but no valid AT response was detected in the initial serial windows.
+  The user corrected reversed TX/RX wiring and connected a shared GND, but a new
+  120-second serial capture with Demo `eb20f6b` still received zero raw UART
+  bytes and timed out on AT detection. With Tiny UART disconnected, a Hat2 G5/G6
+  loopback returned all four sent bytes at every tested baud rate, verifying
+  the StickS3-side UART path; Tiny-side AT communication remains unverified.
+  With Tiny independently powered and UART disconnected, the user measured
+  EN≈5 V and Tiny TXD idle≈3.6 V relative to Tiny GND. Direct Tiny TXD to
+  StickS3 GPIO6 was paused pending UART-suitable level shifting or a measured
+  divider; the seller's 3.3 V UART claim has not matched this first reading.
+  In a separate short DAPLink UART check at 115200 bps, the same Tiny answered
+  `AT`, identified as `ML307R`, had SIM READY, registered to CHINA MOBILE, and
+  returned CSQ 31/99 plus CESQ RSRQ/RSRP codes 29/67 in three samples. Its data
+  context was active with a nonzero IP. The user powered Tiny from DAPLink 5 V
+  for that check; neither the DAPLink output current nor RX input tolerance was
+  verified. This establishes module-side AT, SIM and signal only for that short
+  setup, not StickS3 4G uplink or sustained transmit power.
+  The user later questioned the voltage reading and requested a direct UART
+  retest. With StickS3 powered by USB-C and direct G5→Tiny RXD, Tiny TXD→G6,
+  and common GND reported, Demo `0cf41d4` was flashed and hash-verified.
+  Tiny's supply and DAPLink UART isolation were not reconfirmed for this run.
+  The new probe transmitted `AT` but received zero bytes at all eight tested
+  rates (9600–921600 bps). A 120-second post-flash and 65-second reset capture
+  showed repeated AT timeouts without unexpected resets, panic or stack
+  overflow; `bringup` free stack was at least 8940/12288 B. This still does not
+  establish StickS3-side modem communication or diagnose the exact wiring fault.
+  A separate AT Demo build `802bba9` then tried StickS3 Hat2 GPIO4/TX and
+  GPIO7/RX with the user reporting moved wires. A 120-second capture again
+  received zero bytes across the eight tested baud rates and showed no panic
+  or unexpected reset. This alternate-pin test has not verified the Tiny link;
+  the integrated project still uses GPIO5/6.
+  A second alternate Demo `1c8dc1a` swapped directions to GPIO7/TX and
+  GPIO4/RX, with the user reporting the corresponding wire move. It likewise
+  received zero AT bytes during a 120-second capture without abnormal resets
+  or panic. These tests have not identified a functional StickS3-to-Tiny UART
+  connection; the integrated GPS/MotoBox 4G build remains unflashed.
+  A following one-way check connected StickS3 G7 to DAPLink RX. Tiny UART
+  removal was not reconfirmed. DAPLink received 22 exact `AT\r\n` sequences
+  at 115200 bps over 30 seconds, verifying the Demo's physical G7 transmit
+  path. Both USB devices were on the same computer without a direct GND jumper;
+  the return
+  path was not traced. At that point G4 receive and the Tiny interconnect
+  remained unverified.
+  A following DAPLink TX→StickS3 G4 injection sent 144 bytes of synthetic
+  `OK` responses after the first modem timeout. The 115200-bps raw probe
+  received all 144 bytes and reported `ok=1`, verifying G4 receive separately.
+  This is an injected response, not a modem reply. Tiny communication remains
+  unverified.
+  In a subsequent one-way test, StickS3 G7 drove the Tiny socket formerly
+  used by DAPLink TX while DAPLink RX monitored Tiny's reply socket. With
+  StickS3 G4 left open, DAPLink read 11 complete `OK` responses in the first
+  11 seconds and 22 over 30 seconds at 115200 bps. This proves the modem
+  receives StickS3 AT and replies on that Tiny pin; StickS3 receiving the reply
+  is the remaining UART check.
+  After GPIO4/RX was connected to Tiny TXD, the independent Demo `1c8dc1a`
+  completed four AT identification, CHINA MOBILE registration (CSQ 31) and
+  TCP connections to its public test endpoint over a 120-second serial run.
+  A follow-up Demo `324d9ef` completed two more cycles in 50 seconds and
+  measured active free stack at 9580/12288 B for `bringup`, 1096/2048 B for
+  `modem_receive` and 3364/6144 B for `modem_event`. No panic, unexpected
+  reset or USB reconnect was observed. This is hardware evidence for the
+  isolated modem path only; power/current peaks and integrated GPS/MQTT
+  behavior remain unmeasured.
+  At that point, registration and TCP had been verified only in the isolated
+  Demo; the integrated GPS/MotoBox 4G uplink had not been flashed.
+  The first integrated cellular build used `mqtts://` on port 8883. In a
+  150-second capture it registered and obtained UDP network time, but all 12
+  MQTT TCP connection attempts failed; 27 telemetry frames accumulated in RAM.
+  A development-computer check also timed out on public port 8883, while the
+  MotoBox port 443 `/mqtt` WebSocket upgrade returned HTTP 101. The firmware
+  then gained a WSS wrapper around the existing ESP32-side, certificate-verified
+  TLS transport; this preserves MQTT QoS 1 and requires no Wi-Fi.
+  With that build flashed on StickS3 K150, GPS Unit v1.1 and the same separately
+  powered ML307R-DL Tiny, a 150-second follow-up serial capture observed
+  sequences 3–32 sampled, published and PUBACKed in order. Fifteen heartbeats
+  reported GPS NMEA online, no indoor fix, trusted time, MQTT connected, zero
+  queue and zero drops at the end. No panic, stack overflow, task-start failure,
+  abnormal reset or USB reconnect appeared. Lowest observed free stacks in
+  bytes were GPS 1480, cellular 9552, modem receive 1276, modem event 3336,
+  MQTT 8784, telemetry 2400, uplink 4936, UI 4204, voice 3308 and heartbeat
+  1264; each exceeded 25% of its configured stack and 1024 B. A read-only
+  MotoBox SQL query later found the first 128 frames of the USB-reset run in
+  continuous ingestion order with original `ext.ts_ms` preserved and `gsm`
+  capability/state present. Raw serial, device ID and SQL details stay outside Git.
+  That short run does not establish long-term stability or outage recovery.
+  A subsequent 31-minute USB-reset run used firmware source `d4de2aa` and the
+  locally configured WSS credentials; the flashed application image SHA-256 was
+  `a2c4428dc4cc93bcdf11953c1a3deb74b36e08bc564089480e0ef9630182c0f2`.
+  The hardware was StickS3 K150, Unit GPS v1.1 and the same ML307R-DL Tiny,
+  with Tiny on a separate 5 V supply, shared ground, GPIO7/4 UART and EN open.
+  The supply's current rating, voltage during transmission and UART high level
+  were not measured. The requested USB reset reported reason 11; this was not
+  a full power-off cold start. Serial recorded 185 heartbeats spanning 1851 s,
+  GPS NMEA online without an indoor fix, trusted cellular time, MQTT connected,
+  Wi-Fi off, and sequences 1–372 sampled, published and PUBACKed in order.
+  Final queue and drop counts were zero. One expected reset at the test start
+  was the only reset; there was no panic, Guru Meditation, stack overflow,
+  task-start failure, MQTT error or USB reconnect. Minimum free stack in bytes:
+  GPS 1476/4096, cellular 9552/12288, modem receive 1260/2048, modem event
+  3352/6144, MQTT 8892/12288, telemetry 2412/6144, uplink 4804/8192,
+  UI 4172/8192, voice 3308/4096 and heartbeat 1276/4096. Every measured task
+  retained at least 25% and 1024 B. A read-only MotoBox SQL check found all
+  372 sequences once and in ingestion order, no backwards sampling time,
+  `ext.ts_ms` equal to the stored original `ts_ms` in every frame, 4164–5802 ms
+  between samples and 344–3116 ms ingestion delay. Every frame advertised
+  `gsm`, `modules.gsm=true`, `modules.wifi=false` and CSQ 31; none contained
+  an indoor location fix. The raw log and database identifiers remain outside Git.
+  Negative checks then used temporary, Git-ignored test configurations. With
+  a certificate-invalid host on the same service IP, 100 seconds recorded 14
+  `TLS_FAILED code=-9984 verify=0x4` events, no `TLS_VERIFIED`, MQTT connection
+  or PUBACK, and continued sampling/heartbeats without panic. With the valid
+  WSS host but an invalid password, 100 seconds recorded nine verified TLS
+  handshakes followed by nine broker `not authorized` refusals, no MQTT
+  connection or PUBACK, and continued sampling/heartbeats without panic.
+  Reflashing between these checks discarded their RAM-only queues as expected.
+  The valid private configuration was restored from an outside-Git backup and
+  rebuilt before the final flash. Its application image SHA-256 was
+  `9cd05dc675367ba6fc0bc76d4bac0f5a1c481699d742a61200d9243b593ddf0b`.
+  A 150-second post-restore USB-reset capture showed modem registration,
+  cellular time, verified TLS, MQTT connection, 29 consecutive samples and
+  29 PUBACKs, with 15 heartbeats and no MQTT error, panic or stack overflow.
+  A read-only MotoBox query found all 29 restored-run frames in the database.
+  Deliberate two-minute link loss/recovery,
+  full power-off cold start, outdoor motion, power peaks, UART level and visual
+  screen/button checks remain pending.
+  The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
+  Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and
+  all hardware evidence below remain software rollback references.
+- Pending 4G acceptance: 30-minute real-device run with cold start, GNSS/LCD/button concurrency,
+  two-minute cellular outage/recovery and outdoor movement; MotoBox sequence and original sample-time
+  check; wrong certificate and wrong credential rejection; signal 99 when unknown; voltage/current
+  peaks; task margins of at least 25% and 1024 B for GPS, sampler, uplink, MQTT, modem orchestration,
+  modem receive/event, UI, voice and heartbeat. Capture full serial and private route outside Git.
+
 ## Current state
 
 - On the second outdoor run on 2026-09-24, the `fec6e12` firmware reached its first backend-confirmed

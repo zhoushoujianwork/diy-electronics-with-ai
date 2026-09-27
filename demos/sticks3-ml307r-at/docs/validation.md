@@ -1,0 +1,156 @@
+# Validation
+
+## Build
+
+- ESP-IDF 5.5.2 build: passed on 2026-09-27 with `78/esp-ml307` 3.7.5 and
+  `78/uart-uhci` 0.4.0. The initial application binary was `0x80870` bytes;
+  the first raw-UART diagnostic build was `0x84210` bytes, and the eight-rate
+  diagnostic build was `0x84220` bytes, leaving 48% of the 1 MiB app partition.
+  These builds were hash-verified when flashed to the StickS3.
+- Static driver review found that its network wait can return registration-ready
+  without PDP/IP readiness. The Demo now logs `CELL_REGISTERED` separately from
+  `TCP_CONNECTED` and backs off when TCP fails; this behavior is build-verified
+  but awaits real-device serial evidence.
+- StickS3 K150 / ESP32-S3-PICO-1, 8 MiB flash and PSRAM, was identified on
+  `/dev/cu.usbmodem212301`. Its previous 8 MiB flash image was backed up outside
+  Git before flashing. Initial AT Demo app version `080c78e` booted normally.
+  A deliberate serial RTS pulse produced reset reason 11. A 120-second serial
+  window showed repeated `MODEM_DETECT_FAILED` timeouts, no registration or TCP,
+  no panic, stack overflow, task-start failure or unexpected USB reconnect.
+  The UART1/UHCI initialization succeeded. The first raw-UART diagnostic saw
+  248 bytes at 921600 bps across two reads but no `OK`; a later deliberate
+  StickS3 reset saw zero bytes at all tested rates. This does not prove those
+  bytes originated from the modem. Later 70- and 35-second windows still showed
+  AT timeouts.
+  The `bringup` task's lowest observed free stack was 8956 bytes of 12288
+  (73%); modem receive/event task margins remain unmeasured because modem
+  detection never succeeded. Raw logs remain outside Git.
+- The user reports Tiny BAT disconnected, Tiny VIN supplied independently at
+  about 5 V, EN unconnected and its indicator blinking. They found the original
+  TX/RX wiring reversed, corrected it, and subsequently connected the grounds.
+  A fresh 120-second capture with Demo app version `eb20f6b` after both changes
+  still showed five AT-detection timeouts; the raw UART probe received zero
+  bytes at 115200, 921600, 460800, 57600 and 9600 bps. There was no panic,
+  unexpected reset or USB reconnect. With Tiny UART disconnected and StickS3
+  Hat2 G5 shorted to G6, the same build received all four transmitted `AT\r\n`
+  bytes at every tested baud rate; `OK` was absent as expected for a wire loop.
+  This verifies the StickS3 UART1 pins and firmware TX/RX path, but does not
+  verify either Tiny pin or its AT firmware. With Tiny alone on its independent
+  supply and UART disconnected, the user measured EN at about 5 V and TXD idle
+  at about 3.6 V relative to Tiny GND. The latter exceeds the seller table's
+  3.3 V claim; it prompted a pause in direct Tiny TXD → StickS3 G6 wiring.
+  The user later questioned this meter reading and requested the direct retest
+  recorded below. The exact carrier PCB revision, power-source current rating
+  and measured peak current have not been independently recorded. Real modem
+  detection, SIM registration and TCP
+  through StickS3 remain pending.
+- A separate short DAPLink UART test used `/dev/cu.usbmodem212402` at 115200 bps.
+  The user wired Tiny directly to LCKFB DAPLink and used its 5 V pin for this
+  bench check. `AT` replied `OK`; `AT+CGMM` returned `ML307R`; `AT+CPIN?`
+  returned `READY`; `AT+CEREG?` reported registration state 1 and `AT+COPS?`
+  reported CHINA MOBILE. Three signal samples about five seconds apart all
+  returned `+CSQ: 31,99` for `AT+CSQ` and `AT+CESQ` RSRQ/RSRP codes
+  29/67. `AT+MIPCALL?`
+  reported context 1 active with a nonzero IP; the IP was not recorded in Git.
+  This confirms the module's AT interface, SIM registration and reported signal
+  in that short setup. DAPLink 5 V output current and RX input tolerance were
+  not verified, so the run does not establish a suitable long-term modem power
+  or logic interface, cellular TCP, or StickS3 interoperability.
+- With StickS3 powered by USB-C, the user reported reconnecting G5 to Tiny RXD,
+  Tiny TXD directly to G6, and common GND. Tiny's power source and whether its
+  DAPLink RX/TX wires were removed were not reconfirmed for this run. Demo app
+  `0cf41d4` was flashed and hash-verified. A deliberate reset reported reason
+  11; AT detection timed out. The raw probe transmitted four bytes per attempt
+  but received **zero bytes** in two attempts at each of 115200, 921600, 460800,
+  230400, 57600, 38400, 19200 and 9600 bps. A 120-second post-flash capture
+  and 65-second reset capture showed no panic, stack overflow, task-start
+  failure or unexpected USB reconnect. Lowest observed `bringup` free stack
+  was 8940/12288 B (73%); modem receive/event margins remain unmeasured. This
+  rules out a simple baud-rate mismatch for the observed zero-byte path but
+  does not yet locate the open or contended connection. No StickS3-side modem
+  detection, registration or TCP was observed. Raw logs remain outside Git.
+- To check another Hat2 UART pair, Demo `802bba9` routed UART1 TX to GPIO4
+  (Hat2 pin 4) and RX to GPIO7 (pin 8). It built under ESP-IDF 5.5.2 as a
+  `0x84280`-byte application, was flashed with hash verification, and logged
+  `UART_PINS uart=1 tx=4 rx=7` after reset. With the user reporting the wires
+  moved to those pins, the 120-second capture still showed AT timeouts and
+  zero received bytes in two attempts at every tested baud rate from 9600 to
+  921600 bps. `bringup` free stack remained 8940/12288 B; no panic, stack
+  overflow or unexpected reset was observed. A physical G4/G7 loopback was
+  requested but not completed before the next direction-swap trial. This test
+  does not establish whether the alternate pair reaches the Tiny UART.
+- After swapping physical UART wires, Demo `1c8dc1a` assigned UART1 TX to
+  GPIO7 (Hat2 pin 8) and RX to GPIO4 (pin 4). It built as a `0x84280`-byte
+  application and was flashed with hash verification. The reset log confirmed
+  `UART_PINS uart=1 tx=7 rx=4`. With the user reporting the swapped Tiny wiring,
+  a 120-second serial capture again showed AT timeouts and zero received bytes
+  at all eight probe rates. `bringup` free stack remained 8940/12288 B; no
+  panic, stack overflow or unexpected reset was observed. This direction swap
+  did not establish UART communication; the exact inter-board path is still
+  unverified. A DAPLink check of the physical StickS3 TX/RX paths is next.
+- The user connected StickS3 Hat2 G7 to DAPLink RX for a one-way check. Tiny
+  UART wire removal was requested but not independently reconfirmed. Both USB
+  devices were on the same computer, but no separate GND jumper was installed.
+  At 115200 bps, DAPLink received 22 exact `AT\r\n` sequences during a
+  30-second StickS3 reset capture; the StickS3 log confirmed
+  `UART_PINS uart=1 tx=7 rx=4` and still timed out without a modem. Other
+  captured bytes overlapped the Demo's alternate-baud probes and are not
+  interpreted. This verifies the firmware-to-Hat2 G7 TX path and DAPLink RX
+  observation. The USB-ground return path was not independently traced; at
+  this point the G4 receive path and Tiny interconnect remained unverified.
+- For a separate G4 receive check, the user reported connecting DAPLink TX
+  to StickS3 Hat2 G4 after removing Tiny TXD from that pin. The direct GND
+  jumper was not reconfirmed. On the first `MODEM_DETECT_FAILED` after reset,
+  the host sent a synthetic `\r\nOK\r\n` response through DAPLink for two
+  seconds. At 115200 bps, the raw probe reported `rx_bytes=144 ok=1`, exactly
+  matching the number of bytes DAPLink transmitted. This validates the
+  physical G4 receive path and firmware UART input, **not** Tiny detection.
+  The modem detect operation still timed out before and after this injection.
+- The user then wired StickS3 G7 to the Tiny socket previously driven by
+  DAPLink TX, and connected DAPLink RX to the Tiny response socket. DAPLink TX
+  and StickS3 G4 were left disconnected, with the three grounds reported
+  connected. A 30-second reset capture saw 11 complete `OK` responses during
+  the first 11 seconds and 22 total on DAPLink at 115200 bps. StickS3 still
+  timed out as expected because G4/RX was open. This verifies that Tiny
+  receives StickS3's AT commands and sends replies on the socket watched by
+  DAPLink. The complete StickS3-to-Tiny receive connection remains to be tested.
+- The user then connected StickS3 GPIO4/RX to the same Tiny TXD node while
+  leaving DAPLink RX as a passive listener; GPIO7/TX remained on Tiny RXD and
+  the grounds were shared. Tiny's current supply rating and voltage under
+  transmit load were not reconfirmed. With Demo firmware `1c8dc1a`, a
+  120-second reset capture completed four successive cycles of
+  `MODEM_DETECTED` (`ML307R-DL-MBRH0S01`), `CELL_REGISTERED` (CHINA MOBILE,
+  CSQ 31), and `TCP_CONNECTED` to the configured public test endpoint on port
+  80. No panic, task-start failure, stack overflow, unexpected reset or USB
+  reconnect appeared. The lowest observed `bringup` free stack was
+  9580/12288 B. This validates the StickS3↔Tiny AT, registration and TCP path
+  for the short run, not MQTT TLS, GPS concurrency or 30-minute stability.
+- The Demo was rebuilt, hash-verified and flashed as `324d9ef` to measure
+  driver stacks before the modem object was destroyed. A 50-second reset
+  capture completed two more AT/registration/TCP cycles. Active free-stack
+  high-water marks were `bringup` 9580/12288 B, `modem_receive` 1096/2048 B
+  and `modem_event` 3364/6144 B. All meet the project's minimum of at least
+  25% and 1024 B under this AT/TCP load. The receive margin exceeds the
+  absolute minimum by only 72 B; integrated load still needs measurement.
+  Logs after the local modem object was destroyed correctly reported zero for
+  its no-longer-running worker tasks. Raw logs remain outside Git.
+- A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
+  EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
+  be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom
+  hole count in the seller image. These supplied documents are not a measured
+  electrical check of the user's exact PCB; physical label inspection remains
+  pending. EN stays disconnected for bring-up.
+  StickS3 Hat2 BAT is not accepted as a Tiny BAT supply for network testing
+  because its 4G transmit-current capacity is undocumented.
+
+## Hardware procedure
+
+With the exact PCB revision and supply arrangement recorded, attach antenna and
+SIM, then power the Tiny independently. Capture the complete StickS3 serial log.
+Check cold start, AT detection, network registration, TCP connection, CSQ updates
+and a 30-minute steady run. Measure supply voltage/current while registering and
+transmitting. Check reset reason, panic, Guru Meditation, stack overflow, task
+creation failure, unexpected USB reconnect and heartbeat continuity. Record the
+lowest free stack for `bringup`, `modem_receive` and `modem_event`; each must have
+at least 25% and 1024 bytes free. Preserve raw logs privately and commit a
+sanitized summary with firmware commit, start/end time and pass/fail criteria.

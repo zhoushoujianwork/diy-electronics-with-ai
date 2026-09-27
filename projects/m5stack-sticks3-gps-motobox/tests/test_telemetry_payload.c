@@ -21,6 +21,7 @@ int main(void)
         .uptime_s = 12,
         .free_heap = 345678,
         .wifi_connected = true,
+        .wifi_rssi = -55,
         .gnss_online = true,
         .gnss_rmc_status = 'V',
         .gnss_gga_quality = 0,
@@ -35,6 +36,7 @@ int main(void)
     contains(payload, "\"model\":\"m5stack-sticks3-gps\"");
     contains(payload, "\"caps\":[\"gps\",\"wifi\"]");
     contains(payload, "\"wifi\":true");
+    contains(payload, "\"signal\":-55");
     contains(payload, "\"gnss\":true");
     contains(payload, "\"position_source\":\"NONE\"");
     contains(payload, "\"gnss_online\":true");
@@ -79,6 +81,30 @@ int main(void)
     contains(payload, "\"position_source\":\"GNSS\"");
     contains(payload, "\"gnss_rmc_status\":\"A\"");
     contains(payload, "\"ts_ms\":1790017179000");
+
+    telemetry_payload_input_t cellular = status;
+    cellular.wifi_connected = false;
+    cellular.cellular_enabled = true;
+    cellular.cellular_registered = true;
+    cellular.cellular_data_ready = true;
+    cellular.cellular_csq = 21;
+    cellular.cellular_reconnects = 2;
+    cellular.cellular_sampled_ms = 123456;
+    cellular.cellular_model = "ML307R-DL";
+    assert(telemetry_payload_build(payload, sizeof(payload), &cellular) > 0);
+    contains(payload, "\"caps\":[\"gps\",\"gsm\"]");
+    contains(payload, "\"signal\":21");
+    contains(payload, "\"wifi\":false");
+    contains(payload, "\"gsm\":true");
+    contains(payload, "\"cell_model\":\"ML307R-DL\"");
+    contains(payload, "\"cell_registered\":true");
+    contains(payload, "\"cell_reconnects\":2");
+    contains(payload, "\"cell_sampled_ms\":123456");
+    cellular.cellular_csq = 99;
+    cellular.cellular_data_ready = false;
+    assert(telemetry_payload_build(payload, sizeof(payload), &cellular) > 0);
+    contains(payload, "\"signal\":99");
+    contains(payload, "\"gsm\":false");
 
     assert(telemetry_payload_build(payload, 32, &fix) == 0);
     puts("telemetry payload tests passed");

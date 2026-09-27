@@ -7,6 +7,7 @@
 #include "board.h"
 #include "binding_announcement.h"
 #include "binding_protocol.h"
+#include "cellular_transport.h"
 #include "demo_status.h"
 #include "driver/uart.h"
 #include "esp_app_desc.h"
@@ -40,7 +41,13 @@
 #define WIFI_CONNECTED_BIT BIT0
 #define GPS_TASK_STACK 4096
 #define TELEMETRY_TASK_STACK 6144
+#define UPLINK_TASK_STACK 8192
 #define HEARTBEAT_TASK_STACK 4096
+#ifdef CONFIG_DEMO_CELLULAR
+#define CELLULAR_ENABLED 1
+#else
+#define CELLULAR_ENABLED 0
+#endif
 
 static const char *TAG = "motobox_demo";
 static portMUX_TYPE state_lock = portMUX_INITIALIZER_UNLOCKED;
@@ -54,6 +61,7 @@ static EventGroupHandle_t wifi_events;
 static esp_mqtt_client_handle_t mqtt_client;
 static TaskHandle_t gps_task_handle;
 static TaskHandle_t telemetry_task_handle;
+static TaskHandle_t uplink_task_handle;
 static TaskHandle_t heartbeat_task_handle;
 static char device_id[24];
 static char telemetry_topic[96];
@@ -62,10 +70,35 @@ static char binding_response_topic[96];
 static char binding_request_id[BINDING_REQUEST_ID_LENGTH + 1];
 static int binding_subscribe_id;
 static uint64_t next_sequence = 1;
+static int early_ack_ids[8];
+static unsigned early_ack_next;
 static bool sntp_started;
 static bool clock_trusted;
 static bool binding_voice_ready;
 static bool binding_code_requested;
+static void mark_clock_trusted(const char *source, int64_t utc_ms);
+
+static void cellular_status_changed(const cellular_status_t *cell)
+{
+    portENTER_CRITICAL(&state_lock);
+    status.sim_ready = cell->sim_ready;
+    status.cellular_registered = cell->registered;
+    status.cellular_data_ready = cell->data_ready;
+    status.cellular_csq = cell->csq;
+    status.cellular_reconnects = cell->reconnects;
+    status.cellular_sampled_ms = cell->sampled_ms;
+    memcpy(status.cellular_model, cell->model, sizeof(status.cellular_model));
+    memcpy(status.cellular_carrier, cell->carrier, sizeof(status.cellular_carrier));
+    if (cell->error[0] || strncmp(status.cellular_error, "mqtt_", 5) != 0) {
+        memcpy(status.cellular_error, cell->error, sizeof(status.cellular_error));
+    }
+    portEXIT_CRITICAL(&state_lock);
+}
+
+static void cellular_time_ready(int64_t utc_ms)
+{
+    mark_clock_trusted("CELLULAR_SNTP", utc_ms);
+}
 
 static int64_t wall_time_ms(void)
 {
@@ -128,6 +161,12 @@ static void set_status_flag(bool *field, bool value)
     portEXIT_CRITICAL(&state_lock);
 }
 
+static unsigned task_stack_margin(const char *name)
+{
+    TaskHandle_t handle = xTaskGetHandle(name);
+    return handle ? (unsigned)uxTaskGetStackHighWaterMark(handle) : 0;
+}
+
 static void set_clock_from_gnss(int64_t utc_ms)
 {
     if (utc_ms < 1735689600000LL) return;
@@ -155,17 +194,17 @@ static void gps_task(void *unused)
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
         .source_clk = UART_SCLK_DEFAULT,
     };
-    ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, 4096, 0, 0, NULL, 0));
-    ESP_ERROR_CHECK(uart_param_config(UART_NUM_1, &config));
-    ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1, STICKS3_GPS_UART_TX_GPIO,
+    ESP_ERROR_CHECK(uart_driver_install(UART_NUM_2, 4096, 0, 0, NULL, 0));
+    ESP_ERROR_CHECK(uart_param_config(UART_NUM_2, &config));
+    ESP_ERROR_CHECK(uart_set_pin(UART_NUM_2, STICKS3_GPS_UART_TX_GPIO,
                                  STICKS3_GPS_UART_RX_GPIO, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
     gnss_parser_t parser;
     gnss_parser_init(&parser);
     uint8_t bytes[256];
-    ESP_LOGI(TAG, "GNSS_READY uart=1 baud=115200 rx=%d tx=%d", STICKS3_GPS_UART_RX_GPIO,
+    ESP_LOGI(TAG, "GNSS_READY uart=2 baud=115200 rx=%d tx=%d", STICKS3_GPS_UART_RX_GPIO,
              STICKS3_GPS_UART_TX_GPIO);
     for (;;) {
-        int count = uart_read_bytes(UART_NUM_1, bytes, sizeof(bytes), pdMS_TO_TICKS(1000));
+        int count = uart_read_bytes(UART_NUM_2, bytes, sizeof(bytes), pdMS_TO_TICKS(1000));
         for (int i = 0; i < count; ++i) {
             gnss_fix_t fix;
             uint32_t before = parser.nmea_sentence_count;
@@ -305,6 +344,9 @@ static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void
     esp_mqtt_event_handle_t event = event_data;
     if (event_id == MQTT_EVENT_CONNECTED) {
         set_status_flag(&status.mqtt_connected, true);
+        portENTER_CRITICAL(&state_lock);
+        if (strncmp(status.cellular_error, "mqtt_", 5) == 0) status.cellular_error[0] = 0;
+        portEXIT_CRITICAL(&state_lock);
         binding_subscribe_id = esp_mqtt_client_subscribe(mqtt_client, binding_response_topic, 1);
         ESP_LOGI(TAG, "MQTT_CONNECTED uri=%s", CONFIG_DEMO_MQTT_URI);
     } else if (event_id == MQTT_EVENT_DISCONNECTED) {
@@ -315,6 +357,8 @@ static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void
         portEXIT_CRITICAL(&state_lock);
         xSemaphoreTake(queue_mutex, portMAX_DELAY);
         telemetry_queue_retry_inflight(&telemetry_queue);
+        memset(early_ack_ids, 0, sizeof(early_ack_ids));
+        early_ack_next = 0;
         xSemaphoreGive(queue_mutex);
         ESP_LOGW(TAG, "MQTT_DISCONNECTED");
     } else if (event_id == MQTT_EVENT_SUBSCRIBED && event->msg_id == binding_subscribe_id) {
@@ -393,9 +437,19 @@ static void mqtt_event(void *args, esp_event_base_t base, int32_t event_id, void
         uint64_t sequence = head ? head->sequence : 0;
         if (telemetry_queue_ack(&telemetry_queue, event->msg_id)) {
             ESP_LOGI(TAG, "MQTT_ACK seq=%" PRIu64 " msg_id=%d", sequence, event->msg_id);
+        } else if (head && head->in_flight && head->message_id == 0) {
+            early_ack_ids[early_ack_next++ % 8] = event->msg_id;
         }
         xSemaphoreGive(queue_mutex);
     } else if (event_id == MQTT_EVENT_ERROR) {
+        if (CELLULAR_ENABLED) {
+            char reason[sizeof(status.cellular_error)] = {0};
+            snprintf(reason, sizeof(reason), "mqtt_error_%d",
+                     event->error_handle ? event->error_handle->error_type : -1);
+            portENTER_CRITICAL(&state_lock);
+            memcpy(status.cellular_error, reason, sizeof(reason));
+            portEXIT_CRITICAL(&state_lock);
+        }
         ESP_LOGE(TAG, "MQTT_ERROR type=%d", event->error_handle ? event->error_handle->error_type : -1);
     }
 }
@@ -411,7 +465,14 @@ static esp_err_t mqtt_init(void)
         .network.reconnect_timeout_ms = 5000,
         .session.protocol_ver = MQTT_PROTOCOL_V_3_1_1,
         .session.keepalive = 30,
+#if CONFIG_DEMO_CELLULAR
+        .task.stack_size = 12288,
+#endif
     };
+#if CONFIG_DEMO_CELLULAR
+    config.network.transport = cellular_mqtt_transport_create(CONFIG_DEMO_MQTT_URI);
+    ESP_RETURN_ON_FALSE(config.network.transport, ESP_ERR_NO_MEM, TAG, "cellular transport");
+#endif
     mqtt_client = esp_mqtt_client_init(&config);
     ESP_RETURN_ON_FALSE(mqtt_client, ESP_ERR_NO_MEM, TAG, "MQTT client init");
     ESP_RETURN_ON_ERROR(esp_mqtt_client_register_event(mqtt_client, ESP_EVENT_ANY_ID, mqtt_event, NULL), TAG,
@@ -443,6 +504,14 @@ static size_t build_payload(char *buffer, size_t capacity, uint64_t sequence, in
         .uptime_s = (uint32_t)(esp_timer_get_time() / 1000000),
         .free_heap = (uint32_t)esp_get_free_heap_size(),
         .wifi_connected = current.wifi_connected,
+        .wifi_rssi = current.wifi_rssi,
+        .cellular_enabled = CELLULAR_ENABLED,
+        .cellular_registered = current.cellular_registered,
+        .cellular_data_ready = current.cellular_data_ready,
+        .cellular_csq = current.cellular_csq,
+        .cellular_reconnects = current.cellular_reconnects,
+        .cellular_sampled_ms = current.cellular_sampled_ms,
+        .cellular_model = current.cellular_model,
         .gnss_online = gnss_online,
         .gnss_rmc_status = current.gnss_rmc_status,
         .gnss_gga_quality = current.gnss_gga_seen ? current.gnss_gga_quality : -1,
@@ -463,29 +532,8 @@ static void telemetry_task(void *unused)
     (void)unused;
     int64_t next_sample_ms = 0;
     char payload[TELEMETRY_PAYLOAD_MAX];
-    int64_t next_binding_poll_ms = esp_timer_get_time() / 1000 + BINDING_STATUS_POLL_MS;
     for (;;) {
         int64_t now_mono = esp_timer_get_time() / 1000;
-        int64_t now_wall = wall_time_ms();
-        bool mqtt_up;
-        bool code_expired = false;
-        portENTER_CRITICAL(&state_lock);
-        mqtt_up = status.mqtt_connected;
-        if (status.binding_ready && clock_trusted && now_wall >= status.binding_expires_ms) {
-            status.binding_ready = false;
-            status.binding_code[0] = 0;
-            binding_code_requested = false;
-            code_expired = true;
-        }
-        portEXIT_CRITICAL(&state_lock);
-        if (code_expired) ESP_LOGI(TAG, "BINDING_CODE_EXPIRED");
-        if (mqtt_up && now_mono >= next_binding_poll_ms) {
-            portENTER_CRITICAL(&state_lock);
-            if (!status.binding_ready && !status.binding_bound) binding_code_requested = false;
-            portEXIT_CRITICAL(&state_lock);
-            publish_binding_request(true);
-            next_binding_poll_ms = now_mono + BINDING_STATUS_POLL_MS;
-        }
         if (wall_time_trusted() && now_mono >= next_sample_ms) {
             uint64_t sequence = next_sequence++;
             size_t length = build_payload(payload, sizeof(payload), sequence, wall_time_ms());
@@ -499,20 +547,72 @@ static void telemetry_task(void *unused)
             }
             next_sample_ms = now_mono + CONFIG_DEMO_PUBLISH_INTERVAL_MS;
         }
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+}
 
+static void uplink_task(void *unused)
+{
+    (void)unused;
+    int64_t next_binding_poll_ms = esp_timer_get_time() / 1000 + BINDING_STATUS_POLL_MS;
+    char pending_payload[TELEMETRY_PAYLOAD_MAX];
+    for (;;) {
+        int64_t now_mono = esp_timer_get_time() / 1000;
+        int64_t now_wall = wall_time_ms();
         bool connected;
+        bool code_expired = false;
         portENTER_CRITICAL(&state_lock);
         connected = status.mqtt_connected;
+        if (status.binding_ready && clock_trusted && now_wall >= status.binding_expires_ms) {
+            status.binding_ready = false;
+            status.binding_code[0] = 0;
+            binding_code_requested = false;
+            code_expired = true;
+        }
         portEXIT_CRITICAL(&state_lock);
+        if (code_expired) ESP_LOGI(TAG, "BINDING_CODE_EXPIRED");
+        if (connected && now_mono >= next_binding_poll_ms) {
+            portENTER_CRITICAL(&state_lock);
+            if (!status.binding_ready && !status.binding_bound) binding_code_requested = false;
+            portEXIT_CRITICAL(&state_lock);
+            publish_binding_request(true);
+            next_binding_poll_ms = now_mono + BINDING_STATUS_POLL_MS;
+        }
+
+        uint64_t pending_sequence = 0;
         if (connected && xSemaphoreTake(queue_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
             telemetry_item_t *item = telemetry_queue_head(&telemetry_queue);
-            if (item && !item->in_flight) {
-                int id = esp_mqtt_client_publish(mqtt_client, telemetry_topic, item->payload, 0, 1, 0);
-                if (telemetry_queue_mark_published(&telemetry_queue, id)) {
+            if (item && !item->in_flight &&
+                telemetry_queue_mark_published(&telemetry_queue, 0)) {
+                pending_sequence = item->sequence;
+                memcpy(pending_payload, item->payload, sizeof(pending_payload));
+            }
+            xSemaphoreGive(queue_mutex);
+        }
+        if (pending_sequence) {
+            int id = esp_mqtt_client_enqueue(mqtt_client, telemetry_topic, pending_payload, 0, 1, 0, false);
+            xSemaphoreTake(queue_mutex, portMAX_DELAY);
+            telemetry_item_t *item = telemetry_queue_head(&telemetry_queue);
+            if (item && item->sequence == pending_sequence && item->in_flight && item->message_id == 0) {
+                if (id > 0) {
+                    item->message_id = id;
                     ESP_LOGI(TAG, "MQTT_PUBLISH seq=%" PRIu64 " msg_id=%d qos=1 retain=0",
-                             item->sequence, id);
+                             pending_sequence, id);
+                    for (size_t i = 0; i < 8; ++i) {
+                        if (early_ack_ids[i] == id) {
+                            early_ack_ids[i] = 0;
+                            telemetry_queue_ack(&telemetry_queue, id);
+                            ESP_LOGI(TAG, "MQTT_ACK seq=%" PRIu64 " msg_id=%d early=1", pending_sequence, id);
+                            break;
+                        }
+                    }
+                } else {
+                    telemetry_queue_retry_inflight(&telemetry_queue);
+                    ESP_LOGW(TAG, "MQTT_ENQUEUE_FAILED seq=%" PRIu64 " code=%d", pending_sequence, id);
                 }
             }
+            memset(early_ack_ids, 0, sizeof(early_ack_ids));
+            early_ack_next = 0;
             xSemaphoreGive(queue_mutex);
         }
         vTaskDelay(pdMS_TO_TICKS(100));
@@ -531,7 +631,8 @@ static void heartbeat_task(void *unused)
         if (now_ms >= next_log_ms) {
             ESP_LOGI(TAG,
             "HEARTBEAT gps_online=%d gps_fix=%d rmc=%c gga_q=%d sat=%d hdop=%.1f gsv_seen=%d gsv_peak_view=%d gsv_peak_snr=%d fix_age_ms=%u wifi=%d ip=%s rssi=%d mqtt=%d binding_known=%d bound=%d utc=%d queue=%u dropped=%u "
-            "stack_gps=%u stack_telemetry=%u stack_ui=%u stack_voice=%u stack_heartbeat=%u heap=%u",
+            "cell_sim=%d cell_reg=%d cell_data=%d cell_csq=%d cell_error=%s "
+            "stack_gps=%u stack_cellular=%u stack_modem_rx=%u stack_modem_event=%u stack_mqtt=%u stack_telemetry=%u stack_uplink=%u stack_ui=%u stack_voice=%u stack_heartbeat=%u heap=%u",
             current.gnss_online, current.fix_valid,
             current.gnss_rmc_status ? current.gnss_rmc_status : '?',
             current.gnss_gga_seen ? current.gnss_gga_quality : -1,
@@ -540,8 +641,15 @@ static void heartbeat_task(void *unused)
             current.wifi_connected, current.wifi_connected ? current.wifi_ip : "-", current.wifi_rssi,
             current.mqtt_connected, current.binding_known, current.binding_bound, current.time_trusted,
             current.queue_depth, current.queue_dropped,
+            current.sim_ready, current.cellular_registered, current.cellular_data_ready,
+            current.cellular_csq, current.cellular_error,
             (unsigned)uxTaskGetStackHighWaterMark(gps_task_handle),
+            CELLULAR_ENABLED ? task_stack_margin("cellular") : 0,
+            CELLULAR_ENABLED ? task_stack_margin("modem_receive") : 0,
+            CELLULAR_ENABLED ? task_stack_margin("modem_event") : 0,
+            task_stack_margin("mqtt_task"),
             (unsigned)uxTaskGetStackHighWaterMark(telemetry_task_handle),
+            (unsigned)uxTaskGetStackHighWaterMark(uplink_task_handle),
             ui_stack_high_water_mark(), binding_announcement_stack_high_water_mark(),
             (unsigned)uxTaskGetStackHighWaterMark(NULL),
             (unsigned)esp_get_free_heap_size());
@@ -588,21 +696,31 @@ void app_main(void)
     ESP_ERROR_CHECK(queue_mutex ? ESP_OK : ESP_ERR_NO_MEM);
     telemetry_queue_init(&telemetry_queue);
 
-    if (strlen(CONFIG_DEMO_WIFI_SSID) == 0 || strlen(CONFIG_DEMO_MQTT_USERNAME) == 0 ||
+    if ((!CELLULAR_ENABLED && strlen(CONFIG_DEMO_WIFI_SSID) == 0) ||
+        strlen(CONFIG_DEMO_MQTT_USERNAME) == 0 ||
         strlen(CONFIG_DEMO_MQTT_PASSWORD) == 0 ||
-        (strncmp(CONFIG_DEMO_MQTT_URI, "mqtts://", 8) != 0 &&
+        (CELLULAR_ENABLED && strncmp(CONFIG_DEMO_MQTT_URI, "mqtts://", 8) != 0 &&
+         strncmp(CONFIG_DEMO_MQTT_URI, "wss://", 6) != 0) ||
+        (!CELLULAR_ENABLED && strncmp(CONFIG_DEMO_MQTT_URI, "mqtts://", 8) != 0 &&
          strncmp(CONFIG_DEMO_MQTT_URI, "wss://", 6) != 0)) {
-        ESP_LOGE(TAG, "CONFIG_INVALID require Wi-Fi, device MQTT credentials, and mqtts:// or wss:// URI");
+        ESP_LOGE(TAG, "CONFIG_INVALID require device MQTT credentials and supported TLS URI");
         return;
     }
 
-    ESP_ERROR_CHECK(wifi_init());
+    if (CELLULAR_ENABLED) {
+        ESP_ERROR_CHECK(cellular_start(cellular_status_changed, cellular_time_ready));
+    } else {
+        ESP_ERROR_CHECK(wifi_init());
+    }
     ESP_ERROR_CHECK(mqtt_init());
     BaseType_t ok;
     ok = xTaskCreatePinnedToCore(gps_task, "gps", GPS_TASK_STACK, NULL, 7, &gps_task_handle, 1);
     ESP_ERROR_CHECK(ok == pdPASS ? ESP_OK : ESP_ERR_NO_MEM);
     ok = xTaskCreatePinnedToCore(telemetry_task, "telemetry", TELEMETRY_TASK_STACK, NULL, 6,
                                  &telemetry_task_handle, 0);
+    ESP_ERROR_CHECK(ok == pdPASS ? ESP_OK : ESP_ERR_NO_MEM);
+    ok = xTaskCreatePinnedToCore(uplink_task, "uplink", UPLINK_TASK_STACK, NULL, 5,
+                                 &uplink_task_handle, 0);
     ESP_ERROR_CHECK(ok == pdPASS ? ESP_OK : ESP_ERR_NO_MEM);
     ok = xTaskCreatePinnedToCore(heartbeat_task, "heartbeat", HEARTBEAT_TASK_STACK, NULL, 3,
                                  &heartbeat_task_handle, 0);

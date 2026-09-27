@@ -11,13 +11,13 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 ## 项目与 Demo 展示
 
 从下面的设备项目了解这里能做什么；点击小图或名称查看硬件清单、接线和运行步骤。
-**目前三个项目和一个独立 Demo 均未完成验收**：两个项目与一个 Demo 在开发，ATOM Lite 底座处于规划阶段。已验证范围和待完成项分别列出。
+**目前三个项目和两个独立 Demo 均未完成验收**：两个项目与两个 Demo 在开发，ATOM Lite 底座处于规划阶段。已验证范围和待完成项分别列出。
 
 | [摩托声浪模拟器 · EV Engine Sound](projects/ev-engine-sound/) · Project | [车辆定位终端 · StickS3 GPS → MotoBox](projects/m5stack-sticks3-gps-motobox/) · Project |
 | --- | --- |
-| [<img src="projects/ev-engine-sound/docs/assets/engine-sim-official-concept.png" width="300" alt="EV Engine Sound 桌面设计预览：发动机剖面、点火和排气界面，非实机照片">](projects/ev-engine-sound/)<br>桌面设计预览 · [素材来源与许可](projects/ev-engine-sound/docs/third-party/engine-sim.md) | [<img src="projects/m5stack-sticks3-gps-motobox/docs/assets/showcase-overview.svg" width="300" alt="StickS3 GPS 到 MotoBox 的工作原理示意：GPS Unit 经 UART 接入 StickS3，再通过 Wi-Fi 和 MQTT TLS 上报服务端，非实机照片">](projects/m5stack-sticks3-gps-motobox/)<br>工作原理示意 · 非实机照片 |
-| ESP32-S3 实时合成发动机声浪，配合活塞与点火动画；18 种发动机配置、5 种排气音色。可先在电脑试听，再按板型构建固件。 | StickS3 + GPS Unit 的 Wi-Fi 定位终端，包含位置上报、离线队列和服务端验证码绑定。MotoBox 服务账号与凭据需另行开通。 |
-| **开发中 · 已部分实机验证** · [`hardware-verified`](projects/ev-engine-sound/project.yaml)<br>已验证：StickS3 与立创实战派的部分功能；历史 ESP32-S3 板型仅构建通过。<br>待完成：其余实体交互、听感与视觉验收；v2 界面仍为电脑预览。<br>[验证记录与具体范围](projects/ev-engine-sound/docs/validation.md) | **开发中 · 原型** · [`prototype`](projects/m5stack-sticks3-gps-motobox/project.yaml)<br>已验证：构建、室内联网、状态上报、断网恢复、验证码显示与播报、小程序实机绑定，以及室外静止 GNSS 定位。<br>待完成：移动轨迹、定位精度与小程序位置/分享完整链路。<br>[验证记录与具体范围](projects/m5stack-sticks3-gps-motobox/docs/validation.md) |
+| [<img src="projects/ev-engine-sound/docs/assets/engine-sim-official-concept.png" width="300" alt="EV Engine Sound 桌面设计预览：发动机剖面、点火和排气界面，非实机照片">](projects/ev-engine-sound/)<br>桌面设计预览 · [素材来源与许可](projects/ev-engine-sound/docs/third-party/engine-sim.md) | [<img src="projects/m5stack-sticks3-gps-motobox/docs/assets/showcase-overview.svg" width="300" alt="StickS3 GPS 到 MotoBox 的 4G 方案示意：GPS Unit 经 UART2 接入 StickS3，StickS3 经 UART1 接 ML307R-DL Tiny，再通过 4G 和 MQTT TLS 上报服务端，非实机照片">](projects/m5stack-sticks3-gps-motobox/)<br>4G 方案示意 · 非实机照片 |
+| ESP32-S3 实时合成发动机声浪，配合活塞与点火动画；18 种发动机配置、5 种排气音色。可先在电脑试听，再按板型构建固件。 | StickS3 + GPS Unit + ML307R-DL Tiny 的 4G 定位终端，包含位置上报、离线队列和服务端验证码绑定。MotoBox 服务账号与凭据需另行开通。 |
+| **开发中 · 已部分实机验证** · [`hardware-verified`](projects/ev-engine-sound/project.yaml)<br>已验证：StickS3 与立创实战派的部分功能；历史 ESP32-S3 板型仅构建通过。<br>待完成：其余实体交互、听感与视觉验收；v2 界面仍为电脑预览。<br>[验证记录与具体范围](projects/ev-engine-sound/docs/validation.md) | **开发中 · 原型** · [`prototype`](projects/m5stack-sticks3-gps-motobox/project.yaml)<br>已验证：Tiny AT/TCP Demo；集成 GPS/4G/WSS/MQTT 室内运行 31 分钟、372 帧全部确认并入库；错误证书和凭据均被拒绝。<br>待完成：4G 两分钟断连补传、完整断电冷启动、移动轨迹和小程序位置/分享验收；复测 Tiny TXD 电平与供电峰值。<br>[验证记录与具体范围](projects/m5stack-sticks3-gps-motobox/docs/validation.md) |
 | [硬件与运行说明](projects/ev-engine-sound/README.md) | [硬件与运行说明](projects/m5stack-sticks3-gps-motobox/README.md) · [中文图解手册](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md) |
 
 | [ESP32 蓝牙声浪原型](demos/esp32-a2dp-engine-sound/) · Demo | 进度与验证 |
@@ -28,7 +28,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 | --- | --- |
 | [<img src="projects/atom-lite-cellular-gnss-base/docs/assets/stack-concept.svg" width="380" alt="ATOM Lite 24毫米同轮廓底座与Tiny通信板的尺寸和功能分工概念图，连接器位置与PCB尚未定型，非实机证据">](projects/atom-lite-cellular-gnss-base/README.md)<br>设计概念示意 · 非 PCB 或实机照片 | 制作 Type-C 供电、自动定位上报的堆叠底座，采用通信核心板、适配 PCB 与打印外壳；ATOM 先行，评估 StickS3 顶部变体，并记录需求到量产准备全过程。<br>**规划中 · 已立项** · [`idea`](projects/atom-lite-cellular-gnss-base/project.yaml)<br>已核对：公开选型资料；已记录用户测量与商品图尺寸差异。<br>待完成：电气/机械核验、原生原理图与 PCB、固件、实机和试产验收。<br>[验证范围与前置条件](projects/atom-lite-cellular-gnss-base/docs/validation.md) |
 
-更多入口：[全部 Projects](projects/) · [全部 Demos](demos/)。
+更多入口：[全部 Projects](projects/) · [全部 Demos](demos/) · [StickS3 + ML307R-DL Tiny AT/TCP 接入 Demo](demos/sticks3-ml307r-at/)。
 状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。
 
 ## 从项目代码到图解说明书
@@ -39,7 +39,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 
 | 图解样页 · 点击查看 | 说明与体验 |
 | --- | --- |
-| [<img src="projects/m5stack-sticks3-gps-motobox/docs/manual/01-hardware.png" width="220" alt="MotoBox 手册小预览：硬件、接线与供电，AI 示意图，点击查看完整手册">](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md) | **MotoBox GPS：三页操作手册 + 一页技术原理**<br>接线、按键、状态、联网绑定与排查；再解释定位、平台账号和微信分享。<br>[四页手册](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md) · [原理与 Demo](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md#5-技术原理各部分如何组成定位-demo)<br>[技能介绍与灵感来源](docs/m5-product-manual.md) · [安装与调用](docs/m5-product-manual.md#如何使用) |
+| [<img src="projects/m5stack-sticks3-gps-motobox/docs/manual/01-hardware.png" width="220" alt="MotoBox 历史 Wi-Fi 固件手册小预览：硬件、接线与供电，AI 示意图">](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md) | **MotoBox GPS：历史 Wi-Fi 固件手册**<br>四页图解记录先前接线、按键、状态和联网绑定；当前 4G 接线请看[项目 README](projects/m5stack-sticks3-gps-motobox/README.md)。<br>[四页手册](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md) · [原理与 Demo](projects/m5stack-sticks3-gps-motobox/docs/manual/README.md#5-技术原理各部分如何组成定位-demo)<br>[技能介绍与灵感来源](docs/m5-product-manual.md) · [安装与调用](docs/m5-product-manual.md#如何使用) |
 
 图稿保留对应固件版本，最新验证范围见配套手册。说明图用于理解项目；实际使用仍要核对硬件、固件与验证记录。
 

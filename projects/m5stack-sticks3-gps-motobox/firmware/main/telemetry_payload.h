@@ -14,6 +14,14 @@ typedef struct {
     uint32_t uptime_s;
     uint32_t free_heap;
     bool wifi_connected;
+    int wifi_rssi;
+    bool cellular_enabled;
+    bool cellular_registered;
+    bool cellular_data_ready;
+    int cellular_csq;
+    uint32_t cellular_reconnects;
+    int64_t cellular_sampled_ms;
+    const char *cellular_model;
     bool gnss_online;
     char gnss_rmc_status;
     int gnss_gga_quality;

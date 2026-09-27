@@ -1,5 +1,13 @@
 menu "StickS3 GPS MotoBox Demo"
 
+config DEMO_CELLULAR
+    bool "Use ML307R-DL cellular uplink"
+    default y
+
+config DEMO_NTP_HOST
+    string "Cellular UDP NTP server"
+    default "ntp.aliyun.com"
+
 config DEMO_WIFI_SSID
     string "Wi-Fi SSID"
     default ""
@@ -10,7 +18,7 @@ config DEMO_WIFI_PASSWORD
 
 config DEMO_MQTT_URI
     string "MotoBox MQTT TLS URI"
-    default "mqtts://emqx.daboluo.cc:8883"
+    default "wss://emqx.daboluo.cc/mqtt"
 
 config DEMO_MQTT_USERNAME
     string "Device MQTT username"
