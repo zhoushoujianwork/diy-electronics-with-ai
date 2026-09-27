@@ -13,6 +13,23 @@ Tiny 页已实现 **UART 电平转换候选子电路**，五个功能页已添�
 
 ![原生 UART 候选电路和右侧无框设计备注，A1 草稿，非实机验证](../../docs/assets/uart-a1-schematic.png)
 
+## Tiny 图片参考素材
+
+已准备 [尺寸与接口观察示意](../../docs/assets/tiny-dimensions-pinlabels.svg) 和
+[图片摆放计划](tiny-reference-images.plan.json)，**尚未导入原生原理图**。
+实测约 20 × 20 mm 与商品标称 20 × 19 × 6 mm 分别注明来源；6P 节距 2.54 mm 为用户报告。
+图中 A–F 只索引正面右侧从上到下的 BAT、EN、RX、TX、GND、VIN，不作为正式封装针号。
+
+用户原始正反面照片、商品尺寸图与 FPC 天线图原样保存在忽略的 `local/tiny-reference-images/`。
+这些原图未复制进 Git；公开 SVG 是自行绘制的观察示意，不包含设备识别号码或第三方图片。
+图片导入目标为 Tiny 页下半部，独立于电气符号；原生 A1 电路尚未改变。
+
+当前 CLI/daemon/选中 Connector 均为 1.8.0，Web 4.1.60。官方 API 索引提供
+`sch_PrimitiveObject.create(content, startX, startY, width, height, rotation, mirror, fileName)`，
+但已安装的 typed action 目录没有原理图图片/内嵌对象创建动作。PCB 的丝印 SVG 导入不能代替它。
+本次未绕过该缺口调用原始 JS。原生导入、坐标语义、保存重开及图片持久化均未验证。
+已检查 SVG/JSON 可解析、六脚文字、原图字节一致性与计划边界；PNG 预览文字清晰，无裁切。
+
 ## 已实现的子电路
 
 | 器件 | 选型与用途 |
