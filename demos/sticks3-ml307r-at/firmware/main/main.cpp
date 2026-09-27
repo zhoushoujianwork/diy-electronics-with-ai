@@ -113,6 +113,9 @@ void bringup_task(void *) {
             } else {
                 ESP_LOGE(TAG, "MODEM_UNSUPPORTED model=%s", model.c_str());
             }
+            ESP_LOGI(TAG, "STACK_FREE_ACTIVE bringup=%u modem_receive=%u modem_event=%u",
+                     (unsigned)uxTaskGetStackHighWaterMark(nullptr), free_stack("modem_receive"),
+                     free_stack("modem_event"));
         }
         ESP_LOGI(TAG, "STACK_FREE bringup=%u modem_receive=%u modem_event=%u",
                  (unsigned)uxTaskGetStackHighWaterMark(nullptr), free_stack("modem_receive"),
