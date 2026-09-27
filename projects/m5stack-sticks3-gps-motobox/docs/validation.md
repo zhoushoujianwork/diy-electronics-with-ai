@@ -51,6 +51,11 @@
   received zero bytes across the eight tested baud rates and showed no panic
   or unexpected reset. This alternate-pin test has not verified the Tiny link;
   the integrated project still uses GPIO5/6.
+  A second alternate Demo `1c8dc1a` swapped directions to GPIO7/TX and
+  GPIO4/RX, with the user reporting the corresponding wire move. It likewise
+  received zero AT bytes during a 120-second capture without abnormal resets
+  or panic. These tests have not identified a functional StickS3-to-Tiny UART
+  connection; the integrated GPS/MotoBox 4G build remains unflashed.
   Registration, TCP and the integrated GPS/MotoBox 4G firmware have not been hardware-verified.
   The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
   Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and

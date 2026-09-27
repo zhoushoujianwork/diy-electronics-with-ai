@@ -79,6 +79,15 @@
   overflow or unexpected reset was observed. A physical G4/G7 loopback was
   requested but not completed before the next direction-swap trial. This test
   does not establish whether the alternate pair reaches the Tiny UART.
+- After swapping physical UART wires, Demo `1c8dc1a` assigned UART1 TX to
+  GPIO7 (Hat2 pin 8) and RX to GPIO4 (pin 4). It built as a `0x84280`-byte
+  application and was flashed with hash verification. The reset log confirmed
+  `UART_PINS uart=1 tx=7 rx=4`. With the user reporting the swapped Tiny wiring,
+  a 120-second serial capture again showed AT timeouts and zero received bytes
+  at all eight probe rates. `bringup` free stack remained 8940/12288 B; no
+  panic, stack overflow or unexpected reset was observed. This direction swap
+  did not establish UART communication; the exact inter-board path is still
+  unverified. A DAPLink check of the physical StickS3 TX/RX paths is next.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
   be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom
