@@ -17,9 +17,9 @@ The `78/esp-ml307` 3.7.5 dependency is licensed under
   six-hole header on the right. Its labels run top to bottom **BAT, EN, RX, TX,
   GND, VIN**. The supplied interface table numbers these pins in reverse,
   starting with VIN as pin 1: GND=2, TXD=3, RXD=4, EN=5, BAT=6. The current
-  **alternate-pin diagnostic build** uses StickS3 Hat2 pin 1 (GND) → Tiny
-  **GND** (table pin 2, fifth hole from the top); Hat2 pin 4 (GPIO4/UART1 TX)
-  → Tiny **RXD** (table pin 4, third hole); Hat2 pin 8 (GPIO7/UART1 RX) ← Tiny
+  **direction-swapped diagnostic build** uses StickS3 Hat2 pin 1 (GND) → Tiny
+  **GND** (table pin 2, fifth hole from the top); Hat2 pin 8 (GPIO7/UART1 TX)
+  → Tiny **RXD** (table pin 4, third hole); Hat2 pin 4 (GPIO4/UART1 RX) ← Tiny
   **TXD** (table pin 3, fourth hole). Remove DAPLink TX/RX when moving its
   previously successful Tiny UART sockets to StickS3. Confirm the same labels
   on the actual carrier. The integrated project still uses GPIO5/6 until this

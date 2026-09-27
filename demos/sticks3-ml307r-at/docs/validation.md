@@ -69,6 +69,16 @@
   rules out a simple baud-rate mismatch for the observed zero-byte path but
   does not yet locate the open or contended connection. No StickS3-side modem
   detection, registration or TCP was observed. Raw logs remain outside Git.
+- To check another Hat2 UART pair, Demo `802bba9` routed UART1 TX to GPIO4
+  (Hat2 pin 4) and RX to GPIO7 (pin 8). It built under ESP-IDF 5.5.2 as a
+  `0x84280`-byte application, was flashed with hash verification, and logged
+  `UART_PINS uart=1 tx=4 rx=7` after reset. With the user reporting the wires
+  moved to those pins, the 120-second capture still showed AT timeouts and
+  zero received bytes in two attempts at every tested baud rate from 9600 to
+  921600 bps. `bringup` free stack remained 8940/12288 B; no panic, stack
+  overflow or unexpected reset was observed. A physical G4/G7 loopback was
+  requested but not completed before the next direction-swap trial. This test
+  does not establish whether the alternate pair reaches the Tiny UART.
 - A user-supplied interface table identifies VIN as 5–16 V, TXD/RXD as 3.3 V,
   EN as pulled up to VIN, and BAT as a separate 3.4–4.2 V input that must not
   be powered with VIN. Its pin numbers start at VIN=1, opposite the top-to-bottom

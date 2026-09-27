@@ -46,6 +46,11 @@
   showed repeated AT timeouts without unexpected resets, panic or stack
   overflow; `bringup` free stack was at least 8940/12288 B. This still does not
   establish StickS3-side modem communication or diagnose the exact wiring fault.
+  A separate AT Demo build `802bba9` then tried StickS3 Hat2 GPIO4/TX and
+  GPIO7/RX with the user reporting moved wires. A 120-second capture again
+  received zero bytes across the eight tested baud rates and showed no panic
+  or unexpected reset. This alternate-pin test has not verified the Tiny link;
+  the integrated project still uses GPIO5/6.
   Registration, TCP and the integrated GPS/MotoBox 4G firmware have not been hardware-verified.
   The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
   Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and

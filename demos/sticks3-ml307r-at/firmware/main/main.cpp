@@ -16,8 +16,8 @@
 namespace {
 constexpr char TAG[] = "ml307_bringup";
 constexpr uint32_t TASK_STACK = 12288;
-constexpr gpio_num_t MODEM_TX_PIN = GPIO_NUM_4;
-constexpr gpio_num_t MODEM_RX_PIN = GPIO_NUM_7;
+constexpr gpio_num_t MODEM_TX_PIN = GPIO_NUM_7;
+constexpr gpio_num_t MODEM_RX_PIN = GPIO_NUM_4;
 
 unsigned free_stack(const char *name) {
     TaskHandle_t handle = xTaskGetHandle(name);
