@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "documentId": "176a6afa07803c76",
+  "notes": [
+    {
+      "id": "04-gnss-note-1",
+      "text": "GNSS 扩展 A1｜首版外接现成接收模块，采用独立 UART；暂不集成 GNSS 射频电路",
+      "x": 60,
+      "y": 750,
+      "fontSize": 18,
+      "color": "#333333"
+    },
+    {
+      "id": "04-gnss-note-2",
+      "text": "候选：M5Stack GPS Unit v1.1 / AT6668，官方标称 5V 供电、115200 波特率",
+      "x": 60,
+      "y": 710,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "04-gnss-note-3",
+      "text": "官方 Grove 线色：黑 = GND，红 = 5V，黄 = 模组 RX，白 = 模组 TX；仍需核对连接器视角",
+      "x": 60,
+      "y": 670,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "04-gnss-note-4",
+      "text": "主机视角：G23 TX → 黄色 RX；G33 RX ← 白色 TX；不能与 4G 的 TX / RX 共用并联",
+      "x": 60,
+      "y": 630,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "04-gnss-note-5",
+      "text": "电平边界：5V 供电不代表 5V TTL；确认所购修订 UART 电平后再决定直连或转换",
+      "x": 60,
+      "y": 590,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "04-gnss-note-6",
+      "text": "资料差异：网页关联的旧版 GP-02 原理图不能证明 AT6668 修订的 UART 电平",
+      "x": 60,
+      "y": 550,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "04-gnss-note-7",
+      "text": "来源：docs.m5stack.com / Unit-GPS v1.1；本页未放连接器，接口针号待复核",
+      "x": 60,
+      "y": 510,
+      "fontSize": 12,
+      "color": "#333333"
+    }
+  ]
+}

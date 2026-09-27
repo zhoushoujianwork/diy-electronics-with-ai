@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "documentId": "08c508a46de0eba7",
+  "notes": [
+    {
+      "id": "02-atom-note-1",
+      "text": "ATOM Lite 接口提案 A1｜适用 C008 / ESP32-PICO-D4；排针针号与朝向待实测",
+      "x": 60,
+      "y": 750,
+      "fontSize": 18,
+      "color": "#333333"
+    },
+    {
+      "id": "02-atom-note-2",
+      "text": "4G UART：G19 → HOST_TX → 模组 RX；G22 ← HOST_RX ← 模组 TX",
+      "x": 60,
+      "y": 710,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "02-atom-note-3",
+      "text": "GNSS UART：G23 → GNSS RX；G33 ← GNSS TX；两模块 TX 禁止并联",
+      "x": 60,
+      "y": 670,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "02-atom-note-4",
+      "text": "控制资源：G21 候选控制 UART_OE；G25 保留控制用途，不能直接当作 Tiny EN",
+      "x": 60,
+      "y": 630,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "02-atom-note-5",
+      "text": "资源冲突：G21 / G25 被使用后禁止初始化默认 I2C；保留 UART0、RGB G27、按钮 G39、IR G12",
+      "x": 60,
+      "y": 590,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "02-atom-note-6",
+      "text": "机械边界：24×24mm 是外壳尺寸；ATOM 与 StickS3 分别设计适配 PCB，封装坐标尚未冻结",
+      "x": 60,
+      "y": 550,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "02-atom-note-7",
+      "text": "来源：M5Stack ATOM Lite 官方原理图与引脚说明；本页是 GPIO 提案，不是可照接针序",
+      "x": 60,
+      "y": 510,
+      "fontSize": 12,
+      "color": "#333333"
+    }
+  ]
+}

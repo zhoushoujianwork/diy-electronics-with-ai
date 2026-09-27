@@ -1,63 +1,92 @@
-# EasyEDA 原生工程准备
+# EasyEDA A1 原理图草稿
 
-用户指定：**只使用 Codex 内置浏览器中的 EasyEDA Pro 网页版，禁止改用桌面 EDA 客户端。**
-工程写入、保存及验证走 `easyeda` typed CLI；GUI 只读观察不能替代数据回读。
+[打开原生工程](https://pro.lceda.cn/editor#id=247f2261614c4e20861e8a96a79cb7ba)
 
-[打开工程](https://pro.lceda.cn/editor#id=247f2261614c4e20861e8a96a79cb7ba)
+只使用 Codex 内置浏览器中的 EasyEDA Pro Web，工程写入通过 typed CLI 和参数文件完成。
+Tiny 页已实现 **UART 电平转换候选子电路**，五个功能页已添加中文设计说明。
+备注采用深灰色普通文字，不加 zone 边框；Tiny 页的备注放在电路右侧。
+项目仍为 `idea`，完整供电、连接器、PCB 和实机验证尚未完成。
 
-当前仅建立原生工程框架：一个 ATOM Board、五个功能页、一块空白 PCB。
-页面标记 `DRAFT - NOT WIRED` / `A0-inputs`。尚无器件实例、电气连接、PCB 板框或布线。
-StickS3 的第二块板仍处于接口调研阶段，没有通过复制空板宣称完成适配。
+![原生 UART 候选电路和右侧无框设计备注，A1 草稿，非实机验证](../../docs/assets/uart-a1-schematic.png)
 
-## 文件
+## 已实现的子电路
 
-- [project-state.json](project-state.json)：工程、原理图、PCB 和五个页面的真实 UUID，以及保存重开后的核对结果。
-- [configure-scaffold.playbook.json](configure-scaffold.playbook.json)：已有页面的名称、草稿标记和保存参数，使用现有 Apply v1 格式。
-- [library-candidates.json](library-candidates.json)：三款 TI 候选的精确 MPN、C 号、库器件和符号/封装关联。
-- `local/atom-adapter-a0-scaffold.epro2`：本机原生快照，目录忽略 Git；不包含制造交付含义。
-
-参数文件不包含易失的 `windowId`。每次先运行 `easyeda health`，核对内置浏览器的工程连接，
-用当次 windowId 和稳定 project/doc UUID 限定目标。存在多个连接时先辨认宿主，不能依赖默认窗口。
-2026-09-27 的连接已通过本机连接来源核对为 Codex 内置浏览器，并与当前标签的工程 URL 对应。
-
-## 功能页与下一项工作
-
-| 页面 | 下一步输入 |
+| 器件 | 选型与用途 |
 | --- | --- |
-| 01 Power - DRAFT | Tiny 实际输入范围、三支路预算、Type-C 受电与主机防倒灌拓扑 |
-| 02 ATOM Host - DRAFT | 底部连接器型号、针号/方向、GPIO 分配与真实电源路径 |
-| 03 Tiny Interface - DRAFT | 六针板级定义、UART 电压域、EN 时序；再决定是否采用 TXU0202 |
-| 04 GNSS Interface - DRAFT | 对应修订的供电/电平、连接器和线束映射 |
-| 05 Test Points - DRAFT | 网络冻结后设置可接触的电源/UART/控制测试点 |
+| U1 | TXU0202DCUR / C5186957，两个固定方向通道，条件式 UART 电平转换 |
+| C1、C2 | CC0603KRX7R9BB104 / C14663，100 nF，分别为 VCCA、VCCB 去耦 |
+| R1 | 0603WAF1003T5E / C25803，100 kΩ，OE 默认下拉关闭 |
 
-Tiny 原始数值仍见[设计输入](../design-inputs.json)，未核实项不填默认电压或 NC。
-现有外壳和排针坐标沿用原提交；本轮没有新增 PCB 机械尺寸。
+引脚映射依据 [TI TXU0202 数据手册](https://www.ti.com/lit/ds/symlink/txu0202.pdf)
+SCES942A 的引脚定义、§10 UART 应用及 §12 去耦建议，并与原生库实例八个引脚逐一对应：
 
-## 执行与验证范围
+- `HOST_TX → A1(5) → B1Y(8) → MODEM_RX`。
+- `MODEM_TX → B2(1) → A2Y(4) → HOST_RX`。
+- `VCCA(3) = HOST_3V3`，`VCCB(7) = MODEM_VIO_TBD`，`GND(2) = GND`。
+- `OE(6) = UART_OE`，通过 R1 接地；两侧供电有效后由主机使能。
 
-创建工程与页面使用 `project create` / `sch page-new`，没有 GUI 落图。
-读取默认页面与 Board 关联后，执行参数化名称/标题栏设置，逐页保存并通过有界
-`doc reload` 重开，再读取标题栏、器件和导线。五页的名称、草稿标记、版本和空电路状态均符合预期。
+`MODEM_VIO_TBD` **没有已设计的电源来源或确定电压**。先取得 Tiny 的实际 UART 电压和板内转换资料，
+再决定采用或省去 U1。当前 6P 上没有已验证的 VIO 输出，不能把 VIN/BAT 当作这个参考电源。
+此页没有 Tiny 连接器，也没有把商品图标签当作封装针号；电源和信号端口表示待接入的边界。
+G21 控制 OE 仅为主机资源提案，不构成已完成的 GPIO 接线。
 
-配置文件绑定本工程现有五页，**不是从零创建工程的通用模板**。进入正式设计后不要重放草稿标记。
-当前源文件可从仓库根目录离线检查：
+## 五页内容
+
+| 页面 | 当前实现 |
+| --- | --- |
+| 01 Power | USB-C 受电、分路、防倒灌、峰值依据和待确认项；尚无电源电路 |
+| 02 ATOM Host | G19/G22 用于 4G、G23/G33 用于 GNSS 的提案；标明 I2C 冲突和待核针序 |
+| 03 Tiny Interface | 四器件 UART 候选电路；标明转换方向、VIO 来源待定、OE 默认关闭和去耦 |
+| 04 GNSS Interface | 独立 UART、Grove 线色、供电与电平区别、官方旧版 PDF 差异 |
+| 05 Test Points | 测试点、上电、发射负载、定位上报和试产计划；尚无测试焊盘 |
+
+供电、EN、GPIO 和连接器尚未冻结；这些备注不是可以直接照接的整板接线表。
+两路 UART 的 TX 不并联。原外壳、朝下排针与底壳天线孔保持原基线。
+
+## 参数与证据
+
+- [uart-a1.layout-input.json](uart-a1.layout-input.json)：连接目标、器件所有权、实测引脚/位号几何及布局约束。
+- [uart-a1.composition.json](uart-a1.composition.json)：由 `sch lib-layout` 求得的局部电路，附最终图签字段。
+- [annotations/](annotations/)：五页普通文字的内容、位置和样式参数。
+- [annotate-a1.apply.json](annotate-a1.apply.json)：原生备注写入及图签队列，执行时指定当次窗口。
+- [project-state.json](project-state.json)：工程 UUID、对象数、验证范围与本机快照摘要。
+- [library-candidates.json](library-candidates.json)：早期三款 TI 候选库身份，不代表全部已使用。
+- `local/`：原始回包、失败日志、受保护队列、原生导出和图片，忽略 Git。
+
+原生图框 SVG 解析得到 A4 内框 `(10,10)…(1160,815)`，图签占位 `(460,10)…(1160,190)`。
+原理图单位为 raw（0.01 inch），y 向上，网格 5。器件坐标由实测几何与布局器生成，没有猜测封装焊盘。
+
+### 重算与执行
+
+从仓库根目录运行。每次先用 `easyeda health` 核对工程、浏览器宿主及窗口版本。
+当前机器仍有一个 1.6.0 旧连接器会话，本轮设计写入均固定到 1.8.0 窗口。
+不要仅以工程 UUID 自动路由，也不要将窗口 ID 固定进长期源文件。
 
 ```sh
-easyeda apply projects/atom-lite-cellular-gnss-base/hardware/easyeda/configure-scaffold.playbook.json --dry-run
+easyeda sch lib-layout --from projects/atom-lite-cellular-gnss-base/hardware/easyeda/uart-a1.layout-input.json --out projects/atom-lite-cellular-gnss-base/hardware/easyeda/local/recomputed.json
+easyeda sch compose --from projects/atom-lite-cellular-gnss-base/hardware/easyeda/uart-a1.composition.json --out projects/atom-lite-cellular-gnss-base/hardware/easyeda/local/plan.json
+easyeda apply projects/atom-lite-cellular-gnss-base/hardware/easyeda/annotate-a1.apply.json --dry-run
 ```
 
-导出原生快照使用 `project export --project-uuid <UUID> --window <当次连接> --out <新文件>`，
-该命令拒绝全局 `--project/--doc`。本轮首个带全局路由的调用在预检阶段被拒绝，按帮助补充的错误提示
-修正参数后导出成功。ZIP 完整性已检查，导入恢复仍未验证。
+布局重算输出不含图签设置，沿用已提交 composition 的 `titleBlock`。实际电路 Apply 必须用
+当前页的 fresh `sch list`（identity/pins/bbox/wires/page-primitives）重新生成受保护队列。
+不能重放旧测量、旧 primitive ID 或 A0 scaffold 队列。
 
-首次执行中，Board 改名成功；原理图文档改名返回 `result.ok:false`，但 CLI 总结仍把该步计为成功。
-独立回读发现名称实际仍为 `Schematic1`，据此保留原名，并从最终参数文件移除无效的改名步骤。
-最终文件保留 15 个已落地的页面设置/保存步骤，离线预检通过；没有以总成功数代替实际状态。
+1.8.0 没有独立的文字写入命令。备注队列组合现有 typed 能力：用 frame 工具建立并回读文字样式，
+捕获该次返回的矩形 ID，再仅删除这些矩形。最终保留普通文字，电路图元不在删除范围。
+内部 frame 记录保留创建收据，最终无框状态通过实际 texts/rectangles 验收，不运行旧 `frame check`。
+修改备注参数时同步重生成队列，不能只运行其中建立框的一步。
 
-库查询确认的是器件身份和关联。`lib symbol get` / `lib footprint get` 本次只返回资产元数据，
-不能用来声称真实 symbol pin 与 footprint pad 已逐脚检查；这些工作放在实例化之前完成。
-库摘要的电压/方向描述若与原厂手册不同，以原厂手册为电气依据。
+## 验证边界与回退
 
-运行环境：CLI/daemon `v1.6.0-dirty`、Connector `1.6.0`、Web `4.1.60`，加载的 Skill 为 `1.5.3-dev.3`。
-显式安装对账显示最新发布为 `1.7.0`；本轮未升级，未宣称当前组件具有同一发布版的一致性。
-本轮没有 ERC/DRC 或硬件通过结论。调研依据及落图前置输入见[PCB 调研](../../docs/pcb-design-research.md)。
+四器件共 14 个引脚的网络与目标一致，原生回读为 10 个合并后的导线图元、3 个地标记、7 个端口。
+外围直连与导线树检查通过；有一处已核实无接点的内部交叉。
+首次严格门禁发现图签未填，后续补齐；最终官方 DRC 返回 4 个 warning，只有聚合数量，尚未取得逐项原因。
+局部连通检查不能替代完整板级设计或消除官方警告。
+
+五页均执行保存、重开和 fresh 回读；最终备注去框后另行核对文字、矩形及电路不变性。
+实际结果见[验证记录](../../docs/validation.md)。没有进行 PCB 导入、布线、制造导出、上电或固件测试。
+本机原生 `.epro2` 是备份，ZIP 完整性检查不等于导入恢复测试。
+
+回退保留 A0 框架备份和本轮前后快照。撤回本轮时仅处理本轮创建的器件、电路和文字，
+不删除整个工程或其他项目；外壳基线不受影响。

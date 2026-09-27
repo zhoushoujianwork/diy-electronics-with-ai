@@ -11,7 +11,7 @@
 - [PCB 设计调研](../docs/pcb-design-research.md)：板级资料与裸模组要求、电源方案、机械限制、缺口及官方来源。
 - [pcb-interface-plan.csv](pcb-interface-plan.csv)：两款主机 GPIO 分配提案；官方逻辑针号不等于 PCB pad 编号，空值表示未核实。
 - [pcb-part-candidates.csv](pcb-part-candidates.csv)：已查数据手册的器件候选；未冻结 BOM、库器件或采购状态。
-- [EasyEDA 原生工程准备](easyeda/README.md)：内置浏览器中的工程框架、五个草稿页及候选库身份；尚未接线或布板。
+- [EasyEDA A1 原理图草稿](easyeda/README.md)：已接线的 UART 电平转换候选子电路、五页设计备注和参数源；尚未布板。
 
 ## 坐标与封装
 
@@ -28,8 +28,8 @@ StickS3 变体另需顶部 Hat2 观察方向、配对高度、壳体卡位与屏
 
 当前环境使用已安装的 `easyeda` typed CLI，不进行 GUI 落图或任意脚本注入。
 2026-09-27 初始查询没有编辑器连接；随后已在用户指定的内置浏览器完成工程准备。
-当前 CLI/daemon `v1.6.0-dirty`、Connector `1.6.0`、Web `4.1.60`；五个草稿页保存重开后回读通过，
-原生电路、板框、布线及 DRC 仍待实施。工程身份和证据见上方 EasyEDA 入口。
+当前操作固定到 CLI/daemon/Connector `1.8.0` 与 Web `4.1.60`。Tiny 页已有四个器件的候选子电路，
+五页备注采用无边框普通文字。完整供电和接口、PCB、官方 DRC 警告处理仍待完成。工程身份与证据见上方入口。
 
 后续沿用已创建的独立工程，只连接内置浏览器，不启动桌面 EDA 客户端：
 

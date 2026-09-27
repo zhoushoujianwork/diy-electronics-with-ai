@@ -210,3 +210,9 @@ TXU0202 的候选连法：VCCA 接已验证的主机逻辑电源，VCCB 接已�
 - **[S6]** [TI TXU0202 手册](https://www.ti.com/lit/ds/symlink/txu0202.pdf)，SCES942A，2022-03 修订；页 1 特性、页 4 引脚、末尾订购表。
 - **[S7]** [TI TPS212x 手册](https://www.ti.com/lit/ds/symlink/tps2121.pdf)，SLVSEA3F，2020-08 修订；页 1、特性/应用及订购表。
 - **[S8]** [TI TUSB320 手册](https://www.ti.com/lit/ds/symlink/tusb320.pdf)，SLLSEN9F，2022-03 修订；页 1、CC 检测及订购表。
+
+## A1 落图补记
+
+[UART 候选子电路](../hardware/easyeda/README.md)已使用 TXU0202DCUR、两颗 100 nF 去耦和 100 kΩ OE 下拉。
+ATOM 原备用 G21 提议用作 `UART_OE` 控制，GPIO 与连接器尚未接入原理图；仍需在两侧电源有效后使能。
+该提案不确定 Tiny EN 功能，也不解决 `MODEM_VIO_TBD` 的电源来源。是否采用转换器仍取决于 Tiny 板级电平资料。

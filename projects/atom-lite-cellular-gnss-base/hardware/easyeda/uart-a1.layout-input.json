@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "connectivity": {
+    "schemaVersion": "1.4",
+    "projectId": "247f2261614c4e20861e8a96a79cb7ba",
+    "documentId": "ba5508e7a4983dd6",
+    "components": [
+      {
+        "id": "cmp-C1",
+        "ref": "C1",
+        "device": {
+          "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+          "deviceUuid": "96b39256cc3f4d80bd3b503deb4f3328",
+          "name": "={Value}"
+        },
+        "pins": [
+          {
+            "number": "1",
+            "name": "1"
+          },
+          {
+            "number": "2",
+            "name": "2"
+          }
+        ],
+        "role": "vcca_decoupling"
+      },
+      {
+        "id": "cmp-C2",
+        "ref": "C2",
+        "device": {
+          "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+          "deviceUuid": "96b39256cc3f4d80bd3b503deb4f3328",
+          "name": "={Value}"
+        },
+        "pins": [
+          {
+            "number": "1",
+            "name": "1"
+          },
+          {
+            "number": "2",
+            "name": "2"
+          }
+        ],
+        "role": "vccb_decoupling"
+      },
+      {
+        "id": "cmp-R1",
+        "ref": "R1",
+        "device": {
+          "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+          "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+          "name": "={Value}"
+        },
+        "pins": [
+          {
+            "number": "1",
+            "name": "1"
+          },
+          {
+            "number": "2",
+            "name": "2"
+          }
+        ],
+        "role": "oe_default_disabled"
+      },
+      {
+        "id": "cmp-U1",
+        "ref": "U1",
+        "device": {
+          "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+          "deviceUuid": "493798d782f842239c2500d2396f07aa",
+          "name": "={Manufacturer Part}"
+        },
+        "pins": [
+          {
+            "number": "1",
+            "name": "B2"
+          },
+          {
+            "number": "2",
+            "name": "GND"
+          },
+          {
+            "number": "3",
+            "name": "VCCA"
+          },
+          {
+            "number": "4",
+            "name": "A2Y"
+          },
+          {
+            "number": "5",
+            "name": "A1"
+          },
+          {
+            "number": "6",
+            "name": "OE"
+          },
+          {
+            "number": "7",
+            "name": "VCCB"
+          },
+          {
+            "number": "8",
+            "name": "B1Y"
+          }
+        ],
+        "role": "optional_modem_uart_translator"
+      }
+    ],
+    "nets": [
+      {
+        "id": "GND",
+        "name": "GND",
+        "scope": "global",
+        "role": "ground"
+      },
+      {
+        "id": "HOST_3V3",
+        "name": "HOST_3V3",
+        "scope": "global",
+        "role": "power"
+      },
+      {
+        "id": "HOST_RX",
+        "name": "HOST_RX",
+        "scope": "local",
+        "role": "signal"
+      },
+      {
+        "id": "HOST_TX",
+        "name": "HOST_TX",
+        "scope": "local",
+        "role": "signal"
+      },
+      {
+        "id": "MODEM_RX",
+        "name": "MODEM_RX",
+        "scope": "local",
+        "role": "signal"
+      },
+      {
+        "id": "MODEM_TX",
+        "name": "MODEM_TX",
+        "scope": "local",
+        "role": "signal"
+      },
+      {
+        "id": "MODEM_VIO_TBD",
+        "name": "MODEM_VIO_TBD",
+        "scope": "global",
+        "role": "power"
+      },
+      {
+        "id": "UART_OE",
+        "name": "UART_OE",
+        "scope": "local",
+        "role": "signal"
+      }
+    ],
+    "connections": [
+      {
+        "componentId": "cmp-C1",
+        "pinNumber": "1",
+        "netId": "HOST_3V3",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-C1",
+        "pinNumber": "2",
+        "netId": "GND",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-C2",
+        "pinNumber": "1",
+        "netId": "MODEM_VIO_TBD",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-C2",
+        "pinNumber": "2",
+        "netId": "GND",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-R1",
+        "pinNumber": "1",
+        "netId": "GND",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-R1",
+        "pinNumber": "2",
+        "netId": "UART_OE",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "1",
+        "netId": "MODEM_TX",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "2",
+        "netId": "GND",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "3",
+        "netId": "HOST_3V3",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "4",
+        "netId": "HOST_RX",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "5",
+        "netId": "HOST_TX",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "6",
+        "netId": "UART_OE",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "7",
+        "netId": "MODEM_VIO_TBD",
+        "kind": "netlist"
+      },
+      {
+        "componentId": "cmp-U1",
+        "pinNumber": "8",
+        "netId": "MODEM_RX",
+        "kind": "netlist"
+      }
+    ],
+    "modules": [
+      {
+        "id": "uart-domain",
+        "name": "Optional UART level conversion",
+        "coreComponents": [
+          "cmp-U1"
+        ],
+        "peripheralComponents": [
+          "cmp-C1",
+          "cmp-C2",
+          "cmp-R1"
+        ],
+        "internalNets": [],
+        "ports": []
+      }
+    ]
+  },
+  "sheet": {
+    "minX": 0,
+    "minY": 0,
+    "maxX": 1170,
+    "maxY": 825
+  },
+  "sheetBorder": {
+    "minX": 10,
+    "minY": 10,
+    "maxX": 1160,
+    "maxY": 815
+  },
+  "keepouts": [
+    {
+      "minX": 459.99999999999955,
+      "minY": 10,
+      "maxX": 1160,
+      "maxY": 190
+    },
+    {
+      "minX": 575,
+      "minY": 520,
+      "maxX": 1145,
+      "maxY": 755
+    }
+  ],
+  "measurements": [
+    {
+      "designator": "C1",
+      "x": 200,
+      "y": 650,
+      "rotation": 0,
+      "mirror": false,
+      "bbox": {
+        "maxX": 210.5,
+        "maxY": 658.5,
+        "minX": 189.5,
+        "minY": 641.5
+      },
+      "value": "100nF",
+      "textBboxes": [
+        {
+          "minX": 190,
+          "minY": 660,
+          "maxX": 197.5548553466797,
+          "maxY": 666.75
+        }
+      ],
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "HOST_3V3",
+          "x": 180,
+          "y": 650,
+          "rotation": 180
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "x": 220,
+          "y": 650,
+          "rotation": 0
+        }
+      ]
+    },
+    {
+      "designator": "C2",
+      "x": 800,
+      "y": 650,
+      "rotation": 0,
+      "mirror": false,
+      "bbox": {
+        "maxX": 810.5,
+        "maxY": 658.5,
+        "minX": 789.5,
+        "minY": 641.5
+      },
+      "value": "100nF",
+      "textBboxes": [
+        {
+          "minX": 790,
+          "minY": 660,
+          "maxX": 797.5548553466797,
+          "maxY": 666.75
+        }
+      ],
+      "pins": [
+        {
+          "number": "1",
+          "name": "1",
+          "net": "MODEM_VIO_TBD",
+          "x": 780,
+          "y": 650,
+          "rotation": 180
+        },
+        {
+          "number": "2",
+          "name": "2",
+          "net": "GND",
+          "x": 820,
+          "y": 650,
+          "rotation": 0
+        }
+      ]
+    },
+    {
+      "designator": "R1",
+      "x": 200,
+      "y": 400,
+      "rotation": 0,
+      "mirror": false,
+      "bbox": {
+        "maxX": 210.5,
+        "maxY": 404.5,
+        "minX": 189.5,
+        "minY": 395.5
+      },
+      "value": "100kΩ",
+      "textBboxes": [
+        {
+          "minX": 190,
+          "minY": 405,
+          "maxX": 198.9482421875,
+          "maxY": 413
+        }
+      ],
+      "pins": [
+        {
+          "number": "2",
+          "name": "2",
+          "net": "UART_OE",
+          "x": 220,
+          "y": 400,
+          "rotation": 0
+        },
+        {
+          "number": "1",
+          "name": "1",
+          "net": "GND",
+          "x": 180,
+          "y": 400,
+          "rotation": 180
+        }
+      ]
+    },
+    {
+      "designator": "U1",
+      "x": 500,
+      "y": 550,
+      "rotation": 0,
+      "mirror": false,
+      "bbox": {
+        "maxX": 530.5,
+        "maxY": 600.5,
+        "minX": 469.5,
+        "minY": 499.5
+      },
+      "value": "TXU0202DCUR",
+      "textBboxes": [
+        {
+          "minX": 470,
+          "minY": 600,
+          "maxX": 478.9482421875,
+          "maxY": 608
+        }
+      ],
+      "pins": [
+        {
+          "number": "6",
+          "name": "OE",
+          "net": "UART_OE",
+          "x": 460,
+          "y": 570,
+          "rotation": 180
+        },
+        {
+          "number": "5",
+          "name": "A1",
+          "net": "HOST_TX",
+          "x": 460,
+          "y": 540,
+          "rotation": 180
+        },
+        {
+          "number": "4",
+          "name": "A2Y",
+          "net": "HOST_RX",
+          "x": 460,
+          "y": 530,
+          "rotation": 180
+        },
+        {
+          "number": "2",
+          "name": "GND",
+          "net": "GND",
+          "x": 540,
+          "y": 510,
+          "rotation": 0
+        },
+        {
+          "number": "1",
+          "name": "B2",
+          "net": "MODEM_TX",
+          "x": 540,
+          "y": 540,
+          "rotation": 0
+        },
+        {
+          "number": "8",
+          "name": "B1Y",
+          "net": "MODEM_RX",
+          "x": 540,
+          "y": 550,
+          "rotation": 0
+        },
+        {
+          "number": "7",
+          "name": "VCCB",
+          "net": "MODEM_VIO_TBD",
+          "x": 540,
+          "y": 580,
+          "rotation": 0
+        },
+        {
+          "number": "3",
+          "name": "VCCA",
+          "net": "HOST_3V3",
+          "x": 540,
+          "y": 590,
+          "rotation": 0
+        }
+      ]
+    }
+  ],
+  "layoutModules": [
+    {
+      "id": "uart-domain",
+      "title": "UART LEVEL CONVERSION - CONDITIONAL",
+      "coreComponentId": "cmp-U1",
+      "netPolicies": {
+        "GND": "local_ground",
+        "HOST_3V3": "direct",
+        "HOST_RX": "module_port",
+        "HOST_TX": "module_port",
+        "MODEM_RX": "module_port",
+        "MODEM_TX": "module_port",
+        "MODEM_VIO_TBD": "direct",
+        "UART_OE": "direct"
+      },
+      "peripherals": [
+        {
+          "componentId": "cmp-C1",
+          "pinNumber": "1",
+          "attachTo": {
+            "componentId": "cmp-U1",
+            "pinNumber": "3"
+          }
+        },
+        {
+          "componentId": "cmp-C2",
+          "pinNumber": "1",
+          "attachTo": {
+            "componentId": "cmp-U1",
+            "pinNumber": "7"
+          }
+        },
+        {
+          "componentId": "cmp-R1",
+          "pinNumber": "2",
+          "attachTo": {
+            "componentId": "cmp-U1",
+            "pinNumber": "6"
+          }
+        }
+      ]
+    }
+  ],
+  "maxCandidates": 100000
+}

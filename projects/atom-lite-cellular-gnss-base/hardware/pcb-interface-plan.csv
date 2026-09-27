@@ -4,7 +4,7 @@ atom-lite,MODEM_RX,22,bottom expansion,,input,Tiny TX via interface circuit,Tiny
 atom-lite,GNSS_TX,23,bottom expansion,,output,GNSS RX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
 atom-lite,GNSS_RX,33,bottom expansion,,input,GNSS TX via interface circuit,receiver logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
 atom-lite,MODEM_CTRL,25,bottom expansion,,reserved-output,Tiny EN through circuit defined after verification,EN domain and polarity unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md
-atom-lite,SPARE,21,bottom expansion,,unassigned,unassigned,host logic domain; no external connection,proposal-not-for-wiring,../docs/pcb-design-research.md
+atom-lite,UART_OE_CANDIDATE,21,bottom expansion,,reserved-output,optional TXU0202 OE; host connector not yet drawn,HOST_3V3 logic; default disabled by 100k pull-down,proposal-not-for-wiring,easyeda/README.md
 atom-lite,HOST_POWER,,bottom expansion,,input,isolated carrier host branch,5 V path and actual board revision to verify,proposal-not-for-wiring,../docs/pcb-design-research.md
 atom-lite,GND,,bottom expansion,,reference,common ground,return-current path to design,proposal-not-for-wiring,../docs/pcb-design-research.md
 sticks3,MODEM_TX,5,Hat2,2,output,Tiny RX via interface circuit,Tiny logic voltage unresolved,proposal-not-for-wiring,../docs/pcb-design-research.md

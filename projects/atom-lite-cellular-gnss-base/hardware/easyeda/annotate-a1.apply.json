@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "A1 plain Chinese schematic notes",
+    "project": "247f2261614c4e20861e8a96a79cb7ba"
+  },
+  "defaults": {
+    "retry": 0,
+    "continueOnError": false
+  },
+  "steps": [
+    {
+      "id": "01-power-text-style",
+      "run": "sch frame apply",
+      "flags": {
+        "doc": "9bb2a5485117e258",
+        "data": "{\"schemaVersion\":1,\"documentId\":\"9bb2a5485117e258\",\"frames\":[{\"id\":\"01-power-note-1\",\"title\":\"电源设计 A1｜目标：底座 USB-C 受电，ATOM / 4G / GNSS 分路供电\",\"rect\":{\"minX\":50,\"minY\":722,\"maxX\":1145,\"maxY\":760},\"titleX\":60,\"titleY\":750,\"fontSize\":18,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"01-power-note-2\",\"title\":\"USB-C：两颗 5.1kΩ Rd 仅声明受电端；不能据此假定可取 3A\",\"rect\":{\"minX\":50,\"minY\":688,\"maxX\":1145,\"maxY\":720},\"titleX\":60,\"titleY\":710,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"01-power-note-3\",\"title\":\"4G 支路：Tiny VIN / BAT 范围与稳压器未知；不接 HOST_3V3，不短接 VIN 与 BAT\",\"rect\":{\"minX\":50,\"minY\":648,\"maxX\":1145,\"maxY\":680},\"titleX\":60,\"titleY\":670,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"01-power-note-4\",\"title\":\"峰值依据：ML307R 裸模组 VBAT 3.4–4.5V、瞬态 2A；不能直接套到 Tiny VIN\",\"rect\":{\"minX\":50,\"minY\":608,\"maxX\":1145,\"maxY\":640},\"titleX\":60,\"titleY\":630,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"01-power-note-5\",\"title\":\"防倒灌：需核对 ATOM USB 与底座同时插入时的电源路径；电源保护与限流待设计\",\"rect\":{\"minX\":50,\"minY\":568,\"maxX\":1145,\"maxY\":600},\"titleX\":60,\"titleY\":590,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"01-power-note-6\",\"title\":\"落板条件：取得 Tiny 板级资料，测量三支路启动 / 发射电流，核定连接器与线宽\",\"rect\":{\"minX\":50,\"minY\":528,\"maxX\":1145,\"maxY\":560},\"titleX\":60,\"titleY\":550,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"01-power-note-7\",\"title\":\"来源：M307R Hardware Datasheet V1.0.1，p23 / p25 / p27–28；本页未落电源电路\",\"rect\":{\"minX\":50,\"minY\":488,\"maxX\":1145,\"maxY\":520},\"titleX\":60,\"titleY\":510,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1}]}"
+      },
+      "capture": {
+        "01_power_rect_0": "$.frames[0].rectangle.id",
+        "01_power_rect_1": "$.frames[1].rectangle.id",
+        "01_power_rect_2": "$.frames[2].rectangle.id",
+        "01_power_rect_3": "$.frames[3].rectangle.id",
+        "01_power_rect_4": "$.frames[4].rectangle.id",
+        "01_power_rect_5": "$.frames[5].rectangle.id",
+        "01_power_rect_6": "$.frames[6].rectangle.id"
+      },
+      "assert": {
+        "$.verified": "true"
+      }
+    },
+    {
+      "id": "01-power-remove-note-boxes",
+      "run": "sch prim-delete",
+      "flags": {
+        "doc": "9bb2a5485117e258",
+        "ids": "${01_power_rect_0},${01_power_rect_1},${01_power_rect_2},${01_power_rect_3},${01_power_rect_4},${01_power_rect_5},${01_power_rect_6}"
+      }
+    },
+    {
+      "id": "01-power-title",
+      "run": "sch titleblock",
+      "flags": {
+        "doc": "9bb2a5485117e258",
+        "data": "{\"Name\":{\"value\":\"Power Design - DRAFT\",\"showTitle\":false,\"showValue\":false},\"Drawed\":{\"value\":\"DIY Lab / Codex\",\"showTitle\":false,\"showValue\":false},\"Description\":{\"value\":\"DESIGN NOTES - NOT WIRED\",\"showTitle\":false,\"showValue\":false},\"Version\":{\"value\":\"A1\",\"showTitle\":false,\"showValue\":false}}"
+      }
+    },
+    {
+      "id": "01-power-save",
+      "run": "sch save",
+      "flags": {
+        "doc": "9bb2a5485117e258"
+      }
+    },
+    {
+      "id": "02-atom-text-style",
+      "run": "sch frame apply",
+      "flags": {
+        "doc": "08c508a46de0eba7",
+        "data": "{\"schemaVersion\":1,\"documentId\":\"08c508a46de0eba7\",\"frames\":[{\"id\":\"02-atom-note-1\",\"title\":\"ATOM Lite 接口提案 A1｜适用 C008 / ESP32-PICO-D4；排针针号与朝向待实测\",\"rect\":{\"minX\":50,\"minY\":722,\"maxX\":1145,\"maxY\":760},\"titleX\":60,\"titleY\":750,\"fontSize\":18,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"02-atom-note-2\",\"title\":\"4G UART：G19 → HOST_TX → 模组 RX；G22 ← HOST_RX ← 模组 TX\",\"rect\":{\"minX\":50,\"minY\":688,\"maxX\":1145,\"maxY\":720},\"titleX\":60,\"titleY\":710,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"02-atom-note-3\",\"title\":\"GNSS UART：G23 → GNSS RX；G33 ← GNSS TX；两模块 TX 禁止并联\",\"rect\":{\"minX\":50,\"minY\":648,\"maxX\":1145,\"maxY\":680},\"titleX\":60,\"titleY\":670,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"02-atom-note-4\",\"title\":\"控制资源：G21 候选控制 UART_OE；G25 保留控制用途，不能直接当作 Tiny EN\",\"rect\":{\"minX\":50,\"minY\":608,\"maxX\":1145,\"maxY\":640},\"titleX\":60,\"titleY\":630,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"02-atom-note-5\",\"title\":\"资源冲突：G21 / G25 被使用后禁止初始化默认 I2C；保留 UART0、RGB G27、按钮 G39、IR G12\",\"rect\":{\"minX\":50,\"minY\":568,\"maxX\":1145,\"maxY\":600},\"titleX\":60,\"titleY\":590,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"02-atom-note-6\",\"title\":\"机械边界：24×24mm 是外壳尺寸；ATOM 与 StickS3 分别设计适配 PCB，封装坐标尚未冻结\",\"rect\":{\"minX\":50,\"minY\":528,\"maxX\":1145,\"maxY\":560},\"titleX\":60,\"titleY\":550,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"02-atom-note-7\",\"title\":\"来源：M5Stack ATOM Lite 官方原理图与引脚说明；本页是 GPIO 提案，不是可照接针序\",\"rect\":{\"minX\":50,\"minY\":488,\"maxX\":1145,\"maxY\":520},\"titleX\":60,\"titleY\":510,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1}]}"
+      },
+      "capture": {
+        "02_atom_rect_0": "$.frames[0].rectangle.id",
+        "02_atom_rect_1": "$.frames[1].rectangle.id",
+        "02_atom_rect_2": "$.frames[2].rectangle.id",
+        "02_atom_rect_3": "$.frames[3].rectangle.id",
+        "02_atom_rect_4": "$.frames[4].rectangle.id",
+        "02_atom_rect_5": "$.frames[5].rectangle.id",
+        "02_atom_rect_6": "$.frames[6].rectangle.id"
+      },
+      "assert": {
+        "$.verified": "true"
+      }
+    },
+    {
+      "id": "02-atom-remove-note-boxes",
+      "run": "sch prim-delete",
+      "flags": {
+        "doc": "08c508a46de0eba7",
+        "ids": "${02_atom_rect_0},${02_atom_rect_1},${02_atom_rect_2},${02_atom_rect_3},${02_atom_rect_4},${02_atom_rect_5},${02_atom_rect_6}"
+      }
+    },
+    {
+      "id": "02-atom-title",
+      "run": "sch titleblock",
+      "flags": {
+        "doc": "08c508a46de0eba7",
+        "data": "{\"Name\":{\"value\":\"ATOM GPIO Proposal\",\"showTitle\":false,\"showValue\":false},\"Drawed\":{\"value\":\"DIY Lab / Codex\",\"showTitle\":false,\"showValue\":false},\"Description\":{\"value\":\"DESIGN NOTES - NOT WIRED\",\"showTitle\":false,\"showValue\":false},\"Version\":{\"value\":\"A1\",\"showTitle\":false,\"showValue\":false}}"
+      }
+    },
+    {
+      "id": "02-atom-save",
+      "run": "sch save",
+      "flags": {
+        "doc": "08c508a46de0eba7"
+      }
+    },
+    {
+      "id": "03-tiny-text-style",
+      "run": "sch frame apply",
+      "flags": {
+        "doc": "ba5508e7a4983dd6",
+        "data": "{\"schemaVersion\":1,\"documentId\":\"ba5508e7a4983dd6\",\"frames\":[{\"id\":\"03-tiny-note-1\",\"title\":\"条件电路：U1 仅在 Tiny UART 需转换时采用；VCCB = MODEM_VIO_TBD，电压与电源来源待确认\",\"rect\":{\"minX\":585,\"minY\":708,\"maxX\":1145,\"maxY\":740},\"titleX\":595,\"titleY\":730,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"03-tiny-note-2\",\"title\":\"方向：HOST_TX → A1 / B1Y → MODEM_RX；MODEM_TX → B2 / A2Y → HOST_RX\",\"rect\":{\"minX\":585,\"minY\":663,\"maxX\":1145,\"maxY\":695},\"titleX\":595,\"titleY\":685,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"03-tiny-note-3\",\"title\":\"OE：R1 100kΩ 默认关闭；确认两侧供电有效后使能。C1 / C2 各 100nF，PCB 紧贴电源脚\",\"rect\":{\"minX\":585,\"minY\":618,\"maxX\":1145,\"maxY\":650},\"titleX\":595,\"titleY\":640,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"03-tiny-note-4\",\"title\":\"Tiny 商品标注：BAT、EN、RX、TX、GND、VIN；不等于封装针号。EN 功能 / VIN / BAT 均待核实\",\"rect\":{\"minX\":585,\"minY\":573,\"maxX\":1145,\"maxY\":605},\"titleX\":595,\"titleY\":595,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"03-tiny-note-5\",\"title\":\"依据：TI TXU0202 SCES942A §10 / §12；仅此子电路已连线，6P 接口与 MODEM_VIO 电源仍待设计\",\"rect\":{\"minX\":585,\"minY\":528,\"maxX\":1145,\"maxY\":560},\"titleX\":595,\"titleY\":550,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1}]}"
+      },
+      "capture": {
+        "03_tiny_rect_0": "$.frames[0].rectangle.id",
+        "03_tiny_rect_1": "$.frames[1].rectangle.id",
+        "03_tiny_rect_2": "$.frames[2].rectangle.id",
+        "03_tiny_rect_3": "$.frames[3].rectangle.id",
+        "03_tiny_rect_4": "$.frames[4].rectangle.id"
+      },
+      "assert": {
+        "$.verified": "true"
+      }
+    },
+    {
+      "id": "03-tiny-remove-note-boxes",
+      "run": "sch prim-delete",
+      "flags": {
+        "doc": "ba5508e7a4983dd6",
+        "ids": "${03_tiny_rect_0},${03_tiny_rect_1},${03_tiny_rect_2},${03_tiny_rect_3},${03_tiny_rect_4}"
+      }
+    },
+    {
+      "id": "03-tiny-title",
+      "run": "sch titleblock",
+      "flags": {
+        "doc": "ba5508e7a4983dd6",
+        "data": "{\"Name\":{\"value\":\"Tiny UART - CONDITIONAL\",\"showTitle\":false,\"showValue\":false},\"Drawed\":{\"value\":\"DIY Lab / Codex\",\"showTitle\":false,\"showValue\":false},\"Description\":{\"value\":\"UART CANDIDATE - VIO TBD\",\"showTitle\":false,\"showValue\":false},\"Version\":{\"value\":\"A1\",\"showTitle\":false,\"showValue\":false}}"
+      }
+    },
+    {
+      "id": "03-tiny-save",
+      "run": "sch save",
+      "flags": {
+        "doc": "ba5508e7a4983dd6"
+      }
+    },
+    {
+      "id": "04-gnss-text-style",
+      "run": "sch frame apply",
+      "flags": {
+        "doc": "176a6afa07803c76",
+        "data": "{\"schemaVersion\":1,\"documentId\":\"176a6afa07803c76\",\"frames\":[{\"id\":\"04-gnss-note-1\",\"title\":\"GNSS 扩展 A1｜首版外接现成接收模块，采用独立 UART；暂不集成 GNSS 射频电路\",\"rect\":{\"minX\":50,\"minY\":722,\"maxX\":1145,\"maxY\":760},\"titleX\":60,\"titleY\":750,\"fontSize\":18,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"04-gnss-note-2\",\"title\":\"候选：M5Stack GPS Unit v1.1 / AT6668，官方标称 5V 供电、115200 波特率\",\"rect\":{\"minX\":50,\"minY\":688,\"maxX\":1145,\"maxY\":720},\"titleX\":60,\"titleY\":710,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"04-gnss-note-3\",\"title\":\"官方 Grove 线色：黑 = GND，红 = 5V，黄 = 模组 RX，白 = 模组 TX；仍需核对连接器视角\",\"rect\":{\"minX\":50,\"minY\":648,\"maxX\":1145,\"maxY\":680},\"titleX\":60,\"titleY\":670,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"04-gnss-note-4\",\"title\":\"主机视角：G23 TX → 黄色 RX；G33 RX ← 白色 TX；不能与 4G 的 TX / RX 共用并联\",\"rect\":{\"minX\":50,\"minY\":608,\"maxX\":1145,\"maxY\":640},\"titleX\":60,\"titleY\":630,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"04-gnss-note-5\",\"title\":\"电平边界：5V 供电不代表 5V TTL；确认所购修订 UART 电平后再决定直连或转换\",\"rect\":{\"minX\":50,\"minY\":568,\"maxX\":1145,\"maxY\":600},\"titleX\":60,\"titleY\":590,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"04-gnss-note-6\",\"title\":\"资料差异：网页关联的旧版 GP-02 原理图不能证明 AT6668 修订的 UART 电平\",\"rect\":{\"minX\":50,\"minY\":528,\"maxX\":1145,\"maxY\":560},\"titleX\":60,\"titleY\":550,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"04-gnss-note-7\",\"title\":\"来源：docs.m5stack.com / Unit-GPS v1.1；本页未放连接器，接口针号待复核\",\"rect\":{\"minX\":50,\"minY\":488,\"maxX\":1145,\"maxY\":520},\"titleX\":60,\"titleY\":510,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1}]}"
+      },
+      "capture": {
+        "04_gnss_rect_0": "$.frames[0].rectangle.id",
+        "04_gnss_rect_1": "$.frames[1].rectangle.id",
+        "04_gnss_rect_2": "$.frames[2].rectangle.id",
+        "04_gnss_rect_3": "$.frames[3].rectangle.id",
+        "04_gnss_rect_4": "$.frames[4].rectangle.id",
+        "04_gnss_rect_5": "$.frames[5].rectangle.id",
+        "04_gnss_rect_6": "$.frames[6].rectangle.id"
+      },
+      "assert": {
+        "$.verified": "true"
+      }
+    },
+    {
+      "id": "04-gnss-remove-note-boxes",
+      "run": "sch prim-delete",
+      "flags": {
+        "doc": "176a6afa07803c76",
+        "ids": "${04_gnss_rect_0},${04_gnss_rect_1},${04_gnss_rect_2},${04_gnss_rect_3},${04_gnss_rect_4},${04_gnss_rect_5},${04_gnss_rect_6}"
+      }
+    },
+    {
+      "id": "04-gnss-title",
+      "run": "sch titleblock",
+      "flags": {
+        "doc": "176a6afa07803c76",
+        "data": "{\"Name\":{\"value\":\"GNSS UART Proposal\",\"showTitle\":false,\"showValue\":false},\"Drawed\":{\"value\":\"DIY Lab / Codex\",\"showTitle\":false,\"showValue\":false},\"Description\":{\"value\":\"DESIGN NOTES - NOT WIRED\",\"showTitle\":false,\"showValue\":false},\"Version\":{\"value\":\"A1\",\"showTitle\":false,\"showValue\":false}}"
+      }
+    },
+    {
+      "id": "04-gnss-save",
+      "run": "sch save",
+      "flags": {
+        "doc": "176a6afa07803c76"
+      }
+    },
+    {
+      "id": "05-test-text-style",
+      "run": "sch frame apply",
+      "flags": {
+        "doc": "e80ae91542c0a9bb",
+        "data": "{\"schemaVersion\":1,\"documentId\":\"e80ae91542c0a9bb\",\"frames\":[{\"id\":\"05-test-note-1\",\"title\":\"验证与测试点 A1｜本项目尚无实机、固件或投板验收；不得依据局部检查直接生产\",\"rect\":{\"minX\":50,\"minY\":722,\"maxX\":1145,\"maxY\":760},\"titleX\":60,\"titleY\":750,\"fontSize\":18,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"05-test-note-2\",\"title\":\"测试点规划：输入 5V、HOST_3V3、MODEM_VIO、GND、两路 UART 与 OE；网络冻结后落焊盘\",\"rect\":{\"minX\":50,\"minY\":688,\"maxX\":1145,\"maxY\":720},\"titleX\":60,\"titleY\":710,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"05-test-note-3\",\"title\":\"上电验证：先查供电 / 电平 / 防倒灌，再验证 AT 指令、注册网络、GNSS 定位及上报\",\"rect\":{\"minX\":50,\"minY\":648,\"maxX\":1145,\"maxY\":680},\"titleX\":60,\"titleY\":670,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"05-test-note-4\",\"title\":\"负载测试：蜂窝最大发射条件下记录电压跌落、启动电流、复位原因与串口连续性\",\"rect\":{\"minX\":50,\"minY\":608,\"maxX\":1145,\"maxY\":640},\"titleX\":60,\"titleY\":630,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"05-test-note-5\",\"title\":\"软件验收：启动 → 注册 → 等待定位 → 有效位置上报；无定位须报告等待状态\",\"rect\":{\"minX\":50,\"minY\":568,\"maxX\":1145,\"maxY\":600},\"titleX\":60,\"titleY\":590,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"05-test-note-6\",\"title\":\"量产前：封装针序、板框与外壳配合、ERC / DRC、BOM / 装配图、试产与测试治具逐项验收\",\"rect\":{\"minX\":50,\"minY\":528,\"maxX\":1145,\"maxY\":560},\"titleX\":60,\"titleY\":550,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1},{\"id\":\"05-test-note-7\",\"title\":\"结构沿用：Tiny 外壳 24×24×11.8mm，原朝下 6P，底壳天线圆孔；本轮未改结构\",\"rect\":{\"minX\":50,\"minY\":488,\"maxX\":1145,\"maxY\":520},\"titleX\":60,\"titleY\":510,\"fontSize\":12,\"color\":\"#333333\",\"lineType\":1}]}"
+      },
+      "capture": {
+        "05_test_rect_0": "$.frames[0].rectangle.id",
+        "05_test_rect_1": "$.frames[1].rectangle.id",
+        "05_test_rect_2": "$.frames[2].rectangle.id",
+        "05_test_rect_3": "$.frames[3].rectangle.id",
+        "05_test_rect_4": "$.frames[4].rectangle.id",
+        "05_test_rect_5": "$.frames[5].rectangle.id",
+        "05_test_rect_6": "$.frames[6].rectangle.id"
+      },
+      "assert": {
+        "$.verified": "true"
+      }
+    },
+    {
+      "id": "05-test-remove-note-boxes",
+      "run": "sch prim-delete",
+      "flags": {
+        "doc": "e80ae91542c0a9bb",
+        "ids": "${05_test_rect_0},${05_test_rect_1},${05_test_rect_2},${05_test_rect_3},${05_test_rect_4},${05_test_rect_5},${05_test_rect_6}"
+      }
+    },
+    {
+      "id": "05-test-title",
+      "run": "sch titleblock",
+      "flags": {
+        "doc": "e80ae91542c0a9bb",
+        "data": "{\"Name\":{\"value\":\"Verification Plan\",\"showTitle\":false,\"showValue\":false},\"Drawed\":{\"value\":\"DIY Lab / Codex\",\"showTitle\":false,\"showValue\":false},\"Description\":{\"value\":\"DESIGN NOTES - NOT WIRED\",\"showTitle\":false,\"showValue\":false},\"Version\":{\"value\":\"A1\",\"showTitle\":false,\"showValue\":false}}"
+      }
+    },
+    {
+      "id": "05-test-save",
+      "run": "sch save",
+      "flags": {
+        "doc": "e80ae91542c0a9bb"
+      }
+    }
+  ]
+}

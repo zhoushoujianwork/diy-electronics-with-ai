@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "documentId": "9bb2a5485117e258",
+  "notes": [
+    {
+      "id": "01-power-note-1",
+      "text": "电源设计 A1｜目标：底座 USB-C 受电，ATOM / 4G / GNSS 分路供电",
+      "x": 60,
+      "y": 750,
+      "fontSize": 18,
+      "color": "#333333"
+    },
+    {
+      "id": "01-power-note-2",
+      "text": "USB-C：两颗 5.1kΩ Rd 仅声明受电端；不能据此假定可取 3A",
+      "x": 60,
+      "y": 710,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "01-power-note-3",
+      "text": "4G 支路：Tiny VIN / BAT 范围与稳压器未知；不接 HOST_3V3，不短接 VIN 与 BAT",
+      "x": 60,
+      "y": 670,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "01-power-note-4",
+      "text": "峰值依据：ML307R 裸模组 VBAT 3.4–4.5V、瞬态 2A；不能直接套到 Tiny VIN",
+      "x": 60,
+      "y": 630,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "01-power-note-5",
+      "text": "防倒灌：需核对 ATOM USB 与底座同时插入时的电源路径；电源保护与限流待设计",
+      "x": 60,
+      "y": 590,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "01-power-note-6",
+      "text": "落板条件：取得 Tiny 板级资料，测量三支路启动 / 发射电流，核定连接器与线宽",
+      "x": 60,
+      "y": 550,
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    {
+      "id": "01-power-note-7",
+      "text": "来源：M307R Hardware Datasheet V1.0.1，p23 / p25 / p27–28；本页未落电源电路",
+      "x": 60,
+      "y": 510,
+      "fontSize": 12,
+      "color": "#333333"
+    }
+  ]
+}

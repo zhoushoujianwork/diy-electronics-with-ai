@@ -15,46 +15,56 @@
       "page_uuid": "9bb2a5485117e258",
       "name": "01 Power - DRAFT",
       "saved_and_reloaded": true,
-      "description": "DRAFT - NOT WIRED",
-      "version": "A0-inputs",
+      "description": "DESIGN NOTES - NOT WIRED",
+      "version": "A1",
       "electrical_components": 0,
-      "wires": 0
+      "wires": 0,
+      "notes": 7,
+      "note_frames": 0
     },
     {
       "page_uuid": "08c508a46de0eba7",
       "name": "02 ATOM Host - DRAFT",
       "saved_and_reloaded": true,
-      "description": "DRAFT - NOT WIRED",
-      "version": "A0-inputs",
+      "description": "DESIGN NOTES - NOT WIRED",
+      "version": "A1",
       "electrical_components": 0,
-      "wires": 0
+      "wires": 0,
+      "notes": 7,
+      "note_frames": 0
     },
     {
       "page_uuid": "ba5508e7a4983dd6",
       "name": "03 Tiny Interface - DRAFT",
       "saved_and_reloaded": true,
-      "description": "DRAFT - NOT WIRED",
-      "version": "A0-inputs",
-      "electrical_components": 0,
-      "wires": 0
+      "description": "UART CANDIDATE - VIO TBD",
+      "version": "A1",
+      "electrical_components": 4,
+      "wires": 10,
+      "notes": 5,
+      "note_frames": 0
     },
     {
       "page_uuid": "176a6afa07803c76",
       "name": "04 GNSS Interface - DRAFT",
       "saved_and_reloaded": true,
-      "description": "DRAFT - NOT WIRED",
-      "version": "A0-inputs",
+      "description": "DESIGN NOTES - NOT WIRED",
+      "version": "A1",
       "electrical_components": 0,
-      "wires": 0
+      "wires": 0,
+      "notes": 7,
+      "note_frames": 0
     },
     {
       "page_uuid": "e80ae91542c0a9bb",
       "name": "05 Test Points - DRAFT",
       "saved_and_reloaded": true,
-      "description": "DRAFT - NOT WIRED",
-      "version": "A0-inputs",
+      "description": "DESIGN NOTES - NOT WIRED",
+      "version": "A1",
       "electrical_components": 0,
-      "wires": 0
+      "wires": 0,
+      "notes": 7,
+      "note_frames": 0
     }
   ],
   "pcb": {
@@ -65,19 +75,19 @@
     "saved_and_reloaded": true
   },
   "runtime": {
-    "cli": "v1.6.0-dirty",
-    "daemon": "v1.6.0-dirty",
-    "connector": "1.6.0",
+    "cli": "v1.8.0",
+    "daemon": "v1.8.0",
+    "connector": "1.8.0",
     "web_editor": "4.1.60",
-    "loaded_skill": "1.5.3-dev.3",
-    "release_consistency": "not-verified; mixed development versions; no update performed"
+    "loaded_skill": "1.8.0",
+    "release_consistency": "selected window aligned; separate 1.6.0 connector session excluded by explicit window routing"
   },
-  "scope": "native document scaffold only; no electrical circuit or manufactured PCB",
+  "scope": "Four-part conditional UART translator with 14 verified pin nets; 33 plain-text design notes on five pages; no complete board design or PCB implementation",
   "schematic_coordinates": {
     "units": "raw, 0.01 inch",
     "y_direction": "up",
     "grid": 5,
-    "geometry_source": "official A4 template; no circuit geometry authored"
+    "geometry_source": "Fresh native component/pin and Designator bbox; same-batch official SVG sheet inner border"
   },
   "pcb_coordinates": {
     "cli_units": "mil",
@@ -95,11 +105,28 @@
     }
   ],
   "native_snapshot": {
-    "path": "local/atom-adapter-a0-scaffold.epro2",
-    "bytes": 134983,
-    "sha256": "54f6a962cfececac31fe239510fe5a39f0161bf97c4e6f005770f803c58547e9",
+    "path": "local/atom-adapter-a1-uart-notes.epro2",
+    "bytes": 396676,
+    "sha256": "515fc6c140e8924894674a7eb4ad2142800e5e4591af0863d0ccaa812f094074",
     "zip_integrity_verified": true,
     "restore_verified": false,
     "tracked_in_git": false
+  },
+  "schematic_validation": {
+    "pin_nets_matched": 14,
+    "parts": 4,
+    "layout_lint": "pass",
+    "clusters": "pass",
+    "check": "pass; one verified non-junction crossing info",
+    "bridge_check": "pass; no short or orphan trees",
+    "strict_gate": "fail",
+    "native_drc": {
+      "fatal": 0,
+      "error": 0,
+      "warning": 4,
+      "details": "aggregate only; individual causes unresolved"
+    },
+    "hardware": "not-run",
+    "annotation_style": "33 plain text notes; no note rectangles; one circuit frame retained"
   }
 }
