@@ -39,8 +39,8 @@ registration and data failure reasons remain distinct.
 ## Task stack sizing and observability
 
 Stack sizes are in ESP-IDF bytes. The configured size covers the largest known
-path and local buffers. Short integrated GPS/4G/WSS runs met the stated free-stack
-margin; the 30-minute loaded run remains pending.
+path and local buffers. The 31-minute integrated GPS/4G/WSS run met the stated
+free-stack margin for every listed task; see the validation record for minima.
 
 | Task | Stack | Largest relevant path |
 | --- | ---: | --- |

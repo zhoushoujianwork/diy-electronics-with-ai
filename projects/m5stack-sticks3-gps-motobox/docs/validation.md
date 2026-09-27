@@ -101,10 +101,50 @@
   bytes were GPS 1480, cellular 9552, modem receive 1276, modem event 3336,
   MQTT 8784, telemetry 2400, uplink 4936, UI 4204, voice 3308 and heartbeat
   1264; each exceeded 25% of its configured stack and 1024 B. A read-only
-  MotoBox SQL query later found the first 128 frames of the cold-reset run in
+  MotoBox SQL query later found the first 128 frames of the USB-reset run in
   continuous ingestion order with original `ext.ts_ms` preserved and `gsm`
   capability/state present. Raw serial, device ID and SQL details stay outside Git.
-  Longer stability, deliberate outage/recovery and outdoor motion remain pending.
+  That short run does not establish long-term stability or outage recovery.
+  A subsequent 31-minute USB-reset run used firmware source `d4de2aa` and the
+  locally configured WSS credentials; the flashed application image SHA-256 was
+  `a2c4428dc4cc93bcdf11953c1a3deb74b36e08bc564089480e0ef9630182c0f2`.
+  The hardware was StickS3 K150, Unit GPS v1.1 and the same ML307R-DL Tiny,
+  with Tiny on a separate 5 V supply, shared ground, GPIO7/4 UART and EN open.
+  The supply's current rating, voltage during transmission and UART high level
+  were not measured. The requested USB reset reported reason 11; this was not
+  a full power-off cold start. Serial recorded 185 heartbeats spanning 1851 s,
+  GPS NMEA online without an indoor fix, trusted cellular time, MQTT connected,
+  Wi-Fi off, and sequences 1–372 sampled, published and PUBACKed in order.
+  Final queue and drop counts were zero. One expected reset at the test start
+  was the only reset; there was no panic, Guru Meditation, stack overflow,
+  task-start failure, MQTT error or USB reconnect. Minimum free stack in bytes:
+  GPS 1476/4096, cellular 9552/12288, modem receive 1260/2048, modem event
+  3352/6144, MQTT 8892/12288, telemetry 2412/6144, uplink 4804/8192,
+  UI 4172/8192, voice 3308/4096 and heartbeat 1276/4096. Every measured task
+  retained at least 25% and 1024 B. A read-only MotoBox SQL check found all
+  372 sequences once and in ingestion order, no backwards sampling time,
+  `ext.ts_ms` equal to the stored original `ts_ms` in every frame, 4164–5802 ms
+  between samples and 344–3116 ms ingestion delay. Every frame advertised
+  `gsm`, `modules.gsm=true`, `modules.wifi=false` and CSQ 31; none contained
+  an indoor location fix. The raw log and database identifiers remain outside Git.
+  Negative checks then used temporary, Git-ignored test configurations. With
+  a certificate-invalid host on the same service IP, 100 seconds recorded 14
+  `TLS_FAILED code=-9984 verify=0x4` events, no `TLS_VERIFIED`, MQTT connection
+  or PUBACK, and continued sampling/heartbeats without panic. With the valid
+  WSS host but an invalid password, 100 seconds recorded nine verified TLS
+  handshakes followed by nine broker `not authorized` refusals, no MQTT
+  connection or PUBACK, and continued sampling/heartbeats without panic.
+  Reflashing between these checks discarded their RAM-only queues as expected.
+  The valid private configuration was restored from an outside-Git backup and
+  rebuilt before the final flash. Its application image SHA-256 was
+  `9cd05dc675367ba6fc0bc76d4bac0f5a1c481699d742a61200d9243b593ddf0b`.
+  A 150-second post-restore USB-reset capture showed modem registration,
+  cellular time, verified TLS, MQTT connection, 29 consecutive samples and
+  29 PUBACKs, with 15 heartbeats and no MQTT error, panic or stack overflow.
+  A read-only MotoBox query found all 29 restored-run frames in the database.
+  Deliberate two-minute link loss/recovery,
+  full power-off cold start, outdoor motion, power peaks, UART level and visual
+  screen/button checks remain pending.
   The former complete 8 MiB StickS3 flash image was saved privately outside Git before the
   Demo flash and is the immediate device rollback point. The existing Wi-Fi firmware and
   all hardware evidence below remain software rollback references.

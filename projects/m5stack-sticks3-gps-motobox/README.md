@@ -2,14 +2,14 @@
 
 StickS3 K150 reads Unit GPS v1.1 and uploads MotoBox telemetry through an ML307R-DL Tiny 4G board.
 The ESP32 validates the MQTT TLS certificate and hostname, then displays and speaks a server-generated
-one-time binding code. A short 4G bench run verified GPS input, cellular time, TLS/WSS MQTT,
-QoS 1 acknowledgements and MotoBox ingestion. Long-run stability, outage recovery, signal level,
+one-time binding code. A 31-minute indoor 4G run verified GPS input, cellular time, TLS/WSS MQTT,
+372 QoS 1 acknowledgements and matching MotoBox ingestion. Outage recovery, UART logic level,
 power and outdoor movement remain open. Earlier Wi-Fi verification is recorded separately in
 [validation](docs/validation.md).
 
 The project remains a `prototype`. The earlier Wi-Fi configuration passed indoor connectivity,
 offline recovery, mini-program binding and a stationary outdoor GNSS fix. The 4G configuration
-has passed a short integrated bench run and still needs the acceptance checks below.
+has passed the 30-minute indoor run and still needs the acceptance checks below.
 
 The first public demonstration uses a platform-managed device account. MotoBox broker access is issued
 separately; cloning this repository does not automatically create a cloud device or MQTT credential.
@@ -21,7 +21,7 @@ separately; cloning this repository does not automatically create a cloud device
 设备绑定以及位置/轨迹查看与分享入口。需要已激活且可用的物联网卡、分别满足负载的电源、
 设备专属 MotoBox 凭据和小程序访问资格。
 
-4G 实机已在室内完成 GPS 数据接收、蜂窝授时和 MotoBox 状态帧入库；两分钟断网补传、
+4G 实机已在室内连续运行 31 分钟，完成 GPS 数据接收、蜂窝授时和 372 帧 MotoBox 入库；两分钟断网补传、
 移动轨迹、定位精度与微信位置分享完整链路仍待验收。先前 Wi-Fi 固件的验证单独记录。
 从下面的图解手册入门，再按本页步骤构建运行；精确版本与实测范围以[验证记录](docs/validation.md)为准。
 
