@@ -16,6 +16,8 @@
 namespace {
 constexpr char TAG[] = "ml307_bringup";
 constexpr uint32_t TASK_STACK = 12288;
+constexpr gpio_num_t MODEM_TX_PIN = GPIO_NUM_4;
+constexpr gpio_num_t MODEM_RX_PIN = GPIO_NUM_7;
 
 unsigned free_stack(const char *name) {
     TaskHandle_t handle = xTaskGetHandle(name);
@@ -31,7 +33,7 @@ void raw_at_probe() {
     config.flow_ctrl = UART_HW_FLOWCTRL_DISABLE;
     config.source_clk = UART_SCLK_DEFAULT;
     esp_err_t err = uart_param_config(UART_NUM_1, &config);
-    if (err == ESP_OK) err = uart_set_pin(UART_NUM_1, GPIO_NUM_5, GPIO_NUM_6,
+    if (err == ESP_OK) err = uart_set_pin(UART_NUM_1, MODEM_TX_PIN, MODEM_RX_PIN,
                                          UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
     if (err == ESP_OK) err = uart_driver_install(UART_NUM_1, 512, 0, 0, nullptr, 0);
     if (err != ESP_OK) {
@@ -77,7 +79,7 @@ void bringup_task(void *) {
     uint32_t retry_ms = 2000;
     for (;;) {
         bool tcp_ok = false;
-        auto detected = AtModem::Detect(GPIO_NUM_5, GPIO_NUM_6, GPIO_NUM_NC, 115200, 10000);
+        auto detected = AtModem::Detect(MODEM_TX_PIN, MODEM_RX_PIN, GPIO_NUM_NC, 115200, 10000);
         if (!detected) {
             ESP_LOGW(TAG, "MODEM_DETECT_FAILED reason=%s", detected.error().ToString().c_str());
             if (!probed_raw_uart) {
@@ -87,7 +89,8 @@ void bringup_task(void *) {
         } else {
             auto modem = std::move(*detected);
             std::string model = modem->GetModuleRevision();
-            ESP_LOGI(TAG, "MODEM_DETECTED model=%s uart=1 tx=5 rx=6", model.c_str());
+            ESP_LOGI(TAG, "MODEM_DETECTED model=%s uart=1 tx=%d rx=%d", model.c_str(),
+                     static_cast<int>(MODEM_TX_PIN), static_cast<int>(MODEM_RX_PIN));
             if (model.rfind("ML307R", 0) == 0) {
                 NetworkStatus status = modem->WaitForNetworkReady(30000);
                 if (status == NetworkStatus::Ready) {
@@ -122,6 +125,8 @@ void bringup_task(void *) {
 
 extern "C" void app_main(void) {
     ESP_LOGI(TAG, "BOOT reset_reason=%d", esp_reset_reason());
+    ESP_LOGI(TAG, "UART_PINS uart=1 tx=%d rx=%d", static_cast<int>(MODEM_TX_PIN),
+             static_cast<int>(MODEM_RX_PIN));
     BaseType_t ok = xTaskCreatePinnedToCore(bringup_task, "bringup", TASK_STACK, nullptr, 5, nullptr, 1);
     if (ok != pdPASS) ESP_LOGE(TAG, "TASK_START_FAILED name=bringup");
 }

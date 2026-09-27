@@ -16,18 +16,23 @@ The `78/esp-ml307` 3.7.5 dependency is licensed under
 - In the supplied seller image, hold the modem's printed text upright with the
   six-hole header on the right. Its labels run top to bottom **BAT, EN, RX, TX,
   GND, VIN**. The supplied interface table numbers these pins in reverse,
-  starting with VIN as pin 1: GND=2, TXD=3, RXD=4, EN=5, BAT=6. StickS3 Hat2
-  pin 1 (GND) → Tiny **GND** (table pin 2, fifth hole from the top); pin 2
-  (GPIO5/TX) → **RXD** (table pin 4, third hole); pin 6 (GPIO6/RX) ← **TXD**
-  (table pin 3, fourth hole). Confirm the same labels on the actual carrier.
+  starting with VIN as pin 1: GND=2, TXD=3, RXD=4, EN=5, BAT=6. The current
+  **alternate-pin diagnostic build** uses StickS3 Hat2 pin 1 (GND) → Tiny
+  **GND** (table pin 2, fifth hole from the top); Hat2 pin 4 (GPIO4/UART1 TX)
+  → Tiny **RXD** (table pin 4, third hole); Hat2 pin 8 (GPIO7/UART1 RX) ← Tiny
+  **TXD** (table pin 3, fourth hole). Remove DAPLink TX/RX when moving its
+  previously successful Tiny UART sockets to StickS3. Confirm the same labels
+  on the actual carrier. The integrated project still uses GPIO5/6 until this
+  alternate-pin test establishes a working connection.
 - Supply StickS3 by USB. Supply Tiny separately and connect the grounds. Confirm
   the Tiny carrier's exact revision and marked power input before connecting.
   The supplied interface table specifies VIN 5–16 V and TXD/RXD 3.3 V. Use an
   independent 5 V supply branch rated at least 2 A, not StickS3 Grove or Hat2
   EXT_5V. The user's first meter reading found Tiny TXD idle around **3.6 V**,
-  above the supplied table's 3.3 V claim. Do not reconnect it directly to
-  StickS3 GPIO6. Use a UART-suitable level shifter or a measured divider that
-  presents a valid 3.3 V logic high without exceeding the GPIO limit.
+  above the supplied table's 3.3 V claim. The user questioned this reading;
+  it has not been independently repeated. Use a UART-suitable level shifter or
+  a measured divider that presents a valid 3.3 V logic high without exceeding
+  the GPIO limit.
 - The supplied table says EN is pulled up to VIN. Leave EN unconnected for this
   bring-up; at 5 V VIN it must not connect directly to a 3.3 V StickS3 GPIO.
   BAT is a separate 3.4–4.2 V battery input and must not be powered with VIN.
