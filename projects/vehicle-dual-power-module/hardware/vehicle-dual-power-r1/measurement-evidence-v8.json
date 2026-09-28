@@ -1,0 +1,32 @@
+[
+  {
+    "page": 1,
+    "documentId": "0fc201a153e9cd31",
+    "parts": 73,
+    "symbolSnapshotSha256": "fe689815da9e248fd0ce23cffdba6ec67e57788a034d46abb3a5e0336ce04995",
+    "designatorSnapshotSha256": "c999fa4153df215bb48174d89b40ab8b2e388bfbffac08b7b455bac8c30fefe6",
+    "layoutInputSha256": "3780af2294d5cc57f82da436dd4a8926df127d7072c10a7ed8dad05d312abdc0",
+    "coverage": "device UUID, C number, physical symbol pin inventory, measured body/pins/designator geometry",
+    "electricalConnections": "not-yet-applied"
+  },
+  {
+    "page": 2,
+    "documentId": "1a4712d29493b068",
+    "parts": 77,
+    "symbolSnapshotSha256": "b6ead1ab079e260363af5c015577f6b094512e71dd57ede3939f137cd99dc115",
+    "designatorSnapshotSha256": "c3f1472055abb24f5bf6d1979bb8d216ad352645e51a08ca5f8eddf04d72ff05",
+    "layoutInputSha256": "973691722913e015d223a7d03c0167b24ea0471d801f0513940435955bb710f5",
+    "coverage": "device UUID, C number, physical symbol pin inventory, measured body/pins/designator geometry",
+    "electricalConnections": "not-yet-applied"
+  },
+  {
+    "page": 3,
+    "documentId": "0b5389c810e16077",
+    "parts": 95,
+    "symbolSnapshotSha256": "d4336ce036ff7ab72e21df4eb2e03c0c2ad640309e1ee90b01ca341e01de203d",
+    "designatorSnapshotSha256": "223d3eca0621d3131e92610b490721d7cdb347c3025489b9d2ce44341e6155fb",
+    "layoutInputSha256": "87aa32f20280e61f41f73354b6622e052e2f7d10915d4bf2309fba89f217f5ad",
+    "coverage": "device UUID, C number, physical symbol pin inventory, measured body/pins/designator geometry",
+    "electricalConnections": "not-yet-applied"
+  }
+]

@@ -2,7 +2,7 @@
 
 本文件配合 [连接源数据](source/design.json)、[BOM](bom.csv) 和 [可重复计算](calculations.json) 阅读。
 计算属于设计检查；效率、温升、切换波形和真实耗电仍需实测。
-本文件计算仅对应 R1 的 BAT 3.9V 支路；新增 VIN 5V 类/2A 的[双模式功率预算](../../docs/power-output-modes.md)尚未进入原理图或本 BOM。
+本文件以下计算仅对应 R1 的 BAT 3.9V 支路。新增标称 VIN 5V/2A 的[双模式设计](../../docs/power-output-modes.md)已进入 R2 电气源数据与当前 BOM，其单独参数见[VIN 计算](vin-calculations.json)；全部 EDA 页面仍未布线。
 
 ## 架构
 

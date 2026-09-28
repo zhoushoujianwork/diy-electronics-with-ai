@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def prepare(raw, version):
+def prepare(raw, version, pages=None):
     design=json.loads((ROOT/"source/design.json").read_text())
     parts=json.loads((ROOT/"source/parts-lock.json").read_text())
     project=json.loads((ROOT/"eda-project.json").read_text())
@@ -25,6 +25,8 @@ def prepare(raw, version):
     evidence=[]
     for pg in project["pages"]:
         pn=pg["number"]
+        if pages is not None and pn not in pages:
+            continue
         source=raw/f'p{pn}-symbols-response.json'
         body=json.loads(source.read_text())
         assert body["ok"] and body["context"]["documentUuid"]==pg["uuid"]
@@ -82,13 +84,15 @@ def prepare(raw, version):
             electricalConnections="not-yet-applied"))
     (ROOT/"source/parts-lock.json").write_text(json.dumps(parts,ensure_ascii=False,indent=2)+"\n")
     (ROOT/f"measurement-evidence-{version}.json").write_text(json.dumps(evidence,indent=2)+"\n")
-    print('Bound 221 measured component geometries; electrical wiring still pending.')
+    print(f'Bound {sum(x["parts"] for x in evidence)} measured component geometries; electrical wiring still pending.')
 
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument('raw',type=Path)
     parser.add_argument('--version',required=True)
+    parser.add_argument('--pages',help='Comma-separated page numbers; default all pages')
     args=parser.parse_args()
     assert args.version.isalnum()
-    prepare(args.raw,args.version)
+    pages={int(x) for x in args.pages.split(',')} if args.pages else None
+    prepare(args.raw,args.version,pages)

@@ -3,7 +3,7 @@ id: vehicle-dual-power-module
 name: Vehicle Dual Power Module
 kind: project
 status: prototype
-summary: Independent vehicle 12 V and protected 1S battery power board; host 5 V and BAT 3.9 V outputs have unwired electrical source data, while an alternative VIN 5 V/2 A output is planned.
+summary: Independent vehicle 12 V and protected 1S battery power board; host 5 V/1 A, BAT 3.9 V/2 A and selectable nominal VIN 5 V/2 A have unwired electrical source data and 299 placed symbols.
 owners:
   - human-ai-lab
 toolchains:
@@ -17,4 +17,4 @@ validation:
   hardware: pending
 # The electrical source tests pass, but the four EDA sheets are not wired or DRC-accepted.
 # AtomS3 Lite is a target host; exact host revision and GPIO assignment remain to be checked.
-# The optional VIN 5 V/2 A circuit has no placed EDA symbols or validated BOM yet.
+# All 78 VIN additions were placed and reloaded, but no page has a completed layout, wires, NC or DRC.

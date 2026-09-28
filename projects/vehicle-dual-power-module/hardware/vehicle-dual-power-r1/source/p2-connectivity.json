@@ -1343,6 +1343,503 @@
           "name": "2"
         }
       ]
+    },
+    {
+      "id": "cmp-U206",
+      "ref": "U206",
+      "role": "battery boost; NC11/12 connect to ground plane for heat",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "f43bfc74a37746fab10d6d9a1d9de1cb",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "VCC"
+        },
+        {
+          "number": "2",
+          "name": "EN"
+        },
+        {
+          "number": "3",
+          "name": "FSW"
+        },
+        {
+          "number": "4",
+          "name": "SW"
+        },
+        {
+          "number": "5",
+          "name": "SW"
+        },
+        {
+          "number": "6",
+          "name": "SW"
+        },
+        {
+          "number": "7",
+          "name": "SW"
+        },
+        {
+          "number": "8",
+          "name": "BOOT"
+        },
+        {
+          "number": "9",
+          "name": "VIN"
+        },
+        {
+          "number": "10",
+          "name": "SS"
+        },
+        {
+          "number": "11",
+          "name": "NC"
+        },
+        {
+          "number": "12",
+          "name": "NC"
+        },
+        {
+          "number": "13",
+          "name": "MODE",
+          "noConnected": true
+        },
+        {
+          "number": "14",
+          "name": "VOUT"
+        },
+        {
+          "number": "15",
+          "name": "VOUT"
+        },
+        {
+          "number": "16",
+          "name": "VOUT"
+        },
+        {
+          "number": "17",
+          "name": "FB"
+        },
+        {
+          "number": "18",
+          "name": "COMP"
+        },
+        {
+          "number": "19",
+          "name": "ILIM"
+        },
+        {
+          "number": "20",
+          "name": "AGND"
+        },
+        {
+          "number": "21",
+          "name": "PGND"
+        }
+      ]
+    },
+    {
+      "id": "cmp-L202",
+      "ref": "L202",
+      "role": "TI-listed 1.5uH, Isat 14A",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "7329ec672be946fdbff491667ad4c135",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C235",
+      "ref": "C235",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C236",
+      "ref": "C236",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C237",
+      "ref": "C237",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C238",
+      "ref": "C238",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "9d6a8d9b94504b8e8615128aa8b87628",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C239",
+      "ref": "C239",
+      "role": "bootstrap",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C240",
+      "ref": "C240",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "f4744ff7405a46a48e360c2c6fadeca3",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C241",
+      "ref": "C241",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C242",
+      "ref": "C242",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C243",
+      "ref": "C243",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R217",
+      "ref": "R217",
+      "role": "6.56V feedback upper",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4d8a2158e6f2469685f8c7673367f44c",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R218",
+      "ref": "R218",
+      "role": "boost feedback lower",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "5b160a02740a4a05b51e666ce1090eeb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R219",
+      "ref": "R219",
+      "role": "frequency resistor goes to SW",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4d8a2158e6f2469685f8c7673367f44c",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R220",
+      "ref": "R220",
+      "role": "9.1A typical peak-limit setting",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0422dcc35ae04489979db7d9b84ce4f7",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R221",
+      "ref": "R221",
+      "role": "8kHz crossover estimate",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "b948db94476e4027ac8953235755ec96",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C244",
+      "ref": "C244",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "f0419ed7c5724c298e313f427615045e",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C245",
+      "ref": "C245",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "20536babac204ca99f2515dbfb730604",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C246",
+      "ref": "C246",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ed3e2032cdfe4c688efeae34aa292a1d",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R222",
+      "ref": "R222",
+      "role": "mode-gated boost enable",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R223",
+      "ref": "R223",
+      "role": "default off",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
     }
   ],
   "nets": [
@@ -1517,6 +2014,78 @@
     {
       "id": "VEH_AON_5V",
       "name": "VEH_AON_5V",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_6V5",
+      "name": "VIN_BAT_6V5",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_BOOT",
+      "name": "VIN_BAT_BOOT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_COMP",
+      "name": "VIN_BAT_COMP",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_COMP_C",
+      "name": "VIN_BAT_COMP_C",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_EN",
+      "name": "VIN_BAT_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_FB",
+      "name": "VIN_BAT_FB",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_FSW",
+      "name": "VIN_BAT_FSW",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_ILIM",
+      "name": "VIN_BAT_ILIM",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_SS",
+      "name": "VIN_BAT_SS",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_SW",
+      "name": "VIN_BAT_SW",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_BAT_VCC",
+      "name": "VIN_BAT_VCC",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VIN_MODE_REG_REQ",
+      "name": "VIN_MODE_REG_REQ",
       "scope": "global",
       "role": "signal"
     }
@@ -2457,6 +3026,366 @@
       "pinNumber": "2",
       "netId": "GND",
       "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_VCC",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "2",
+      "netId": "VIN_BAT_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "3",
+      "netId": "VIN_BAT_FSW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "4",
+      "netId": "VIN_BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "5",
+      "netId": "VIN_BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "6",
+      "netId": "VIN_BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "7",
+      "netId": "VIN_BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "8",
+      "netId": "VIN_BAT_BOOT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "9",
+      "netId": "BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "10",
+      "netId": "VIN_BAT_SS",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "11",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "12",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "14",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "15",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "16",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "17",
+      "netId": "VIN_BAT_FB",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "18",
+      "netId": "VIN_BAT_COMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "19",
+      "netId": "VIN_BAT_ILIM",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "20",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U206",
+      "pinNumber": "21",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-L202",
+      "pinNumber": "1",
+      "netId": "BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-L202",
+      "pinNumber": "2",
+      "netId": "VIN_BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C235",
+      "pinNumber": "1",
+      "netId": "BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C235",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C236",
+      "pinNumber": "1",
+      "netId": "BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C236",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C237",
+      "pinNumber": "1",
+      "netId": "BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C237",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C238",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_VCC",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C238",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C239",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_BOOT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C239",
+      "pinNumber": "2",
+      "netId": "VIN_BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C240",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C240",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C241",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C241",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C242",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C242",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C243",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C243",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R217",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_6V5",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R217",
+      "pinNumber": "2",
+      "netId": "VIN_BAT_FB",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R218",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_FB",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R218",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R219",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_FSW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R219",
+      "pinNumber": "2",
+      "netId": "VIN_BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R220",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_ILIM",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R220",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R221",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_COMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R221",
+      "pinNumber": "2",
+      "netId": "VIN_BAT_COMP_C",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C244",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_COMP_C",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C244",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C245",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_COMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C245",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C246",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_SS",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C246",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R222",
+      "pinNumber": "1",
+      "netId": "VIN_MODE_REG_REQ",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R222",
+      "pinNumber": "2",
+      "netId": "VIN_BAT_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R223",
+      "pinNumber": "1",
+      "netId": "VIN_BAT_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R223",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
     }
   ],
   "modules": [
@@ -2562,6 +3491,35 @@
       "peripheralComponents": [
         "cmp-C233",
         "cmp-C234"
+      ]
+    },
+    {
+      "id": "vin-battery-boost",
+      "name": "OPTIONAL VIN: BATTERY 6.56V / 2A",
+      "coreComponents": [
+        "cmp-U206"
+      ],
+      "peripheralComponents": [
+        "cmp-L202",
+        "cmp-C235",
+        "cmp-C236",
+        "cmp-C237",
+        "cmp-C238",
+        "cmp-C239",
+        "cmp-C240",
+        "cmp-C241",
+        "cmp-C242",
+        "cmp-C243",
+        "cmp-R217",
+        "cmp-R218",
+        "cmp-R219",
+        "cmp-R220",
+        "cmp-R221",
+        "cmp-C244",
+        "cmp-C245",
+        "cmp-C246",
+        "cmp-R222",
+        "cmp-R223"
       ]
     }
   ]

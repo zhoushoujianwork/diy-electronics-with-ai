@@ -46,10 +46,13 @@ RVALUES = {"0": "C21189", "100": "C22775", "1k": "C21190", "10k": "C25804",
            "4.7k": "C23162", "470k": "C23178", "22k": "C31850", "200k": "C25811",
            "249k": "C22918", "9.76k": "C23128", "1.5M": "C4172", "750_1206": "C17985",
            "100k_0.1": "C122538", "90.9k_0.1": "C728600", "1k_0.1": "C110776",
-           "10k_0.1": "C95204", "14.7k_0.1": "C705725"}
+           "10k_0.1": "C95204", "14.7k_0.1": "C705725",
+           "71.5k": "C23103", "56k": "C23206", "60.4k": "C23089",
+           "30k": "C22984", "13.3k": "C25952"}
 CVALUES = {"100n": "C1591", "1u": "C15849", "4.7u": "C19666", "22u": "C12891",
            "2.2u100V": "C86054", "4.7n": "C1621", "47p": "C94904", "47n": "C1622",
-           "10n": "C1589", "1n": "C1588", "10u50V": "C440198", "470u6.3V": "C128503"}
+           "10n": "C1589", "1n": "C1588", "10u50V": "C440198", "470u6.3V": "C128503",
+           "75p": "C22399620"}
 
 
 def r(ref, value, a, b, role, attach=None):
@@ -127,6 +130,24 @@ r("R116", "100k", "3V0_AON", "ACC_N", "ACC logic pullup", (2,"U104",4))
 c("C120", "10n", "ACC_N", attach=(1,"U104",4))
 add("J102", "C492401", {1:"VEH_IN",2:"ACC_IN"}, "cigarette-lighter mode shunt; remove for separate ACC")
 
+zone(1, "vin-car-buck", "OPTIONAL VIN: VEHICLE 6.52V / 2A", "U105")
+add("U105", "C1355305", {1:"VIN_CAR_BOOT",2:"VEH_PROT",3:"VIN_CAR_EN",4:"VIN_CAR_RT",
+    5:"VIN_CAR_FB",6:"VIN_CAR_COMP",7:"GND",8:"VIN_CAR_SW",9:"GND"},
+    "dedicated vehicle preregulator for regulated 5V VIN output")
+for k in range(121,125): c(f"C{k}","2.2u100V","VEH_PROT",attach=(1,"U105",2))
+c("C125","100n","VIN_CAR_BOOT","VIN_CAR_SW","bootstrap",(1,"U105",1))
+add("D106","C266541",{1:"VIN_CAR_SW",2:"GND"},"60V 5A catch diode, cathode pin 1",(1,"U105",8))
+add("L102","C3911753",{1:"VIN_CAR_SW",2:"VIN_CAR_6V5"},"6.8uH preregulator inductor",(1,"U105",8))
+for k in range(126,130): c(f"C{k}","22u","VIN_CAR_6V5",attach=(1,"L102",2))
+r("R117","71.5k","VIN_CAR_6V5","VIN_CAR_FB","6.52V feedback upper",(2,"U105",5))
+r("R118","10k","VIN_CAR_FB","GND","feedback lower",(1,"U105",5))
+r("R119","243k","VIN_CAR_RT","GND","about 400kHz",(1,"U105",4))
+r("R120","16.9k","VIN_CAR_COMP","VIN_CAR_COMP_C","compensation starting value",(1,"U105",6))
+c("C130","4.7n","VIN_CAR_COMP_C",attach=(1,"R120",2))
+c("C131","47p","VIN_CAR_COMP",attach=(1,"U105",6))
+r("R121","1k","VIN_MODE_REG_REQ","VIN_CAR_EN","mode-gated enable",(2,"U105",3))
+r("R122","100k","VIN_CAR_EN","GND","default off",(1,"U105",3))
+
 # PAGE 2 — pack isolation, charger, independent source muxes and AON OR.
 zone(2, "battery-master", "PROTECTED 1S PACK / MASTER ISOLATION", "Q201")
 add("J201", "C53373776", {1:"GND",2:"PACK_IN",3:None,4:None}, "XT30PW-M: pack receptacle on PCB",
@@ -194,6 +215,32 @@ add("U205", "C3747031", {1:"AON_RAW",2:"GND",3:"AON_RAW",4:None,5:"3V0_AON"},
 c("C233","1u","AON_RAW",attach=(1,"U205",1))
 c("C234","4.7u","3V0_AON",attach=(1,"U205",5))
 
+zone(2,"vin-battery-boost","OPTIONAL VIN: BATTERY 6.56V / 2A", "U206")
+add("U206","C1850341",{1:"VIN_BAT_VCC",2:"VIN_BAT_EN",3:"VIN_BAT_FSW",
+    4:"VIN_BAT_SW",5:"VIN_BAT_SW",6:"VIN_BAT_SW",7:"VIN_BAT_SW",8:"VIN_BAT_BOOT",
+    9:"BAT_SW",10:"VIN_BAT_SS",11:"GND",12:"GND",13:None,
+    14:"VIN_BAT_6V5",15:"VIN_BAT_6V5",16:"VIN_BAT_6V5",17:"VIN_BAT_FB",
+    18:"VIN_BAT_COMP",19:"VIN_BAT_ILIM",20:"GND",21:"GND"},
+    "battery boost; NC11/12 connect to ground plane for heat",nc={13:"Floating MODE selects light-load PFM."})
+add("L202","C1332206",{1:"BAT_SW",2:"VIN_BAT_SW"},"TI-listed 1.5uH, Isat 14A",(2,"U206",4))
+c("C235","100n","BAT_SW",attach=(1,"U206",9))
+c("C236","22u","BAT_SW",attach=(1,"L202",1))
+c("C237","22u","BAT_SW",attach=(1,"L202",1))
+c("C238","4.7u","VIN_BAT_VCC",attach=(1,"U206",1))
+c("C239","100n","VIN_BAT_BOOT","VIN_BAT_SW","bootstrap",(1,"U206",8))
+c("C240","1u","VIN_BAT_6V5",attach=(1,"U206",14))
+for k in range(241,244): c(f"C{k}","22u","VIN_BAT_6V5",attach=(1,"U206",14))
+r("R217","249k","VIN_BAT_6V5","VIN_BAT_FB","6.56V feedback upper",(2,"U206",17))
+r("R218","56k","VIN_BAT_FB","GND","boost feedback lower",(1,"U206",17))
+r("R219","249k","VIN_BAT_FSW","VIN_BAT_SW","frequency resistor goes to SW",(1,"U206",3))
+r("R220","60.4k","VIN_BAT_ILIM","GND","9.1A typical peak-limit setting",(1,"U206",19))
+r("R221","10k","VIN_BAT_COMP","VIN_BAT_COMP_C","8kHz crossover estimate",(1,"U206",18))
+c("C244","4.7n","VIN_BAT_COMP_C",attach=(1,"R221",2))
+c("C245","47p","VIN_BAT_COMP",attach=(1,"U206",18))
+c("C246","47n","VIN_BAT_SS",attach=(1,"U206",10))
+r("R222","1k","VIN_MODE_REG_REQ","VIN_BAT_EN","mode-gated boost enable",(2,"U206",2))
+r("R223","100k","VIN_BAT_EN","GND","default off",(1,"U206",2))
+
 # PAGE 3 — regulated load rails, real load disconnection and wired terminals.
 for suffix, u, li, cbase, rbase in [("HOST",301,301,302,301),("MODEM",304,302,312,306)]:
     zone(3,"reg-"+suffix.lower(),suffix+" BUCK-BOOST / FORCED PWM", "U"+str(u))
@@ -215,7 +262,8 @@ for suffix, u, li, cbase, rbase in [("HOST",301,301,302,301),("MODEM",304,302,31
         r("R306","100k_0.1",out,fb,"modem feedback upper",(2,un,3))
         r("R307","14.7k_0.1",fb,"GND","modem feedback lower",(1,un,3))
         rb=308
-    r("R"+str(rb),"1k","CTL_"+suffix+"_REG_EN",en,"regulator control series resistor",(2,un,12))
+    request = "BAT_MODE_REG_REQ" if suffix=="MODEM" else "CTL_HOST_REG_EN"
+    r("R"+str(rb),"1k",request,en,"regulator control series resistor",(2,un,12))
     r("R"+str(rb+1),"100k",en,"GND","regulator default off",(1,un,12))
     r("R"+str(310+(u-301)//3),"330k","3V0_AON",suffix+"_REG_PG","regulator power-good pullup",(2,un,14))
 
@@ -243,7 +291,7 @@ c("C318","1u","MODEM_REG",attach=(1,"U305",1))
 c("C319","10n","MODEM_CT",attach=(1,"U305",6))
 c("C301","470u6.3V","TINY_BAT",role="470uF low-ESR switched bulk; positive pin1",attach=(1,"U305",7))
 c("C320","22u","TINY_BAT",attach=(1,"U305",7))
-r("R315","1k","CTL_MODEM_LOAD_EN","MODEM_LOAD_EN","modem load control series",(2,"U305",3))
+r("R315","1k","BAT_MODE_LOAD_REQ","MODEM_LOAD_EN","BAT-mode load control series",(2,"U305",3))
 r("R316","100k","MODEM_LOAD_EN","GND","modem load default off",(1,"U305",3))
 
 for ref,code,net in [("J301","C474881","HOST_5V"),("J302","C2908600","HOST_5V"),
@@ -254,9 +302,9 @@ for ref,code,net in [("J301","C474881","HOST_5V"),("J302","C2908600","HOST_5V"),
     add(ref,code,{1:net,2:"GND"},"parallel output: + pin1 / GND pin2; never another source")
 
 zone(3,"modem-vio","SWITCHED 3.3V FOR TINY UART", "U306")
-add("U306","C2887324",{1:"TINY_BAT",2:"GND",3:"TINY_BAT",4:None,5:"MODEM_VIO"},
-    "UART level-converter supply follows actual modem output",nc={4:"Datasheet NC."})
-c("C321","1u","TINY_BAT",attach=(1,"U306",1))
+add("U306","C2887324",{1:"AON_RAW",2:"GND",3:"AON_RAW",4:None,5:"MODEM_VIO"},
+    "low-IQ UART reference shared by BAT and VIN modes",nc={4:"Datasheet NC."})
+c("C321","1u","AON_RAW",attach=(1,"U306",1))
 c("C322","1u","MODEM_VIO",attach=(1,"U306",5))
 
 zone(3,"modem-uart","TINY UART / POWER-OFF ISOLATION", "U307")
@@ -267,6 +315,60 @@ c("C324","100n","MODEM_VIO",attach=(1,"U307",7))
 r("R317","100k","CTL_MODEM_LOAD_EN","GND","UART OE default off",(1,"U307",6))
 add("J307","C7434310",{1:"HOST_3V3",2:"GND",3:"HOST_MODEM_TX",4:"HOST_MODEM_RX"},"host modem UART XH; 3V3 is reference input")
 add("J308","C41425294",{1:"MODEM_VIO",2:"GND",3:"TINY_RX",4:"TINY_TX"},"Tiny UART header; pin1 is test/reference only, no Tiny VCC connection")
+
+zone(3,"vin-mode-switch","MANUAL BAT / REGULATED VIN SELECT", "SW301")
+add("SW301","C225088",{1:"BAT_MODE_REG_REQ",2:"CTL_MODEM_REG_EN",3:"VIN_MODE_REG_REQ",
+    4:"BAT_MODE_LOAD_REQ",5:"CTL_MODEM_LOAD_EN",6:"VIN_MODE_LOAD_REQ"},
+    "BAT throw 1-2/4-5; VIN throw 2-3/5-6; low-current controls only")
+
+zone(3,"vin-source-mux","VIN 6.5V SOURCE / CAR PRIORITY", "U308")
+add("U308","C485916",{1:"VIN_SRC",2:"VIN_BAT_6V5",3:"VIN_CP2",4:"VIN_OV2",
+    5:"VIN_OV1",6:"VIN_PR1",7:"VIN_CAR_6V5",8:"VIN_SRC",9:"GND",
+    10:"VIN_ILM",11:"VIN_MUX_SS",12:"GND"},"TPS2121 fast XCOMP switchover")
+c("C325","22u","VIN_CAR_6V5",attach=(1,"U308",7))
+c("C326","22u","VIN_BAT_6V5",attach=(1,"U308",2))
+r("R318","200k","VIN_CAR_6V5","VIN_PR1","car priority divider upper",(2,"U308",6))
+r("R319","100k","VIN_PR1","GND","car priority divider lower",(1,"U308",6))
+r("R320","243k","VIN_BAT_6V5","VIN_CP2","battery comparator divider upper",(2,"U308",3))
+r("R321","100k","VIN_CP2","GND","battery comparator divider lower",(1,"U308",3))
+r("R322","71.5k","VIN_CAR_6V5","VIN_OV1","car 8.6V OV threshold upper",(2,"U308",5))
+r("R323","10k","VIN_OV1","GND","car OV threshold lower",(1,"U308",5))
+r("R324","71.5k","VIN_BAT_6V5","VIN_OV2","battery 8.6V OV threshold upper",(2,"U308",4))
+r("R325","10k","VIN_OV2","GND","battery OV threshold lower",(1,"U308",4))
+r("R326","30k","VIN_ILM","GND","about 3.5A typical mux current limit",(1,"U308",10))
+c("C327","100n","VIN_MUX_SS",attach=(1,"U308",11))
+c("C328","22u","VIN_SRC",attach=(1,"U308",1))
+c("C329","22u","VIN_SRC",attach=(1,"U308",8))
+
+zone(3,"vin-5v-regulator","VIN OUTPUT / REGULATED 5V 2A", "U310")
+add("U310","C311983",{1:"GND",2:"VIN_POST_SW",3:"VIN_SRC",4:"VIN_POST_FB",
+    5:"VIN_POST_EN",6:"VIN_POST_BOOT"},"TPS54302 3A synchronous post-regulator")
+c("C330","22u","VIN_SRC",attach=(1,"U310",3))
+c("C331","22u","VIN_SRC",attach=(1,"U310",3))
+c("C332","100n","VIN_POST_BOOT","VIN_POST_SW","bootstrap",(1,"U310",6))
+add("L303","C3911753",{1:"VIN_POST_SW",2:"VIN_5V_REG"},"6.8uH post-regulator inductor",(1,"U310",2))
+c("C333","22u","VIN_5V_REG",attach=(1,"L303",2))
+c("C334","22u","VIN_5V_REG",attach=(1,"L303",2))
+r("R327","100k","VIN_5V_REG","VIN_POST_FB","5V feedback upper",(2,"U310",4))
+r("R328","13.3k","VIN_POST_FB","GND","5V feedback lower",(1,"U310",4))
+c("C335","75p","VIN_5V_REG","VIN_POST_FB","feedforward starting value",(1,"R327",1))
+r("R329","1k","VIN_MODE_REG_REQ","VIN_POST_EN","mode-gated post-regulator enable",(2,"U310",5))
+r("R330","100k","VIN_POST_EN","GND","default off",(1,"U310",5))
+
+zone(3,"vin-load-switch","VIN 5V LOAD DISCONNECT", "U309")
+add("U309","C17294173",{1:"VIN_LOAD_EN",2:"GND",3:None,4:"GND",
+    5:"VIN_5V_REG",6:"OUT_VIN_5V",7:"VIN_DVDT",8:"GND",9:"GND",10:None},
+    "10A load switch; EN#/OVLO low, PG unused, IMON grounded",
+    nc={3:"Open-drain PG output unused.",10:"Datasheet DNC must remain open."})
+r("R331","1k","VIN_MODE_LOAD_REQ","VIN_LOAD_EN","mode-gated load enable",(2,"U309",1))
+r("R332","100k","VIN_LOAD_EN","GND","default off",(1,"U309",1))
+c("C336","1n","VIN_DVDT",attach=(1,"U309",7))
+c("C337","22u","OUT_VIN_5V",attach=(1,"U309",6))
+c("C338","470u6.3V","OUT_VIN_5V",role="output polymer bulk for modem pulses",attach=(1,"U309",6))
+
+zone(3,"vin-connectors","VIN 5V / THREE PARALLEL PORTS / TOTAL 2A", "J309")
+for ref,code in [("J309","C474881"),("J310","C2908600"),("J311","C492401")]:
+    add(ref,code,{1:"OUT_VIN_5V",2:"GND"},"VIN-only 5V output; shared 2A capacity")
 
 # PAGE 4 — controller, independent IMU, user inputs and management interface.
 zone(4,"controller","STM32L031 / INDEPENDENT POWER CONTROL", "U401")
@@ -343,11 +445,11 @@ def generate():
             a=comp["attachment"];owner=byref[a["owner"]]
             assert owner["zone"]==comp["zone"], comp["ref"]
             assert comp["pins"][a["pin"]] == owner["pins"][a["ownerPin"]], (comp["ref"],a)
-    design=dict(schemaVersion=1, revision="R1-BAT", state="source-only",
+    design=dict(schemaVersion=1, revision="R2-BAT-VIN", state="source-only",
                 components=components,zones=zones,
                 externalParts=[dict(lcsc="C394021",role="cell-attached 10k NTC",qty=1),
                                dict(role="protected 1S 3000mAh >=9A LiPo pack",qty=1,lcsc=None)],
-                forbiddenConnections=["Tiny VIN to any power source while Tiny BAT connected",
+                forbiddenConnections=["BAT and VIN output harnesses simultaneously connected to one module",
                                       "USB VBUS bypass during controlled-off acceptance",
                                       "external power into any output terminal",
                                       "SWD probe drive with AON VTREF absent"])

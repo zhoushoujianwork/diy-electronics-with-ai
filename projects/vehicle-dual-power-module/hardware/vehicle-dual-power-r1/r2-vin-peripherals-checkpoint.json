@@ -1,0 +1,1169 @@
+{
+  "status": "live-placed-saved-reloaded-unwired",
+  "projectUuid": "143594ca6b24412691655cb627c51791",
+  "sourcePlan": "source/r2-vin-peripherals-placement-plan.json",
+  "sourcePlanSha256": "ab5c8cb829e0c4b0c0a2e21323195c7e031a96609e7bc71cd131c4aeb215c8e6",
+  "pages": {
+    "1": {
+      "pageUuid": "0fc201a153e9cd31",
+      "partCount": 73,
+      "wires": 0,
+      "snapshotSha256": "fe689815da9e248fd0ce23cffdba6ec67e57788a034d46abb3a5e0336ce04995"
+    },
+    "2": {
+      "pageUuid": "1a4712d29493b068",
+      "partCount": 77,
+      "wires": 0,
+      "snapshotSha256": "19130c496d7d19b0531b0b8bf93a7522eb040f9fc99d9c5f4782631dc8d96f75"
+    },
+    "3": {
+      "pageUuid": "0b5389c810e16077",
+      "partCount": 95,
+      "wires": 0,
+      "snapshotSha256": "4ca21c2ad54ed0262452ab7efa9605cf658f286091b6cb599446c9d09714fa74"
+    }
+  },
+  "placedCount": 70,
+  "placed": [
+    {
+      "ref": "C121",
+      "page": 1,
+      "lcsc": "C86054",
+      "primitiveId": "34c8654336f8cc7a",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C122",
+      "page": 1,
+      "lcsc": "C86054",
+      "primitiveId": "2dc2754cd2fe3b60",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C123",
+      "page": 1,
+      "lcsc": "C86054",
+      "primitiveId": "fcdbaa1b93af8123",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C124",
+      "page": 1,
+      "lcsc": "C86054",
+      "primitiveId": "34389ab63e68ff6d",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C125",
+      "page": 1,
+      "lcsc": "C1591",
+      "primitiveId": "de74573fea4ce13e",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "D106",
+      "page": 1,
+      "lcsc": "C266541",
+      "primitiveId": "97cd898b9ca25a71",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "L102",
+      "page": 1,
+      "lcsc": "C3911753",
+      "primitiveId": "84c8217650542a76",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C126",
+      "page": 1,
+      "lcsc": "C12891",
+      "primitiveId": "121448a1836d233d",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C127",
+      "page": 1,
+      "lcsc": "C12891",
+      "primitiveId": "a45bac8716f9f405",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C128",
+      "page": 1,
+      "lcsc": "C12891",
+      "primitiveId": "5c3c838bb0f27bbe",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C129",
+      "page": 1,
+      "lcsc": "C12891",
+      "primitiveId": "c190900a23ff4c1f",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "R117",
+      "page": 1,
+      "lcsc": "C23103",
+      "primitiveId": "62ca67778a496468",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R118",
+      "page": 1,
+      "lcsc": "C25804",
+      "primitiveId": "85031fcd8a3877f8",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R119",
+      "page": 1,
+      "lcsc": "C23351",
+      "primitiveId": "bbe27c5e84f5010f",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R120",
+      "page": 1,
+      "lcsc": "C25954",
+      "primitiveId": "446cdd6eba15cb3b",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C130",
+      "page": 1,
+      "lcsc": "C1621",
+      "primitiveId": "8065c4cbdd9ee5a2",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C131",
+      "page": 1,
+      "lcsc": "C94904",
+      "primitiveId": "0015cdcccb855d60",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "R121",
+      "page": 1,
+      "lcsc": "C21190",
+      "primitiveId": "638faae7ab77caec",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R122",
+      "page": 1,
+      "lcsc": "C25803",
+      "primitiveId": "d8e8723de626f20c",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "L202",
+      "page": 2,
+      "lcsc": "C1332206",
+      "primitiveId": "8ffda97cb6edafaa",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C235",
+      "page": 2,
+      "lcsc": "C1591",
+      "primitiveId": "4509f7b826ff13ca",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C236",
+      "page": 2,
+      "lcsc": "C12891",
+      "primitiveId": "4b890c41e78fe17a",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C237",
+      "page": 2,
+      "lcsc": "C12891",
+      "primitiveId": "4a189cfc5a03dbee",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C238",
+      "page": 2,
+      "lcsc": "C19666",
+      "primitiveId": "9cb7bddde8b55b48",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C239",
+      "page": 2,
+      "lcsc": "C1591",
+      "primitiveId": "9adc1fefd0d4c45a",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C240",
+      "page": 2,
+      "lcsc": "C15849",
+      "primitiveId": "6e1bfb7186231591",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C241",
+      "page": 2,
+      "lcsc": "C12891",
+      "primitiveId": "7d7713207291efc9",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C242",
+      "page": 2,
+      "lcsc": "C12891",
+      "primitiveId": "eaa3a8bddb434004",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C243",
+      "page": 2,
+      "lcsc": "C12891",
+      "primitiveId": "c7ac890fbfdb2273",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "R217",
+      "page": 2,
+      "lcsc": "C22918",
+      "primitiveId": "131428d68e492741",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R218",
+      "page": 2,
+      "lcsc": "C23206",
+      "primitiveId": "48bfc99c1e673324",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R219",
+      "page": 2,
+      "lcsc": "C22918",
+      "primitiveId": "3e2e8c916b906286",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R220",
+      "page": 2,
+      "lcsc": "C23089",
+      "primitiveId": "2b52f0784376217d",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R221",
+      "page": 2,
+      "lcsc": "C25804",
+      "primitiveId": "0f30eb0002310b04",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C244",
+      "page": 2,
+      "lcsc": "C1621",
+      "primitiveId": "7f8669669b1386a0",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C245",
+      "page": 2,
+      "lcsc": "C94904",
+      "primitiveId": "8eda88b175f8afca",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C246",
+      "page": 2,
+      "lcsc": "C1622",
+      "primitiveId": "e71683bea2272374",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "R222",
+      "page": 2,
+      "lcsc": "C21190",
+      "primitiveId": "77e1b8a3215ad488",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R223",
+      "page": 2,
+      "lcsc": "C25803",
+      "primitiveId": "40c12aa90b3e487f",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C325",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "5517aa8c75470bcd",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C326",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "d43de65e86342b0b",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "R318",
+      "page": 3,
+      "lcsc": "C25811",
+      "primitiveId": "b8ca216354d78afd",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R319",
+      "page": 3,
+      "lcsc": "C25803",
+      "primitiveId": "962031cad0860147",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R320",
+      "page": 3,
+      "lcsc": "C23351",
+      "primitiveId": "2098f9dbfa4664f2",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R321",
+      "page": 3,
+      "lcsc": "C25803",
+      "primitiveId": "61c8da477b541e7f",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R322",
+      "page": 3,
+      "lcsc": "C23103",
+      "primitiveId": "3e158cc90d431b24",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R323",
+      "page": 3,
+      "lcsc": "C25804",
+      "primitiveId": "7912520abb401efe",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R324",
+      "page": 3,
+      "lcsc": "C23103",
+      "primitiveId": "afc539ec06581621",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R325",
+      "page": 3,
+      "lcsc": "C25804",
+      "primitiveId": "c9bbd635b4182ae2",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R326",
+      "page": 3,
+      "lcsc": "C22984",
+      "primitiveId": "6600eccac515a920",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C327",
+      "page": 3,
+      "lcsc": "C1591",
+      "primitiveId": "e3a682bfb110d65c",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C328",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "4f5c86d3cefa737e",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C329",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "78ddb02bf641ff05",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "U310",
+      "page": 3,
+      "lcsc": "C311983",
+      "primitiveId": "77ecbf2d2651e6fc",
+      "pins": [
+        {
+          "number": "1",
+          "name": "GND"
+        },
+        {
+          "number": "2",
+          "name": "SW"
+        },
+        {
+          "number": "3",
+          "name": "VIN"
+        },
+        {
+          "number": "4",
+          "name": "FB"
+        },
+        {
+          "number": "5",
+          "name": "EN"
+        },
+        {
+          "number": "6",
+          "name": "BOOT"
+        }
+      ]
+    },
+    {
+      "ref": "C330",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "9744c3c5a9e54daa",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C331",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "52227161441a4203",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C332",
+      "page": 3,
+      "lcsc": "C1591",
+      "primitiveId": "09aa8717cb224eb9",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "L303",
+      "page": 3,
+      "lcsc": "C3911753",
+      "primitiveId": "aaa7e7f275a75667",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C333",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "ab402d2ef628ea5c",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C334",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "b31685ed23b29cd4",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "R327",
+      "page": 3,
+      "lcsc": "C25803",
+      "primitiveId": "c82f8cc6fe564784",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R328",
+      "page": 3,
+      "lcsc": "C25952",
+      "primitiveId": "e344350898ab1469",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C335",
+      "page": 3,
+      "lcsc": "C22399620",
+      "primitiveId": "0df0c02463cd5681",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "R329",
+      "page": 3,
+      "lcsc": "C21190",
+      "primitiveId": "d8a01cb0fc4c4bc7",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R330",
+      "page": 3,
+      "lcsc": "C25803",
+      "primitiveId": "8871bad240e5d8a6",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R331",
+      "page": 3,
+      "lcsc": "C21190",
+      "primitiveId": "3760daf30125fb25",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "R332",
+      "page": 3,
+      "lcsc": "C25803",
+      "primitiveId": "ee3256f701145082",
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "ref": "C336",
+      "page": 3,
+      "lcsc": "C1588",
+      "primitiveId": "10831e99fadbd391",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C337",
+      "page": 3,
+      "lcsc": "C12891",
+      "primitiveId": "949497ffa45409fb",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "ref": "C338",
+      "page": 3,
+      "lcsc": "C128503",
+      "primitiveId": "fba4e57e33233669",
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "All R2 VIN additions remain at off-sheet measurement coordinates.",
+    "No page has VIN wires or NC markers; no final layout or DRC has passed."
+  ]
+}

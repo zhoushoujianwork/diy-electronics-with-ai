@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "R1-BAT",
+  "revision": "R2-BAT-VIN",
   "state": "source-only",
   "components": [
     {
@@ -930,6 +930,368 @@
         "2": "ACC_IN"
       },
       "ncReasons": {}
+    },
+    {
+      "id": "cmp-U105",
+      "ref": "U105",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C1355305",
+      "role": "dedicated vehicle preregulator for regulated 5V VIN output",
+      "pins": {
+        "1": "VIN_CAR_BOOT",
+        "2": "VEH_PROT",
+        "3": "VIN_CAR_EN",
+        "4": "VIN_CAR_RT",
+        "5": "VIN_CAR_FB",
+        "6": "VIN_CAR_COMP",
+        "7": "GND",
+        "8": "VIN_CAR_SW",
+        "9": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C121",
+      "ref": "C121",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C122",
+      "ref": "C122",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C123",
+      "ref": "C123",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C124",
+      "ref": "C124",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C125",
+      "ref": "C125",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C1591",
+      "role": "bootstrap",
+      "pins": {
+        "1": "VIN_CAR_BOOT",
+        "2": "VIN_CAR_SW"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-D106",
+      "ref": "D106",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C266541",
+      "role": "60V 5A catch diode, cathode pin 1",
+      "pins": {
+        "1": "VIN_CAR_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-L102",
+      "ref": "L102",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C3911753",
+      "role": "6.8uH preregulator inductor",
+      "pins": {
+        "1": "VIN_CAR_SW",
+        "2": "VIN_CAR_6V5"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-C126",
+      "ref": "C126",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L102",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C127",
+      "ref": "C127",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L102",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C128",
+      "ref": "C128",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L102",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C129",
+      "ref": "C129",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L102",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R117",
+      "ref": "R117",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C23103",
+      "role": "6.52V feedback upper",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "VIN_CAR_FB"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U105",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-R118",
+      "ref": "R118",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C25804",
+      "role": "feedback lower",
+      "pins": {
+        "1": "VIN_CAR_FB",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-R119",
+      "ref": "R119",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C23351",
+      "role": "about 400kHz",
+      "pins": {
+        "1": "VIN_CAR_RT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R120",
+      "ref": "R120",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C25954",
+      "role": "compensation starting value",
+      "pins": {
+        "1": "VIN_CAR_COMP",
+        "2": "VIN_CAR_COMP_C"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C130",
+      "ref": "C130",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C1621",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_CAR_COMP_C",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R120",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C131",
+      "ref": "C131",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C94904",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_CAR_COMP",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-R121",
+      "ref": "R121",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C21190",
+      "role": "mode-gated enable",
+      "pins": {
+        "1": "VIN_MODE_REG_REQ",
+        "2": "VIN_CAR_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U105",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R122",
+      "ref": "R122",
+      "page": 1,
+      "zone": "vin-car-buck",
+      "lcsc": "C25803",
+      "role": "default off",
+      "pins": {
+        "1": "VIN_CAR_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U105",
+        "ownerPin": "3"
+      }
     },
     {
       "id": "cmp-J201",
@@ -1961,6 +2323,400 @@
       }
     },
     {
+      "id": "cmp-U206",
+      "ref": "U206",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C1850341",
+      "role": "battery boost; NC11/12 connect to ground plane for heat",
+      "pins": {
+        "1": "VIN_BAT_VCC",
+        "2": "VIN_BAT_EN",
+        "3": "VIN_BAT_FSW",
+        "4": "VIN_BAT_SW",
+        "5": "VIN_BAT_SW",
+        "6": "VIN_BAT_SW",
+        "7": "VIN_BAT_SW",
+        "8": "VIN_BAT_BOOT",
+        "9": "BAT_SW",
+        "10": "VIN_BAT_SS",
+        "11": "GND",
+        "12": "GND",
+        "13": null,
+        "14": "VIN_BAT_6V5",
+        "15": "VIN_BAT_6V5",
+        "16": "VIN_BAT_6V5",
+        "17": "VIN_BAT_FB",
+        "18": "VIN_BAT_COMP",
+        "19": "VIN_BAT_ILIM",
+        "20": "GND",
+        "21": "GND"
+      },
+      "ncReasons": {
+        "13": "Floating MODE selects light-load PFM."
+      }
+    },
+    {
+      "id": "cmp-L202",
+      "ref": "L202",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C1332206",
+      "role": "TI-listed 1.5uH, Isat 14A",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "VIN_BAT_SW"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U206",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C235",
+      "ref": "C235",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "9"
+      }
+    },
+    {
+      "id": "cmp-C236",
+      "ref": "C236",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L202",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C237",
+      "ref": "C237",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L202",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C238",
+      "ref": "C238",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C19666",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_VCC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C239",
+      "ref": "C239",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C1591",
+      "role": "bootstrap",
+      "pins": {
+        "1": "VIN_BAT_BOOT",
+        "2": "VIN_BAT_SW"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-C240",
+      "ref": "C240",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "14"
+      }
+    },
+    {
+      "id": "cmp-C241",
+      "ref": "C241",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "14"
+      }
+    },
+    {
+      "id": "cmp-C242",
+      "ref": "C242",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "14"
+      }
+    },
+    {
+      "id": "cmp-C243",
+      "ref": "C243",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "14"
+      }
+    },
+    {
+      "id": "cmp-R217",
+      "ref": "R217",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C22918",
+      "role": "6.56V feedback upper",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "VIN_BAT_FB"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U206",
+        "ownerPin": "17"
+      }
+    },
+    {
+      "id": "cmp-R218",
+      "ref": "R218",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C23206",
+      "role": "boost feedback lower",
+      "pins": {
+        "1": "VIN_BAT_FB",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "17"
+      }
+    },
+    {
+      "id": "cmp-R219",
+      "ref": "R219",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C22918",
+      "role": "frequency resistor goes to SW",
+      "pins": {
+        "1": "VIN_BAT_FSW",
+        "2": "VIN_BAT_SW"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R220",
+      "ref": "R220",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C23089",
+      "role": "9.1A typical peak-limit setting",
+      "pins": {
+        "1": "VIN_BAT_ILIM",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "19"
+      }
+    },
+    {
+      "id": "cmp-R221",
+      "ref": "R221",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C25804",
+      "role": "8kHz crossover estimate",
+      "pins": {
+        "1": "VIN_BAT_COMP",
+        "2": "VIN_BAT_COMP_C"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "18"
+      }
+    },
+    {
+      "id": "cmp-C244",
+      "ref": "C244",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C1621",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_COMP_C",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R221",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C245",
+      "ref": "C245",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C94904",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_COMP",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "18"
+      }
+    },
+    {
+      "id": "cmp-C246",
+      "ref": "C246",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C1622",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_SS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-R222",
+      "ref": "R222",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C21190",
+      "role": "mode-gated boost enable",
+      "pins": {
+        "1": "VIN_MODE_REG_REQ",
+        "2": "VIN_BAT_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U206",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R223",
+      "ref": "R223",
+      "page": 2,
+      "zone": "vin-battery-boost",
+      "lcsc": "C25803",
+      "role": "default off",
+      "pins": {
+        "1": "VIN_BAT_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U206",
+        "ownerPin": "2"
+      }
+    },
+    {
       "id": "cmp-U301",
       "ref": "U301",
       "page": 3,
@@ -2416,7 +3172,7 @@
       "lcsc": "C21190",
       "role": "regulator control series resistor",
       "pins": {
-        "1": "CTL_MODEM_REG_EN",
+        "1": "BAT_MODE_REG_REQ",
         "2": "MODEM_REG_EN"
       },
       "ncReasons": {},
@@ -2730,9 +3486,9 @@
       "page": 3,
       "zone": "modem-disconnect",
       "lcsc": "C21190",
-      "role": "modem load control series",
+      "role": "BAT-mode load control series",
       "pins": {
-        "1": "CTL_MODEM_LOAD_EN",
+        "1": "BAT_MODE_LOAD_REQ",
         "2": "MODEM_LOAD_EN"
       },
       "ncReasons": {},
@@ -2844,11 +3600,11 @@
       "page": 3,
       "zone": "modem-vio",
       "lcsc": "C2887324",
-      "role": "UART level-converter supply follows actual modem output",
+      "role": "low-IQ UART reference shared by BAT and VIN modes",
       "pins": {
-        "1": "TINY_BAT",
+        "1": "AON_RAW",
         "2": "GND",
-        "3": "TINY_BAT",
+        "3": "AON_RAW",
         "4": null,
         "5": "MODEM_VIO"
       },
@@ -2864,7 +3620,7 @@
       "lcsc": "C15849",
       "role": "decoupling",
       "pins": {
-        "1": "TINY_BAT",
+        "1": "AON_RAW",
         "2": "GND"
       },
       "ncReasons": {},
@@ -2992,6 +3748,666 @@
         "2": "GND",
         "3": "TINY_RX",
         "4": "TINY_TX"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-SW301",
+      "ref": "SW301",
+      "page": 3,
+      "zone": "vin-mode-switch",
+      "lcsc": "C225088",
+      "role": "BAT throw 1-2/4-5; VIN throw 2-3/5-6; low-current controls only",
+      "pins": {
+        "1": "BAT_MODE_REG_REQ",
+        "2": "CTL_MODEM_REG_EN",
+        "3": "VIN_MODE_REG_REQ",
+        "4": "BAT_MODE_LOAD_REQ",
+        "5": "CTL_MODEM_LOAD_EN",
+        "6": "VIN_MODE_LOAD_REQ"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-U308",
+      "ref": "U308",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C485916",
+      "role": "TPS2121 fast XCOMP switchover",
+      "pins": {
+        "1": "VIN_SRC",
+        "2": "VIN_BAT_6V5",
+        "3": "VIN_CP2",
+        "4": "VIN_OV2",
+        "5": "VIN_OV1",
+        "6": "VIN_PR1",
+        "7": "VIN_CAR_6V5",
+        "8": "VIN_SRC",
+        "9": "GND",
+        "10": "VIN_ILM",
+        "11": "VIN_MUX_SS",
+        "12": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C325",
+      "ref": "C325",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "7"
+      }
+    },
+    {
+      "id": "cmp-C326",
+      "ref": "C326",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R318",
+      "ref": "R318",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C25811",
+      "role": "car priority divider upper",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "VIN_PR1"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U308",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-R319",
+      "ref": "R319",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C25803",
+      "role": "car priority divider lower",
+      "pins": {
+        "1": "VIN_PR1",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-R320",
+      "ref": "R320",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C23351",
+      "role": "battery comparator divider upper",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "VIN_CP2"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U308",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R321",
+      "ref": "R321",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C25803",
+      "role": "battery comparator divider lower",
+      "pins": {
+        "1": "VIN_CP2",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R322",
+      "ref": "R322",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C23103",
+      "role": "car 8.6V OV threshold upper",
+      "pins": {
+        "1": "VIN_CAR_6V5",
+        "2": "VIN_OV1"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U308",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-R323",
+      "ref": "R323",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C25804",
+      "role": "car OV threshold lower",
+      "pins": {
+        "1": "VIN_OV1",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-R324",
+      "ref": "R324",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C23103",
+      "role": "battery 8.6V OV threshold upper",
+      "pins": {
+        "1": "VIN_BAT_6V5",
+        "2": "VIN_OV2"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U308",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R325",
+      "ref": "R325",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C25804",
+      "role": "battery OV threshold lower",
+      "pins": {
+        "1": "VIN_OV2",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R326",
+      "ref": "R326",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C22984",
+      "role": "about 3.5A typical mux current limit",
+      "pins": {
+        "1": "VIN_ILM",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-C327",
+      "ref": "C327",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_MUX_SS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-C328",
+      "ref": "C328",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C329",
+      "ref": "C329",
+      "page": 3,
+      "zone": "vin-source-mux",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U308",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-U310",
+      "ref": "U310",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C311983",
+      "role": "TPS54302 3A synchronous post-regulator",
+      "pins": {
+        "1": "GND",
+        "2": "VIN_POST_SW",
+        "3": "VIN_SRC",
+        "4": "VIN_POST_FB",
+        "5": "VIN_POST_EN",
+        "6": "VIN_POST_BOOT"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C330",
+      "ref": "C330",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U310",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-C331",
+      "ref": "C331",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U310",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-C332",
+      "ref": "C332",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C1591",
+      "role": "bootstrap",
+      "pins": {
+        "1": "VIN_POST_BOOT",
+        "2": "VIN_POST_SW"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U310",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-L303",
+      "ref": "L303",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C3911753",
+      "role": "6.8uH post-regulator inductor",
+      "pins": {
+        "1": "VIN_POST_SW",
+        "2": "VIN_5V_REG"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U310",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C333",
+      "ref": "C333",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_5V_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L303",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C334",
+      "ref": "C334",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_5V_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L303",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R327",
+      "ref": "R327",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C25803",
+      "role": "5V feedback upper",
+      "pins": {
+        "1": "VIN_5V_REG",
+        "2": "VIN_POST_FB"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U310",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R328",
+      "ref": "R328",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C25952",
+      "role": "5V feedback lower",
+      "pins": {
+        "1": "VIN_POST_FB",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U310",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C335",
+      "ref": "C335",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C22399620",
+      "role": "feedforward starting value",
+      "pins": {
+        "1": "VIN_5V_REG",
+        "2": "VIN_POST_FB"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R327",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R329",
+      "ref": "R329",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C21190",
+      "role": "mode-gated post-regulator enable",
+      "pins": {
+        "1": "VIN_MODE_REG_REQ",
+        "2": "VIN_POST_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U310",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-R330",
+      "ref": "R330",
+      "page": 3,
+      "zone": "vin-5v-regulator",
+      "lcsc": "C25803",
+      "role": "default off",
+      "pins": {
+        "1": "VIN_POST_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U310",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-U309",
+      "ref": "U309",
+      "page": 3,
+      "zone": "vin-load-switch",
+      "lcsc": "C17294173",
+      "role": "10A load switch; EN#/OVLO low, PG unused, IMON grounded",
+      "pins": {
+        "1": "VIN_LOAD_EN",
+        "2": "GND",
+        "3": null,
+        "4": "GND",
+        "5": "VIN_5V_REG",
+        "6": "OUT_VIN_5V",
+        "7": "VIN_DVDT",
+        "8": "GND",
+        "9": "GND",
+        "10": null
+      },
+      "ncReasons": {
+        "3": "Open-drain PG output unused.",
+        "10": "Datasheet DNC must remain open."
+      }
+    },
+    {
+      "id": "cmp-R331",
+      "ref": "R331",
+      "page": 3,
+      "zone": "vin-load-switch",
+      "lcsc": "C21190",
+      "role": "mode-gated load enable",
+      "pins": {
+        "1": "VIN_MODE_LOAD_REQ",
+        "2": "VIN_LOAD_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U309",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R332",
+      "ref": "R332",
+      "page": 3,
+      "zone": "vin-load-switch",
+      "lcsc": "C25803",
+      "role": "default off",
+      "pins": {
+        "1": "VIN_LOAD_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U309",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C336",
+      "ref": "C336",
+      "page": 3,
+      "zone": "vin-load-switch",
+      "lcsc": "C1588",
+      "role": "decoupling",
+      "pins": {
+        "1": "VIN_DVDT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U309",
+        "ownerPin": "7"
+      }
+    },
+    {
+      "id": "cmp-C337",
+      "ref": "C337",
+      "page": 3,
+      "zone": "vin-load-switch",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "OUT_VIN_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U309",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C338",
+      "ref": "C338",
+      "page": 3,
+      "zone": "vin-load-switch",
+      "lcsc": "C128503",
+      "role": "output polymer bulk for modem pulses",
+      "pins": {
+        "1": "OUT_VIN_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U309",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-J309",
+      "ref": "J309",
+      "page": 3,
+      "zone": "vin-connectors",
+      "lcsc": "C474881",
+      "role": "VIN-only 5V output; shared 2A capacity",
+      "pins": {
+        "1": "OUT_VIN_5V",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J310",
+      "ref": "J310",
+      "page": 3,
+      "zone": "vin-connectors",
+      "lcsc": "C2908600",
+      "role": "VIN-only 5V output; shared 2A capacity",
+      "pins": {
+        "1": "OUT_VIN_5V",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J311",
+      "ref": "J311",
+      "page": 3,
+      "zone": "vin-connectors",
+      "lcsc": "C492401",
+      "role": "VIN-only 5V output; shared 2A capacity",
+      "pins": {
+        "1": "OUT_VIN_5V",
+        "2": "GND"
       },
       "ncReasons": {}
     },
@@ -4066,6 +5482,34 @@
       ]
     },
     {
+      "id": "vin-car-buck",
+      "page": 1,
+      "title": "OPTIONAL VIN: VEHICLE 6.52V / 2A",
+      "core": "U105",
+      "members": [
+        "U105",
+        "C121",
+        "C122",
+        "C123",
+        "C124",
+        "C125",
+        "D106",
+        "L102",
+        "C126",
+        "C127",
+        "C128",
+        "C129",
+        "R117",
+        "R118",
+        "R119",
+        "R120",
+        "C130",
+        "C131",
+        "R121",
+        "R122"
+      ]
+    },
+    {
       "id": "battery-master",
       "page": 2,
       "title": "PROTECTED 1S PACK / MASTER ISOLATION",
@@ -4167,6 +5611,35 @@
         "U205",
         "C233",
         "C234"
+      ]
+    },
+    {
+      "id": "vin-battery-boost",
+      "page": 2,
+      "title": "OPTIONAL VIN: BATTERY 6.56V / 2A",
+      "core": "U206",
+      "members": [
+        "U206",
+        "L202",
+        "C235",
+        "C236",
+        "C237",
+        "C238",
+        "C239",
+        "C240",
+        "C241",
+        "C242",
+        "C243",
+        "R217",
+        "R218",
+        "R219",
+        "R220",
+        "R221",
+        "C244",
+        "C245",
+        "C246",
+        "R222",
+        "R223"
       ]
     },
     {
@@ -4300,6 +5773,83 @@
       ]
     },
     {
+      "id": "vin-mode-switch",
+      "page": 3,
+      "title": "MANUAL BAT / REGULATED VIN SELECT",
+      "core": "SW301",
+      "members": [
+        "SW301"
+      ]
+    },
+    {
+      "id": "vin-source-mux",
+      "page": 3,
+      "title": "VIN 6.5V SOURCE / CAR PRIORITY",
+      "core": "U308",
+      "members": [
+        "U308",
+        "C325",
+        "C326",
+        "R318",
+        "R319",
+        "R320",
+        "R321",
+        "R322",
+        "R323",
+        "R324",
+        "R325",
+        "R326",
+        "C327",
+        "C328",
+        "C329"
+      ]
+    },
+    {
+      "id": "vin-5v-regulator",
+      "page": 3,
+      "title": "VIN OUTPUT / REGULATED 5V 2A",
+      "core": "U310",
+      "members": [
+        "U310",
+        "C330",
+        "C331",
+        "C332",
+        "L303",
+        "C333",
+        "C334",
+        "R327",
+        "R328",
+        "C335",
+        "R329",
+        "R330"
+      ]
+    },
+    {
+      "id": "vin-load-switch",
+      "page": 3,
+      "title": "VIN 5V LOAD DISCONNECT",
+      "core": "U309",
+      "members": [
+        "U309",
+        "R331",
+        "R332",
+        "C336",
+        "C337",
+        "C338"
+      ]
+    },
+    {
+      "id": "vin-connectors",
+      "page": 3,
+      "title": "VIN 5V / THREE PARALLEL PORTS / TOTAL 2A",
+      "core": "J309",
+      "members": [
+        "J309",
+        "J310",
+        "J311"
+      ]
+    },
+    {
       "id": "controller",
       "page": 4,
       "title": "STM32L031 / INDEPENDENT POWER CONTROL",
@@ -4423,7 +5973,7 @@
     }
   ],
   "forbiddenConnections": [
-    "Tiny VIN to any power source while Tiny BAT connected",
+    "BAT and VIN output harnesses simultaneously connected to one module",
     "USB VBUS bypass during controlled-off acceptance",
     "external power into any output terminal",
     "SWD probe drive with AON VTREF absent"

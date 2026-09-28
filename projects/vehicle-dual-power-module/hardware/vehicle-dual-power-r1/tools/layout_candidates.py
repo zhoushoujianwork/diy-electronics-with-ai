@@ -11,19 +11,21 @@ import argparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RAILS = set('VEH_IN VEH_FUSED VEH_CD VEH_PROT VEH_AON_5V CAR_5V PACK_IN PACK_FUSED BAT_CS BAT_SW BAT_SYS AON_RAW 3V0_AON HOST_SRC MODEM_SRC HOST_REG MODEM_REG HOST_SW HOST_5V TINY_BAT HOST_3V3 MODEM_VIO CHG_REGN CHG_PMID'.split())
+RAILS = set('VEH_IN VEH_FUSED VEH_CD VEH_PROT VEH_AON_5V CAR_5V PACK_IN PACK_FUSED BAT_CS BAT_SW BAT_SYS AON_RAW 3V0_AON HOST_SRC MODEM_SRC HOST_REG MODEM_REG HOST_SW HOST_5V TINY_BAT HOST_3V3 MODEM_VIO CHG_REGN CHG_PMID VIN_CAR_6V5 VIN_BAT_6V5 VIN_SRC VIN_5V_REG OUT_VIN_5V'.split())
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--version', required=True, help='New immutable experiment name, e.g. v6')
+    parser.add_argument('--base-version', default='v1', help='Measured zone-input version')
+    parser.add_argument('--pages', default='1,2,3,4', help='Comma-separated pages to prepare')
     args = parser.parse_args()
     assert args.version.isalnum(), 'Use an alphanumeric version'
     target = ROOT / ('build/layout-' + args.version)
     target.mkdir(parents=True, exist_ok=True)
     manifest = []
-    for pn in range(1, 5):
-        old = ROOT / f'source/p{pn}-zones-v1.json'
+    for pn in [int(x) for x in args.pages.split(',')]:
+        old = ROOT / f'source/p{pn}-zones-{args.base_version}.json'
         data = json.loads(old.read_text())
         data['maxCandidates'] = 40000
         data['routing'] = dict(maxExpandedNodes=2000000, maxReroutes=8)
@@ -42,7 +44,11 @@ def main():
             full.write_text(encoded)
         for zone in data['zones']:
             ids = set(zone['componentIds'])
-            one = dict(data, zones=[zone],
+            solo_zone = dict(zone)
+            # A same-page relation is checked by the sheet planner. A one-zone
+            # local solve has no other zone to reference.
+            solo_zone.pop('placement', None)
+            one = dict(data, zones=[solo_zone],
                        components=[c for c in data['components'] if c['id'] in ids],
                        attachments=[a for a in data['attachments'] if a['componentId'] in ids])
             used_nets = {p['net'] for c in one['components'] for p in c['measurement']['pins'] if p['net']}

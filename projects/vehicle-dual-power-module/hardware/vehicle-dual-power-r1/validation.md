@@ -3,15 +3,15 @@
 ## 当前结论
 
 **设计未发布。** 电气源数据、器件身份和计算已经建立，四页EDA工程处于器件测量阶段。
-本记录只覆盖现有 BAT 3.9V/2A 支路；人工选择的 VIN 5V 类/2A 支路目前仅有[设计输入](../../docs/power-output-modes.md)，尚无 EDA 或实测结果。
+R1 检查点覆盖 BAT 3.9V/2A；新增的标称 VIN 5V/2A 已有[引脚级源数据](../../docs/vin-schematic-r2.md)和器件放置回读，仍无实际连线或实测结果。
 现有工程中的器件尚未布线、未加NC标记，初始测量坐标有部分在纸外。保存或重开这个工程不能证明电气设计已落地。
 
 | 验证项目 | 状态 | 覆盖与证据 |
 |---|---|---|
-| 板上器件库身份 | 已核对 | 221个元件、73种C号；真实放置符号回读与`source/selected-parts.json`对应 |
-| 实际引脚与位号几何 | 已采集 | [测量摘要](measurement-evidence.json)，每页53 / 56 / 58 / 54个元件；只证明测量姿态 |
-| 引脚连接意图、NC理由与功能归属 | 源数据检查通过 | [design.json](source/design.json)；11项[电气约束测试](tests/test_design.py)通过；不代表EDA连线已完成 |
-| 电压、电流、NTC与待机计算 | 离线计算完成 | [engineering.md](engineering.md)、[calculations.json](calculations.json)；列明效率/温升等未实测分配 |
+| 板上器件库身份 | 已核对 | 299 件、84 种 C 号；VIN 新增 78 件见[首批](r2-vin-checkpoint.json)及[外围](r2-vin-peripherals-checkpoint.json)回读 |
+| 实际引脚与位号几何 | 已采集 | R1 [测量摘要](measurement-evidence.json)及 R2 [测量摘要](measurement-evidence-v8.json)；只证明测量姿态 |
+| 引脚连接意图、NC理由与功能归属 | 源数据检查通过 | [design.json](source/design.json)；12 项[电气约束测试](tests/test_design.py)通过；不代表 EDA 连线已完成 |
+| 电压、电流、NTC与待机计算 | 离线计算完成 | [BAT 计算](calculations.json)与[VIN 计算](vin-calculations.json)；效率、温升和脉冲未实测 |
 | 自动布局与布线 | 未完成 | [layout-attempts.json](layout-attempts.json)记录输入/报告哈希、失败分类；失败候选不进入Apply |
 | 四页保存、关闭再打开与读回 | 见检查点记录 | [checkpoint-evidence.json](checkpoint-evidence.json)；验证的是未布线器件的持久化 |
 | Compose、完整布线Apply、目标网表对账 | 未执行 | 尚无完整合格的四页布局输入 |
@@ -32,7 +32,7 @@ v6明确总开关限流电阻链的归属后该区通过；v7把同一芯片的�
 所有原始输入、报告和候选保存在本地`build/layout-v*/`，摘要对原始字节做SHA-256绑定。
 `source/layout-attempt-inputs/`保留用于重现的参数输入；未提交含账号信息的原生工程内容或第三方数据手册。
 
-最终有17/27区得到局部完整结果，10区尚未解决。百万候选的完整失败记录与后续附属关系修正仍未收敛到四页完整方案。
+R1 曾有 17/27 区得到局部完整结果，10 区尚未解决。R2 新增的 7 个 VIN 区中，模式开关和输出端子区通过；初次完整求解的其余 VIN 区因有界预算耗尽而失败。VIN 输出开关与输出储能电容组已在 [p3-zones-v10.json](source/p3-zones-v10.json) 中明确分区，保持所有引脚网络不变；两区分别得到完整离线局部解，输入、报告和几何哈希见[拆分检查点](vin-layout-split-checkpoint.json)。此结果尚未合页或写入 EDA。百万候选的 R1 失败记录与 R2 新区尚未收敛到四页完整方案。
 其余重复计算在整理检查点时停止；这些记录单独标为`interrupted-no-result`，不冒充工具返回的失败或证明无解。
 继续实施需先解决这些区的局部直连/标记求解，再完成朝向实测、合页和受保护Apply；当前未生成可制板网表。
 

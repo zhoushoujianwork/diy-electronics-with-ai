@@ -2,7 +2,7 @@
 
 独立电源板设计：车载 12V 和带保护板的单节锂聚合物电池供电，给主控提供受控 **5V / 1A**。4G 供电目标改为人工选择 **BAT 约 3.9V / 2A** 或 **VIN 5V 类 / 2A**；电源板不识别所接模块。目标主控包括 AtomS3 Lite；其他项目可按[复用接口](docs/reuse.md)评估接入。
 
-**状态：`prototype`。当前 221 件、四页 EasyEDA Pro 工程仅覆盖 BAT 3.9V 支路，且尚未布线；VIN 5V/2A 是下一版待落图的设计目标。没有可制板文件、可烧录固件或实板验证，不得按此资料直接装车。** 设计示意如下；它不是 PCB 或实机照片。
+**状态：`prototype`。四页 EasyEDA Pro 工程已放置 299 件元件，保存重载并回读了 VIN 新增的 78 件核心与外围；全部仍未布线。没有可制板文件、可烧录固件或实板验证，不得按此资料直接装车。** 设计示意如下；它不是 PCB 或实机照片。
 
 ![车载输入和单节电池汇入两路受控输出，常供电控制器管理按键、ACC 和运动唤醒的设计示意图](docs/assets/power-path.svg)
 
@@ -13,10 +13,10 @@
 | 车载输入 | 12V 电瓶直连加 ACC，或点烟器输入；板上保险丝、TVS、反接与过压保护后降压；上游仍需合适保险丝 |
 | 备用电池 | 1S、满充 4.2V、约 3000mAh；须自带保护板、贴电芯 NTC，连续放电能力至少 9A |
 | 主控输出 | 受控 5V / 1A；AtomS3 Lite 等主控需另核对准确板版次和输入脚位 |
-| 4G 输出 | 当前源数据：受控约 3.9V / 2A BAT；新增目标：独立 5V 类 / 2A VIN，人工断电选择其一。具体方案见[双模式设计输入](docs/power-output-modes.md) |
+| 4G 输出 | 电气源数据包含受控约 3.9V / 2A BAT 与独立标称 5V / 2A VIN，人工断电选择其一；两路尚未写成 EDA 导线。VIN 电压范围和压降分析见[原理图绘制依据](docs/vin-schematic-r2.md) |
 | 开关与唤醒 | 独立电源键、双刀硬件总开关、ACC、板载 IMU 与外部开漏唤醒；STM32L031 常供电控制器的固件尚未实现 |
 
-现有主控及 BAT 输出各有螺丝端子、XH **2.50mm** 插座和 **2.54mm** 排针，三个端口并联且共享该路电流额定值；VIN 输出也按三种端子规划，尚未进入 EDA。现有针脚、时序、UART 协议和掉电边界以[接口与控制合同](hardware/vehicle-dual-power-r1/interfaces-and-control.md)为准；电路与器件请看[硬件设计](hardware/vehicle-dual-power-r1/README.md)。
+现有主控及 BAT 输出各有螺丝端子、XH **2.50mm** 插座和 **2.54mm** 排针，三个端口并联且共享该路电流额定值；VIN 输出的三种端子已放置但尚未接线。现有针脚、时序、UART 协议和掉电边界以[接口与控制合同](hardware/vehicle-dual-power-r1/interfaces-and-control.md)为准；电路与器件请看[硬件设计](hardware/vehicle-dual-power-r1/README.md)。
 
 ## 复现现有设计检查
 
@@ -25,6 +25,7 @@
 ```sh
 python3 tools/build_design.py
 python3 tools/calculate.py
+python3 tools/calculate_vin.py
 python3 -m unittest discover -s tests -v
 ```
 

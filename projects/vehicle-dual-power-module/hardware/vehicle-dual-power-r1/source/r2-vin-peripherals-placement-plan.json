@@ -1,0 +1,708 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Typed temporary placement for R2 VIN symbol and pin measurements; no wiring or final layout",
+  "projectUuid": "143594ca6b24412691655cb627c51791",
+  "coordinateState": "temporary-off-sheet-measurement",
+  "placements": [
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C121",
+      "lcsc": "C86054",
+      "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 1100
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C122",
+      "lcsc": "C86054",
+      "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 1100
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C123",
+      "lcsc": "C86054",
+      "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 1100
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C124",
+      "lcsc": "C86054",
+      "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 1100
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C125",
+      "lcsc": "C1591",
+      "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 1100
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "D106",
+      "lcsc": "C266541",
+      "deviceUuid": "c369b4376a324cab92b7be819cdfcdec",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 900
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "L102",
+      "lcsc": "C3911753",
+      "deviceUuid": "74ed7a6dd8a9440887ac1ac039f93ae1",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 900
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C126",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 900
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C127",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 900
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C128",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 900
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C129",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 700
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "R117",
+      "lcsc": "C23103",
+      "deviceUuid": "f71ef8bcddb84a508b60d21f475ee81d",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 700
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "R118",
+      "lcsc": "C25804",
+      "deviceUuid": "b948db94476e4027ac8953235755ec96",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 700
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "R119",
+      "lcsc": "C23351",
+      "deviceUuid": "1486fa2842a5451c9481d0e580335567",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 700
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "R120",
+      "lcsc": "C25954",
+      "deviceUuid": "1a464fbd615d4cc998baa6ac5fbcf5ef",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 700
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C130",
+      "lcsc": "C1621",
+      "deviceUuid": "f0419ed7c5724c298e313f427615045e",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 500
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "C131",
+      "lcsc": "C94904",
+      "deviceUuid": "20536babac204ca99f2515dbfb730604",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 500
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "R121",
+      "lcsc": "C21190",
+      "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 500
+    },
+    {
+      "page": 1,
+      "pageUuid": "0fc201a153e9cd31",
+      "ref": "R122",
+      "lcsc": "C25803",
+      "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 500
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "L202",
+      "lcsc": "C1332206",
+      "deviceUuid": "7329ec672be946fdbff491667ad4c135",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 1100
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C235",
+      "lcsc": "C1591",
+      "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 1100
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C236",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 1100
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C237",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 1100
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C238",
+      "lcsc": "C19666",
+      "deviceUuid": "9d6a8d9b94504b8e8615128aa8b87628",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 1100
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C239",
+      "lcsc": "C1591",
+      "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 900
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C240",
+      "lcsc": "C15849",
+      "deviceUuid": "f4744ff7405a46a48e360c2c6fadeca3",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 900
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C241",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 900
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C242",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 900
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C243",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 900
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "R217",
+      "lcsc": "C22918",
+      "deviceUuid": "4d8a2158e6f2469685f8c7673367f44c",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 700
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "R218",
+      "lcsc": "C23206",
+      "deviceUuid": "5b160a02740a4a05b51e666ce1090eeb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 700
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "R219",
+      "lcsc": "C22918",
+      "deviceUuid": "4d8a2158e6f2469685f8c7673367f44c",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 700
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "R220",
+      "lcsc": "C23089",
+      "deviceUuid": "0422dcc35ae04489979db7d9b84ce4f7",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 700
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "R221",
+      "lcsc": "C25804",
+      "deviceUuid": "b948db94476e4027ac8953235755ec96",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 700
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C244",
+      "lcsc": "C1621",
+      "deviceUuid": "f0419ed7c5724c298e313f427615045e",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 500
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C245",
+      "lcsc": "C94904",
+      "deviceUuid": "20536babac204ca99f2515dbfb730604",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 500
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "C246",
+      "lcsc": "C1622",
+      "deviceUuid": "ed3e2032cdfe4c688efeae34aa292a1d",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 500
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "R222",
+      "lcsc": "C21190",
+      "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 500
+    },
+    {
+      "page": 2,
+      "pageUuid": "1a4712d29493b068",
+      "ref": "R223",
+      "lcsc": "C25803",
+      "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 500
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C325",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 1100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C326",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 1100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R318",
+      "lcsc": "C25811",
+      "deviceUuid": "8492e9c42c704af98a070b91ba967cca",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 1100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R319",
+      "lcsc": "C25803",
+      "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 1100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R320",
+      "lcsc": "C23351",
+      "deviceUuid": "1486fa2842a5451c9481d0e580335567",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 1100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R321",
+      "lcsc": "C25803",
+      "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 900
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R322",
+      "lcsc": "C23103",
+      "deviceUuid": "f71ef8bcddb84a508b60d21f475ee81d",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 900
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R323",
+      "lcsc": "C25804",
+      "deviceUuid": "b948db94476e4027ac8953235755ec96",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 900
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R324",
+      "lcsc": "C23103",
+      "deviceUuid": "f71ef8bcddb84a508b60d21f475ee81d",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 900
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R325",
+      "lcsc": "C25804",
+      "deviceUuid": "b948db94476e4027ac8953235755ec96",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 900
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R326",
+      "lcsc": "C22984",
+      "deviceUuid": "5a0729e57b954fd9a63041fbaa7c3e8a",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 700
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C327",
+      "lcsc": "C1591",
+      "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 700
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C328",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 700
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C329",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 700
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "U310",
+      "lcsc": "C311983",
+      "deviceUuid": "09d09adf261f49f397dcf1784d04fb9a",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 700
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C330",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 500
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C331",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 500
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C332",
+      "lcsc": "C1591",
+      "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 500
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "L303",
+      "lcsc": "C3911753",
+      "deviceUuid": "74ed7a6dd8a9440887ac1ac039f93ae1",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 500
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C333",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 500
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C334",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 300
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R327",
+      "lcsc": "C25803",
+      "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 300
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R328",
+      "lcsc": "C25952",
+      "deviceUuid": "553e14c5b19b4eeba650a5a603833375",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 300
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C335",
+      "lcsc": "C22399620",
+      "deviceUuid": "a8116ad5c4064b61813b3961e5f7c9a9",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 300
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R329",
+      "lcsc": "C21190",
+      "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 300
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R330",
+      "lcsc": "C25803",
+      "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": 100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R331",
+      "lcsc": "C21190",
+      "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4250,
+      "y": 100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "R332",
+      "lcsc": "C25803",
+      "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4500,
+      "y": 100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C336",
+      "lcsc": "C1588",
+      "deviceUuid": "f7218f4330f6417aa864e05da749dbcb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4750,
+      "y": 100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C337",
+      "lcsc": "C12891",
+      "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 5000,
+      "y": 100
+    },
+    {
+      "page": 3,
+      "pageUuid": "0b5389c810e16077",
+      "ref": "C338",
+      "lcsc": "C128503",
+      "deviceUuid": "cc43ed9dc2114b90bf9b6e9d28629bee",
+      "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+      "x": 4000,
+      "y": -100
+    }
+  ]
+}

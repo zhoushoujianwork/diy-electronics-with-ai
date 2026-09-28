@@ -1,0 +1,25 @@
+{
+  "status": "offline-local-only",
+  "toolVersion": "1.8.0",
+  "source": "source/p3-zones-v10.json",
+  "sourceSha256": "2abebc23cbfeb2326219ebb4410321c95403f3295cc970c7727c6e4dba0ba6ea",
+  "zones": [
+    {
+      "zone": "vin-load-core",
+      "status": "planned",
+      "input": "build/layout-v10/vin-load-core-input.json",
+      "inputSha256": "a8ff4447d544b66a921ce7b42ce72933609bac70c315eb90b51560da35d8410d",
+      "reportSha256": "18919cfb767d2f1b9fe6f9351ca0630fbf312dab7b9b3365ff3490d10ef0288f",
+      "geometrySha256": "35e2903add12a72ce2d24fcfec96a0dfd500684694d6f05b0cf844a7efc8bbf0"
+    },
+    {
+      "zone": "vin-load-output-bank",
+      "status": "planned",
+      "input": "build/layout-v11/vin-load-output-bank-input.json",
+      "inputSha256": "e301860a04196ff35674dd22d8bade0721e266f6a19089b88183a3afd09df023",
+      "reportSha256": "9c3a9feffdf8b21971bd69b61c3ad5493629038f7f4954f2024d501a37453966",
+      "geometrySha256": "42268babb0a114eff390dbdbd4521ff89101c2f849038f7b543e8dd57805c772"
+    }
+  ],
+  "limits": "No sheet composition, EDA Apply, actual wires, NC, or DRC."
+}

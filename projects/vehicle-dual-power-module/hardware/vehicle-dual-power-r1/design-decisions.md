@@ -23,4 +23,8 @@ Master switch: dual pole, low-current control only, independently disables vehic
 
 Engineering data, calculations, source tests and readback summaries are stored alongside the source and BOM. Library existence establishes component identity; it does not establish stock availability or vehicle qualification.
 
-Current status: the four A4 sheets contain all 221 selected parts for measurement. The full pin/net source and 73-type onboard BOM are generated. Eleven electrical-intent tests pass. Automated layout is incomplete; no final wiring/NC Apply, final DRC, PCB, firmware, or hardware validation is claimed. See [validation.md](validation.md) for scope and retained failure evidence.
+## R2 selectable VIN branch
+
+The user also requested a separate 5V/2A output for a module's VIN input, selected manually instead of the BAT output. The board does not identify the attached module. A two-pole mode switch selects the regulator and load-switch enables without carrying either output current. The VIN branch uses separate car and battery 6.5V converters, a TPS2121 source mux, a TPS54302 5V regulator, and a TPS22811 output disconnect. Its three parallel connector families share one 2A rating. See [VIN schematic basis](../../docs/vin-schematic-r2.md) for exact pin/net and voltage calculations.
+
+The four A4 sheets now contain 299 selected parts for measurement and the BOM has 84 C numbers. Twelve electrical-intent tests pass. Automated layout remains incomplete; no final wiring/NC Apply, final DRC, PCB, firmware, or hardware validation is claimed. See [validation.md](validation.md) for the retained failure evidence and exact limits.
