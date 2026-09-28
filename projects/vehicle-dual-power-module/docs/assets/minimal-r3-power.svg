@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" role="img" aria-labelledby="title desc">
+  <title id="title">R3 精简车载双电源模块架构</title>
+  <desc id="desc">车载和电池分别提供 5V，经过车载优先切源形成共用母线，再分别供给主控 5V、4G VIN 5V 和经降压生成的 4G BAT 3.9V；独立低功耗控制域负责按键、ACC 和运动唤醒。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L9 5 L1 9 Z" fill="#64748b"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.box{fill:white;stroke:#334155;stroke-width:2;rx:12}.source{fill:#eff6ff;stroke:#2563eb}.control{fill:#ecfdf5;stroke:#059669}.output{fill:#fff7ed;stroke:#ea580c}.warn{fill:#fef2f2;stroke:#dc2626}
+      .line{fill:none;stroke:#64748b;stroke-width:3;marker-end:url(#arrow)}.charge{fill:none;stroke:#059669;stroke-width:2.5;marker-end:url(#arrow)}.ctl{fill:none;stroke:#0f766e;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#arrow)}
+      .title{font:700 27px system-ui,-apple-system,"PingFang SC",sans-serif;fill:#0f172a}.text{font:700 17px system-ui,-apple-system,"PingFang SC",sans-serif;fill:#0f172a}.small{font:14px system-ui,-apple-system,"PingFang SC",sans-serif;fill:#475569}.note{font:13px system-ui,-apple-system,"PingFang SC",sans-serif;fill:#7f1d1d}
+    </style>
+  </defs>
+  <rect class="bg" width="1100" height="680"/>
+  <text class="title" x="44" y="47">R3 精简方案 · 一条共用 5V 母线</text>
+  <text class="small" x="44" y="74">架构预览：保留车载保护、电池充电、硬件总开关和停车唤醒；BAT / VIN 人工选一路</text>
+
+  <rect class="box source" x="42" y="117" width="205" height="82"/><text class="text" x="63" y="148">车载 12V + ACC</text><text class="small" x="63" y="176">保险 / TVS / 反接 / 总开关</text>
+  <rect class="box source" x="315" y="117" width="170" height="82"/><text class="text" x="337" y="148">5V 降压</text><text class="small" x="337" y="176">目标 5A，兼顾充电</text>
+  <path class="line" d="M247 158 H315"/>
+
+  <rect class="box source" x="42" y="290" width="205" height="82"/><text class="text" x="63" y="321">1S 电池 + NTC</text><text class="small" x="63" y="349">保护板 / 背靠背 MOS</text>
+  <rect class="box source" x="315" y="290" width="170" height="82"/><text class="text" x="337" y="321">5V 升压</text><text class="small" x="337" y="349">目标 4A，运行时就绪</text>
+  <path class="line" d="M247 331 H315"/>
+
+  <rect class="box control" x="315" y="212" width="170" height="55"/><text class="text" x="337" y="244">1S 充电器</text>
+  <path class="charge" d="M400 199 V212"/><path class="charge" d="M315 240 H280 V290"/>
+
+  <rect class="box" x="543" y="199" width="169" height="90"/><text class="text" x="563" y="232">车载优先切源</text><text class="small" x="563" y="259">共用 5V 母线 ≥3A</text>
+  <path class="line" d="M485 158 H525 V225 H543"/><path class="line" d="M485 331 H525 V265 H543"/>
+
+  <rect class="box output" x="790" y="114" width="270" height="75"/><text class="text" x="810" y="143">主控 5V / 1A</text><text class="small" x="810" y="169">受控开关 → AtomS3 Lite 等</text>
+  <rect class="box output" x="790" y="214" width="270" height="75"/><text class="text" x="810" y="243">4G VIN 5V / 2A</text><text class="small" x="810" y="269">母线 → 受控开关</text>
+  <rect class="box output" x="790" y="314" width="270" height="91"/><text class="text" x="810" y="343">4G BAT 约 3.9V / 2A</text><text class="small" x="810" y="369">母线 → 3.9V 降压 → 受控开关</text>
+  <path class="line" d="M712 242 H751 V151 H790"/><path class="line" d="M712 242 H790"/><path class="line" d="M751 242 V359 H790"/>
+
+  <rect class="box control" x="43" y="451" width="669" height="115"/><text class="text" x="64" y="481">独立常供电控制（车载或电池供电）</text><text class="small" x="64" y="510">低功耗 MCU + IMU + 电源键 + ACC 检测 + 外部 WAKE_N</text><text class="small" x="64" y="537">关机握手、120 秒停车待机、低电量禁止启动；总开关 OFF 硬件优先</text>
+  <path class="ctl" d="M625 451 V289"/><path class="ctl" d="M712 509 H753 V189"/>
+
+  <rect class="box warn" x="790" y="457" width="270" height="109"/><text class="text" x="810" y="486">模式由人选择</text><text class="note" x="810" y="513">BAT 与 VIN 不同时接同一模块</text><text class="small" x="810" y="539">板子不识别外设型号</text>
+  <text class="small" x="44" y="628">三类接线端子保留；同一路的端子并联，电流额定值按该路合计计算。</text>
+  <text class="small" x="44" y="650">本图未给出芯片型号、反馈电阻或 PCB；这些在架构确定后再核算。</text>
+</svg>
