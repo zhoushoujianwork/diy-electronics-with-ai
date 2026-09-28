@@ -1,0 +1,637 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 1000000,
+  "routing": {
+    "maxExpandedNodes": 5000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-U203",
+      "measurement": {
+        "x": 2350,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2385.5,
+          "maxY": -324.5,
+          "minX": 2314.5,
+          "minY": -375.5
+        },
+        "designator": "U203",
+        "value": "TPS2117DRLR",
+        "pins": [
+          {
+            "number": "1",
+            "name": "GND",
+            "net": "GND",
+            "x": 2305,
+            "y": -335,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "VOUT",
+            "net": "MODEM_SRC",
+            "x": 2305,
+            "y": -345,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "VIN1",
+            "net": "CAR_5V",
+            "x": 2305,
+            "y": -355,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "PR1",
+            "net": "MODEM_PR",
+            "x": 2305,
+            "y": -365,
+            "rotation": 180
+          },
+          {
+            "number": "5",
+            "name": "MODE",
+            "net": "CAR_5V",
+            "x": 2395,
+            "y": -365,
+            "rotation": 0
+          },
+          {
+            "number": "6",
+            "name": "VIN2",
+            "net": "BAT_SW",
+            "x": 2395,
+            "y": -355,
+            "rotation": 0
+          },
+          {
+            "number": "7",
+            "name": "VOUT",
+            "net": "MODEM_SRC",
+            "x": 2395,
+            "y": -345,
+            "rotation": 0
+          },
+          {
+            "number": "8",
+            "name": "ST",
+            "net": "MODEM_CAR_ST",
+            "x": 2395,
+            "y": -335,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2315,
+            "minY": -325,
+            "maxX": 2331.734375,
+            "maxY": -317
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-C221",
+      "measurement": {
+        "x": 2600,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2610.5,
+          "maxY": -341.5,
+          "minX": 2589.5,
+          "minY": -358.5
+        },
+        "designator": "C221",
+        "value": "1uF",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2620,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "CAR_5V",
+            "x": 2580,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2590,
+            "minY": -340,
+            "maxX": 2606.734375,
+            "maxY": -332
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-C222",
+      "measurement": {
+        "x": 2850,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2860.5,
+          "maxY": -341.5,
+          "minX": 2839.5,
+          "minY": -358.5
+        },
+        "designator": "C222",
+        "value": "1uF",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2870,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "BAT_SW",
+            "x": 2830,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2840,
+            "minY": -340,
+            "maxX": 2856.734375,
+            "maxY": -332
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-C223",
+      "measurement": {
+        "x": 1600,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1605.5,
+          "maxY": -591.5,
+          "minX": 1594.5,
+          "minY": -608.5
+        },
+        "designator": "C223",
+        "value": "22uF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MODEM_SRC",
+            "x": 1585,
+            "y": -600,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1615,
+            "y": -600,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1595,
+            "minY": -590,
+            "maxX": 1611.734375,
+            "maxY": -582
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-C224",
+      "measurement": {
+        "x": 1850,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1855.5,
+          "maxY": -591.5,
+          "minX": 1844.5,
+          "minY": -608.5
+        },
+        "designator": "C224",
+        "value": "22uF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MODEM_SRC",
+            "x": 1835,
+            "y": -600,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1865,
+            "y": -600,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1845,
+            "minY": -590,
+            "maxX": 1861.734375,
+            "maxY": -582
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-C225",
+      "measurement": {
+        "x": 2100,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2105.5,
+          "maxY": -591.5,
+          "minX": 2094.5,
+          "minY": -608.5
+        },
+        "designator": "C225",
+        "value": "22uF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MODEM_SRC",
+            "x": 2085,
+            "y": -600,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2115,
+            "y": -600,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2095,
+            "minY": -590,
+            "maxX": 2111.734375,
+            "maxY": -582
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-C226",
+      "measurement": {
+        "x": 2350,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2355.5,
+          "maxY": -591.5,
+          "minX": 2344.5,
+          "minY": -608.5
+        },
+        "designator": "C226",
+        "value": "22uF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MODEM_SRC",
+            "x": 2335,
+            "y": -600,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2365,
+            "y": -600,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2345,
+            "minY": -590,
+            "maxX": 2361.734375,
+            "maxY": -582
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-R214",
+      "measurement": {
+        "x": 2600,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2610.5,
+          "maxY": -595.5,
+          "minX": 2589.5,
+          "minY": -604.5
+        },
+        "designator": "R214",
+        "value": "330k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "MODEM_PR",
+            "x": 2620,
+            "y": -600,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "CAR_5V",
+            "x": 2580,
+            "y": -600,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2590,
+            "minY": -595,
+            "maxX": 2606.734375,
+            "maxY": -587
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-R215",
+      "measurement": {
+        "x": 2850,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2860.5,
+          "maxY": -595.5,
+          "minX": 2839.5,
+          "minY": -604.5
+        },
+        "designator": "R215",
+        "value": "100k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2870,
+            "y": -600,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MODEM_PR",
+            "x": 2830,
+            "y": -600,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2840,
+            "minY": -595,
+            "maxX": 2856.734375,
+            "maxY": -587
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-R216",
+      "measurement": {
+        "x": 1600,
+        "y": -850,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1610.5,
+          "maxY": -845.5,
+          "minX": 1589.5,
+          "minY": -854.5
+        },
+        "designator": "R216",
+        "value": "330k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "MODEM_CAR_ST",
+            "x": 1620,
+            "y": -850,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 1580,
+            "y": -850,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1590,
+            "minY": -845,
+            "maxX": 1606.734375,
+            "maxY": -837
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-C221",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "3"
+      }
+    },
+    {
+      "componentId": "cmp-C222",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "6"
+      }
+    },
+    {
+      "componentId": "cmp-C223",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-C224",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-C225",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-C226",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-R214",
+      "pinNumber": "2",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "4"
+      }
+    },
+    {
+      "componentId": "cmp-R215",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "4"
+      }
+    },
+    {
+      "componentId": "cmp-R216",
+      "pinNumber": "2",
+      "attachTo": {
+        "componentId": "cmp-U203",
+        "pinNumber": "8"
+      }
+    }
+  ],
+  "netPolicies": {
+    "BAT_SW": "local_power",
+    "MODEM_CAR_ST": "module_port",
+    "GND": "local_ground",
+    "3V0_AON": "local_power",
+    "CAR_5V": "local_power",
+    "MODEM_SRC": "local_power",
+    "MODEM_PR": "direct"
+  },
+  "zones": [
+    {
+      "id": "mux-modem",
+      "title": "MODEM SOURCE MUX / CAR PRIORITY",
+      "coreComponentId": "cmp-U203",
+      "componentIds": [
+        "cmp-U203",
+        "cmp-C221",
+        "cmp-C222",
+        "cmp-C223",
+        "cmp-C224",
+        "cmp-C225",
+        "cmp-C226",
+        "cmp-R214",
+        "cmp-R215",
+        "cmp-R216"
+      ]
+    }
+  ]
+}

@@ -11,7 +11,7 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 ## 项目与 Demo 展示
 
 从下面的设备项目了解这里能做什么；点击小图或名称查看硬件清单、接线和运行步骤。
-**目前三个项目和两个独立 Demo 均未完成验收**：两个项目与两个 Demo 在开发，ATOM Lite 底座处于规划阶段。已验证范围和待完成项分别列出。
+**目前四个项目和两个独立 Demo 均未完成验收**：三个项目与两个 Demo 在开发，ATOM Lite 底座处于规划阶段。已验证范围和待完成项分别列出。
 
 | [摩托声浪模拟器 · EV Engine Sound](projects/ev-engine-sound/) · Project | [车辆定位终端 · StickS3 GPS → MotoBox](projects/m5stack-sticks3-gps-motobox/) · Project |
 | --- | --- |
@@ -27,6 +27,10 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 | [ATOM Lite 4G/GNSS 堆叠底座](projects/atom-lite-cellular-gnss-base/README.md) · Project | 进度与验证 |
 | --- | --- |
 | [<img src="projects/atom-lite-cellular-gnss-base/docs/assets/stack-concept.svg" width="380" alt="ATOM Lite 24毫米同轮廓底座与Tiny通信板的尺寸和功能分工概念图，连接器位置与PCB尚未定型，非实机证据">](projects/atom-lite-cellular-gnss-base/README.md)<br>设计概念示意 · 非 PCB 或实机照片 | 制作 Type-C 供电、自动定位上报的堆叠底座，采用通信核心板、适配 PCB 与打印外壳；ATOM 先行，评估 StickS3 顶部变体，并记录需求到量产准备全过程。<br>**规划中 · 已立项** · [`idea`](projects/atom-lite-cellular-gnss-base/project.yaml)<br>已核对：公开选型资料；已记录用户测量与商品图尺寸差异。<br>待完成：电气/机械核验、原生原理图与 PCB、固件、实机和试产验收。<br>[验证范围与前置条件](projects/atom-lite-cellular-gnss-base/docs/validation.md) |
+
+| [车载双电源模块](projects/vehicle-dual-power-module/README.md) · Project | 进度与验证 |
+| --- | --- |
+| [<img src="projects/vehicle-dual-power-module/docs/assets/power-path.svg" width="380" alt="车载 12V 和受保护单节电池经切源后供给主控 5V；4G 的 BAT 3.9V 已有设计源，VIN 5V 仍待落图的示意，非 PCB 或实机证据">](projects/vehicle-dual-power-module/README.md)<br>设计示意图 · 非 PCB 或实机照片 | 独立电源板计划支持 12V 与备用电池供电、日常按键开关机、硬件总开关及停车运动唤醒；4G 供电目标是人工选择 BAT 3.9V/2A 或 VIN 5V 类/2A。<br>**开发中 · 电气设计原型** · [`prototype`](projects/vehicle-dual-power-module/project.yaml)<br>已验证：BAT 方案的 221 个元件、73 种嘉立创 C 号已放置并回读；11 项电气源数据测试通过。<br>待完成：VIN 支路选型与落图、四页原理图布线及 DRC、PCB、控制固件和车载/电池实测。<br>[验证记录与具体范围](projects/vehicle-dual-power-module/docs/validation.md) |
 
 更多入口：[全部 Projects](projects/) · [全部 Demos](demos/) · [StickS3 + ML307R-DL Tiny AT/TCP 接入 Demo](demos/sticks3-ml307r-at/)。
 状态含义见下方[状态词](#状态词)；图片用于说明项目，不替代验证证据。

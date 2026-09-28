@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-U303",
+      "measurement": {
+        "x": 1160,
+        "y": 700,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1190.5,
+          "maxY": 720.5,
+          "minX": 1129.5,
+          "minY": 679.5
+        },
+        "designator": "U303",
+        "value": "LM66100DCKR",
+        "pins": [
+          {
+            "number": "1",
+            "name": "VIN",
+            "net": "HOST_SW",
+            "x": 1120,
+            "y": 710,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "GND",
+            "net": "GND",
+            "x": 1120,
+            "y": 700,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "CE#",
+            "net": "HOST_5V",
+            "x": 1120,
+            "y": 690,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "NC",
+            "net": "",
+            "x": 1200,
+            "y": 690,
+            "rotation": 0
+          },
+          {
+            "number": "5",
+            "name": "ST",
+            "net": "",
+            "x": 1200,
+            "y": 700,
+            "rotation": 0
+          },
+          {
+            "number": "6",
+            "name": "VOUT",
+            "net": "HOST_5V",
+            "x": 1200,
+            "y": 710,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1130,
+            "minY": 720,
+            "maxX": 1146.734375,
+            "maxY": 728
+          }
+        ]
+      },
+      "pinStates": {
+        "4": "nc",
+        "5": "nc"
+      }
+    },
+    {
+      "id": "cmp-C311",
+      "measurement": {
+        "x": 1600,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1610.5,
+          "maxY": -341.5,
+          "minX": 1589.5,
+          "minY": -358.5
+        },
+        "designator": "C311",
+        "value": "1uF",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1620,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "HOST_5V",
+            "x": 1580,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1590,
+            "minY": -340,
+            "maxX": 1606.21484375,
+            "maxY": -332
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R314",
+      "measurement": {
+        "x": 1850,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": -345.5,
+          "minX": 1839.5,
+          "minY": -354.5
+        },
+        "designator": "R314",
+        "value": "10k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1870,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "HOST_5V",
+            "x": 1830,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": -345,
+            "maxX": 1856.734375,
+            "maxY": -337
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-C311",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U303",
+        "pinNumber": "6"
+      }
+    },
+    {
+      "componentId": "cmp-R314",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U303",
+        "pinNumber": "6"
+      }
+    }
+  ],
+  "netPolicies": {
+    "HOST_SW": "local_power",
+    "HOST_5V": "local_power",
+    "GND": "local_ground"
+  },
+  "zones": [
+    {
+      "id": "host-reverse",
+      "title": "HOST REVERSE BLOCK / USB BACKFEED",
+      "coreComponentId": "cmp-U303",
+      "componentIds": [
+        "cmp-U303",
+        "cmp-C311",
+        "cmp-R314"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2630 @@
+{
+  "schemaVersion": "1.4",
+  "projectId": "143594ca6b24412691655cb627c51791",
+  "documentId": "e8cff9394f2d57fb",
+  "components": [
+    {
+      "id": "cmp-U401",
+      "ref": "U401",
+      "role": "STM32L031K6 LQFP32; internal clock",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "2062a26141404a13ad15ea980aed4435",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "VDD"
+        },
+        {
+          "number": "2",
+          "name": "PC14-OSC_IN"
+        },
+        {
+          "number": "3",
+          "name": "PC15-OSC32_OUT"
+        },
+        {
+          "number": "4",
+          "name": "NRST"
+        },
+        {
+          "number": "5",
+          "name": "VDDA"
+        },
+        {
+          "number": "6",
+          "name": "PA0-CK_IN"
+        },
+        {
+          "number": "7",
+          "name": "PA1"
+        },
+        {
+          "number": "8",
+          "name": "PA2"
+        },
+        {
+          "number": "9",
+          "name": "PA3"
+        },
+        {
+          "number": "10",
+          "name": "PA4"
+        },
+        {
+          "number": "11",
+          "name": "PA5"
+        },
+        {
+          "number": "12",
+          "name": "PA6"
+        },
+        {
+          "number": "13",
+          "name": "PA7"
+        },
+        {
+          "number": "14",
+          "name": "PB0"
+        },
+        {
+          "number": "15",
+          "name": "PB1"
+        },
+        {
+          "number": "16",
+          "name": "VSS"
+        },
+        {
+          "number": "17",
+          "name": "VDD"
+        },
+        {
+          "number": "18",
+          "name": "PA8"
+        },
+        {
+          "number": "19",
+          "name": "PA9"
+        },
+        {
+          "number": "20",
+          "name": "PA10"
+        },
+        {
+          "number": "21",
+          "name": "PA11"
+        },
+        {
+          "number": "22",
+          "name": "PA12"
+        },
+        {
+          "number": "23",
+          "name": "PA13"
+        },
+        {
+          "number": "24",
+          "name": "PA14"
+        },
+        {
+          "number": "25",
+          "name": "PA15"
+        },
+        {
+          "number": "26",
+          "name": "PB3"
+        },
+        {
+          "number": "27",
+          "name": "PB4"
+        },
+        {
+          "number": "28",
+          "name": "PB5"
+        },
+        {
+          "number": "29",
+          "name": "PB6"
+        },
+        {
+          "number": "30",
+          "name": "PB7"
+        },
+        {
+          "number": "31",
+          "name": "BOOT0"
+        },
+        {
+          "number": "32",
+          "name": "VSS"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C401",
+      "ref": "C401",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C402",
+      "ref": "C402",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C403",
+      "ref": "C403",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C404",
+      "ref": "C404",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "9d6a8d9b94504b8e8615128aa8b87628",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R401",
+      "ref": "R401",
+      "role": "boot from flash",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "b948db94476e4027ac8953235755ec96",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R402",
+      "ref": "R402",
+      "role": "reset pullup",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "b948db94476e4027ac8953235755ec96",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C405",
+      "ref": "C405",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R403",
+      "ref": "R403",
+      "role": "MCU control default low",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R404",
+      "ref": "R404",
+      "role": "MCU control default low",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R405",
+      "ref": "R405",
+      "role": "MCU control default low",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R406",
+      "ref": "R406",
+      "role": "MCU control default low",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R407",
+      "ref": "R407",
+      "role": "MCU control default low",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R408",
+      "ref": "R408",
+      "role": "MCU control default low",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R409",
+      "ref": "R409",
+      "role": "ADC upper divider, ratio 1/3",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "8492e9c42c704af98a070b91ba967cca",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R410",
+      "ref": "R410",
+      "role": "ADC lower divider",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C406",
+      "ref": "C406",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R411",
+      "ref": "R411",
+      "role": "ADC upper divider, ratio 1/3",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "8492e9c42c704af98a070b91ba967cca",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R412",
+      "ref": "R412",
+      "role": "ADC lower divider",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C407",
+      "ref": "C407",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R413",
+      "ref": "R413",
+      "role": "ADC upper divider, ratio 1/3",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "8492e9c42c704af98a070b91ba967cca",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R414",
+      "ref": "R414",
+      "role": "ADC lower divider",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C408",
+      "ref": "C408",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R415",
+      "ref": "R415",
+      "role": "ADC upper divider, ratio 1/3",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "8492e9c42c704af98a070b91ba967cca",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R416",
+      "ref": "R416",
+      "role": "ADC lower divider",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C409",
+      "ref": "C409",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-U402",
+      "ref": "U402",
+      "role": "I2C address 0x18; RES tied ground per datasheet",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "040e8f50e10e4c31bbe05259a88e7c59",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "SCL/SPC"
+        },
+        {
+          "number": "2",
+          "name": "CS"
+        },
+        {
+          "number": "3",
+          "name": "SDO/SA0"
+        },
+        {
+          "number": "4",
+          "name": "SDA/SDI/SDO"
+        },
+        {
+          "number": "5",
+          "name": "NC",
+          "noConnected": true
+        },
+        {
+          "number": "6",
+          "name": "GND"
+        },
+        {
+          "number": "7",
+          "name": "RES"
+        },
+        {
+          "number": "8",
+          "name": "GND"
+        },
+        {
+          "number": "9",
+          "name": "VDD"
+        },
+        {
+          "number": "10",
+          "name": "VDDIO"
+        },
+        {
+          "number": "11",
+          "name": "INT2",
+          "noConnected": true
+        },
+        {
+          "number": "12",
+          "name": "INT1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C410",
+      "ref": "C410",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C411",
+      "ref": "C411",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C412",
+      "ref": "C412",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "f4744ff7405a46a48e360c2c6fadeca3",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R417",
+      "ref": "R417",
+      "role": "I2C pullup",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "b948db94476e4027ac8953235755ec96",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R418",
+      "ref": "R418",
+      "role": "I2C pullup",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "b948db94476e4027ac8953235755ec96",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R419",
+      "ref": "R419",
+      "role": "interrupt default inactive; configure push-pull active high",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-SW401",
+      "ref": "SW401",
+      "role": "momentary independent power key",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "cff07d923b95482c818b184e98b80db7",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J403",
+      "ref": "J403",
+      "role": "external enclosure momentary key",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "96395fd10e1147659737ad0dcda73174",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R420",
+      "ref": "R420",
+      "role": "key series filter resistor",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R421",
+      "ref": "R421",
+      "role": "key pullup",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C413",
+      "ref": "C413",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "03a827702a5d447dbe9d3571f0aad427",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J401",
+      "ref": "J401",
+      "role": "XH external wake connector",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "6934d76a8ee6438388dad49508dc5ccf",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J402",
+      "ref": "J402",
+      "role": "parallel 2.54mm wake connector",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "a7c65807c5894564893a45460053a26d",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J404",
+      "ref": "J404",
+      "role": "parallel screw wake connector",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "7a0fae900741409391a016b8e696c69b",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R422",
+      "ref": "R422",
+      "role": "wake input series filter",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R423",
+      "ref": "R423",
+      "role": "wake pullup",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C414",
+      "ref": "C414",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "03a827702a5d447dbe9d3571f0aad427",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-U403",
+      "ref": "U403",
+      "role": "power-management UART isolation",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "493798d782f842239c2500d2396f07aa",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "6",
+          "name": "OE"
+        },
+        {
+          "number": "5",
+          "name": "A1"
+        },
+        {
+          "number": "4",
+          "name": "A2Y"
+        },
+        {
+          "number": "2",
+          "name": "GND"
+        },
+        {
+          "number": "1",
+          "name": "B2"
+        },
+        {
+          "number": "8",
+          "name": "B1Y"
+        },
+        {
+          "number": "7",
+          "name": "VCCB"
+        },
+        {
+          "number": "3",
+          "name": "VCCA"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C415",
+      "ref": "C415",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C416",
+      "ref": "C416",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R424",
+      "ref": "R424",
+      "role": "management UART default isolation",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J405",
+      "ref": "J405",
+      "role": "host management XH; 3V3 is reference input",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "7e3599eccc0c4343874da90dcc77d70e",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        },
+        {
+          "number": "4",
+          "name": "4"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J406",
+      "ref": "J406",
+      "role": "parallel management header",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "3260ae80d47a4583a8f42d300cfc400b",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        },
+        {
+          "number": "4",
+          "name": "4"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J407",
+      "ref": "J407",
+      "role": "debugger must float signals when VTREF is absent",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "3260ae80d47a4583a8f42d300cfc400b",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        },
+        {
+          "number": "4",
+          "name": "4"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R425",
+      "ref": "R425",
+      "role": "debug series protection; not powered-off isolation",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R426",
+      "ref": "R426",
+      "role": "debug series protection; not powered-off isolation",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J408",
+      "ref": "J408",
+      "role": "optional debugger open-drain reset",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "99b1039acd624894acb0c01cac9f07f5",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    }
+  ],
+  "nets": [
+    {
+      "id": "3V0_AON",
+      "name": "3V0_AON",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_N",
+      "name": "ACC_N",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ADC_BAT",
+      "name": "ADC_BAT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ADC_CAR",
+      "name": "ADC_CAR",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ADC_HOST",
+      "name": "ADC_HOST",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ADC_MODEM",
+      "name": "ADC_MODEM",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "AON_NRST",
+      "name": "AON_NRST",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "AON_SCL",
+      "name": "AON_SCL",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "AON_SDA",
+      "name": "AON_SDA",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "AON_SWCLK",
+      "name": "AON_SWCLK",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "AON_SWDIO",
+      "name": "AON_SWDIO",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "AON_UART_RX",
+      "name": "AON_UART_RX",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "AON_UART_TX",
+      "name": "AON_UART_TX",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "BAT_SW",
+      "name": "BAT_SW",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "BOOT0",
+      "name": "BOOT0",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_5V",
+      "name": "CAR_5V",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CHG_STAT_N",
+      "name": "CHG_STAT_N",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CTL_CAR_EN",
+      "name": "CTL_CAR_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CTL_CHG_EN",
+      "name": "CTL_CHG_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CTL_HOST_LOAD_EN",
+      "name": "CTL_HOST_LOAD_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CTL_HOST_REG_EN",
+      "name": "CTL_HOST_REG_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CTL_MODEM_LOAD_EN",
+      "name": "CTL_MODEM_LOAD_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CTL_MODEM_REG_EN",
+      "name": "CTL_MODEM_REG_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "DBG_SWCLK",
+      "name": "DBG_SWCLK",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "DBG_SWDIO",
+      "name": "DBG_SWDIO",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "EXT_WAKE_N",
+      "name": "EXT_WAKE_N",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "GND",
+      "name": "GND",
+      "scope": "global",
+      "role": "ground"
+    },
+    {
+      "id": "HOST_3V3",
+      "name": "HOST_3V3",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "HOST_CAR_ST",
+      "name": "HOST_CAR_ST",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "HOST_MGMT_RX",
+      "name": "HOST_MGMT_RX",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "HOST_MGMT_TX",
+      "name": "HOST_MGMT_TX",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "HOST_REG_PG",
+      "name": "HOST_REG_PG",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "HOST_SW",
+      "name": "HOST_SW",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "IMU_INT",
+      "name": "IMU_INT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "KEY_EXT",
+      "name": "KEY_EXT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "KEY_N",
+      "name": "KEY_N",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "MODEM_CAR_ST",
+      "name": "MODEM_CAR_ST",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "MODEM_REG_PG",
+      "name": "MODEM_REG_PG",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "TINY_BAT",
+      "name": "TINY_BAT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "WAKE_PORT_N",
+      "name": "WAKE_PORT_N",
+      "scope": "global",
+      "role": "signal"
+    }
+  ],
+  "connections": [
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "2",
+      "netId": "HOST_REG_PG",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "3",
+      "netId": "MODEM_CAR_ST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "4",
+      "netId": "AON_NRST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "5",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "6",
+      "netId": "ADC_BAT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "7",
+      "netId": "ADC_CAR",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "8",
+      "netId": "AON_UART_TX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "9",
+      "netId": "AON_UART_RX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "10",
+      "netId": "ADC_HOST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "11",
+      "netId": "ADC_MODEM",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "12",
+      "netId": "CTL_CAR_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "13",
+      "netId": "CTL_HOST_REG_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "14",
+      "netId": "CTL_MODEM_REG_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "15",
+      "netId": "CTL_HOST_LOAD_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "16",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "17",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "18",
+      "netId": "CTL_MODEM_LOAD_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "19",
+      "netId": "CTL_CHG_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "20",
+      "netId": "CHG_STAT_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "21",
+      "netId": "HOST_CAR_ST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "22",
+      "netId": "ACC_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "23",
+      "netId": "AON_SWDIO",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "24",
+      "netId": "AON_SWCLK",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "25",
+      "netId": "KEY_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "26",
+      "netId": "EXT_WAKE_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "27",
+      "netId": "IMU_INT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "28",
+      "netId": "MODEM_REG_PG",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "29",
+      "netId": "AON_SCL",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "30",
+      "netId": "AON_SDA",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "31",
+      "netId": "BOOT0",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U401",
+      "pinNumber": "32",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C401",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C401",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C402",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C402",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C403",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C403",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C404",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C404",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R401",
+      "pinNumber": "1",
+      "netId": "BOOT0",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R401",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R402",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R402",
+      "pinNumber": "2",
+      "netId": "AON_NRST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C405",
+      "pinNumber": "1",
+      "netId": "AON_NRST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C405",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R403",
+      "pinNumber": "1",
+      "netId": "CTL_CAR_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R403",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R404",
+      "pinNumber": "1",
+      "netId": "CTL_HOST_REG_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R404",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R405",
+      "pinNumber": "1",
+      "netId": "CTL_MODEM_REG_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R405",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R406",
+      "pinNumber": "1",
+      "netId": "CTL_HOST_LOAD_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R406",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R407",
+      "pinNumber": "1",
+      "netId": "CTL_MODEM_LOAD_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R407",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R408",
+      "pinNumber": "1",
+      "netId": "CTL_CHG_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R408",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R409",
+      "pinNumber": "1",
+      "netId": "BAT_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R409",
+      "pinNumber": "2",
+      "netId": "ADC_BAT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R410",
+      "pinNumber": "1",
+      "netId": "ADC_BAT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R410",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C406",
+      "pinNumber": "1",
+      "netId": "ADC_BAT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C406",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R411",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R411",
+      "pinNumber": "2",
+      "netId": "ADC_CAR",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R412",
+      "pinNumber": "1",
+      "netId": "ADC_CAR",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R412",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C407",
+      "pinNumber": "1",
+      "netId": "ADC_CAR",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C407",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R413",
+      "pinNumber": "1",
+      "netId": "HOST_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R413",
+      "pinNumber": "2",
+      "netId": "ADC_HOST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R414",
+      "pinNumber": "1",
+      "netId": "ADC_HOST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R414",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C408",
+      "pinNumber": "1",
+      "netId": "ADC_HOST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C408",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R415",
+      "pinNumber": "1",
+      "netId": "TINY_BAT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R415",
+      "pinNumber": "2",
+      "netId": "ADC_MODEM",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R416",
+      "pinNumber": "1",
+      "netId": "ADC_MODEM",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R416",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C409",
+      "pinNumber": "1",
+      "netId": "ADC_MODEM",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C409",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "1",
+      "netId": "AON_SCL",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "2",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "3",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "4",
+      "netId": "AON_SDA",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "6",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "7",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "8",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "9",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "10",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U402",
+      "pinNumber": "12",
+      "netId": "IMU_INT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C410",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C410",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C411",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C411",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C412",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C412",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R417",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R417",
+      "pinNumber": "2",
+      "netId": "AON_SCL",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R418",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R418",
+      "pinNumber": "2",
+      "netId": "AON_SDA",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R419",
+      "pinNumber": "1",
+      "netId": "IMU_INT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R419",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW401",
+      "pinNumber": "1",
+      "netId": "KEY_EXT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW401",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J403",
+      "pinNumber": "1",
+      "netId": "KEY_EXT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J403",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R420",
+      "pinNumber": "1",
+      "netId": "KEY_EXT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R420",
+      "pinNumber": "2",
+      "netId": "KEY_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R421",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R421",
+      "pinNumber": "2",
+      "netId": "KEY_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C413",
+      "pinNumber": "1",
+      "netId": "KEY_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C413",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J401",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J401",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J401",
+      "pinNumber": "3",
+      "netId": "WAKE_PORT_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J402",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J402",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J402",
+      "pinNumber": "3",
+      "netId": "WAKE_PORT_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J404",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J404",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J404",
+      "pinNumber": "3",
+      "netId": "WAKE_PORT_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R422",
+      "pinNumber": "1",
+      "netId": "WAKE_PORT_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R422",
+      "pinNumber": "2",
+      "netId": "EXT_WAKE_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R423",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R423",
+      "pinNumber": "2",
+      "netId": "EXT_WAKE_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C414",
+      "pinNumber": "1",
+      "netId": "EXT_WAKE_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C414",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "1",
+      "netId": "HOST_MGMT_TX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "3",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "4",
+      "netId": "AON_UART_RX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "5",
+      "netId": "AON_UART_TX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "6",
+      "netId": "CTL_HOST_LOAD_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "7",
+      "netId": "HOST_3V3",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U403",
+      "pinNumber": "8",
+      "netId": "HOST_MGMT_RX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C415",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C415",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C416",
+      "pinNumber": "1",
+      "netId": "HOST_3V3",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C416",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R424",
+      "pinNumber": "1",
+      "netId": "CTL_HOST_LOAD_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R424",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J405",
+      "pinNumber": "1",
+      "netId": "HOST_3V3",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J405",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J405",
+      "pinNumber": "3",
+      "netId": "HOST_MGMT_TX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J405",
+      "pinNumber": "4",
+      "netId": "HOST_MGMT_RX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J406",
+      "pinNumber": "1",
+      "netId": "HOST_3V3",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J406",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J406",
+      "pinNumber": "3",
+      "netId": "HOST_MGMT_TX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J406",
+      "pinNumber": "4",
+      "netId": "HOST_MGMT_RX",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J407",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J407",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J407",
+      "pinNumber": "3",
+      "netId": "DBG_SWDIO",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J407",
+      "pinNumber": "4",
+      "netId": "DBG_SWCLK",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R425",
+      "pinNumber": "1",
+      "netId": "DBG_SWDIO",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R425",
+      "pinNumber": "2",
+      "netId": "AON_SWDIO",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R426",
+      "pinNumber": "1",
+      "netId": "DBG_SWCLK",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R426",
+      "pinNumber": "2",
+      "netId": "AON_SWCLK",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J408",
+      "pinNumber": "1",
+      "netId": "AON_NRST",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J408",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    }
+  ],
+  "modules": [
+    {
+      "id": "controller",
+      "name": "STM32L031 / INDEPENDENT POWER CONTROL",
+      "coreComponents": [
+        "cmp-U401"
+      ],
+      "peripheralComponents": [
+        "cmp-C401",
+        "cmp-C402",
+        "cmp-C403",
+        "cmp-C404",
+        "cmp-R401",
+        "cmp-R402",
+        "cmp-C405",
+        "cmp-R403",
+        "cmp-R404",
+        "cmp-R405",
+        "cmp-R406",
+        "cmp-R407",
+        "cmp-R408",
+        "cmp-R409",
+        "cmp-R410",
+        "cmp-C406",
+        "cmp-R411",
+        "cmp-R412",
+        "cmp-C407",
+        "cmp-R413",
+        "cmp-R414",
+        "cmp-C408",
+        "cmp-R415",
+        "cmp-R416",
+        "cmp-C409"
+      ]
+    },
+    {
+      "id": "motion-imu",
+      "name": "LIS2DW12 / PARKING MOTION WAKE",
+      "coreComponents": [
+        "cmp-U402"
+      ],
+      "peripheralComponents": [
+        "cmp-C410",
+        "cmp-C411",
+        "cmp-C412",
+        "cmp-R417",
+        "cmp-R418",
+        "cmp-R419"
+      ]
+    },
+    {
+      "id": "user-key",
+      "name": "POWER KEY / LOCAL AND EXTERNAL",
+      "coreComponents": [
+        "cmp-SW401"
+      ],
+      "peripheralComponents": [
+        "cmp-J403",
+        "cmp-R420",
+        "cmp-R421",
+        "cmp-C413"
+      ]
+    },
+    {
+      "id": "external-wake",
+      "name": "EXTERNAL OPEN-DRAIN WAKE / 10mA MAX",
+      "coreComponents": [
+        "cmp-J401"
+      ],
+      "peripheralComponents": [
+        "cmp-J402",
+        "cmp-J404",
+        "cmp-R422",
+        "cmp-R423",
+        "cmp-C414"
+      ]
+    },
+    {
+      "id": "management-uart",
+      "name": "HOST MANAGEMENT UART / Ioff ISOLATION",
+      "coreComponents": [
+        "cmp-U403"
+      ],
+      "peripheralComponents": [
+        "cmp-C415",
+        "cmp-C416",
+        "cmp-R424",
+        "cmp-J405",
+        "cmp-J406"
+      ]
+    },
+    {
+      "id": "debug",
+      "name": "AON SWD / VTREF IS SENSE ONLY",
+      "coreComponents": [
+        "cmp-J407"
+      ],
+      "peripheralComponents": [
+        "cmp-R425",
+        "cmp-R426"
+      ]
+    },
+    {
+      "id": "debug-reset",
+      "name": "OPEN-DRAIN DEBUG RESET",
+      "coreComponents": [
+        "cmp-J408"
+      ],
+      "peripheralComponents": []
+    }
+  ]
+}

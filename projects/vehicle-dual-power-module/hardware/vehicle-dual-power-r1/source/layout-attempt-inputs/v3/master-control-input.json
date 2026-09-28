@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-SW101",
+      "measurement": {
+        "x": 520,
+        "y": 420,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 546.5,
+          "maxY": 443,
+          "minX": 493.5,
+          "minY": 397
+        },
+        "designator": "SW101",
+        "value": "SS-22D0205-G 2 LT RT",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MASTER_CLAMP",
+            "x": 500,
+            "y": 450,
+            "rotation": 90
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "MASTER_CAR_EN",
+            "x": 520,
+            "y": 450,
+            "rotation": 90
+          },
+          {
+            "number": "3",
+            "name": "3",
+            "net": "GND",
+            "x": 540,
+            "y": 450,
+            "rotation": 90
+          },
+          {
+            "number": "6",
+            "name": "6",
+            "net": "BAT_CS",
+            "x": 540,
+            "y": 390,
+            "rotation": 270
+          },
+          {
+            "number": "5",
+            "name": "5",
+            "net": "BAT_GATE_CTL",
+            "x": 520,
+            "y": 390,
+            "rotation": 270
+          },
+          {
+            "number": "4",
+            "name": "4",
+            "net": "GND",
+            "x": 500,
+            "y": 390,
+            "rotation": 270
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 550,
+            "minY": 430,
+            "maxX": 572.955078125,
+            "maxY": 438
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-R103",
+      "measurement": {
+        "x": 2850,
+        "y": 900,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2860.5,
+          "maxY": 904.5,
+          "minX": 2839.5,
+          "minY": 895.5
+        },
+        "designator": "R103",
+        "value": "22k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "MASTER_RMID",
+            "x": 2870,
+            "y": 900,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_FUSED",
+            "x": 2830,
+            "y": 900,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2840,
+            "minY": 905,
+            "maxX": 2856.734375,
+            "maxY": 913
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R104",
+      "measurement": {
+        "x": 1600,
+        "y": 650,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1610.5,
+          "maxY": 654.5,
+          "minX": 1589.5,
+          "minY": 645.5
+        },
+        "designator": "R104",
+        "value": "22k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "MASTER_CLAMP",
+            "x": 1620,
+            "y": 650,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MASTER_RMID",
+            "x": 1580,
+            "y": 650,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1590,
+            "minY": 655,
+            "maxX": 1606.734375,
+            "maxY": 663
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-D103",
+      "measurement": {
+        "x": 200,
+        "y": -140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 205.5,
+          "maxY": -129.5,
+          "minX": 190.5,
+          "minY": -151.5
+        },
+        "designator": "D103",
+        "value": "BZT52C5V1",
+        "pins": [
+          {
+            "number": "2",
+            "name": "A",
+            "net": "GND",
+            "x": 220,
+            "y": -140,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "K",
+            "net": "MASTER_CLAMP",
+            "x": 180,
+            "y": -140,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 190,
+            "minY": -130,
+            "maxX": 206.734375,
+            "maxY": -122
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R105",
+      "measurement": {
+        "x": 1850,
+        "y": 650,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": 654.5,
+          "minX": 1839.5,
+          "minY": 645.5
+        },
+        "designator": "R105",
+        "value": "100k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1870,
+            "y": 650,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MASTER_CAR_EN",
+            "x": 1830,
+            "y": 650,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": 655,
+            "maxX": 1856.734375,
+            "maxY": 663
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-C103",
+      "measurement": {
+        "x": 2100,
+        "y": 650,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2105.5,
+          "maxY": 658.5,
+          "minX": 2094.5,
+          "minY": 641.5
+        },
+        "designator": "C103",
+        "value": "10nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MASTER_CLAMP",
+            "x": 2085,
+            "y": 650,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2115,
+            "y": 650,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2095,
+            "minY": 660,
+            "maxX": 2111.734375,
+            "maxY": 668
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-R104",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-R103",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-D103",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-SW101",
+        "pinNumber": "1"
+      }
+    },
+    {
+      "componentId": "cmp-R105",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-SW101",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-C103",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-SW101",
+        "pinNumber": "1"
+      }
+    }
+  ],
+  "netPolicies": {
+    "BAT_GATE_CTL": "module_port",
+    "MASTER_CLAMP": "direct",
+    "BAT_CS": "local_power",
+    "GND": "local_ground",
+    "MASTER_CAR_EN": "module_port",
+    "VEH_FUSED": "local_power",
+    "MASTER_RMID": "direct"
+  },
+  "zones": [
+    {
+      "id": "master-control",
+      "title": "DPDT MASTER / LOW CURRENT ONLY",
+      "coreComponentId": "cmp-SW101",
+      "componentIds": [
+        "cmp-SW101",
+        "cmp-R103",
+        "cmp-R104",
+        "cmp-D103",
+        "cmp-R105",
+        "cmp-C103"
+      ]
+    }
+  ]
+}

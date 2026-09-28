@@ -1,0 +1,375 @@
+{
+  "lcsc": "C394021",
+  "mpn": "MF52B 103F3950-100",
+  "source": "https://datasheet.lcsc.com/datasheet/pdf/cd8e0aba264d825ccf7cbaee0b47dc0e.pdf?productCode=C394021",
+  "datasheetSha256": "8f95a5b77f768abe4c0653b0d50c8c2ce909481f46369ea739ca43ad835f55a2",
+  "note": "Numerical R/T min/nom/max facts transcribed from manufacturer table; do not add R25/B tolerance a second time.",
+  "rows": [
+    {
+      "celsius": -5,
+      "min_kohm": 40.242,
+      "nom_kohm": 41.229,
+      "max_kohm": 42.235
+    },
+    {
+      "celsius": -4,
+      "min_kohm": 38.27,
+      "nom_kohm": 39.188,
+      "max_kohm": 40.124
+    },
+    {
+      "celsius": -3,
+      "min_kohm": 36.404,
+      "nom_kohm": 37.258,
+      "max_kohm": 38.129
+    },
+    {
+      "celsius": -2,
+      "min_kohm": 34.638,
+      "nom_kohm": 35.434,
+      "max_kohm": 36.244
+    },
+    {
+      "celsius": -1,
+      "min_kohm": 32.967,
+      "nom_kohm": 33.708,
+      "max_kohm": 34.461
+    },
+    {
+      "celsius": 0,
+      "min_kohm": 31.352,
+      "nom_kohm": 32.04,
+      "max_kohm": 32.739
+    },
+    {
+      "celsius": 1,
+      "min_kohm": 29.887,
+      "nom_kohm": 30.528,
+      "max_kohm": 31.179
+    },
+    {
+      "celsius": 2,
+      "min_kohm": 28.467,
+      "nom_kohm": 29.063,
+      "max_kohm": 29.669
+    },
+    {
+      "celsius": 3,
+      "min_kohm": 27.122,
+      "nom_kohm": 27.676,
+      "max_kohm": 28.239
+    },
+    {
+      "celsius": 4,
+      "min_kohm": 25.847,
+      "nom_kohm": 26.362,
+      "max_kohm": 26.885
+    },
+    {
+      "celsius": 5,
+      "min_kohm": 24.637,
+      "nom_kohm": 25.116,
+      "max_kohm": 25.602
+    },
+    {
+      "celsius": 6,
+      "min_kohm": 23.49,
+      "nom_kohm": 23.935,
+      "max_kohm": 24.386
+    },
+    {
+      "celsius": 7,
+      "min_kohm": 22.401,
+      "nom_kohm": 22.815,
+      "max_kohm": 23.234
+    },
+    {
+      "celsius": 8,
+      "min_kohm": 21.368,
+      "nom_kohm": 21.753,
+      "max_kohm": 22.142
+    },
+    {
+      "celsius": 9,
+      "min_kohm": 20.388,
+      "nom_kohm": 20.744,
+      "max_kohm": 21.105
+    },
+    {
+      "celsius": 10,
+      "min_kohm": 19.456,
+      "nom_kohm": 19.788,
+      "max_kohm": 20.122
+    },
+    {
+      "celsius": 11,
+      "min_kohm": 18.572,
+      "nom_kohm": 18.879,
+      "max_kohm": 19.189
+    },
+    {
+      "celsius": 12,
+      "min_kohm": 17.732,
+      "nom_kohm": 18.016,
+      "max_kohm": 18.304
+    },
+    {
+      "celsius": 13,
+      "min_kohm": 16.933,
+      "nom_kohm": 17.197,
+      "max_kohm": 17.464
+    },
+    {
+      "celsius": 14,
+      "min_kohm": 16.174,
+      "nom_kohm": 16.419,
+      "max_kohm": 16.665
+    },
+    {
+      "celsius": 15,
+      "min_kohm": 15.453,
+      "nom_kohm": 15.679,
+      "max_kohm": 15.907
+    },
+    {
+      "celsius": 16,
+      "min_kohm": 14.766,
+      "nom_kohm": 14.976,
+      "max_kohm": 15.187
+    },
+    {
+      "celsius": 17,
+      "min_kohm": 14.114,
+      "nom_kohm": 14.308,
+      "max_kohm": 14.503
+    },
+    {
+      "celsius": 18,
+      "min_kohm": 13.493,
+      "nom_kohm": 13.672,
+      "max_kohm": 13.852
+    },
+    {
+      "celsius": 19,
+      "min_kohm": 12.902,
+      "nom_kohm": 13.068,
+      "max_kohm": 13.234
+    },
+    {
+      "celsius": 20,
+      "min_kohm": 12.34,
+      "nom_kohm": 12.493,
+      "max_kohm": 12.646
+    },
+    {
+      "celsius": 21,
+      "min_kohm": 11.805,
+      "nom_kohm": 11.945,
+      "max_kohm": 12.086
+    },
+    {
+      "celsius": 22,
+      "min_kohm": 11.295,
+      "nom_kohm": 11.425,
+      "max_kohm": 11.554
+    },
+    {
+      "celsius": 23,
+      "min_kohm": 10.81,
+      "nom_kohm": 10.929,
+      "max_kohm": 11.048
+    },
+    {
+      "celsius": 24,
+      "min_kohm": 10.348,
+      "nom_kohm": 10.457,
+      "max_kohm": 10.567
+    },
+    {
+      "celsius": 25,
+      "min_kohm": 9.9,
+      "nom_kohm": 10.0,
+      "max_kohm": 10.1
+    },
+    {
+      "celsius": 26,
+      "min_kohm": 9.48,
+      "nom_kohm": 9.58,
+      "max_kohm": 9.68
+    },
+    {
+      "celsius": 27,
+      "min_kohm": 9.073,
+      "nom_kohm": 9.172,
+      "max_kohm": 9.272
+    },
+    {
+      "celsius": 28,
+      "min_kohm": 8.685,
+      "nom_kohm": 8.784,
+      "max_kohm": 8.883
+    },
+    {
+      "celsius": 29,
+      "min_kohm": 8.315,
+      "nom_kohm": 8.413,
+      "max_kohm": 8.512
+    },
+    {
+      "celsius": 30,
+      "min_kohm": 7.963,
+      "nom_kohm": 8.06,
+      "max_kohm": 8.159
+    },
+    {
+      "celsius": 31,
+      "min_kohm": 7.627,
+      "nom_kohm": 7.724,
+      "max_kohm": 7.821
+    },
+    {
+      "celsius": 32,
+      "min_kohm": 7.307,
+      "nom_kohm": 7.403,
+      "max_kohm": 7.5
+    },
+    {
+      "celsius": 33,
+      "min_kohm": 7.002,
+      "nom_kohm": 7.097,
+      "max_kohm": 7.193
+    },
+    {
+      "celsius": 34,
+      "min_kohm": 6.711,
+      "nom_kohm": 6.805,
+      "max_kohm": 6.9
+    },
+    {
+      "celsius": 35,
+      "min_kohm": 6.434,
+      "nom_kohm": 6.527,
+      "max_kohm": 6.62
+    },
+    {
+      "celsius": 36,
+      "min_kohm": 6.17,
+      "nom_kohm": 6.261,
+      "max_kohm": 6.353
+    },
+    {
+      "celsius": 37,
+      "min_kohm": 5.917,
+      "nom_kohm": 6.008,
+      "max_kohm": 6.099
+    },
+    {
+      "celsius": 38,
+      "min_kohm": 5.676,
+      "nom_kohm": 5.765,
+      "max_kohm": 5.855
+    },
+    {
+      "celsius": 39,
+      "min_kohm": 5.447,
+      "nom_kohm": 5.534,
+      "max_kohm": 5.623
+    },
+    {
+      "celsius": 40,
+      "min_kohm": 5.227,
+      "nom_kohm": 5.313,
+      "max_kohm": 5.401
+    },
+    {
+      "celsius": 41,
+      "min_kohm": 5.018,
+      "nom_kohm": 5.102,
+      "max_kohm": 5.188
+    },
+    {
+      "celsius": 42,
+      "min_kohm": 4.817,
+      "nom_kohm": 4.901,
+      "max_kohm": 4.985
+    },
+    {
+      "celsius": 43,
+      "min_kohm": 4.626,
+      "nom_kohm": 4.708,
+      "max_kohm": 4.791
+    },
+    {
+      "celsius": 44,
+      "min_kohm": 4.444,
+      "nom_kohm": 4.524,
+      "max_kohm": 4.606
+    },
+    {
+      "celsius": 45,
+      "min_kohm": 4.269,
+      "nom_kohm": 4.348,
+      "max_kohm": 4.429
+    },
+    {
+      "celsius": 46,
+      "min_kohm": 4.103,
+      "nom_kohm": 4.18,
+      "max_kohm": 4.259
+    },
+    {
+      "celsius": 47,
+      "min_kohm": 3.943,
+      "nom_kohm": 4.019,
+      "max_kohm": 4.097
+    },
+    {
+      "celsius": 48,
+      "min_kohm": 3.791,
+      "nom_kohm": 3.866,
+      "max_kohm": 3.942
+    },
+    {
+      "celsius": 49,
+      "min_kohm": 3.645,
+      "nom_kohm": 3.718,
+      "max_kohm": 3.793
+    },
+    {
+      "celsius": 50,
+      "min_kohm": 3.506,
+      "nom_kohm": 3.578,
+      "max_kohm": 3.651
+    },
+    {
+      "celsius": 51,
+      "min_kohm": 3.372,
+      "nom_kohm": 3.443,
+      "max_kohm": 3.514
+    },
+    {
+      "celsius": 52,
+      "min_kohm": 3.244,
+      "nom_kohm": 3.314,
+      "max_kohm": 3.384
+    },
+    {
+      "celsius": 53,
+      "min_kohm": 3.122,
+      "nom_kohm": 3.19,
+      "max_kohm": 3.259
+    },
+    {
+      "celsius": 54,
+      "min_kohm": 3.005,
+      "nom_kohm": 3.072,
+      "max_kohm": 3.139
+    },
+    {
+      "celsius": 55,
+      "min_kohm": 2.893,
+      "nom_kohm": 2.958,
+      "max_kohm": 3.025
+    }
+  ]
+}

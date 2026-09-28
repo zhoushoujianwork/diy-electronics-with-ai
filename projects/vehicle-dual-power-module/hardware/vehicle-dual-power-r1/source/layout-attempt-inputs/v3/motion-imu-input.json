@@ -1,0 +1,511 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-U402",
+      "measurement": {
+        "x": 520,
+        "y": 700,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 570.5,
+          "maxY": 740.5,
+          "minX": 464.5,
+          "minY": 664.5
+        },
+        "designator": "U402",
+        "value": "LIS2DW12TR",
+        "pins": [
+          {
+            "number": "1",
+            "name": "SCL/SPC",
+            "net": "AON_SCL",
+            "x": 455,
+            "y": 730,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "CS",
+            "net": "3V0_AON",
+            "x": 455,
+            "y": 720,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "SDO/SA0",
+            "net": "GND",
+            "x": 455,
+            "y": 710,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "SDA/SDI/SDO",
+            "net": "AON_SDA",
+            "x": 455,
+            "y": 700,
+            "rotation": 180
+          },
+          {
+            "number": "5",
+            "name": "NC",
+            "net": "",
+            "x": 455,
+            "y": 685,
+            "rotation": 180
+          },
+          {
+            "number": "6",
+            "name": "GND",
+            "net": "GND",
+            "x": 455,
+            "y": 675,
+            "rotation": 180
+          },
+          {
+            "number": "7",
+            "name": "RES",
+            "net": "GND",
+            "x": 580,
+            "y": 675,
+            "rotation": 0
+          },
+          {
+            "number": "8",
+            "name": "GND",
+            "net": "GND",
+            "x": 580,
+            "y": 685,
+            "rotation": 0
+          },
+          {
+            "number": "9",
+            "name": "VDD",
+            "net": "3V0_AON",
+            "x": 580,
+            "y": 695,
+            "rotation": 0
+          },
+          {
+            "number": "10",
+            "name": "VDDIO",
+            "net": "3V0_AON",
+            "x": 580,
+            "y": 705,
+            "rotation": 0
+          },
+          {
+            "number": "11",
+            "name": "INT2",
+            "net": "",
+            "x": 580,
+            "y": 715,
+            "rotation": 0
+          },
+          {
+            "number": "12",
+            "name": "INT1",
+            "net": "IMU_INT",
+            "x": 580,
+            "y": 725,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 465,
+            "minY": 740,
+            "maxX": 481.734375,
+            "maxY": 748
+          }
+        ]
+      },
+      "pinStates": {
+        "5": "nc",
+        "11": "nc"
+      }
+    },
+    {
+      "id": "cmp-C410",
+      "measurement": {
+        "x": 2850,
+        "y": 150,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2860.5,
+          "maxY": 158.5,
+          "minX": 2839.5,
+          "minY": 141.5
+        },
+        "designator": "C410",
+        "value": "100nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 2830,
+            "y": 150,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2870,
+            "y": 150,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2840,
+            "minY": 160,
+            "maxX": 2856.734375,
+            "maxY": 168
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-C411",
+      "measurement": {
+        "x": 1600,
+        "y": -100,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1610.5,
+          "maxY": -91.5,
+          "minX": 1589.5,
+          "minY": -108.5
+        },
+        "designator": "C411",
+        "value": "100nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 1580,
+            "y": -100,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1620,
+            "y": -100,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1590,
+            "minY": -90,
+            "maxX": 1606.21484375,
+            "maxY": -82
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-C412",
+      "measurement": {
+        "x": 1850,
+        "y": -100,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": -91.5,
+          "minX": 1839.5,
+          "minY": -108.5
+        },
+        "designator": "C412",
+        "value": "1uF",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1870,
+            "y": -100,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 1830,
+            "y": -100,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": -90,
+            "maxX": 1856.734375,
+            "maxY": -82
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R417",
+      "measurement": {
+        "x": 2100,
+        "y": -100,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2110.5,
+          "maxY": -95.5,
+          "minX": 2089.5,
+          "minY": -104.5
+        },
+        "designator": "R417",
+        "value": "10k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "AON_SCL",
+            "x": 2120,
+            "y": -100,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 2080,
+            "y": -100,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2090,
+            "minY": -95,
+            "maxX": 2106.734375,
+            "maxY": -87
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R418",
+      "measurement": {
+        "x": 2350,
+        "y": -100,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2360.5,
+          "maxY": -95.5,
+          "minX": 2339.5,
+          "minY": -104.5
+        },
+        "designator": "R418",
+        "value": "10k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "AON_SDA",
+            "x": 2370,
+            "y": -100,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 2330,
+            "y": -100,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2340,
+            "minY": -95,
+            "maxX": 2356.734375,
+            "maxY": -87
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R419",
+      "measurement": {
+        "x": 2600,
+        "y": -100,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2610.5,
+          "maxY": -95.5,
+          "minX": 2589.5,
+          "minY": -104.5
+        },
+        "designator": "R419",
+        "value": "100k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2620,
+            "y": -100,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "IMU_INT",
+            "x": 2580,
+            "y": -100,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2590,
+            "minY": -95,
+            "maxX": 2606.734375,
+            "maxY": -87
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-C410",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U402",
+        "pinNumber": "9"
+      }
+    },
+    {
+      "componentId": "cmp-C411",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U402",
+        "pinNumber": "10"
+      }
+    },
+    {
+      "componentId": "cmp-C412",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U402",
+        "pinNumber": "9"
+      }
+    },
+    {
+      "componentId": "cmp-R417",
+      "pinNumber": "2",
+      "attachTo": {
+        "componentId": "cmp-U402",
+        "pinNumber": "1"
+      }
+    },
+    {
+      "componentId": "cmp-R418",
+      "pinNumber": "2",
+      "attachTo": {
+        "componentId": "cmp-U402",
+        "pinNumber": "4"
+      }
+    },
+    {
+      "componentId": "cmp-R419",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U402",
+        "pinNumber": "12"
+      }
+    }
+  ],
+  "netPolicies": {
+    "IMU_INT": "module_port",
+    "GND": "local_ground",
+    "3V0_AON": "local_power",
+    "AON_SDA": "module_port",
+    "AON_SCL": "module_port"
+  },
+  "zones": [
+    {
+      "id": "motion-imu",
+      "title": "LIS2DW12 / PARKING MOTION WAKE",
+      "coreComponentId": "cmp-U402",
+      "componentIds": [
+        "cmp-U402",
+        "cmp-C410",
+        "cmp-C411",
+        "cmp-C412",
+        "cmp-R417",
+        "cmp-R418",
+        "cmp-R419"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2445 @@
+{
+  "schemaVersion": "1.4",
+  "projectId": "143594ca6b24412691655cb627c51791",
+  "documentId": "0fc201a153e9cd31",
+  "components": [
+    {
+      "id": "cmp-J101",
+      "ref": "J101",
+      "role": "vehicle input: power / return / ACC",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "7a0fae900741409391a016b8e696c69b",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        }
+      ]
+    },
+    {
+      "id": "cmp-F101",
+      "ref": "F101",
+      "role": "5A input fuse; upstream vehicle fuse also required",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "dd4e1d5a5eff4de383cd5330ca28ff12",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-D101",
+      "ref": "D101",
+      "role": "bidirectional 33V TVS after input fuse",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4082bc581abd4d04944ef59351b09011",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "K"
+        },
+        {
+          "number": "2",
+          "name": "A"
+        }
+      ]
+    },
+    {
+      "id": "cmp-Q101",
+      "ref": "Q101",
+      "role": "100V ideal-diode MOSFET",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4bdd5d34775b408ba9988c04d31656d2",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "S"
+        },
+        {
+          "number": "2",
+          "name": "S"
+        },
+        {
+          "number": "3",
+          "name": "S"
+        },
+        {
+          "number": "4",
+          "name": "G"
+        },
+        {
+          "number": "5",
+          "name": "D"
+        },
+        {
+          "number": "6",
+          "name": "D"
+        },
+        {
+          "number": "7",
+          "name": "D"
+        },
+        {
+          "number": "8",
+          "name": "D"
+        },
+        {
+          "number": "9",
+          "name": "D"
+        }
+      ]
+    },
+    {
+      "id": "cmp-Q102",
+      "ref": "Q102",
+      "role": "100V disconnect MOSFET, common drain",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4bdd5d34775b408ba9988c04d31656d2",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "S"
+        },
+        {
+          "number": "2",
+          "name": "S"
+        },
+        {
+          "number": "3",
+          "name": "S"
+        },
+        {
+          "number": "4",
+          "name": "G"
+        },
+        {
+          "number": "5",
+          "name": "D"
+        },
+        {
+          "number": "6",
+          "name": "D"
+        },
+        {
+          "number": "7",
+          "name": "D"
+        },
+        {
+          "number": "8",
+          "name": "D"
+        },
+        {
+          "number": "9",
+          "name": "D"
+        }
+      ]
+    },
+    {
+      "id": "cmp-U101",
+      "ref": "U101",
+      "role": "LM74800 protection controller",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "500849370cc74bf180bd89cadb556c77",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "13",
+          "name": "RTN",
+          "noConnected": true
+        },
+        {
+          "number": "12",
+          "name": "C"
+        },
+        {
+          "number": "11",
+          "name": "CAP"
+        },
+        {
+          "number": "10",
+          "name": "VS"
+        },
+        {
+          "number": "9",
+          "name": "OUT"
+        },
+        {
+          "number": "8",
+          "name": "HGATE"
+        },
+        {
+          "number": "7",
+          "name": "GND"
+        },
+        {
+          "number": "6",
+          "name": "EN/UVLO"
+        },
+        {
+          "number": "5",
+          "name": "OV"
+        },
+        {
+          "number": "4",
+          "name": "SW"
+        },
+        {
+          "number": "3",
+          "name": "VSNS"
+        },
+        {
+          "number": "2",
+          "name": "A"
+        },
+        {
+          "number": "1",
+          "name": "DGATE"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C101",
+      "ref": "C101",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C102",
+      "ref": "C102",
+      "role": "charge pump capacitor, 50V differential rating",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R101",
+      "ref": "R101",
+      "role": "overvoltage upper divider",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4d8a2158e6f2469685f8c7673367f44c",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R102",
+      "ref": "R102",
+      "role": "overvoltage lower divider",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "1a464fbd615d4cc998baa6ac5fbcf5ef",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-SW101",
+      "ref": "SW101",
+      "role": "ON: 1-2 and 4-5; OFF: 2-3 and 5-6",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4c6dca7640dd4287aaa9da136b9d749d",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        },
+        {
+          "number": "6",
+          "name": "6"
+        },
+        {
+          "number": "5",
+          "name": "5"
+        },
+        {
+          "number": "4",
+          "name": "4"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R103",
+      "ref": "R103",
+      "role": "master control current limiting stage 1",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "dae1a5d4e3554561babbb6745e7d62d9",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R104",
+      "ref": "R104",
+      "role": "master control current limiting stage 2",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "dae1a5d4e3554561babbb6745e7d62d9",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-D103",
+      "ref": "D103",
+      "role": "5.1V zener protects 6V slide contacts",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "e2e573b8c3e94ac0a837a6ae38ac45e1",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "A"
+        },
+        {
+          "number": "1",
+          "name": "K"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R105",
+      "ref": "R105",
+      "role": "vehicle master default off",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C103",
+      "ref": "C103",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "03a827702a5d447dbe9d3571f0aad427",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-U102",
+      "ref": "U102",
+      "role": "vehicle step-down regulator",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ace73d28aba84757b175504c38ec1686",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "BOOT"
+        },
+        {
+          "number": "2",
+          "name": "VIN"
+        },
+        {
+          "number": "3",
+          "name": "EN"
+        },
+        {
+          "number": "4",
+          "name": "RT/CLK"
+        },
+        {
+          "number": "5",
+          "name": "FB"
+        },
+        {
+          "number": "6",
+          "name": "COMP"
+        },
+        {
+          "number": "7",
+          "name": "GND"
+        },
+        {
+          "number": "8",
+          "name": "SW"
+        },
+        {
+          "number": "9",
+          "name": "EP"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C104",
+      "ref": "C104",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C105",
+      "ref": "C105",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C106",
+      "ref": "C106",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C107",
+      "ref": "C107",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C108",
+      "ref": "C108",
+      "role": "bootstrap capacitor",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-D102",
+      "ref": "D102",
+      "role": "5A 60V catch Schottky: pin1 cathode",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "c369b4376a324cab92b7be819cdfcdec",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-L101",
+      "ref": "L101",
+      "role": "6.8uH buck inductor",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "74ed7a6dd8a9440887ac1ac039f93ae1",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C109",
+      "ref": "C109",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C110",
+      "ref": "C110",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C111",
+      "ref": "C111",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C112",
+      "ref": "C112",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C113",
+      "ref": "C113",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C114",
+      "ref": "C114",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R106",
+      "ref": "R106",
+      "role": "buck feedback upper",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "e291317b77454e42bf03213d32bb7795",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R107",
+      "ref": "R107",
+      "role": "buck feedback lower",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "b948db94476e4027ac8953235755ec96",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R108",
+      "ref": "R108",
+      "role": "switching frequency about 400kHz",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "1486fa2842a5451c9481d0e580335567",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R109",
+      "ref": "R109",
+      "role": "compensation series R",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "1a464fbd615d4cc998baa6ac5fbcf5ef",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C115",
+      "ref": "C115",
+      "role": "compensation series C",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "f0419ed7c5724c298e313f427615045e",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C116",
+      "ref": "C116",
+      "role": "compensation high-frequency pole",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "20536babac204ca99f2515dbfb730604",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R110",
+      "ref": "R110",
+      "role": "buck GPIO series resistor",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R111",
+      "ref": "R111",
+      "role": "buck defaults off on MCU reset",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-U103",
+      "ref": "U103",
+      "role": "TPS7A1650 fixed 5V always-on vehicle LDO",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "0780060eeff4428e956f7ce381789527",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "OUT"
+        },
+        {
+          "number": "2",
+          "name": "FB/DNC",
+          "noConnected": true
+        },
+        {
+          "number": "3",
+          "name": "PG",
+          "noConnected": true
+        },
+        {
+          "number": "4",
+          "name": "GND"
+        },
+        {
+          "number": "5",
+          "name": "EN"
+        },
+        {
+          "number": "6",
+          "name": "NC",
+          "noConnected": true
+        },
+        {
+          "number": "7",
+          "name": "DELAY",
+          "noConnected": true
+        },
+        {
+          "number": "8",
+          "name": "IN"
+        },
+        {
+          "number": "9",
+          "name": "EP"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C117",
+      "ref": "C117",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C118",
+      "ref": "C118",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C119",
+      "ref": "C119",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "6e5726223dd84f70bc3b626fc7d1f72c",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-U104",
+      "ref": "U104",
+      "role": "ACC optocoupler; shared system return",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "94b92fd4314c44a989f28fa11fba3d03",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "3",
+          "name": "3"
+        },
+        {
+          "number": "4",
+          "name": "4"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R112",
+      "ref": "R112",
+      "role": "ACC LED series 750R / 0.25W",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "25415e703f364afeb328c446741478fc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R113",
+      "ref": "R113",
+      "role": "ACC LED series 750R / 0.25W",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "25415e703f364afeb328c446741478fc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R114",
+      "ref": "R114",
+      "role": "ACC LED series 750R / 0.25W",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "25415e703f364afeb328c446741478fc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R115",
+      "ref": "R115",
+      "role": "ACC LED series 750R / 0.25W",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "25415e703f364afeb328c446741478fc",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-D104",
+      "ref": "D104",
+      "role": "antiparallel LED reverse protection",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "76d24ed7c48e4683a577694c4d221e92",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "A"
+        },
+        {
+          "number": "1",
+          "name": "K"
+        }
+      ]
+    },
+    {
+      "id": "cmp-D105",
+      "ref": "D105",
+      "role": "ACC line transient clamp; fused ACC feed required",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "4082bc581abd4d04944ef59351b09011",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "K"
+        },
+        {
+          "number": "2",
+          "name": "A"
+        }
+      ]
+    },
+    {
+      "id": "cmp-Q103",
+      "ref": "Q103",
+      "role": "master OFF interrupts optocoupler LED",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "f8007837564a4f1fa0e6b57b81dccb0d",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "3",
+          "name": "D"
+        },
+        {
+          "number": "1",
+          "name": "G"
+        },
+        {
+          "number": "2",
+          "name": "S"
+        }
+      ]
+    },
+    {
+      "id": "cmp-R116",
+      "ref": "R116",
+      "role": "ACC logic pullup",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "2",
+          "name": "2"
+        },
+        {
+          "number": "1",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "id": "cmp-C120",
+      "ref": "C120",
+      "role": "decoupling",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "03a827702a5d447dbe9d3571f0aad427",
+        "name": "={Value}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    },
+    {
+      "id": "cmp-J102",
+      "ref": "J102",
+      "role": "cigarette-lighter mode shunt; remove for separate ACC",
+      "device": {
+        "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+        "deviceUuid": "99b1039acd624894acb0c01cac9f07f5",
+        "name": "={Manufacturer Part}"
+      },
+      "pins": [
+        {
+          "number": "1",
+          "name": "1"
+        },
+        {
+          "number": "2",
+          "name": "2"
+        }
+      ]
+    }
+  ],
+  "nets": [
+    {
+      "id": "3V0_AON",
+      "name": "3V0_AON",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_IN",
+      "name": "ACC_IN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_LED_A",
+      "name": "ACC_LED_A",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_LED_K",
+      "name": "ACC_LED_K",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_N",
+      "name": "ACC_N",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_R1",
+      "name": "ACC_R1",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_R2",
+      "name": "ACC_R2",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "ACC_R3",
+      "name": "ACC_R3",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "BAT_CS",
+      "name": "BAT_CS",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "BAT_GATE_CTL",
+      "name": "BAT_GATE_CTL",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_5V",
+      "name": "CAR_5V",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_BOOT",
+      "name": "CAR_BOOT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_BUCK_EN",
+      "name": "CAR_BUCK_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_COMP",
+      "name": "CAR_COMP",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_COMP_C",
+      "name": "CAR_COMP_C",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_FB",
+      "name": "CAR_FB",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_RT",
+      "name": "CAR_RT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CAR_SW",
+      "name": "CAR_SW",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "CTL_CAR_EN",
+      "name": "CTL_CAR_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "GND",
+      "name": "GND",
+      "scope": "global",
+      "role": "ground"
+    },
+    {
+      "id": "MASTER_CAR_EN",
+      "name": "MASTER_CAR_EN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "MASTER_CLAMP",
+      "name": "MASTER_CLAMP",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "MASTER_RMID",
+      "name": "MASTER_RMID",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_AON_5V",
+      "name": "VEH_AON_5V",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_CD",
+      "name": "VEH_CD",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_CP",
+      "name": "VEH_CP",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_DGATE",
+      "name": "VEH_DGATE",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_FUSED",
+      "name": "VEH_FUSED",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_HGATE",
+      "name": "VEH_HGATE",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_IN",
+      "name": "VEH_IN",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_OV",
+      "name": "VEH_OV",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_PROT",
+      "name": "VEH_PROT",
+      "scope": "global",
+      "role": "signal"
+    },
+    {
+      "id": "VEH_SENSE",
+      "name": "VEH_SENSE",
+      "scope": "global",
+      "role": "signal"
+    }
+  ],
+  "connections": [
+    {
+      "componentId": "cmp-J101",
+      "pinNumber": "1",
+      "netId": "VEH_IN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J101",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J101",
+      "pinNumber": "3",
+      "netId": "ACC_IN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-F101",
+      "pinNumber": "1",
+      "netId": "VEH_IN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-F101",
+      "pinNumber": "2",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D101",
+      "pinNumber": "1",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D101",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "1",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "2",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "3",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "4",
+      "netId": "VEH_DGATE",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "5",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "6",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "7",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "8",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q101",
+      "pinNumber": "9",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "1",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "2",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "3",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "4",
+      "netId": "VEH_HGATE",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "5",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "6",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "7",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "8",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q102",
+      "pinNumber": "9",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "1",
+      "netId": "VEH_DGATE",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "2",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "3",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "4",
+      "netId": "VEH_SENSE",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "5",
+      "netId": "VEH_OV",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "6",
+      "netId": "MASTER_CAR_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "7",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "8",
+      "netId": "VEH_HGATE",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "9",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "10",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "11",
+      "netId": "VEH_CP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U101",
+      "pinNumber": "12",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C101",
+      "pinNumber": "1",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C101",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C102",
+      "pinNumber": "1",
+      "netId": "VEH_CP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C102",
+      "pinNumber": "2",
+      "netId": "VEH_CD",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R101",
+      "pinNumber": "1",
+      "netId": "VEH_SENSE",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R101",
+      "pinNumber": "2",
+      "netId": "VEH_OV",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R102",
+      "pinNumber": "1",
+      "netId": "VEH_OV",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R102",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW101",
+      "pinNumber": "1",
+      "netId": "MASTER_CLAMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW101",
+      "pinNumber": "2",
+      "netId": "MASTER_CAR_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW101",
+      "pinNumber": "3",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW101",
+      "pinNumber": "4",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW101",
+      "pinNumber": "5",
+      "netId": "BAT_GATE_CTL",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-SW101",
+      "pinNumber": "6",
+      "netId": "BAT_CS",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R103",
+      "pinNumber": "1",
+      "netId": "VEH_FUSED",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R103",
+      "pinNumber": "2",
+      "netId": "MASTER_RMID",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R104",
+      "pinNumber": "1",
+      "netId": "MASTER_RMID",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R104",
+      "pinNumber": "2",
+      "netId": "MASTER_CLAMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D103",
+      "pinNumber": "1",
+      "netId": "MASTER_CLAMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D103",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R105",
+      "pinNumber": "1",
+      "netId": "MASTER_CAR_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R105",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C103",
+      "pinNumber": "1",
+      "netId": "MASTER_CLAMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C103",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "1",
+      "netId": "CAR_BOOT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "2",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "3",
+      "netId": "CAR_BUCK_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "4",
+      "netId": "CAR_RT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "5",
+      "netId": "CAR_FB",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "6",
+      "netId": "CAR_COMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "7",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "8",
+      "netId": "CAR_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U102",
+      "pinNumber": "9",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C104",
+      "pinNumber": "1",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C104",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C105",
+      "pinNumber": "1",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C105",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C106",
+      "pinNumber": "1",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C106",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C107",
+      "pinNumber": "1",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C107",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C108",
+      "pinNumber": "1",
+      "netId": "CAR_BOOT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C108",
+      "pinNumber": "2",
+      "netId": "CAR_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D102",
+      "pinNumber": "1",
+      "netId": "CAR_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D102",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-L101",
+      "pinNumber": "1",
+      "netId": "CAR_SW",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-L101",
+      "pinNumber": "2",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C109",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C109",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C110",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C110",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C111",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C111",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C112",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C112",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C113",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C113",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C114",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C114",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R106",
+      "pinNumber": "1",
+      "netId": "CAR_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R106",
+      "pinNumber": "2",
+      "netId": "CAR_FB",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R107",
+      "pinNumber": "1",
+      "netId": "CAR_FB",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R107",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R108",
+      "pinNumber": "1",
+      "netId": "CAR_RT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R108",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R109",
+      "pinNumber": "1",
+      "netId": "CAR_COMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R109",
+      "pinNumber": "2",
+      "netId": "CAR_COMP_C",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C115",
+      "pinNumber": "1",
+      "netId": "CAR_COMP_C",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C115",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C116",
+      "pinNumber": "1",
+      "netId": "CAR_COMP",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C116",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R110",
+      "pinNumber": "1",
+      "netId": "CTL_CAR_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R110",
+      "pinNumber": "2",
+      "netId": "CAR_BUCK_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R111",
+      "pinNumber": "1",
+      "netId": "CAR_BUCK_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R111",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U103",
+      "pinNumber": "1",
+      "netId": "VEH_AON_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U103",
+      "pinNumber": "4",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U103",
+      "pinNumber": "5",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U103",
+      "pinNumber": "8",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U103",
+      "pinNumber": "9",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C117",
+      "pinNumber": "1",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C117",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C118",
+      "pinNumber": "1",
+      "netId": "VEH_PROT",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C118",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C119",
+      "pinNumber": "1",
+      "netId": "VEH_AON_5V",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C119",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U104",
+      "pinNumber": "1",
+      "netId": "ACC_LED_A",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U104",
+      "pinNumber": "2",
+      "netId": "ACC_LED_K",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U104",
+      "pinNumber": "3",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-U104",
+      "pinNumber": "4",
+      "netId": "ACC_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R112",
+      "pinNumber": "1",
+      "netId": "ACC_IN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R112",
+      "pinNumber": "2",
+      "netId": "ACC_R1",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R113",
+      "pinNumber": "1",
+      "netId": "ACC_R1",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R113",
+      "pinNumber": "2",
+      "netId": "ACC_R2",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R114",
+      "pinNumber": "1",
+      "netId": "ACC_R2",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R114",
+      "pinNumber": "2",
+      "netId": "ACC_R3",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R115",
+      "pinNumber": "1",
+      "netId": "ACC_R3",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R115",
+      "pinNumber": "2",
+      "netId": "ACC_LED_A",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D104",
+      "pinNumber": "1",
+      "netId": "ACC_LED_A",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D104",
+      "pinNumber": "2",
+      "netId": "ACC_LED_K",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D105",
+      "pinNumber": "1",
+      "netId": "ACC_IN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-D105",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q103",
+      "pinNumber": "3",
+      "netId": "ACC_LED_K",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q103",
+      "pinNumber": "1",
+      "netId": "MASTER_CAR_EN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-Q103",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R116",
+      "pinNumber": "1",
+      "netId": "3V0_AON",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-R116",
+      "pinNumber": "2",
+      "netId": "ACC_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C120",
+      "pinNumber": "1",
+      "netId": "ACC_N",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-C120",
+      "pinNumber": "2",
+      "netId": "GND",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J102",
+      "pinNumber": "1",
+      "netId": "VEH_IN",
+      "kind": "netlist"
+    },
+    {
+      "componentId": "cmp-J102",
+      "pinNumber": "2",
+      "netId": "ACC_IN",
+      "kind": "netlist"
+    }
+  ],
+  "modules": [
+    {
+      "id": "vehicle-protection",
+      "name": "VEHICLE INPUT / REVERSE AND OV",
+      "coreComponents": [
+        "cmp-U101"
+      ],
+      "peripheralComponents": [
+        "cmp-J101",
+        "cmp-F101",
+        "cmp-D101",
+        "cmp-Q101",
+        "cmp-Q102",
+        "cmp-C101",
+        "cmp-C102",
+        "cmp-R101",
+        "cmp-R102"
+      ]
+    },
+    {
+      "id": "master-control",
+      "name": "DPDT MASTER / LOW CURRENT ONLY",
+      "coreComponents": [
+        "cmp-SW101"
+      ],
+      "peripheralComponents": [
+        "cmp-R103",
+        "cmp-R104",
+        "cmp-D103",
+        "cmp-R105",
+        "cmp-C103"
+      ]
+    },
+    {
+      "id": "vehicle-buck",
+      "name": "VEHICLE 5.088V / 4A DESIGN LOAD",
+      "coreComponents": [
+        "cmp-U102"
+      ],
+      "peripheralComponents": [
+        "cmp-C104",
+        "cmp-C105",
+        "cmp-C106",
+        "cmp-C107",
+        "cmp-C108",
+        "cmp-D102",
+        "cmp-L101",
+        "cmp-C109",
+        "cmp-C110",
+        "cmp-C111",
+        "cmp-C112",
+        "cmp-C113",
+        "cmp-C114",
+        "cmp-R106",
+        "cmp-R107",
+        "cmp-R108",
+        "cmp-R109",
+        "cmp-C115",
+        "cmp-C116",
+        "cmp-R110",
+        "cmp-R111"
+      ]
+    },
+    {
+      "id": "vehicle-aon",
+      "name": "AON VEHICLE COLD START / 5V",
+      "coreComponents": [
+        "cmp-U103"
+      ],
+      "peripheralComponents": [
+        "cmp-C117",
+        "cmp-C118",
+        "cmp-C119"
+      ]
+    },
+    {
+      "id": "acc-sense",
+      "name": "ACC OPTO INPUT / MASTER GATED",
+      "coreComponents": [
+        "cmp-U104"
+      ],
+      "peripheralComponents": [
+        "cmp-R112",
+        "cmp-R113",
+        "cmp-R114",
+        "cmp-R115",
+        "cmp-D104",
+        "cmp-D105",
+        "cmp-Q103",
+        "cmp-R116",
+        "cmp-C120",
+        "cmp-J102"
+      ]
+    }
+  ]
+}

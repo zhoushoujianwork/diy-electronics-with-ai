@@ -1,0 +1,418 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 1000000,
+  "routing": {
+    "maxExpandedNodes": 5000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-U307",
+      "measurement": {
+        "x": 840,
+        "y": 420,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 870.5,
+          "maxY": 470.5,
+          "minX": 809.5,
+          "minY": 369.5
+        },
+        "designator": "U307",
+        "value": "TXU0202DCUR",
+        "pins": [
+          {
+            "number": "6",
+            "name": "OE",
+            "net": "CTL_MODEM_LOAD_EN",
+            "x": 800,
+            "y": 440,
+            "rotation": 180
+          },
+          {
+            "number": "5",
+            "name": "A1",
+            "net": "HOST_MODEM_TX",
+            "x": 800,
+            "y": 410,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "A2Y",
+            "net": "HOST_MODEM_RX",
+            "x": 800,
+            "y": 400,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "GND",
+            "net": "GND",
+            "x": 880,
+            "y": 380,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "B2",
+            "net": "TINY_TX",
+            "x": 880,
+            "y": 410,
+            "rotation": 0
+          },
+          {
+            "number": "8",
+            "name": "B1Y",
+            "net": "TINY_RX",
+            "x": 880,
+            "y": 420,
+            "rotation": 0
+          },
+          {
+            "number": "7",
+            "name": "VCCB",
+            "net": "MODEM_VIO",
+            "x": 880,
+            "y": 450,
+            "rotation": 0
+          },
+          {
+            "number": "3",
+            "name": "VCCA",
+            "net": "HOST_3V3",
+            "x": 880,
+            "y": 460,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 810,
+            "minY": 470,
+            "maxX": 826.734375,
+            "maxY": 478
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-C323",
+      "measurement": {
+        "x": 1600,
+        "y": -850,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1610.5,
+          "maxY": -841.5,
+          "minX": 1589.5,
+          "minY": -858.5
+        },
+        "designator": "C323",
+        "value": "100nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "HOST_3V3",
+            "x": 1580,
+            "y": -850,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1620,
+            "y": -850,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1590,
+            "minY": -840,
+            "maxX": 1606.734375,
+            "maxY": -832
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-C324",
+      "measurement": {
+        "x": 1850,
+        "y": -850,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": -841.5,
+          "minX": 1839.5,
+          "minY": -858.5
+        },
+        "designator": "C324",
+        "value": "100nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MODEM_VIO",
+            "x": 1830,
+            "y": -850,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1870,
+            "y": -850,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": -840,
+            "maxX": 1856.734375,
+            "maxY": -832
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-R317",
+      "measurement": {
+        "x": 2100,
+        "y": -850,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2110.5,
+          "maxY": -845.5,
+          "minX": 2089.5,
+          "minY": -854.5
+        },
+        "designator": "R317",
+        "value": "100k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2120,
+            "y": -850,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "CTL_MODEM_LOAD_EN",
+            "x": 2080,
+            "y": -850,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2090,
+            "minY": -845,
+            "maxX": 2106.734375,
+            "maxY": -837
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90
+      ]
+    },
+    {
+      "id": "cmp-J307",
+      "measurement": {
+        "x": 840,
+        "y": 140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 850.5,
+          "maxY": 165.5,
+          "minX": 829.5,
+          "minY": 114.5
+        },
+        "designator": "J307",
+        "value": "HC-XH-4A-G-K",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "HOST_3V3",
+            "x": 820,
+            "y": 155,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 820,
+            "y": 145,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "3",
+            "net": "HOST_MODEM_TX",
+            "x": 820,
+            "y": 135,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "4",
+            "net": "HOST_MODEM_RX",
+            "x": 820,
+            "y": 125,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 830,
+            "minY": 165,
+            "maxX": 845.17919921875,
+            "maxY": 173
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-J308",
+      "measurement": {
+        "x": 1160,
+        "y": 140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1170.5,
+          "maxY": 165.5,
+          "minX": 1149.5,
+          "minY": 114.5
+        },
+        "designator": "J308",
+        "value": "PZ254V-11-04P-RD",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "MODEM_VIO",
+            "x": 1140,
+            "y": 155,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1140,
+            "y": 145,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "3",
+            "net": "TINY_RX",
+            "x": 1140,
+            "y": 135,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "4",
+            "net": "TINY_TX",
+            "x": 1140,
+            "y": 125,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1150,
+            "minY": 165,
+            "maxX": 1165.17919921875,
+            "maxY": 173
+          }
+        ]
+      },
+      "pinStates": {}
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-C323",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U307",
+        "pinNumber": "3"
+      }
+    },
+    {
+      "componentId": "cmp-C324",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U307",
+        "pinNumber": "7"
+      }
+    },
+    {
+      "componentId": "cmp-R317",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U307",
+        "pinNumber": "6"
+      }
+    }
+  ],
+  "netPolicies": {
+    "MODEM_VIO": "local_power",
+    "HOST_MODEM_RX": "direct",
+    "HOST_MODEM_TX": "direct",
+    "TINY_TX": "direct",
+    "GND": "local_ground",
+    "HOST_3V3": "local_power",
+    "CTL_MODEM_LOAD_EN": "module_port",
+    "TINY_RX": "direct"
+  },
+  "zones": [
+    {
+      "id": "modem-uart",
+      "title": "TINY UART / POWER-OFF ISOLATION",
+      "coreComponentId": "cmp-U307",
+      "componentIds": [
+        "cmp-U307",
+        "cmp-C323",
+        "cmp-C324",
+        "cmp-R317",
+        "cmp-J307",
+        "cmp-J308"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-U205",
+      "measurement": {
+        "x": 1160,
+        "y": 420,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1190.5,
+          "maxY": 440.5,
+          "minX": 1129.5,
+          "minY": 399.5
+        },
+        "designator": "U205",
+        "value": "TPS7A0230PDBVR",
+        "pins": [
+          {
+            "number": "5",
+            "name": "OUT",
+            "net": "3V0_AON",
+            "x": 1200,
+            "y": 430,
+            "rotation": 0
+          },
+          {
+            "number": "4",
+            "name": "NC",
+            "net": "",
+            "x": 1200,
+            "y": 410,
+            "rotation": 0
+          },
+          {
+            "number": "3",
+            "name": "EN",
+            "net": "AON_RAW",
+            "x": 1120,
+            "y": 420,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "GND",
+            "net": "GND",
+            "x": 1120,
+            "y": 410,
+            "rotation": 180
+          },
+          {
+            "number": "1",
+            "name": "IN",
+            "net": "AON_RAW",
+            "x": 1120,
+            "y": 430,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1130,
+            "minY": 440,
+            "maxX": 1146.734375,
+            "maxY": 448
+          }
+        ]
+      },
+      "pinStates": {
+        "4": "nc"
+      }
+    },
+    {
+      "id": "cmp-C233",
+      "measurement": {
+        "x": 2600,
+        "y": -850,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2610.5,
+          "maxY": -841.5,
+          "minX": 2589.5,
+          "minY": -858.5
+        },
+        "designator": "C233",
+        "value": "1uF",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2620,
+            "y": -850,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "AON_RAW",
+            "x": 2580,
+            "y": -850,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2590,
+            "minY": -840,
+            "maxX": 2606.734375,
+            "maxY": -832
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-C234",
+      "measurement": {
+        "x": 2850,
+        "y": -850,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2860.5,
+          "maxY": -841.5,
+          "minX": 2839.5,
+          "minY": -858.5
+        },
+        "designator": "C234",
+        "value": "4.7uF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 2830,
+            "y": -850,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2870,
+            "y": -850,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2840,
+            "minY": -840,
+            "maxX": 2856.734375,
+            "maxY": -832
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-C233",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U205",
+        "pinNumber": "1"
+      }
+    },
+    {
+      "componentId": "cmp-C234",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U205",
+        "pinNumber": "5"
+      }
+    }
+  ],
+  "netPolicies": {
+    "AON_RAW": "local_power",
+    "3V0_AON": "local_power",
+    "GND": "local_ground"
+  },
+  "zones": [
+    {
+      "id": "aon-ldo",
+      "title": "3.0V ALWAYS-ON / LOW IQ",
+      "coreComponentId": "cmp-U205",
+      "componentIds": [
+        "cmp-U205",
+        "cmp-C233",
+        "cmp-C234"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4431 @@
+{
+  "schemaVersion": 1,
+  "revision": "R1-BAT",
+  "state": "source-only",
+  "components": [
+    {
+      "id": "cmp-J101",
+      "ref": "J101",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C474882",
+      "role": "vehicle input: power / return / ACC",
+      "pins": {
+        "1": "VEH_IN",
+        "2": "GND",
+        "3": "ACC_IN"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-F101",
+      "ref": "F101",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C48467",
+      "role": "5A input fuse; upstream vehicle fuse also required",
+      "pins": {
+        "1": "VEH_IN",
+        "2": "VEH_FUSED"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-D101",
+      "ref": "D101",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C1982094",
+      "role": "bidirectional 33V TVS after input fuse",
+      "pins": {
+        "1": "VEH_FUSED",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-Q101",
+      "ref": "Q101",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C114200",
+      "role": "100V ideal-diode MOSFET",
+      "pins": {
+        "1": "VEH_FUSED",
+        "2": "VEH_FUSED",
+        "3": "VEH_FUSED",
+        "4": "VEH_DGATE",
+        "5": "VEH_CD",
+        "6": "VEH_CD",
+        "7": "VEH_CD",
+        "8": "VEH_CD",
+        "9": "VEH_CD"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-Q102",
+      "ref": "Q102",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C114200",
+      "role": "100V disconnect MOSFET, common drain",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "VEH_PROT",
+        "3": "VEH_PROT",
+        "4": "VEH_HGATE",
+        "5": "VEH_CD",
+        "6": "VEH_CD",
+        "7": "VEH_CD",
+        "8": "VEH_CD",
+        "9": "VEH_CD"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-U101",
+      "ref": "U101",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C3215600",
+      "role": "LM74800 protection controller",
+      "pins": {
+        "1": "VEH_DGATE",
+        "2": "VEH_FUSED",
+        "3": "VEH_FUSED",
+        "4": "VEH_SENSE",
+        "5": "VEH_OV",
+        "6": "MASTER_CAR_EN",
+        "7": "GND",
+        "8": "VEH_HGATE",
+        "9": "VEH_PROT",
+        "10": "VEH_CD",
+        "11": "VEH_CP",
+        "12": "VEH_CD",
+        "13": null
+      },
+      "ncReasons": {
+        "13": "Datasheet RTN exposed pad must float; no ground copper connection."
+      }
+    },
+    {
+      "id": "cmp-C101",
+      "ref": "C101",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_CD",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U101",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-C102",
+      "ref": "C102",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C1591",
+      "role": "charge pump capacitor, 50V differential rating",
+      "pins": {
+        "1": "VEH_CP",
+        "2": "VEH_CD"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U101",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-R101",
+      "ref": "R101",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C22918",
+      "role": "overvoltage upper divider",
+      "pins": {
+        "1": "VEH_SENSE",
+        "2": "VEH_OV"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U101",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R102",
+      "ref": "R102",
+      "page": 1,
+      "zone": "vehicle-protection",
+      "lcsc": "C25954",
+      "role": "overvoltage lower divider",
+      "pins": {
+        "1": "VEH_OV",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R101",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-SW101",
+      "ref": "SW101",
+      "page": 1,
+      "zone": "master-control",
+      "lcsc": "C225088",
+      "role": "ON: 1-2 and 4-5; OFF: 2-3 and 5-6",
+      "pins": {
+        "1": "MASTER_CLAMP",
+        "2": "MASTER_CAR_EN",
+        "3": "GND",
+        "4": "GND",
+        "5": "BAT_GATE_CTL",
+        "6": "BAT_CS"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R103",
+      "ref": "R103",
+      "page": 1,
+      "zone": "master-control",
+      "lcsc": "C31850",
+      "role": "master control current limiting stage 1",
+      "pins": {
+        "1": "VEH_FUSED",
+        "2": "MASTER_RMID"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "R104",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R104",
+      "ref": "R104",
+      "page": 1,
+      "zone": "master-control",
+      "lcsc": "C31850",
+      "role": "master control current limiting stage 2",
+      "pins": {
+        "1": "MASTER_RMID",
+        "2": "MASTER_CLAMP"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "SW101",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-D103",
+      "ref": "D103",
+      "page": 1,
+      "zone": "master-control",
+      "lcsc": "C213116",
+      "role": "5.1V zener protects 6V slide contacts",
+      "pins": {
+        "1": "MASTER_CLAMP",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "SW101",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R105",
+      "ref": "R105",
+      "page": 1,
+      "zone": "master-control",
+      "lcsc": "C25803",
+      "role": "vehicle master default off",
+      "pins": {
+        "1": "MASTER_CAR_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "SW101",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C103",
+      "ref": "C103",
+      "page": 1,
+      "zone": "master-control",
+      "lcsc": "C1589",
+      "role": "decoupling",
+      "pins": {
+        "1": "MASTER_CLAMP",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "SW101",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-U102",
+      "ref": "U102",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C1355305",
+      "role": "vehicle step-down regulator",
+      "pins": {
+        "1": "CAR_BOOT",
+        "2": "VEH_PROT",
+        "3": "CAR_BUCK_EN",
+        "4": "CAR_RT",
+        "5": "CAR_FB",
+        "6": "CAR_COMP",
+        "7": "GND",
+        "8": "CAR_SW",
+        "9": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C104",
+      "ref": "C104",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C105",
+      "ref": "C105",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C104",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C106",
+      "ref": "C106",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C105",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C107",
+      "ref": "C107",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C106",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C108",
+      "ref": "C108",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C1591",
+      "role": "bootstrap capacitor",
+      "pins": {
+        "1": "CAR_BOOT",
+        "2": "CAR_SW"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-D102",
+      "ref": "D102",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C266541",
+      "role": "5A 60V catch Schottky: pin1 cathode",
+      "pins": {
+        "1": "CAR_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-L101",
+      "ref": "L101",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C3911753",
+      "role": "6.8uH buck inductor",
+      "pins": {
+        "1": "CAR_SW",
+        "2": "CAR_5V"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-C109",
+      "ref": "C109",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "L101",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C110",
+      "ref": "C110",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C109",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C111",
+      "ref": "C111",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C110",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C112",
+      "ref": "C112",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C111",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C113",
+      "ref": "C113",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C112",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C114",
+      "ref": "C114",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C113",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R106",
+      "ref": "R106",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C23074",
+      "role": "buck feedback upper",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "CAR_FB"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U102",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-R107",
+      "ref": "R107",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C25804",
+      "role": "buck feedback lower",
+      "pins": {
+        "1": "CAR_FB",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R106",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R108",
+      "ref": "R108",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C23351",
+      "role": "switching frequency about 400kHz",
+      "pins": {
+        "1": "CAR_RT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R109",
+      "ref": "R109",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C25954",
+      "role": "compensation series R",
+      "pins": {
+        "1": "CAR_COMP",
+        "2": "CAR_COMP_C"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C115",
+      "ref": "C115",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C1621",
+      "role": "compensation series C",
+      "pins": {
+        "1": "CAR_COMP_C",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R109",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C116",
+      "ref": "C116",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C94904",
+      "role": "compensation high-frequency pole",
+      "pins": {
+        "1": "CAR_COMP",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-R110",
+      "ref": "R110",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C21190",
+      "role": "buck GPIO series resistor",
+      "pins": {
+        "1": "CTL_CAR_EN",
+        "2": "CAR_BUCK_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U102",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R111",
+      "ref": "R111",
+      "page": 1,
+      "zone": "vehicle-buck",
+      "lcsc": "C25803",
+      "role": "buck defaults off on MCU reset",
+      "pins": {
+        "1": "CAR_BUCK_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U102",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-U103",
+      "ref": "U103",
+      "page": 1,
+      "zone": "vehicle-aon",
+      "lcsc": "C468238",
+      "role": "TPS7A1650 fixed 5V always-on vehicle LDO",
+      "pins": {
+        "1": "VEH_AON_5V",
+        "2": null,
+        "3": null,
+        "4": "GND",
+        "5": "VEH_PROT",
+        "6": null,
+        "7": null,
+        "8": "VEH_PROT",
+        "9": "GND"
+      },
+      "ncReasons": {
+        "2": "Fixed-voltage DNC must remain disconnected.",
+        "3": "Optional PG unused.",
+        "6": "NC per datasheet.",
+        "7": "Optional PG delay unused."
+      }
+    },
+    {
+      "id": "cmp-C117",
+      "ref": "C117",
+      "page": 1,
+      "zone": "vehicle-aon",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U103",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-C118",
+      "ref": "C118",
+      "page": 1,
+      "zone": "vehicle-aon",
+      "lcsc": "C86054",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_PROT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U103",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-C119",
+      "ref": "C119",
+      "page": 1,
+      "zone": "vehicle-aon",
+      "lcsc": "C440198",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_AON_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U103",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-U104",
+      "ref": "U104",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C109227",
+      "role": "ACC optocoupler; shared system return",
+      "pins": {
+        "1": "ACC_LED_A",
+        "2": "ACC_LED_K",
+        "3": "GND",
+        "4": "ACC_N"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R112",
+      "ref": "R112",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C17985",
+      "role": "ACC LED series 750R / 0.25W",
+      "pins": {
+        "1": "ACC_IN",
+        "2": "ACC_R1"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R113",
+      "ref": "R113",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C17985",
+      "role": "ACC LED series 750R / 0.25W",
+      "pins": {
+        "1": "ACC_R1",
+        "2": "ACC_R2"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R114",
+      "ref": "R114",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C17985",
+      "role": "ACC LED series 750R / 0.25W",
+      "pins": {
+        "1": "ACC_R2",
+        "2": "ACC_R3"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R115",
+      "ref": "R115",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C17985",
+      "role": "ACC LED series 750R / 0.25W",
+      "pins": {
+        "1": "ACC_R3",
+        "2": "ACC_LED_A"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-D104",
+      "ref": "D104",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C2892570",
+      "role": "antiparallel LED reverse protection",
+      "pins": {
+        "1": "ACC_LED_A",
+        "2": "ACC_LED_K"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U104",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-D105",
+      "ref": "D105",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C1982094",
+      "role": "ACC line transient clamp; fused ACC feed required",
+      "pins": {
+        "1": "ACC_IN",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-Q103",
+      "ref": "Q103",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C8545",
+      "role": "master OFF interrupts optocoupler LED",
+      "pins": {
+        "3": "ACC_LED_K",
+        "1": "MASTER_CAR_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "3",
+        "owner": "U104",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R116",
+      "ref": "R116",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C25803",
+      "role": "ACC logic pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "ACC_N"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U104",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C120",
+      "ref": "C120",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C1589",
+      "role": "decoupling",
+      "pins": {
+        "1": "ACC_N",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U104",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-J102",
+      "ref": "J102",
+      "page": 1,
+      "zone": "acc-sense",
+      "lcsc": "C492401",
+      "role": "cigarette-lighter mode shunt; remove for separate ACC",
+      "pins": {
+        "1": "VEH_IN",
+        "2": "ACC_IN"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J201",
+      "ref": "J201",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C53373776",
+      "role": "XT30PW-M: pack receptacle on PCB",
+      "pins": {
+        "1": "GND",
+        "2": "PACK_IN",
+        "3": null,
+        "4": null
+      },
+      "ncReasons": {
+        "3": "Mechanical fixing leg, no electrical net.",
+        "4": "Mechanical fixing leg, no electrical net."
+      }
+    },
+    {
+      "id": "cmp-F201",
+      "ref": "F201",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C44479",
+      "role": "10A board fuse; external pack protection mandatory",
+      "pins": {
+        "1": "PACK_IN",
+        "2": "PACK_FUSED"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-Q201",
+      "ref": "Q201",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C461052",
+      "role": "P-channel input MOSFET; common-source pair",
+      "pins": {
+        "3": "BAT_CS",
+        "2": "BAT_CS",
+        "1": "BAT_CS",
+        "4": "BAT_GATE",
+        "5": "PACK_FUSED"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-Q202",
+      "ref": "Q202",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C461052",
+      "role": "P-channel charger/load MOSFET; bidirectional isolation",
+      "pins": {
+        "3": "BAT_CS",
+        "2": "BAT_CS",
+        "1": "BAT_CS",
+        "4": "BAT_GATE",
+        "5": "BAT_SW"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R201",
+      "ref": "R201",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C22775",
+      "role": "gate series resistor",
+      "pins": {
+        "1": "BAT_GATE_CTL",
+        "2": "BAT_GATE"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "Q201",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R202",
+      "ref": "R202",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C22935",
+      "role": "gate-source fail-safe off bias",
+      "pins": {
+        "1": "BAT_CS",
+        "2": "BAT_GATE"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "Q201",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C201",
+      "ref": "C201",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C1588",
+      "role": "gate-source transient suppression",
+      "pins": {
+        "1": "BAT_CS",
+        "2": "BAT_GATE"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "Q201",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C202",
+      "ref": "C202",
+      "page": 2,
+      "zone": "battery-master",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "Q202",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-U201",
+      "ref": "U201",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C374063",
+      "role": "standalone charger; SYS supplies AON only",
+      "pins": {
+        "1": "CAR_5V",
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": "CHG_STAT_N",
+        "6": "GND",
+        "7": null,
+        "8": "CHG_ILIM",
+        "9": "CHG_CE_N",
+        "10": "CHG_ICHG",
+        "11": "BAT_TS",
+        "12": null,
+        "13": "BAT_SW",
+        "14": "BAT_SW",
+        "15": "BAT_SYS",
+        "16": "BAT_SYS",
+        "17": "GND",
+        "18": "GND",
+        "19": "CHG_SW",
+        "20": "CHG_SW",
+        "21": "CHG_BTST",
+        "22": "CHG_REGN",
+        "23": "CHG_PMID",
+        "24": "CAR_5V",
+        "25": "GND"
+      },
+      "ncReasons": {
+        "2": "Datasheet NC.",
+        "3": "No USB data source; unknown-adapter detection uses ILIM; bench verify.",
+        "4": "No USB data source; do not short D+ and D-.",
+        "7": "Optional PG output unused.",
+        "12": "VSET floating selects 4.208V. Ground would select 4.352V."
+      }
+    },
+    {
+      "id": "cmp-C203",
+      "ref": "C203",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C440198",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "24"
+      }
+    },
+    {
+      "id": "cmp-C204",
+      "ref": "C204",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "24"
+      }
+    },
+    {
+      "id": "cmp-C205",
+      "ref": "C205",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C440198",
+      "role": "decoupling",
+      "pins": {
+        "1": "CHG_PMID",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "23"
+      }
+    },
+    {
+      "id": "cmp-C206",
+      "ref": "C206",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C19666",
+      "role": "decoupling",
+      "pins": {
+        "1": "CHG_REGN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "22"
+      }
+    },
+    {
+      "id": "cmp-C207",
+      "ref": "C207",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C1622",
+      "role": "charger bootstrap",
+      "pins": {
+        "1": "CHG_BTST",
+        "2": "CHG_SW"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "21"
+      }
+    },
+    {
+      "id": "cmp-L201",
+      "ref": "L201",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C920280",
+      "role": "2.2uH charger inductor",
+      "pins": {
+        "1": "CHG_SW",
+        "2": "BAT_SYS"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "19"
+      }
+    },
+    {
+      "id": "cmp-C208",
+      "ref": "C208",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SYS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "15"
+      }
+    },
+    {
+      "id": "cmp-C209",
+      "ref": "C209",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SYS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "16"
+      }
+    },
+    {
+      "id": "cmp-C210",
+      "ref": "C210",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C440198",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "13"
+      }
+    },
+    {
+      "id": "cmp-R203",
+      "ref": "R203",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C23220",
+      "role": "unknown-adapter input limit about 0.77A",
+      "pins": {
+        "1": "CHG_ILIM",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-R204",
+      "ref": "R204",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C22764",
+      "role": "nominal charge current 615mA",
+      "pins": {
+        "1": "CHG_ICHG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-R205",
+      "ref": "R205",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C23128",
+      "role": "temperature upper resistor",
+      "pins": {
+        "1": "CHG_REGN",
+        "2": "BAT_TS"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U201",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-R206",
+      "ref": "R206",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C4172",
+      "role": "temperature parallel resistor",
+      "pins": {
+        "1": "BAT_TS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-C211",
+      "ref": "C211",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C1589",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_TS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-J202",
+      "ref": "J202",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C2908600",
+      "role": "external cell-attached C394021 10k NTC; never on PCB",
+      "pins": {
+        "1": "BAT_TS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U201",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-R207",
+      "ref": "R207",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C25803",
+      "role": "charge disabled until controller allows",
+      "pins": {
+        "1": "CHG_REGN",
+        "2": "CHG_CE_N"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U201",
+        "ownerPin": "9"
+      }
+    },
+    {
+      "id": "cmp-Q203",
+      "ref": "Q203",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C8545",
+      "role": "isolates 5V charger CE from 3V MCU",
+      "pins": {
+        "3": "CHG_CE_N",
+        "1": "CHG_GATE",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "3",
+        "owner": "U201",
+        "ownerPin": "9"
+      }
+    },
+    {
+      "id": "cmp-R208",
+      "ref": "R208",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C21190",
+      "role": "charge-enable gate resistor",
+      "pins": {
+        "1": "CTL_CHG_EN",
+        "2": "CHG_GATE"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "Q203",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R209",
+      "ref": "R209",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C25803",
+      "role": "charge default off",
+      "pins": {
+        "1": "CHG_GATE",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "Q203",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R210",
+      "ref": "R210",
+      "page": 2,
+      "zone": "charger",
+      "lcsc": "C25803",
+      "role": "charger status pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "CHG_STAT_N"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U201",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-U202",
+      "ref": "U202",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C22399676",
+      "role": "independent 4A priority mux",
+      "pins": {
+        "1": "GND",
+        "2": "HOST_SRC",
+        "3": "CAR_5V",
+        "4": "HOST_PR",
+        "5": "CAR_5V",
+        "6": "BAT_SW",
+        "7": "HOST_SRC",
+        "8": "HOST_CAR_ST"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C212",
+      "ref": "C212",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U202",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-C213",
+      "ref": "C213",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U202",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C214",
+      "ref": "C214",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U202",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C215",
+      "ref": "C215",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C214",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C216",
+      "ref": "C216",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C215",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C217",
+      "ref": "C217",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C216",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R211",
+      "ref": "R211",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C23137",
+      "role": "priority threshold upper",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "HOST_PR"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U202",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R212",
+      "ref": "R212",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C25803",
+      "role": "priority threshold lower",
+      "pins": {
+        "1": "HOST_PR",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U202",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R213",
+      "ref": "R213",
+      "page": 2,
+      "zone": "mux-host",
+      "lcsc": "C23137",
+      "role": "mux source status pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "HOST_CAR_ST"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U202",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-U203",
+      "ref": "U203",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C22399676",
+      "role": "independent 4A priority mux",
+      "pins": {
+        "1": "GND",
+        "2": "MODEM_SRC",
+        "3": "CAR_5V",
+        "4": "MODEM_PR",
+        "5": "CAR_5V",
+        "6": "BAT_SW",
+        "7": "MODEM_SRC",
+        "8": "MODEM_CAR_ST"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C221",
+      "ref": "C221",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U203",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-C222",
+      "ref": "C222",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U203",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C223",
+      "ref": "C223",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U203",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C224",
+      "ref": "C224",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C223",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C225",
+      "ref": "C225",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C224",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C226",
+      "ref": "C226",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C225",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R214",
+      "ref": "R214",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C23137",
+      "role": "priority threshold upper",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "MODEM_PR"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U203",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R215",
+      "ref": "R215",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C25803",
+      "role": "priority threshold lower",
+      "pins": {
+        "1": "MODEM_PR",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U203",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R216",
+      "ref": "R216",
+      "page": 2,
+      "zone": "mux-modem",
+      "lcsc": "C23137",
+      "role": "mux source status pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "MODEM_CAR_ST"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U203",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-U204",
+      "ref": "U204",
+      "page": 2,
+      "zone": "aon-source",
+      "lcsc": "C3235556",
+      "role": "low-quiescent dual ideal-diode OR",
+      "pins": {
+        "1": "GND",
+        "2": "AON_RAW",
+        "3": "VEH_AON_5V",
+        "4": "GND",
+        "5": "GND",
+        "6": "BAT_SYS",
+        "7": "AON_RAW",
+        "8": null
+      },
+      "ncReasons": {
+        "8": "Optional source-status output unused."
+      }
+    },
+    {
+      "id": "cmp-C230",
+      "ref": "C230",
+      "page": 2,
+      "zone": "aon-source",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "VEH_AON_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U204",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-C231",
+      "ref": "C231",
+      "page": 2,
+      "zone": "aon-source",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "BAT_SYS",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U204",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C232",
+      "ref": "C232",
+      "page": 2,
+      "zone": "aon-source",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "AON_RAW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U204",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-U205",
+      "ref": "U205",
+      "page": 2,
+      "zone": "aon-ldo",
+      "lcsc": "C3747031",
+      "role": "AON 3V regulator for controller, IMU and wake port",
+      "pins": {
+        "1": "AON_RAW",
+        "2": "GND",
+        "3": "AON_RAW",
+        "4": null,
+        "5": "3V0_AON"
+      },
+      "ncReasons": {
+        "4": "Datasheet NC."
+      }
+    },
+    {
+      "id": "cmp-C233",
+      "ref": "C233",
+      "page": 2,
+      "zone": "aon-ldo",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "AON_RAW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U205",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C234",
+      "ref": "C234",
+      "page": 2,
+      "zone": "aon-ldo",
+      "lcsc": "C19666",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U205",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-U301",
+      "ref": "U301",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C15483",
+      "role": "TPS63020 forced PWM; disabled during standby",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND",
+        "3": "HOST_FB",
+        "4": "HOST_REG",
+        "5": "HOST_REG",
+        "6": "HOST_L2",
+        "7": "HOST_L2",
+        "8": "HOST_L1",
+        "9": "HOST_L1",
+        "10": "HOST_SRC",
+        "11": "HOST_SRC",
+        "12": "HOST_REG_EN",
+        "13": "HOST_SRC",
+        "14": "HOST_REG_PG",
+        "15": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-L301",
+      "ref": "L301",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C2651165",
+      "role": "1.5uH rail inductor",
+      "pins": {
+        "1": "HOST_L1",
+        "2": "HOST_L2"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-C302",
+      "ref": "C302",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C303",
+      "ref": "C303",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-C304",
+      "ref": "C304",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-C305",
+      "ref": "C305",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C306",
+      "ref": "C306",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C305",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C307",
+      "ref": "C307",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C306",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R301",
+      "ref": "R301",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C728600",
+      "role": "host feedback upper series part",
+      "pins": {
+        "1": "HOST_REG",
+        "2": "HOST_FB_MID"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R302",
+      "ref": "R302",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C110776",
+      "role": "host feedback trim",
+      "pins": {
+        "1": "HOST_FB_MID",
+        "2": "HOST_FB"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R301",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R303",
+      "ref": "R303",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C95204",
+      "role": "host feedback lower",
+      "pins": {
+        "1": "HOST_FB",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R304",
+      "ref": "R304",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C21190",
+      "role": "regulator control series resistor",
+      "pins": {
+        "1": "CTL_HOST_REG_EN",
+        "2": "HOST_REG_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U301",
+        "ownerPin": "12"
+      }
+    },
+    {
+      "id": "cmp-R305",
+      "ref": "R305",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C25803",
+      "role": "regulator default off",
+      "pins": {
+        "1": "HOST_REG_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U301",
+        "ownerPin": "12"
+      }
+    },
+    {
+      "id": "cmp-R310",
+      "ref": "R310",
+      "page": 3,
+      "zone": "reg-host",
+      "lcsc": "C23137",
+      "role": "regulator power-good pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "HOST_REG_PG"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U301",
+        "ownerPin": "14"
+      }
+    },
+    {
+      "id": "cmp-U304",
+      "ref": "U304",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C15483",
+      "role": "TPS63020 forced PWM; disabled during standby",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND",
+        "3": "MODEM_FB",
+        "4": "MODEM_REG",
+        "5": "MODEM_REG",
+        "6": "MODEM_L2",
+        "7": "MODEM_L2",
+        "8": "MODEM_L1",
+        "9": "MODEM_L1",
+        "10": "MODEM_SRC",
+        "11": "MODEM_SRC",
+        "12": "MODEM_REG_EN",
+        "13": "MODEM_SRC",
+        "14": "MODEM_REG_PG",
+        "15": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-L302",
+      "ref": "L302",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C2651165",
+      "role": "1.5uH rail inductor",
+      "pins": {
+        "1": "MODEM_L1",
+        "2": "MODEM_L2"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U304",
+        "ownerPin": "8"
+      }
+    },
+    {
+      "id": "cmp-C312",
+      "ref": "C312",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U304",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C313",
+      "ref": "C313",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U304",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-C314",
+      "ref": "C314",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_SRC",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U304",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-C315",
+      "ref": "C315",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U304",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C316",
+      "ref": "C316",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C315",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C317",
+      "ref": "C317",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C316",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R306",
+      "ref": "R306",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C122538",
+      "role": "modem feedback upper",
+      "pins": {
+        "1": "MODEM_REG",
+        "2": "MODEM_FB"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U304",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R307",
+      "ref": "R307",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C705725",
+      "role": "modem feedback lower",
+      "pins": {
+        "1": "MODEM_FB",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U304",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R308",
+      "ref": "R308",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C21190",
+      "role": "regulator control series resistor",
+      "pins": {
+        "1": "CTL_MODEM_REG_EN",
+        "2": "MODEM_REG_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U304",
+        "ownerPin": "12"
+      }
+    },
+    {
+      "id": "cmp-R309",
+      "ref": "R309",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C25803",
+      "role": "regulator default off",
+      "pins": {
+        "1": "MODEM_REG_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U304",
+        "ownerPin": "12"
+      }
+    },
+    {
+      "id": "cmp-R311",
+      "ref": "R311",
+      "page": 3,
+      "zone": "reg-modem",
+      "lcsc": "C23137",
+      "role": "regulator power-good pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "MODEM_REG_PG"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U304",
+        "ownerPin": "14"
+      }
+    },
+    {
+      "id": "cmp-U302",
+      "ref": "U302",
+      "page": 3,
+      "zone": "host-disconnect",
+      "lcsc": "C471046",
+      "role": "TPS22953 disconnect with SNS tied directly to OUT",
+      "pins": {
+        "1": "HOST_REG",
+        "2": "HOST_REG",
+        "3": "HOST_REG",
+        "4": "HOST_LOAD_EN",
+        "5": "GND",
+        "6": "HOST_CT",
+        "7": null,
+        "8": "HOST_SW",
+        "9": "HOST_SW",
+        "10": "HOST_SW",
+        "11": "GND"
+      },
+      "ncReasons": {
+        "7": "PG unused; regulator PG and output ADC used."
+      }
+    },
+    {
+      "id": "cmp-C308",
+      "ref": "C308",
+      "page": 3,
+      "zone": "host-disconnect",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U302",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C309",
+      "ref": "C309",
+      "page": 3,
+      "zone": "host-disconnect",
+      "lcsc": "C1589",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_CT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U302",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C310",
+      "ref": "C310",
+      "page": 3,
+      "zone": "host-disconnect",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_SW",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U302",
+        "ownerPin": "9"
+      }
+    },
+    {
+      "id": "cmp-R312",
+      "ref": "R312",
+      "page": 3,
+      "zone": "host-disconnect",
+      "lcsc": "C21190",
+      "role": "host load control series",
+      "pins": {
+        "1": "CTL_HOST_LOAD_EN",
+        "2": "HOST_LOAD_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U302",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R313",
+      "ref": "R313",
+      "page": 3,
+      "zone": "host-disconnect",
+      "lcsc": "C25803",
+      "role": "host load default off",
+      "pins": {
+        "1": "HOST_LOAD_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U302",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-U303",
+      "ref": "U303",
+      "page": 3,
+      "zone": "host-reverse",
+      "lcsc": "C2869734",
+      "role": "CE tied OUT for reverse blocking; not the disconnect device",
+      "pins": {
+        "1": "HOST_SW",
+        "2": "GND",
+        "3": "HOST_5V",
+        "4": null,
+        "5": null,
+        "6": "HOST_5V"
+      },
+      "ncReasons": {
+        "4": "Datasheet NC.",
+        "5": "Optional status output unused."
+      }
+    },
+    {
+      "id": "cmp-C311",
+      "ref": "C311",
+      "page": 3,
+      "zone": "host-reverse",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U303",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-R314",
+      "ref": "R314",
+      "page": 3,
+      "zone": "host-reverse",
+      "lcsc": "C25804",
+      "role": "residual output bleed; external load capacitance affects off time",
+      "pins": {
+        "1": "HOST_5V",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U303",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-U305",
+      "ref": "U305",
+      "page": 3,
+      "zone": "modem-disconnect",
+      "lcsc": "C122837",
+      "role": "modem load switch with quick output discharge",
+      "pins": {
+        "1": "MODEM_REG",
+        "2": "MODEM_REG",
+        "3": "MODEM_LOAD_EN",
+        "4": "MODEM_REG",
+        "5": "GND",
+        "6": "MODEM_CT",
+        "7": "TINY_BAT",
+        "8": "TINY_BAT",
+        "9": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C318",
+      "ref": "C318",
+      "page": 3,
+      "zone": "modem-disconnect",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_REG",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U305",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C319",
+      "ref": "C319",
+      "page": 3,
+      "zone": "modem-disconnect",
+      "lcsc": "C1589",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_CT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U305",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-C301",
+      "ref": "C301",
+      "page": 3,
+      "zone": "modem-disconnect",
+      "lcsc": "C128503",
+      "role": "470uF low-ESR switched bulk; positive pin1",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U305",
+        "ownerPin": "7"
+      }
+    },
+    {
+      "id": "cmp-C320",
+      "ref": "C320",
+      "page": 3,
+      "zone": "modem-disconnect",
+      "lcsc": "C12891",
+      "role": "decoupling",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U305",
+        "ownerPin": "7"
+      }
+    },
+    {
+      "id": "cmp-R315",
+      "ref": "R315",
+      "page": 3,
+      "zone": "modem-disconnect",
+      "lcsc": "C21190",
+      "role": "modem load control series",
+      "pins": {
+        "1": "CTL_MODEM_LOAD_EN",
+        "2": "MODEM_LOAD_EN"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U305",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R316",
+      "ref": "R316",
+      "page": 3,
+      "zone": "modem-disconnect",
+      "lcsc": "C25803",
+      "role": "modem load default off",
+      "pins": {
+        "1": "MODEM_LOAD_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U305",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-J301",
+      "ref": "J301",
+      "page": 3,
+      "zone": "host-connectors",
+      "lcsc": "C474881",
+      "role": "parallel output: + pin1 / GND pin2; never another source",
+      "pins": {
+        "1": "HOST_5V",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J302",
+      "ref": "J302",
+      "page": 3,
+      "zone": "host-connectors",
+      "lcsc": "C2908600",
+      "role": "parallel output: + pin1 / GND pin2; never another source",
+      "pins": {
+        "1": "HOST_5V",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J303",
+      "ref": "J303",
+      "page": 3,
+      "zone": "host-connectors",
+      "lcsc": "C492401",
+      "role": "parallel output: + pin1 / GND pin2; never another source",
+      "pins": {
+        "1": "HOST_5V",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J304",
+      "ref": "J304",
+      "page": 3,
+      "zone": "tiny-connectors",
+      "lcsc": "C474881",
+      "role": "parallel output: + pin1 / GND pin2; never another source",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J305",
+      "ref": "J305",
+      "page": 3,
+      "zone": "tiny-connectors",
+      "lcsc": "C2908600",
+      "role": "parallel output: + pin1 / GND pin2; never another source",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J306",
+      "ref": "J306",
+      "page": 3,
+      "zone": "tiny-connectors",
+      "lcsc": "C492401",
+      "role": "parallel output: + pin1 / GND pin2; never another source",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-U306",
+      "ref": "U306",
+      "page": 3,
+      "zone": "modem-vio",
+      "lcsc": "C2887324",
+      "role": "UART level-converter supply follows actual modem output",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "GND",
+        "3": "TINY_BAT",
+        "4": null,
+        "5": "MODEM_VIO"
+      },
+      "ncReasons": {
+        "4": "Datasheet NC."
+      }
+    },
+    {
+      "id": "cmp-C321",
+      "ref": "C321",
+      "page": 3,
+      "zone": "modem-vio",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U306",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C322",
+      "ref": "C322",
+      "page": 3,
+      "zone": "modem-vio",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_VIO",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U306",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-U307",
+      "ref": "U307",
+      "page": 3,
+      "zone": "modem-uart",
+      "lcsc": "C5186957",
+      "role": "TXU0202 overvoltage-tolerant inputs and Ioff",
+      "pins": {
+        "1": "TINY_TX",
+        "2": "GND",
+        "3": "HOST_3V3",
+        "4": "HOST_MODEM_RX",
+        "5": "HOST_MODEM_TX",
+        "6": "CTL_MODEM_LOAD_EN",
+        "7": "MODEM_VIO",
+        "8": "TINY_RX"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C323",
+      "ref": "C323",
+      "page": 3,
+      "zone": "modem-uart",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_3V3",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U307",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-C324",
+      "ref": "C324",
+      "page": 3,
+      "zone": "modem-uart",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "MODEM_VIO",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U307",
+        "ownerPin": "7"
+      }
+    },
+    {
+      "id": "cmp-R317",
+      "ref": "R317",
+      "page": 3,
+      "zone": "modem-uart",
+      "lcsc": "C25803",
+      "role": "UART OE default off",
+      "pins": {
+        "1": "CTL_MODEM_LOAD_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U307",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-J307",
+      "ref": "J307",
+      "page": 3,
+      "zone": "modem-uart",
+      "lcsc": "C7434310",
+      "role": "host modem UART XH; 3V3 is reference input",
+      "pins": {
+        "1": "HOST_3V3",
+        "2": "GND",
+        "3": "HOST_MODEM_TX",
+        "4": "HOST_MODEM_RX"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J308",
+      "ref": "J308",
+      "page": 3,
+      "zone": "modem-uart",
+      "lcsc": "C41425294",
+      "role": "Tiny UART header; pin1 is test/reference only, no Tiny VCC connection",
+      "pins": {
+        "1": "MODEM_VIO",
+        "2": "GND",
+        "3": "TINY_RX",
+        "4": "TINY_TX"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-U401",
+      "ref": "U401",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C94085",
+      "role": "STM32L031K6 LQFP32; internal clock",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "HOST_REG_PG",
+        "3": "MODEM_CAR_ST",
+        "4": "AON_NRST",
+        "5": "3V0_AON",
+        "6": "ADC_BAT",
+        "7": "ADC_CAR",
+        "8": "AON_UART_TX",
+        "9": "AON_UART_RX",
+        "10": "ADC_HOST",
+        "11": "ADC_MODEM",
+        "12": "CTL_CAR_EN",
+        "13": "CTL_HOST_REG_EN",
+        "14": "CTL_MODEM_REG_EN",
+        "15": "CTL_HOST_LOAD_EN",
+        "16": "GND",
+        "17": "3V0_AON",
+        "18": "CTL_MODEM_LOAD_EN",
+        "19": "CTL_CHG_EN",
+        "20": "CHG_STAT_N",
+        "21": "HOST_CAR_ST",
+        "22": "ACC_N",
+        "23": "AON_SWDIO",
+        "24": "AON_SWCLK",
+        "25": "KEY_N",
+        "26": "EXT_WAKE_N",
+        "27": "IMU_INT",
+        "28": "MODEM_REG_PG",
+        "29": "AON_SCL",
+        "30": "AON_SDA",
+        "31": "BOOT0",
+        "32": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C401",
+      "ref": "C401",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-C402",
+      "ref": "C402",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "17"
+      }
+    },
+    {
+      "id": "cmp-C403",
+      "ref": "C403",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "5"
+      }
+    },
+    {
+      "id": "cmp-C404",
+      "ref": "C404",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C19666",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "C401",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R401",
+      "ref": "R401",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25804",
+      "role": "boot from flash",
+      "pins": {
+        "1": "BOOT0",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "31"
+      }
+    },
+    {
+      "id": "cmp-R402",
+      "ref": "R402",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25804",
+      "role": "reset pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "AON_NRST"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U401",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-C405",
+      "ref": "C405",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "AON_NRST",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R402",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-R403",
+      "ref": "R403",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "MCU control default low",
+      "pins": {
+        "1": "CTL_CAR_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "12"
+      }
+    },
+    {
+      "id": "cmp-R404",
+      "ref": "R404",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "MCU control default low",
+      "pins": {
+        "1": "CTL_HOST_REG_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "13"
+      }
+    },
+    {
+      "id": "cmp-R405",
+      "ref": "R405",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "MCU control default low",
+      "pins": {
+        "1": "CTL_MODEM_REG_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "14"
+      }
+    },
+    {
+      "id": "cmp-R406",
+      "ref": "R406",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "MCU control default low",
+      "pins": {
+        "1": "CTL_HOST_LOAD_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "15"
+      }
+    },
+    {
+      "id": "cmp-R407",
+      "ref": "R407",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "MCU control default low",
+      "pins": {
+        "1": "CTL_MODEM_LOAD_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "18"
+      }
+    },
+    {
+      "id": "cmp-R408",
+      "ref": "R408",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "MCU control default low",
+      "pins": {
+        "1": "CTL_CHG_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U401",
+        "ownerPin": "19"
+      }
+    },
+    {
+      "id": "cmp-R409",
+      "ref": "R409",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25811",
+      "role": "ADC upper divider, ratio 1/3",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "ADC_BAT"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U401",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-R410",
+      "ref": "R410",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "ADC lower divider",
+      "pins": {
+        "1": "ADC_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R409",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C406",
+      "ref": "C406",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "ADC_BAT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R410",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R411",
+      "ref": "R411",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25811",
+      "role": "ADC upper divider, ratio 1/3",
+      "pins": {
+        "1": "CAR_5V",
+        "2": "ADC_CAR"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U401",
+        "ownerPin": "7"
+      }
+    },
+    {
+      "id": "cmp-R412",
+      "ref": "R412",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "ADC lower divider",
+      "pins": {
+        "1": "ADC_CAR",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R411",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C407",
+      "ref": "C407",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "ADC_CAR",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R412",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R413",
+      "ref": "R413",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25811",
+      "role": "ADC upper divider, ratio 1/3",
+      "pins": {
+        "1": "HOST_SW",
+        "2": "ADC_HOST"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U401",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-R414",
+      "ref": "R414",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "ADC lower divider",
+      "pins": {
+        "1": "ADC_HOST",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R413",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C408",
+      "ref": "C408",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "ADC_HOST",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R414",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R415",
+      "ref": "R415",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25811",
+      "role": "ADC upper divider, ratio 1/3",
+      "pins": {
+        "1": "TINY_BAT",
+        "2": "ADC_MODEM"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U401",
+        "ownerPin": "11"
+      }
+    },
+    {
+      "id": "cmp-R416",
+      "ref": "R416",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C25803",
+      "role": "ADC lower divider",
+      "pins": {
+        "1": "ADC_MODEM",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R415",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C409",
+      "ref": "C409",
+      "page": 4,
+      "zone": "controller",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "ADC_MODEM",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R416",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-U402",
+      "ref": "U402",
+      "page": 4,
+      "zone": "motion-imu",
+      "lcsc": "C189624",
+      "role": "I2C address 0x18; RES tied ground per datasheet",
+      "pins": {
+        "1": "AON_SCL",
+        "2": "3V0_AON",
+        "3": "GND",
+        "4": "AON_SDA",
+        "5": null,
+        "6": "GND",
+        "7": "GND",
+        "8": "GND",
+        "9": "3V0_AON",
+        "10": "3V0_AON",
+        "11": null,
+        "12": "IMU_INT"
+      },
+      "ncReasons": {
+        "5": "Datasheet NC.",
+        "11": "Unused second interrupt output."
+      }
+    },
+    {
+      "id": "cmp-C410",
+      "ref": "C410",
+      "page": 4,
+      "zone": "motion-imu",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U402",
+        "ownerPin": "9"
+      }
+    },
+    {
+      "id": "cmp-C411",
+      "ref": "C411",
+      "page": 4,
+      "zone": "motion-imu",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U402",
+        "ownerPin": "10"
+      }
+    },
+    {
+      "id": "cmp-C412",
+      "ref": "C412",
+      "page": 4,
+      "zone": "motion-imu",
+      "lcsc": "C15849",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U402",
+        "ownerPin": "9"
+      }
+    },
+    {
+      "id": "cmp-R417",
+      "ref": "R417",
+      "page": 4,
+      "zone": "motion-imu",
+      "lcsc": "C25804",
+      "role": "I2C pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "AON_SCL"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U402",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R418",
+      "ref": "R418",
+      "page": 4,
+      "zone": "motion-imu",
+      "lcsc": "C25804",
+      "role": "I2C pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "AON_SDA"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "U402",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-R419",
+      "ref": "R419",
+      "page": 4,
+      "zone": "motion-imu",
+      "lcsc": "C25803",
+      "role": "interrupt default inactive; configure push-pull active high",
+      "pins": {
+        "1": "IMU_INT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U402",
+        "ownerPin": "12"
+      }
+    },
+    {
+      "id": "cmp-SW401",
+      "ref": "SW401",
+      "page": 4,
+      "zone": "user-key",
+      "lcsc": "C720477",
+      "role": "momentary independent power key",
+      "pins": {
+        "1": "KEY_EXT",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J403",
+      "ref": "J403",
+      "page": 4,
+      "zone": "user-key",
+      "lcsc": "C2908600",
+      "role": "external enclosure momentary key",
+      "pins": {
+        "1": "KEY_EXT",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "SW401",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R420",
+      "ref": "R420",
+      "page": 4,
+      "zone": "user-key",
+      "lcsc": "C21190",
+      "role": "key series filter resistor",
+      "pins": {
+        "1": "KEY_EXT",
+        "2": "KEY_N"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "SW401",
+        "ownerPin": "1"
+      }
+    },
+    {
+      "id": "cmp-R421",
+      "ref": "R421",
+      "page": 4,
+      "zone": "user-key",
+      "lcsc": "C25803",
+      "role": "key pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "KEY_N"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "R420",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C413",
+      "ref": "C413",
+      "page": 4,
+      "zone": "user-key",
+      "lcsc": "C1589",
+      "role": "decoupling",
+      "pins": {
+        "1": "KEY_N",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R420",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-J401",
+      "ref": "J401",
+      "page": 4,
+      "zone": "external-wake",
+      "lcsc": "C2908601",
+      "role": "XH external wake connector",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND",
+        "3": "WAKE_PORT_N"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J402",
+      "ref": "J402",
+      "page": 4,
+      "zone": "external-wake",
+      "lcsc": "C2937625",
+      "role": "parallel 2.54mm wake connector",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND",
+        "3": "WAKE_PORT_N"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J404",
+      "ref": "J404",
+      "page": 4,
+      "zone": "external-wake",
+      "lcsc": "C474882",
+      "role": "parallel screw wake connector",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND",
+        "3": "WAKE_PORT_N"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R422",
+      "ref": "R422",
+      "page": 4,
+      "zone": "external-wake",
+      "lcsc": "C21190",
+      "role": "wake input series filter",
+      "pins": {
+        "1": "WAKE_PORT_N",
+        "2": "EXT_WAKE_N"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "J401",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R423",
+      "ref": "R423",
+      "page": 4,
+      "zone": "external-wake",
+      "lcsc": "C25803",
+      "role": "wake pullup",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "EXT_WAKE_N"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "2",
+        "owner": "R422",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-C414",
+      "ref": "C414",
+      "page": 4,
+      "zone": "external-wake",
+      "lcsc": "C1589",
+      "role": "decoupling",
+      "pins": {
+        "1": "EXT_WAKE_N",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "R422",
+        "ownerPin": "2"
+      }
+    },
+    {
+      "id": "cmp-U403",
+      "ref": "U403",
+      "page": 4,
+      "zone": "management-uart",
+      "lcsc": "C5186957",
+      "role": "power-management UART isolation",
+      "pins": {
+        "1": "HOST_MGMT_TX",
+        "2": "GND",
+        "3": "3V0_AON",
+        "4": "AON_UART_RX",
+        "5": "AON_UART_TX",
+        "6": "CTL_HOST_LOAD_EN",
+        "7": "HOST_3V3",
+        "8": "HOST_MGMT_RX"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-C415",
+      "ref": "C415",
+      "page": 4,
+      "zone": "management-uart",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U403",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-C416",
+      "ref": "C416",
+      "page": 4,
+      "zone": "management-uart",
+      "lcsc": "C1591",
+      "role": "decoupling",
+      "pins": {
+        "1": "HOST_3V3",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U403",
+        "ownerPin": "7"
+      }
+    },
+    {
+      "id": "cmp-R424",
+      "ref": "R424",
+      "page": 4,
+      "zone": "management-uart",
+      "lcsc": "C25803",
+      "role": "management UART default isolation",
+      "pins": {
+        "1": "CTL_HOST_LOAD_EN",
+        "2": "GND"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "U403",
+        "ownerPin": "6"
+      }
+    },
+    {
+      "id": "cmp-J405",
+      "ref": "J405",
+      "page": 4,
+      "zone": "management-uart",
+      "lcsc": "C7434310",
+      "role": "host management XH; 3V3 is reference input",
+      "pins": {
+        "1": "HOST_3V3",
+        "2": "GND",
+        "3": "HOST_MGMT_TX",
+        "4": "HOST_MGMT_RX"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J406",
+      "ref": "J406",
+      "page": 4,
+      "zone": "management-uart",
+      "lcsc": "C41425294",
+      "role": "parallel management header",
+      "pins": {
+        "1": "HOST_3V3",
+        "2": "GND",
+        "3": "HOST_MGMT_TX",
+        "4": "HOST_MGMT_RX"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-J407",
+      "ref": "J407",
+      "page": 4,
+      "zone": "debug",
+      "lcsc": "C41425294",
+      "role": "debugger must float signals when VTREF is absent",
+      "pins": {
+        "1": "3V0_AON",
+        "2": "GND",
+        "3": "DBG_SWDIO",
+        "4": "DBG_SWCLK"
+      },
+      "ncReasons": {}
+    },
+    {
+      "id": "cmp-R425",
+      "ref": "R425",
+      "page": 4,
+      "zone": "debug",
+      "lcsc": "C21190",
+      "role": "debug series protection; not powered-off isolation",
+      "pins": {
+        "1": "DBG_SWDIO",
+        "2": "AON_SWDIO"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "J407",
+        "ownerPin": "3"
+      }
+    },
+    {
+      "id": "cmp-R426",
+      "ref": "R426",
+      "page": 4,
+      "zone": "debug",
+      "lcsc": "C21190",
+      "role": "debug series protection; not powered-off isolation",
+      "pins": {
+        "1": "DBG_SWCLK",
+        "2": "AON_SWCLK"
+      },
+      "ncReasons": {},
+      "attachment": {
+        "pin": "1",
+        "owner": "J407",
+        "ownerPin": "4"
+      }
+    },
+    {
+      "id": "cmp-J408",
+      "ref": "J408",
+      "page": 4,
+      "zone": "debug-reset",
+      "lcsc": "C492401",
+      "role": "optional debugger open-drain reset",
+      "pins": {
+        "1": "AON_NRST",
+        "2": "GND"
+      },
+      "ncReasons": {}
+    }
+  ],
+  "zones": [
+    {
+      "id": "vehicle-protection",
+      "page": 1,
+      "title": "VEHICLE INPUT / REVERSE AND OV",
+      "core": "U101",
+      "members": [
+        "J101",
+        "F101",
+        "D101",
+        "Q101",
+        "Q102",
+        "U101",
+        "C101",
+        "C102",
+        "R101",
+        "R102"
+      ]
+    },
+    {
+      "id": "master-control",
+      "page": 1,
+      "title": "DPDT MASTER / LOW CURRENT ONLY",
+      "core": "SW101",
+      "members": [
+        "SW101",
+        "R103",
+        "R104",
+        "D103",
+        "R105",
+        "C103"
+      ]
+    },
+    {
+      "id": "vehicle-buck",
+      "page": 1,
+      "title": "VEHICLE 5.088V / 4A DESIGN LOAD",
+      "core": "U102",
+      "members": [
+        "U102",
+        "C104",
+        "C105",
+        "C106",
+        "C107",
+        "C108",
+        "D102",
+        "L101",
+        "C109",
+        "C110",
+        "C111",
+        "C112",
+        "C113",
+        "C114",
+        "R106",
+        "R107",
+        "R108",
+        "R109",
+        "C115",
+        "C116",
+        "R110",
+        "R111"
+      ]
+    },
+    {
+      "id": "vehicle-aon",
+      "page": 1,
+      "title": "AON VEHICLE COLD START / 5V",
+      "core": "U103",
+      "members": [
+        "U103",
+        "C117",
+        "C118",
+        "C119"
+      ]
+    },
+    {
+      "id": "acc-sense",
+      "page": 1,
+      "title": "ACC OPTO INPUT / MASTER GATED",
+      "core": "U104",
+      "members": [
+        "U104",
+        "R112",
+        "R113",
+        "R114",
+        "R115",
+        "D104",
+        "D105",
+        "Q103",
+        "R116",
+        "C120",
+        "J102"
+      ]
+    },
+    {
+      "id": "battery-master",
+      "page": 2,
+      "title": "PROTECTED 1S PACK / MASTER ISOLATION",
+      "core": "Q201",
+      "members": [
+        "J201",
+        "F201",
+        "Q201",
+        "Q202",
+        "R201",
+        "R202",
+        "C201",
+        "C202"
+      ]
+    },
+    {
+      "id": "charger",
+      "page": 2,
+      "title": "BQ25606 / 4.208V / ABOUT 615mA",
+      "core": "U201",
+      "members": [
+        "U201",
+        "C203",
+        "C204",
+        "C205",
+        "C206",
+        "C207",
+        "L201",
+        "C208",
+        "C209",
+        "C210",
+        "R203",
+        "R204",
+        "R205",
+        "R206",
+        "C211",
+        "J202",
+        "R207",
+        "Q203",
+        "R208",
+        "R209",
+        "R210"
+      ]
+    },
+    {
+      "id": "mux-host",
+      "page": 2,
+      "title": "HOST SOURCE MUX / CAR PRIORITY",
+      "core": "U202",
+      "members": [
+        "U202",
+        "C212",
+        "C213",
+        "C214",
+        "C215",
+        "C216",
+        "C217",
+        "R211",
+        "R212",
+        "R213"
+      ]
+    },
+    {
+      "id": "mux-modem",
+      "page": 2,
+      "title": "MODEM SOURCE MUX / CAR PRIORITY",
+      "core": "U203",
+      "members": [
+        "U203",
+        "C221",
+        "C222",
+        "C223",
+        "C224",
+        "C225",
+        "C226",
+        "R214",
+        "R215",
+        "R216"
+      ]
+    },
+    {
+      "id": "aon-source",
+      "page": 2,
+      "title": "AON SUPPLY OR / CAR OR BAT_SYS",
+      "core": "U204",
+      "members": [
+        "U204",
+        "C230",
+        "C231",
+        "C232"
+      ]
+    },
+    {
+      "id": "aon-ldo",
+      "page": 2,
+      "title": "3.0V ALWAYS-ON / LOW IQ",
+      "core": "U205",
+      "members": [
+        "U205",
+        "C233",
+        "C234"
+      ]
+    },
+    {
+      "id": "reg-host",
+      "page": 3,
+      "title": "HOST BUCK-BOOST / FORCED PWM",
+      "core": "U301",
+      "members": [
+        "U301",
+        "L301",
+        "C302",
+        "C303",
+        "C304",
+        "C305",
+        "C306",
+        "C307",
+        "R301",
+        "R302",
+        "R303",
+        "R304",
+        "R305",
+        "R310"
+      ]
+    },
+    {
+      "id": "reg-modem",
+      "page": 3,
+      "title": "MODEM BUCK-BOOST / FORCED PWM",
+      "core": "U304",
+      "members": [
+        "U304",
+        "L302",
+        "C312",
+        "C313",
+        "C314",
+        "C315",
+        "C316",
+        "C317",
+        "R306",
+        "R307",
+        "R308",
+        "R309",
+        "R311"
+      ]
+    },
+    {
+      "id": "host-disconnect",
+      "page": 3,
+      "title": "HOST LOAD SWITCH / TRUE DISCONNECT",
+      "core": "U302",
+      "members": [
+        "U302",
+        "C308",
+        "C309",
+        "C310",
+        "R312",
+        "R313"
+      ]
+    },
+    {
+      "id": "host-reverse",
+      "page": 3,
+      "title": "HOST REVERSE BLOCK / USB BACKFEED",
+      "core": "U303",
+      "members": [
+        "U303",
+        "C311",
+        "R314"
+      ]
+    },
+    {
+      "id": "modem-disconnect",
+      "page": 3,
+      "title": "TINY BAT SWITCH / 3.9V ONLY",
+      "core": "U305",
+      "members": [
+        "U305",
+        "C318",
+        "C319",
+        "C301",
+        "C320",
+        "R315",
+        "R316"
+      ]
+    },
+    {
+      "id": "host-connectors",
+      "page": 3,
+      "title": "HOST 5V / ALL PORTS TOTAL 1A",
+      "core": "J301",
+      "members": [
+        "J301",
+        "J302",
+        "J303"
+      ]
+    },
+    {
+      "id": "tiny-connectors",
+      "page": 3,
+      "title": "TINY BAT / ALL PORTS TOTAL 2A",
+      "core": "J304",
+      "members": [
+        "J304",
+        "J305",
+        "J306"
+      ]
+    },
+    {
+      "id": "modem-vio",
+      "page": 3,
+      "title": "SWITCHED 3.3V FOR TINY UART",
+      "core": "U306",
+      "members": [
+        "U306",
+        "C321",
+        "C322"
+      ]
+    },
+    {
+      "id": "modem-uart",
+      "page": 3,
+      "title": "TINY UART / POWER-OFF ISOLATION",
+      "core": "U307",
+      "members": [
+        "U307",
+        "C323",
+        "C324",
+        "R317",
+        "J307",
+        "J308"
+      ]
+    },
+    {
+      "id": "controller",
+      "page": 4,
+      "title": "STM32L031 / INDEPENDENT POWER CONTROL",
+      "core": "U401",
+      "members": [
+        "U401",
+        "C401",
+        "C402",
+        "C403",
+        "C404",
+        "R401",
+        "R402",
+        "C405",
+        "R403",
+        "R404",
+        "R405",
+        "R406",
+        "R407",
+        "R408",
+        "R409",
+        "R410",
+        "C406",
+        "R411",
+        "R412",
+        "C407",
+        "R413",
+        "R414",
+        "C408",
+        "R415",
+        "R416",
+        "C409"
+      ]
+    },
+    {
+      "id": "motion-imu",
+      "page": 4,
+      "title": "LIS2DW12 / PARKING MOTION WAKE",
+      "core": "U402",
+      "members": [
+        "U402",
+        "C410",
+        "C411",
+        "C412",
+        "R417",
+        "R418",
+        "R419"
+      ]
+    },
+    {
+      "id": "user-key",
+      "page": 4,
+      "title": "POWER KEY / LOCAL AND EXTERNAL",
+      "core": "SW401",
+      "members": [
+        "SW401",
+        "J403",
+        "R420",
+        "R421",
+        "C413"
+      ]
+    },
+    {
+      "id": "external-wake",
+      "page": 4,
+      "title": "EXTERNAL OPEN-DRAIN WAKE / 10mA MAX",
+      "core": "J401",
+      "members": [
+        "J401",
+        "J402",
+        "J404",
+        "R422",
+        "R423",
+        "C414"
+      ]
+    },
+    {
+      "id": "management-uart",
+      "page": 4,
+      "title": "HOST MANAGEMENT UART / Ioff ISOLATION",
+      "core": "U403",
+      "members": [
+        "U403",
+        "C415",
+        "C416",
+        "R424",
+        "J405",
+        "J406"
+      ]
+    },
+    {
+      "id": "debug",
+      "page": 4,
+      "title": "AON SWD / VTREF IS SENSE ONLY",
+      "core": "J407",
+      "members": [
+        "J407",
+        "R425",
+        "R426"
+      ]
+    },
+    {
+      "id": "debug-reset",
+      "page": 4,
+      "title": "OPEN-DRAIN DEBUG RESET",
+      "core": "J408",
+      "members": [
+        "J408"
+      ]
+    }
+  ],
+  "externalParts": [
+    {
+      "lcsc": "C394021",
+      "role": "cell-attached 10k NTC",
+      "qty": 1
+    },
+    {
+      "role": "protected 1S 3000mAh >=9A LiPo pack",
+      "qty": 1,
+      "lcsc": null
+    }
+  ],
+  "forbiddenConnections": [
+    "Tiny VIN to any power source while Tiny BAT connected",
+    "USB VBUS bypass during controlled-off acceptance",
+    "external power into any output terminal",
+    "SWD probe drive with AON VTREF absent"
+  ]
+}

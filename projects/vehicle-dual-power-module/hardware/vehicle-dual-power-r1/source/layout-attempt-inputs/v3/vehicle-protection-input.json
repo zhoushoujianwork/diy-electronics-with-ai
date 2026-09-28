@@ -1,0 +1,764 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-J101",
+      "measurement": {
+        "x": 200,
+        "y": 700,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 210.5,
+          "maxY": 720.5,
+          "minX": 189.5,
+          "minY": 679.5
+        },
+        "designator": "J101",
+        "value": "KF301-5.0-3P",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_IN",
+            "x": 180,
+            "y": 710,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 180,
+            "y": 700,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "3",
+            "net": "ACC_IN",
+            "x": 180,
+            "y": 690,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 190,
+            "minY": 720,
+            "maxX": 205.17919921875,
+            "maxY": 728
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-F101",
+      "measurement": {
+        "x": 520,
+        "y": 700,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 533.5,
+          "maxY": 703.5,
+          "minX": 506.5,
+          "minY": 696.5
+        },
+        "designator": "F101",
+        "value": "0451005.MRL",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_IN",
+            "x": 500,
+            "y": 700,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "VEH_FUSED",
+            "x": 540,
+            "y": 700,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 505,
+            "minY": 705,
+            "maxX": 520.955078125,
+            "maxY": 713
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-D101",
+      "measurement": {
+        "x": 840,
+        "y": 700,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 850.5,
+          "maxY": 706.5,
+          "minX": 829.5,
+          "minY": 693.5
+        },
+        "designator": "D101",
+        "value": "SMBJ33CA-M3/5B",
+        "pins": [
+          {
+            "number": "1",
+            "name": "K",
+            "net": "VEH_FUSED",
+            "x": 820,
+            "y": 700,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "A",
+            "net": "GND",
+            "x": 860,
+            "y": 700,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 830,
+            "minY": 710,
+            "maxX": 846.734375,
+            "maxY": 718
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-Q101",
+      "measurement": {
+        "x": 1160,
+        "y": 700,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1175.5,
+          "maxY": 720.5,
+          "minX": 1144.5,
+          "minY": 669.5
+        },
+        "designator": "Q101",
+        "value": "CSD19534Q5A",
+        "pins": [
+          {
+            "number": "1",
+            "name": "S",
+            "net": "VEH_FUSED",
+            "x": 1135,
+            "y": 710,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "S",
+            "net": "VEH_FUSED",
+            "x": 1135,
+            "y": 700,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "S",
+            "net": "VEH_FUSED",
+            "x": 1135,
+            "y": 690,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "G",
+            "net": "VEH_DGATE",
+            "x": 1135,
+            "y": 680,
+            "rotation": 180
+          },
+          {
+            "number": "5",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1185,
+            "y": 680,
+            "rotation": 0
+          },
+          {
+            "number": "6",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1185,
+            "y": 690,
+            "rotation": 0
+          },
+          {
+            "number": "7",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1185,
+            "y": 700,
+            "rotation": 0
+          },
+          {
+            "number": "8",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1185,
+            "y": 710,
+            "rotation": 0
+          },
+          {
+            "number": "9",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1160,
+            "y": 730,
+            "rotation": 90
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1145,
+            "minY": 660,
+            "maxX": 1162.1240234375,
+            "maxY": 668
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-Q102",
+      "measurement": {
+        "x": 1600,
+        "y": 900,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1615.5,
+          "maxY": 920.5,
+          "minX": 1584.5,
+          "minY": 869.5
+        },
+        "designator": "Q102",
+        "value": "CSD19534Q5A",
+        "pins": [
+          {
+            "number": "1",
+            "name": "S",
+            "net": "VEH_PROT",
+            "x": 1575,
+            "y": 910,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "S",
+            "net": "VEH_PROT",
+            "x": 1575,
+            "y": 900,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "S",
+            "net": "VEH_PROT",
+            "x": 1575,
+            "y": 890,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "G",
+            "net": "VEH_HGATE",
+            "x": 1575,
+            "y": 880,
+            "rotation": 180
+          },
+          {
+            "number": "5",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1625,
+            "y": 880,
+            "rotation": 0
+          },
+          {
+            "number": "6",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1625,
+            "y": 890,
+            "rotation": 0
+          },
+          {
+            "number": "7",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1625,
+            "y": 900,
+            "rotation": 0
+          },
+          {
+            "number": "8",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1625,
+            "y": 910,
+            "rotation": 0
+          },
+          {
+            "number": "9",
+            "name": "D",
+            "net": "VEH_CD",
+            "x": 1600,
+            "y": 930,
+            "rotation": 90
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1585,
+            "minY": 860,
+            "maxX": 1602.1240234375,
+            "maxY": 868
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-U101",
+      "measurement": {
+        "x": 200,
+        "y": 420,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 240.5,
+          "maxY": 460.5,
+          "minX": 149.5,
+          "minY": 379.5
+        },
+        "designator": "U101",
+        "value": "LM74800QDRRRQ1",
+        "pins": [
+          {
+            "number": "13",
+            "name": "RTN",
+            "net": "",
+            "x": 250,
+            "y": 450,
+            "rotation": 0
+          },
+          {
+            "number": "12",
+            "name": "C",
+            "net": "VEH_CD",
+            "x": 250,
+            "y": 440,
+            "rotation": 0
+          },
+          {
+            "number": "11",
+            "name": "CAP",
+            "net": "VEH_CP",
+            "x": 250,
+            "y": 430,
+            "rotation": 0
+          },
+          {
+            "number": "10",
+            "name": "VS",
+            "net": "VEH_CD",
+            "x": 250,
+            "y": 420,
+            "rotation": 0
+          },
+          {
+            "number": "9",
+            "name": "OUT",
+            "net": "VEH_PROT",
+            "x": 250,
+            "y": 410,
+            "rotation": 0
+          },
+          {
+            "number": "8",
+            "name": "HGATE",
+            "net": "VEH_HGATE",
+            "x": 250,
+            "y": 400,
+            "rotation": 0
+          },
+          {
+            "number": "7",
+            "name": "GND",
+            "net": "GND",
+            "x": 250,
+            "y": 390,
+            "rotation": 0
+          },
+          {
+            "number": "6",
+            "name": "EN/UVLO",
+            "net": "MASTER_CAR_EN",
+            "x": 140,
+            "y": 390,
+            "rotation": 180
+          },
+          {
+            "number": "5",
+            "name": "OV",
+            "net": "VEH_OV",
+            "x": 140,
+            "y": 400,
+            "rotation": 180
+          },
+          {
+            "number": "4",
+            "name": "SW",
+            "net": "VEH_SENSE",
+            "x": 140,
+            "y": 410,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "VSNS",
+            "net": "VEH_FUSED",
+            "x": 140,
+            "y": 420,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "A",
+            "net": "VEH_FUSED",
+            "x": 140,
+            "y": 430,
+            "rotation": 180
+          },
+          {
+            "number": "1",
+            "name": "DGATE",
+            "net": "VEH_DGATE",
+            "x": 140,
+            "y": 440,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 150,
+            "minY": 460,
+            "maxX": 166.734375,
+            "maxY": 468
+          }
+        ]
+      },
+      "pinStates": {
+        "13": "nc"
+      }
+    },
+    {
+      "id": "cmp-C101",
+      "measurement": {
+        "x": 1850,
+        "y": 900,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": 908.5,
+          "minX": 1839.5,
+          "minY": 891.5
+        },
+        "designator": "C101",
+        "value": "2.2uF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_CD",
+            "x": 1830,
+            "y": 900,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1870,
+            "y": 900,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": 910,
+            "maxX": 1856.734375,
+            "maxY": 918
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-C102",
+      "measurement": {
+        "x": 2100,
+        "y": 900,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2110.5,
+          "maxY": 908.5,
+          "minX": 2089.5,
+          "minY": 891.5
+        },
+        "designator": "C102",
+        "value": "100nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_CP",
+            "x": 2080,
+            "y": 900,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "VEH_CD",
+            "x": 2120,
+            "y": 900,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2090,
+            "minY": 910,
+            "maxX": 2106.734375,
+            "maxY": 918
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R101",
+      "measurement": {
+        "x": 2350,
+        "y": 900,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2360.5,
+          "maxY": 904.5,
+          "minX": 2339.5,
+          "minY": 895.5
+        },
+        "designator": "R101",
+        "value": "249k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "VEH_OV",
+            "x": 2370,
+            "y": 900,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_SENSE",
+            "x": 2330,
+            "y": 900,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2340,
+            "minY": 905,
+            "maxX": 2356.734375,
+            "maxY": 913
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R102",
+      "measurement": {
+        "x": 2600,
+        "y": 900,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2610.5,
+          "maxY": 904.5,
+          "minX": 2589.5,
+          "minY": 895.5
+        },
+        "designator": "R102",
+        "value": "16.9k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2620,
+            "y": 900,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_OV",
+            "x": 2580,
+            "y": 900,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2590,
+            "minY": 905,
+            "maxX": 2606.734375,
+            "maxY": 913
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-C101",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U101",
+        "pinNumber": "10"
+      }
+    },
+    {
+      "componentId": "cmp-C102",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U101",
+        "pinNumber": "11"
+      }
+    },
+    {
+      "componentId": "cmp-R101",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U101",
+        "pinNumber": "4"
+      }
+    },
+    {
+      "componentId": "cmp-R102",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-R101",
+        "pinNumber": "2"
+      }
+    }
+  ],
+  "netPolicies": {
+    "VEH_CP": "direct",
+    "VEH_IN": "local_power",
+    "VEH_OV": "direct",
+    "VEH_SENSE": "direct",
+    "VEH_PROT": "local_power",
+    "GND": "local_ground",
+    "MASTER_CAR_EN": "module_port",
+    "VEH_FUSED": "local_power",
+    "VEH_CD": "local_power",
+    "VEH_DGATE": "direct",
+    "VEH_HGATE": "direct",
+    "ACC_IN": "module_port"
+  },
+  "zones": [
+    {
+      "id": "vehicle-protection",
+      "title": "VEHICLE INPUT / REVERSE AND OV",
+      "coreComponentId": "cmp-U101",
+      "componentIds": [
+        "cmp-J101",
+        "cmp-F101",
+        "cmp-D101",
+        "cmp-Q101",
+        "cmp-Q102",
+        "cmp-U101",
+        "cmp-C101",
+        "cmp-C102",
+        "cmp-R101",
+        "cmp-R102"
+      ]
+    }
+  ]
+}

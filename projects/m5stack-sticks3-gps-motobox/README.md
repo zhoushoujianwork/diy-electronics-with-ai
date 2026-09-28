@@ -11,6 +11,11 @@ The project remains a `prototype`. The earlier Wi-Fi configuration passed indoor
 offline recovery, mini-program binding and a stationary outdoor GNSS fix. The 4G configuration
 has passed the 30-minute indoor run and still needs the acceptance checks below.
 
+The separate [Vehicle dual power module](../vehicle-dual-power-module/README.md) is a reusable
+12 V and 1S battery supply design for future hosts such as AtomS3 Lite. Its BAT 3.9 V/2 A
+electrical source is still unwired, and the selectable 5 V/2 A VIN output remains a design target;
+neither output has been validated on hardware.
+
 The first public demonstration uses a platform-managed device account. MotoBox broker access is issued
 separately; cloning this repository does not automatically create a cloud device or MQTT credential.
 

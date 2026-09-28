@@ -1,0 +1,640 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-U104",
+      "measurement": {
+        "x": 840,
+        "y": 140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 865.5,
+          "maxY": 157.5,
+          "minX": 814.5,
+          "minY": 122.5
+        },
+        "designator": "U104",
+        "value": "LTV-817S-TA1-C",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "ACC_LED_A",
+            "x": 795,
+            "y": 150,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "ACC_LED_K",
+            "x": 795,
+            "y": 130,
+            "rotation": 180
+          },
+          {
+            "number": "3",
+            "name": "3",
+            "net": "GND",
+            "x": 885,
+            "y": 130,
+            "rotation": 0
+          },
+          {
+            "number": "4",
+            "name": "4",
+            "net": "ACC_N",
+            "x": 885,
+            "y": 150,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 815,
+            "minY": 160,
+            "maxX": 831.734375,
+            "maxY": 168
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-R112",
+      "measurement": {
+        "x": 1850,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": -345.5,
+          "minX": 1839.5,
+          "minY": -354.5
+        },
+        "designator": "R112",
+        "value": "750\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "ACC_R1",
+            "x": 1870,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "ACC_IN",
+            "x": 1830,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": -345,
+            "maxX": 1856.21484375,
+            "maxY": -337
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R113",
+      "measurement": {
+        "x": 2100,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2110.5,
+          "maxY": -345.5,
+          "minX": 2089.5,
+          "minY": -354.5
+        },
+        "designator": "R113",
+        "value": "750\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "ACC_R2",
+            "x": 2120,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "ACC_R1",
+            "x": 2080,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2090,
+            "minY": -345,
+            "maxX": 2106.21484375,
+            "maxY": -337
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R114",
+      "measurement": {
+        "x": 2350,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2360.5,
+          "maxY": -345.5,
+          "minX": 2339.5,
+          "minY": -354.5
+        },
+        "designator": "R114",
+        "value": "750\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "ACC_R3",
+            "x": 2370,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "ACC_R2",
+            "x": 2330,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2340,
+            "minY": -345,
+            "maxX": 2356.21484375,
+            "maxY": -337
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R115",
+      "measurement": {
+        "x": 2600,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2610.5,
+          "maxY": -345.5,
+          "minX": 2589.5,
+          "minY": -354.5
+        },
+        "designator": "R115",
+        "value": "750\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "ACC_LED_A",
+            "x": 2620,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "ACC_R3",
+            "x": 2580,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2590,
+            "minY": -345,
+            "maxX": 2606.21484375,
+            "maxY": -337
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-D104",
+      "measurement": {
+        "x": 520,
+        "y": -140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 530.5,
+          "maxY": -132.5,
+          "minX": 509.5,
+          "minY": -147.5
+        },
+        "designator": "D104",
+        "value": "1N4148W",
+        "pins": [
+          {
+            "number": "2",
+            "name": "A",
+            "net": "ACC_LED_K",
+            "x": 540,
+            "y": -140,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "K",
+            "net": "ACC_LED_A",
+            "x": 500,
+            "y": -140,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 510,
+            "minY": -130,
+            "maxX": 526.734375,
+            "maxY": -122
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-D105",
+      "measurement": {
+        "x": 2850,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2860.5,
+          "maxY": -343.5,
+          "minX": 2839.5,
+          "minY": -356.5
+        },
+        "designator": "D105",
+        "value": "SMBJ33CA-M3/5B",
+        "pins": [
+          {
+            "number": "1",
+            "name": "K",
+            "net": "ACC_IN",
+            "x": 2830,
+            "y": -350,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "A",
+            "net": "GND",
+            "x": 2870,
+            "y": -350,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2840,
+            "minY": -340,
+            "maxX": 2856.734375,
+            "maxY": -332
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-Q103",
+      "measurement": {
+        "x": 1160,
+        "y": 140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1184.5,
+          "maxY": 150.5,
+          "minX": 1149.5,
+          "minY": 129.5
+        },
+        "designator": "Q103",
+        "value": "2N7002",
+        "pins": [
+          {
+            "number": "3",
+            "name": "D",
+            "net": "ACC_LED_K",
+            "x": 1170,
+            "y": 160,
+            "rotation": 90
+          },
+          {
+            "number": "1",
+            "name": "G",
+            "net": "MASTER_CAR_EN",
+            "x": 1140,
+            "y": 140,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "S",
+            "net": "GND",
+            "x": 1170,
+            "y": 120,
+            "rotation": 270
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1190,
+            "minY": 140,
+            "maxX": 1207.1240234375,
+            "maxY": 148
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-R116",
+      "measurement": {
+        "x": 1600,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1610.5,
+          "maxY": -595.5,
+          "minX": 1589.5,
+          "minY": -604.5
+        },
+        "designator": "R116",
+        "value": "100k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "ACC_N",
+            "x": 1620,
+            "y": -600,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 1580,
+            "y": -600,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1590,
+            "minY": -595,
+            "maxX": 1606.21484375,
+            "maxY": -587
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-C120",
+      "measurement": {
+        "x": 1850,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1855.5,
+          "maxY": -591.5,
+          "minX": 1844.5,
+          "minY": -608.5
+        },
+        "designator": "C120",
+        "value": "10nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "ACC_N",
+            "x": 1835,
+            "y": -600,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1865,
+            "y": -600,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1845,
+            "minY": -590,
+            "maxX": 1861.734375,
+            "maxY": -582
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-J102",
+      "measurement": {
+        "x": 2100,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2110.5,
+          "maxY": -584.5,
+          "minX": 2089.5,
+          "minY": -615.5
+        },
+        "designator": "J102",
+        "value": "PZ254V-11-02P",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "VEH_IN",
+            "x": 2080,
+            "y": -595,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "ACC_IN",
+            "x": 2080,
+            "y": -605,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2090,
+            "minY": -585,
+            "maxX": 2105.17919921875,
+            "maxY": -577
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-D104",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U104",
+        "pinNumber": "1"
+      }
+    },
+    {
+      "componentId": "cmp-Q103",
+      "pinNumber": "3",
+      "attachTo": {
+        "componentId": "cmp-U104",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-R116",
+      "pinNumber": "2",
+      "attachTo": {
+        "componentId": "cmp-U104",
+        "pinNumber": "4"
+      }
+    },
+    {
+      "componentId": "cmp-C120",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-U104",
+        "pinNumber": "4"
+      }
+    }
+  ],
+  "netPolicies": {
+    "VEH_IN": "local_power",
+    "ACC_R2": "direct",
+    "ACC_R3": "direct",
+    "GND": "local_ground",
+    "MASTER_CAR_EN": "module_port",
+    "3V0_AON": "local_power",
+    "ACC_LED_A": "direct",
+    "ACC_N": "module_port",
+    "ACC_LED_K": "direct",
+    "ACC_R1": "direct",
+    "ACC_IN": "module_port"
+  },
+  "zones": [
+    {
+      "id": "acc-sense",
+      "title": "ACC OPTO INPUT / MASTER GATED",
+      "coreComponentId": "cmp-U104",
+      "componentIds": [
+        "cmp-U104",
+        "cmp-R112",
+        "cmp-R113",
+        "cmp-R114",
+        "cmp-R115",
+        "cmp-D104",
+        "cmp-D105",
+        "cmp-Q103",
+        "cmp-R116",
+        "cmp-C120",
+        "cmp-J102"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-J301",
+      "measurement": {
+        "x": 1160,
+        "y": 420,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1170.5,
+          "maxY": 435.5,
+          "minX": 1149.5,
+          "minY": 404.5
+        },
+        "designator": "J301",
+        "value": "KF301-5.0-2P",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "HOST_5V",
+            "x": 1140,
+            "y": 425,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1140,
+            "y": 415,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1150,
+            "minY": 435,
+            "maxX": 1165.17919921875,
+            "maxY": 443
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-J302",
+      "measurement": {
+        "x": 200,
+        "y": 140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 210.5,
+          "maxY": 155.5,
+          "minX": 189.5,
+          "minY": 124.5
+        },
+        "designator": "J302",
+        "value": "XH-2A",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "HOST_5V",
+            "x": 180,
+            "y": 145,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 180,
+            "y": 135,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 190,
+            "minY": 155,
+            "maxX": 205.17919921875,
+            "maxY": 163
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-J303",
+      "measurement": {
+        "x": 520,
+        "y": 140,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 530.5,
+          "maxY": 155.5,
+          "minX": 509.5,
+          "minY": 124.5
+        },
+        "designator": "J303",
+        "value": "PZ254V-11-02P",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "HOST_5V",
+            "x": 500,
+            "y": 145,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 500,
+            "y": 135,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 510,
+            "minY": 155,
+            "maxX": 525.17919921875,
+            "maxY": 163
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [],
+  "netPolicies": {
+    "GND": "local_ground",
+    "HOST_5V": "local_power"
+  },
+  "zones": [
+    {
+      "id": "host-connectors",
+      "title": "HOST 5V / ALL PORTS TOTAL 1A",
+      "coreComponentId": "cmp-J301",
+      "componentIds": [
+        "cmp-J301",
+        "cmp-J302",
+        "cmp-J303"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-J304",
+      "measurement": {
+        "x": 1850,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": -584.5,
+          "minX": 1839.5,
+          "minY": -615.5
+        },
+        "designator": "J304",
+        "value": "KF301-5.0-2P",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "TINY_BAT",
+            "x": 1830,
+            "y": -595,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 1830,
+            "y": -605,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": -585,
+            "maxX": 1855.17919921875,
+            "maxY": -577
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-J305",
+      "measurement": {
+        "x": 2100,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2110.5,
+          "maxY": -584.5,
+          "minX": 2089.5,
+          "minY": -615.5
+        },
+        "designator": "J305",
+        "value": "XH-2A",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "TINY_BAT",
+            "x": 2080,
+            "y": -595,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2080,
+            "y": -605,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2090,
+            "minY": -585,
+            "maxX": 2105.17919921875,
+            "maxY": -577
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-J306",
+      "measurement": {
+        "x": 2350,
+        "y": -600,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2360.5,
+          "maxY": -584.5,
+          "minX": 2339.5,
+          "minY": -615.5
+        },
+        "designator": "J306",
+        "value": "PZ254V-11-02P",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "TINY_BAT",
+            "x": 2330,
+            "y": -595,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2330,
+            "y": -605,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2340,
+            "minY": -585,
+            "maxX": 2355.17919921875,
+            "maxY": -577
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [],
+  "netPolicies": {
+    "GND": "local_ground",
+    "TINY_BAT": "local_power"
+  },
+  "zones": [
+    {
+      "id": "tiny-connectors",
+      "title": "TINY BAT / ALL PORTS TOTAL 2A",
+      "coreComponentId": "cmp-J304",
+      "componentIds": [
+        "cmp-J304",
+        "cmp-J305",
+        "cmp-J306"
+      ]
+    }
+  ]
+}

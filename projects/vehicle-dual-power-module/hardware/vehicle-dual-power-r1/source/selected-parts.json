@@ -1,0 +1,2524 @@
+{
+  "C109227": {
+    "lcsc": "C109227",
+    "mpn": "LTV-817S-TA1-C",
+    "manufacturer": "LITEON(光宝)",
+    "deviceUuid": "94b92fd4314c44a989f28fa11fba3d03",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "OPTO-SMD-4_L4.6-W6.5-P2.54-LS10.3-BL",
+    "footprintUuid": "0565fa1ab6394613a6201b702f57bf60",
+    "symbolUuid": "4212562a16fc4630bc47d40c636960ff",
+    "value": "LTV-817S-TA1-C",
+    "datasheet": "https://item.szlcsc.com/datasheet/LTV-817S-TA1-C/110448.html",
+    "description": "输入类型:DC;正向压降(Vf):1.2V;输出电流:50mA;隔离电压(Vrms):5kV;直流反向耐压(Vr):6V;负载电压:35V;输出通道数:1;集射极饱和电压(VCE(sat)):100mV@1mA,20mA;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      },
+      {
+        "number": "4",
+        "name": "4"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C110776": {
+    "lcsc": "C110776",
+    "mpn": "RT0603BRD071KL",
+    "manufacturer": "YAGEO(国巨)",
+    "deviceUuid": "61cf53fda8aa4fd5a65823017929572b",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "c9f80aa77b35414b900e07c88d4d6d98",
+    "value": "1kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/RT0603BRD071KL/112001.html",
+    "description": "电阻类型:薄膜电阻;阻值:1kΩ;精度:±0.1%;功率:100mW;工作电压:75V;温度系数:±25ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C114200": {
+    "lcsc": "C114200",
+    "mpn": "CSD19534Q5A",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "4bdd5d34775b408ba9988c04d31656d2",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "POWERVDFN-8_L6.0-W5.0-P1.27-BL",
+    "footprintUuid": "88106831cbac45fab47ce2313f1b5b98",
+    "symbolUuid": "b4f3bb12fc9b4ddfba8088af6e1667cb",
+    "value": "CSD19534Q5A",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/csd19534q5a.pdf",
+    "description": "数量:1个N沟道;漏源电压(Vdss):100V;连续漏极电流(Id):50A;导通电阻(RDS(on)):17.6mΩ@6V;耗散功率(Pd):63W;阈值电压(Vgs(th)):3.4V;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "S"
+      },
+      {
+        "number": "2",
+        "name": "S"
+      },
+      {
+        "number": "3",
+        "name": "S"
+      },
+      {
+        "number": "4",
+        "name": "G"
+      },
+      {
+        "number": "5",
+        "name": "D"
+      },
+      {
+        "number": "6",
+        "name": "D"
+      },
+      {
+        "number": "7",
+        "name": "D"
+      },
+      {
+        "number": "8",
+        "name": "D"
+      },
+      {
+        "number": "9",
+        "name": "D"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C122538": {
+    "lcsc": "C122538",
+    "mpn": "RT0603BRD07100KL",
+    "manufacturer": "YAGEO(国巨)",
+    "deviceUuid": "3b5957712d6943698e6319ba927b09a8",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "f80fecefc55a43c1bc643cdfd4202652",
+    "value": "100kΩ",
+    "datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20170721/C122538_1500619326323834092.pdf",
+    "description": "电阻类型:薄膜电阻;阻值:100kΩ;精度:±0.1%;功率:100mW;最大工作电压:75V;温度系数:±25ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C122837": {
+    "lcsc": "C122837",
+    "mpn": "TPS22965DSGR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "8de901d1f2ca47688e5f9f06306ff4f4",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "UDFN-8_L2.0-W2.0-P0.50-TL-EP",
+    "footprintUuid": "9537ea6875404e9d8308b936bad4d3f0",
+    "symbolUuid": "d199e9153d9b4ea78db0ab5a3431c034",
+    "value": "TPS22965DSGR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/tps22965.pdf",
+    "description": "类型:负载开关;通道数:1;输入控制逻辑:高电平有效;工作电压:800mV~5.7V;最大连续电流:6A;导通电阻:16mΩ;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "VIN"
+      },
+      {
+        "number": "2",
+        "name": "VIN"
+      },
+      {
+        "number": "3",
+        "name": "ON"
+      },
+      {
+        "number": "4",
+        "name": "VBIAS"
+      },
+      {
+        "number": "5",
+        "name": "GND"
+      },
+      {
+        "number": "6",
+        "name": "CT"
+      },
+      {
+        "number": "7",
+        "name": "VOUT"
+      },
+      {
+        "number": "8",
+        "name": "VOUT"
+      },
+      {
+        "number": "9",
+        "name": "EP"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C128503": {
+    "lcsc": "C128503",
+    "mpn": "6SVP470M",
+    "manufacturer": "PANASONIC(松下)",
+    "deviceUuid": "cc43ed9dc2114b90bf9b6e9d28629bee",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-RD",
+    "footprintUuid": "a206225200504ad1b521972d8019728e",
+    "symbolUuid": "ae28723e88214d0591bd586fcbfa7e91",
+    "value": "470uF",
+    "datasheet": "https://item.szlcsc.com/datasheet/6SVP470M/139788.html",
+    "description": "容值:470uF;精度:±20%;额定电压:6.3V;纹波电流:4.21A@100kHz;等效串联电阻(ESR):15mΩ@100kHz;类型:聚合物;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C12891": {
+    "lcsc": "C12891",
+    "mpn": "CL31A226KAHNNNE",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "0de9d28bbcd34ca3bf2a4d78faaa50bb",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C1206",
+    "footprintUuid": "f9883b5edc654f83a19cf28e812ef37d",
+    "symbolUuid": "d4271502b99744028366a7534683a2c7",
+    "value": "22uF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL31A226KAHNNNE/13537.html",
+    "description": "容值:22uF;精度:±10%;额定电压:25V;温度系数:X5R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C1355305": {
+    "lcsc": "C1355305",
+    "mpn": "TPS54560BQDDAQ1",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "ace73d28aba84757b175504c38ec1686",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "POWERPAD-SO-8_L4.9-W3.9-P1.27-LS6.0-BL-EP",
+    "footprintUuid": "3b99d5c32a27491ba41100646bdb76f2",
+    "symbolUuid": "b506b631e8a04175b4c7831cf2a418d0",
+    "value": "TPS54560BQDDAQ1",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/tps54560b-q1.pdf",
+    "description": "功能类型:降压型;工作电压:4.5V~60V;输出电压:800mV~58.8V;输出电流:5A;输出类型:可调;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "BOOT"
+      },
+      {
+        "number": "2",
+        "name": "VIN"
+      },
+      {
+        "number": "3",
+        "name": "EN"
+      },
+      {
+        "number": "4",
+        "name": "RT/CLK"
+      },
+      {
+        "number": "5",
+        "name": "FB"
+      },
+      {
+        "number": "6",
+        "name": "COMP"
+      },
+      {
+        "number": "7",
+        "name": "GND"
+      },
+      {
+        "number": "8",
+        "name": "SW"
+      },
+      {
+        "number": "9",
+        "name": "EP"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C15483": {
+    "lcsc": "C15483",
+    "mpn": "TPS63020DSJR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "f143f9fd30b14615af82675219556c44",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "VSON-14_L4.0-W3.0-P0.50-BL-EP_TI_DSJ",
+    "footprintUuid": "50581b7b662a4f1cae8e982e89f072e5",
+    "symbolUuid": "c6f40a65389746148da179a99c3b9fee",
+    "value": "TPS63020DSJR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/tps63020.pdf",
+    "description": "功能类型:升降压型;工作电压:1.8V~5.5V;输出电压:1.2V~5.5V;输出电流:3A;输出类型:可调;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "VINA"
+      },
+      {
+        "number": "2",
+        "name": "GND"
+      },
+      {
+        "number": "3",
+        "name": "FB"
+      },
+      {
+        "number": "4",
+        "name": "VOUT"
+      },
+      {
+        "number": "5",
+        "name": "VOUT"
+      },
+      {
+        "number": "6",
+        "name": "L2"
+      },
+      {
+        "number": "7",
+        "name": "L2"
+      },
+      {
+        "number": "8",
+        "name": "L1"
+      },
+      {
+        "number": "9",
+        "name": "L1"
+      },
+      {
+        "number": "10",
+        "name": "VIN"
+      },
+      {
+        "number": "11",
+        "name": "VIN"
+      },
+      {
+        "number": "12",
+        "name": "EN"
+      },
+      {
+        "number": "13",
+        "name": "PS/SYNC"
+      },
+      {
+        "number": "14",
+        "name": "PG"
+      },
+      {
+        "number": "15",
+        "name": "PGND"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C15849": {
+    "lcsc": "C15849",
+    "mpn": "CL10A105KB8NNNC",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "f4744ff7405a46a48e360c2c6fadeca3",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "e92a0c4e0c82442c95b9f681928ac7a5",
+    "value": "1uF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL10A105KB8NNNC/16531.html",
+    "description": "容值:1uF;精度:±10%;额定电压:50V;温度系数:X5R;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C1588": {
+    "lcsc": "C1588",
+    "mpn": "CL10B102KB8NNNC",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "f7218f4330f6417aa864e05da749dbcb",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "180aa4ad4ea946b88ba105d04675e8cf",
+    "value": "1nF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL10B102KB8NNNC/1940.html",
+    "description": "容值:1nF;精度:±10%;额定电压:50V;温度系数:X7R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C1589": {
+    "lcsc": "C1589",
+    "mpn": "CL10B103KB8NNNC",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "03a827702a5d447dbe9d3571f0aad427",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "b179634282da4811901296db6ce1e91b",
+    "value": "10nF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL10B103KB8NNNC/1941.html",
+    "description": "容值:10nF;精度:±10%;额定电压:50V;温度系数:X7R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C1591": {
+    "lcsc": "C1591",
+    "mpn": "CL10B104KB8NNNC",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "ac7072e4a0764739a31216c96ed3c9cc",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "7e4a3fa416de498785d4b983a65978c9",
+    "value": "100nF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL10B104KB8NNNC/1943.html",
+    "description": "容值:100nF;精度:±10%;额定电压:50V;温度系数:X7R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C1621": {
+    "lcsc": "C1621",
+    "mpn": "CL10B472KB8NNNC",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "f0419ed7c5724c298e313f427615045e",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "024bb3d1acf84f9ab5d6c2e6b17af71c",
+    "value": "4.7nF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL10B472KB8NNNC/1973.html",
+    "description": "容值:4.7nF;精度:±10%;额定电压:50V;温度系数:X7R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C1622": {
+    "lcsc": "C1622",
+    "mpn": "CL10B473KB8NNNC",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "ed3e2032cdfe4c688efeae34aa292a1d",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "0bc48fdc8ace4023babfcb7200dd1e73",
+    "value": "47nF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL10B473KB8NNNC/1974.html",
+    "description": "容值:47nF;精度:±10%;额定电压:50V;温度系数:X7R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C17985": {
+    "lcsc": "C17985",
+    "mpn": "1206W4F7500T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "25415e703f364afeb328c446741478fc",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R1206",
+    "footprintUuid": "5a1c051c2d374964995f659053b54f02",
+    "symbolUuid": "d4aa69f159fb4fcfa3e42a38103048cc",
+    "value": "750Ω",
+    "datasheet": "https://item.szlcsc.com/datasheet/1206W4F7500T5E/18673.html",
+    "description": "电阻类型:厚膜电阻;阻值:750Ω;精度:±1%;功率:250mW;工作电压:200V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C189624": {
+    "lcsc": "C189624",
+    "mpn": "LIS2DW12TR",
+    "manufacturer": "ST(意法半导体)",
+    "deviceUuid": "040e8f50e10e4c31bbe05259a88e7c59",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "LGA-12_L2.0-W2.0-P0.50-BL",
+    "footprintUuid": "d3a9f31b434f4e16b1edc4d07111be41",
+    "symbolUuid": "ab0666ee44274cdf9a0c90d2433894c1",
+    "value": "LIS2DW12TR",
+    "datasheet": "https://item.szlcsc.com/datasheet/LIS2DW12TR/202249.html",
+    "description": "传感器类型:加速度计;接口类型:I2C；SPI;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "SCL/SPC"
+      },
+      {
+        "number": "2",
+        "name": "CS"
+      },
+      {
+        "number": "3",
+        "name": "SDO/SA0"
+      },
+      {
+        "number": "4",
+        "name": "SDA/SDI/SDO"
+      },
+      {
+        "number": "5",
+        "name": "NC"
+      },
+      {
+        "number": "6",
+        "name": "GND"
+      },
+      {
+        "number": "7",
+        "name": "RES"
+      },
+      {
+        "number": "8",
+        "name": "GND"
+      },
+      {
+        "number": "9",
+        "name": "VDD"
+      },
+      {
+        "number": "10",
+        "name": "VDDIO"
+      },
+      {
+        "number": "11",
+        "name": "INT2"
+      },
+      {
+        "number": "12",
+        "name": "INT1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C19666": {
+    "lcsc": "C19666",
+    "mpn": "CL10A475KO8NNNC",
+    "manufacturer": "SAMSUNG(三星)",
+    "deviceUuid": "9d6a8d9b94504b8e8615128aa8b87628",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "b57fd487f99d446e9826ddf73df1bc08",
+    "value": "4.7uF",
+    "datasheet": "https://item.szlcsc.com/datasheet/CL10A475KO8NNNC/20375.html",
+    "description": "容值:4.7uF;精度:±10%;额定电压:16V;温度系数:X5R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C1982094": {
+    "lcsc": "C1982094",
+    "mpn": "SMBJ33CA-M3/5B",
+    "manufacturer": "VISHAY(威世)",
+    "deviceUuid": "4082bc581abd4d04944ef59351b09011",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SMB_L4.3-W3.6-LS5.4-BI",
+    "footprintUuid": "998a8c72e3744798a9329f10151729a6",
+    "symbolUuid": "4f2f90ed236f48c086699833a5e195b3",
+    "value": "SMBJ33CA-M3/5B",
+    "datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20210504/294C802C60AB6C7A75E8934FCA9AC73C.pdf",
+    "description": "反向截止电压(Vrwm):33V;最大钳位电压:53.3V;峰值脉冲电流(Ipp)@10/1000us:11.3A;峰值脉冲功率(Ppp)@10/1000us:600W;击穿电压:36.7V;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "K"
+      },
+      {
+        "number": "2",
+        "name": "A"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C21190": {
+    "lcsc": "C21190",
+    "mpn": "0603WAF1001T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "18db11499a04403ba8c98e2f7a687fbc",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "25bf754adc304483add0d0d9357319e3",
+    "value": "1kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF1001T5E/21904.html",
+    "description": "电阻类型:厚膜电阻;阻值:1kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C213116": {
+    "lcsc": "C213116",
+    "mpn": "BZT52C5V1",
+    "manufacturer": "FMS(美丽微)",
+    "deviceUuid": "e2e573b8c3e94ac0a837a6ae38ac45e1",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SOD-123_L2.8-W1.8-LS3.7-RD",
+    "footprintUuid": "eabc9173c4664f8a90fe92f757e4228f",
+    "symbolUuid": "b5cbaba0cf55451fa6dfa696b59f966c",
+    "value": "BZT52C5V1",
+    "datasheet": "https://item.szlcsc.com/datasheet/BZT52C5V1/214014.html",
+    "description": "二极管配置:-;稳压值(标称值):5.1V;稳压值(范围):4.8V~5.4V;耗散功率(Pd):350mW;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "A"
+      },
+      {
+        "number": "1",
+        "name": "K"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C22399676": {
+    "lcsc": "C22399676",
+    "mpn": "TPS2117DRLR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "c5c3d93bd6dc440a9e44f12241b86022",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SOT-583-8_L2.1-W1.2-P0.50-LS1.6-BL",
+    "footprintUuid": "2383d5b014fe4932864241bc7813e9ce",
+    "symbolUuid": "c5bed5d65445412a936b4d70c8732f48",
+    "value": "TPS2117DRLR",
+    "datasheet": "https://www.ti.com.cn/cn/lit/ds/symlink/tps2117.pdf?ts=1739366132054",
+    "description": "开关电路:2:1;通道数:2;导通电阻(Ron):20mΩ;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "GND"
+      },
+      {
+        "number": "2",
+        "name": "VOUT"
+      },
+      {
+        "number": "3",
+        "name": "VIN1"
+      },
+      {
+        "number": "4",
+        "name": "PR1"
+      },
+      {
+        "number": "5",
+        "name": "MODE"
+      },
+      {
+        "number": "6",
+        "name": "VIN2"
+      },
+      {
+        "number": "7",
+        "name": "VOUT"
+      },
+      {
+        "number": "8",
+        "name": "ST"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C225088": {
+    "lcsc": "C225088",
+    "mpn": "SS-22D0205-G 2 LT RT",
+    "manufacturer": "C&K",
+    "deviceUuid": "4c6dca7640dd4287aaa9da136b9d749d",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SW-SMD_SS-22D0205-G2LT",
+    "footprintUuid": "1b05e32141264dd99e7243f0f984273e",
+    "symbolUuid": "b340ceb625c24044b238387f0afea630",
+    "value": "SS-22D0205-G 2 LT RT",
+    "datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20180613/C225088_74137DA561686234A3C9D3EBC31A8923.pdf",
+    "description": "电路结构:双刀双掷;安装方式:直插;额定电流(DC):300mA;额定电压(DC):6V;额定电流(AC):-;额定电压(AC):-;机械寿命:-;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      },
+      {
+        "number": "6",
+        "name": "6"
+      },
+      {
+        "number": "5",
+        "name": "5"
+      },
+      {
+        "number": "4",
+        "name": "4"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C22764": {
+    "lcsc": "C22764",
+    "mpn": "0603WAF1101T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "de053c90ff354be09111566330e152e0",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "4c2f28123595475383eb432b4e65fa6d",
+    "value": "1.1kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF1101T5E/23491.html",
+    "description": "电阻类型:厚膜电阻;阻值:1.1kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C22775": {
+    "lcsc": "C22775",
+    "mpn": "0603WAF1000T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "5303080f43d74b41ae76fc5142aa97e5",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "22d0f9a0d19246ba9a49e0617e0d8ef8",
+    "value": "100Ω",
+    "datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200306/C422600_1E6D84923E4A46A82E41ADD87F860B5C.pdf",
+    "description": "电阻类型:厚膜电阻;阻值:100Ω;精度:±1%;功率:100mW;最大工作电压:75V;温度系数:±200ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C22918": {
+    "lcsc": "C22918",
+    "mpn": "0603WAF2493T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "4d8a2158e6f2469685f8c7673367f44c",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "8510f0b107894b6c99d53bd198afd604",
+    "value": "249kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF2493T5E/23645.html",
+    "description": "电阻类型:厚膜电阻;阻值:249kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C22935": {
+    "lcsc": "C22935",
+    "mpn": "0603WAF1004T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "b37ebeb11cd54bebb515f79f1ed51ef5",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "2a633214c3b2432bbf04f73feb49addd",
+    "value": "1MΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF1004T5E/23662.html",
+    "description": "电阻类型:厚膜电阻;阻值:1MΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C23074": {
+    "lcsc": "C23074",
+    "mpn": "0603WAF5362T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "e291317b77454e42bf03213d32bb7795",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "4ebfe2e8e78246eab0a2bdd1d9963e1d",
+    "value": "53.6kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF5362T5E/23801.html",
+    "description": "电阻类型:厚膜电阻;阻值:53.6kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C23128": {
+    "lcsc": "C23128",
+    "mpn": "0603WAF9761T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "ffbb7addac1941abb1ad312977ac7c63",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "9e868c42c620462cabcd15eb75d56d2a",
+    "value": "9.76kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF9761T5E/23855.html",
+    "description": "电阻类型:厚膜电阻;阻值:9.76kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C23137": {
+    "lcsc": "C23137",
+    "mpn": "0603WAF3303T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "ba71fa5f1d5e4a1b8272f64a4f14a1f0",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "eb0a87ed7c45498c82f984b94593035c",
+    "value": "330kΩ",
+    "datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200306/C422600_1E6D84923E4A46A82E41ADD87F860B5C.pdf",
+    "description": "电阻类型:厚膜电阻;阻值:330kΩ;精度:±1%;功率:100mW;最大工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C23220": {
+    "lcsc": "C23220",
+    "mpn": "0603WAF6200T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "effc28cdacba405ca8a46e52fff6bbc0",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "d96a33e43e284a699eef0c1bd6248d7f",
+    "value": "620Ω",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF6200T5E/23947.html",
+    "description": "电阻类型:厚膜电阻;阻值:620Ω;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C23351": {
+    "lcsc": "C23351",
+    "mpn": "0603WAF2433T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "1486fa2842a5451c9481d0e580335567",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "96545760a8a94efd9eae4450617e9c38",
+    "value": "243kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF2433T5E/24084.html",
+    "description": "电阻类型:厚膜电阻;阻值:243kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C25803": {
+    "lcsc": "C25803",
+    "mpn": "0603WAF1003T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "40ff282b3d594c33b798d1707d8406cb",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "6d3562bdc96243ae97feaf073d2c8f4e",
+    "value": "100kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF1003T5E/26546.html",
+    "description": "电阻类型:厚膜电阻;阻值:100kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C25804": {
+    "lcsc": "C25804",
+    "mpn": "0603WAF1002T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "b948db94476e4027ac8953235755ec96",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "e23085a8f904493eb2ce369cbc1b267c",
+    "value": "10kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF1002T5E/26547.html",
+    "description": "电阻类型:厚膜电阻;阻值:10kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C25811": {
+    "lcsc": "C25811",
+    "mpn": "0603WAF2003T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "8492e9c42c704af98a070b91ba967cca",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "ec5e6c585bf74aaabe97266e808464f9",
+    "value": "200kΩ",
+    "datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200306/C422600_1E6D84923E4A46A82E41ADD87F860B5C.pdf",
+    "description": "电阻类型:厚膜电阻;阻值:200kΩ;精度:±1%;功率:100mW;最大工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C25954": {
+    "lcsc": "C25954",
+    "mpn": "0603WAF1692T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "1a464fbd615d4cc998baa6ac5fbcf5ef",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "a8cb13a7a5b64af4b15061dc9da93531",
+    "value": "16.9kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF1692T5E/26697.html",
+    "description": "电阻类型:厚膜电阻;阻值:16.9kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C2651165": {
+    "lcsc": "C2651165",
+    "mpn": "74438357015",
+    "manufacturer": "Wurth(伍尔特)",
+    "deviceUuid": "93ad256934d54ea8a9bf99a83cf1e892",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "IND-SMD_L4.1-W4.1_74438356010",
+    "footprintUuid": "7448979bc438477286cde30acb11ff03",
+    "symbolUuid": "c232cb994c214322a7d6a7e8cc2da5a5",
+    "value": "1.5uH",
+    "datasheet": "https://www.we-online.com/components/products/datasheet/74438357015.pdf",
+    "description": "电感值:1.5uH;精度:±20%;额定电流:6.2A;饱和电流(Isat):8.5A;类型:-;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C266541": {
+    "lcsc": "C266541",
+    "mpn": "B560C",
+    "manufacturer": "DIODES(美台)",
+    "deviceUuid": "c369b4376a324cab92b7be819cdfcdec",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SMC_L6.9-W5.9-LS7.9-RD",
+    "footprintUuid": "069b625b09bd496eb2ed424307f3e157",
+    "symbolUuid": "0f711c79ad644a309926467b35184763",
+    "value": "B560C",
+    "datasheet": "https://item.szlcsc.com/datasheet/B560C/256682.html",
+    "description": "二极管配置:1个独立式;正向压降(Vf):700mV@5A;直流反向耐压(Vr):60V;整流电流:5A;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C2869734": {
+    "lcsc": "C2869734",
+    "mpn": "LM66100DCKR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "0a1cdd72600e437fb12b108f5a84fa68",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SC-70-6_L2.0-W1.3-P0.65-LS2.1-BL",
+    "footprintUuid": "390ea58c156f43da9f9a02b086ff4515",
+    "symbolUuid": "c04e7a8bfd7143248e96e4967f1ccff9",
+    "value": "LM66100DCKR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/lm66100.pdf",
+    "description": "LM66100 具有集成式 FET 的 1.5V 至 5.5V、1.5A、0.5μA IQ 理想二极管",
+    "pins": [
+      {
+        "number": "1",
+        "name": "VIN"
+      },
+      {
+        "number": "2",
+        "name": "GND"
+      },
+      {
+        "number": "3",
+        "name": "CE#"
+      },
+      {
+        "number": "4",
+        "name": "NC"
+      },
+      {
+        "number": "5",
+        "name": "ST"
+      },
+      {
+        "number": "6",
+        "name": "VOUT"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C2887324": {
+    "lcsc": "C2887324",
+    "mpn": "TPS7A0233PDBVR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "0fd6f0df7f9a47429899d0213af3b5f6",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SOT-23-5_L2.9-W1.6-P0.95-LS2.8-BR",
+    "footprintUuid": "c65512e222f74539b9aedd26f1ca303e",
+    "symbolUuid": "05a65193281a4fbe9c484151dbb9d953",
+    "value": "TPS7A0233PDBVR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/tps7a02.pdf",
+    "description": "输出极性:正极;工作电压:6V;输出电压:3.3V;输出电流:200mA;电源纹波抑制比(PSRR):55dB@(1kHz);输出类型:固定;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "IN"
+      },
+      {
+        "number": "2",
+        "name": "GND"
+      },
+      {
+        "number": "3",
+        "name": "EN"
+      },
+      {
+        "number": "4",
+        "name": "NC"
+      },
+      {
+        "number": "5",
+        "name": "OUT"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C2892570": {
+    "lcsc": "C2892570",
+    "mpn": "1N4148W",
+    "manufacturer": "YONGYUTAI(永裕泰)",
+    "deviceUuid": "76d24ed7c48e4683a577694c4d221e92",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SOD-123_L2.7-W1.6-LS3.7-RD-1",
+    "footprintUuid": "1b8b3d7324614d54bbe2e659eb37cdec",
+    "symbolUuid": "f20802161cc84cf7afa0374729360c95",
+    "value": "1N4148W",
+    "datasheet": "https://item.szlcsc.com/datasheet/1N4148W/3124189.html",
+    "description": "二极管配置:1个独立式;整流电流:150mA;直流反向耐压(Vr):100V;正向压降(Vf):1.25V@100mA;反向恢复时间(Trr):4ns;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "A"
+      },
+      {
+        "number": "1",
+        "name": "K"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C2908600": {
+    "lcsc": "C2908600",
+    "mpn": "XH-2A",
+    "manufacturer": "HCTL(华灿天禄)",
+    "deviceUuid": "96395fd10e1147659737ad0dcda73174",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CONN-TH_2P-P2.50_HCTL_XH-2A-X",
+    "footprintUuid": "2c500997077840cf8b36b0086fa79df5",
+    "symbolUuid": "971b4cb64ff84d26b421a8b19e9caf9f",
+    "value": "XH-2A",
+    "datasheet": "https://item.szlcsc.com/datasheet/XH-2A/3184371.html",
+    "description": "插针结构:1x2P;间距:2.5mm;安装方式:直插;参考系列:XH;总PIN数:2P;排数:1;每排PIN数:2;行距:-;额定电流:3A;触头材质:黄铜;触头镀层:锡;工作温度:-25℃~+85℃;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C2908601": {
+    "lcsc": "C2908601",
+    "mpn": "XH-3A",
+    "manufacturer": "HCTL(华灿天禄)",
+    "deviceUuid": "6934d76a8ee6438388dad49508dc5ccf",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CONN-TH_XH-3A",
+    "footprintUuid": "628e6ad9961541e1b7dc794c33b4a4f7",
+    "symbolUuid": "46484627fec243288e98169a7224b935",
+    "value": "XH-3A",
+    "datasheet": "https://item.szlcsc.com/datasheet/XH-3A/3184372.html",
+    "description": "插针结构:1x3P;间距:2.5mm;安装方式:直插;参考系列:XH;总PIN数:3P;排数:1;每排PIN数:3;行距:-;额定电流:3A;触头材质:黄铜;触头镀层:锡;工作温度:-25℃~+85℃;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C2937625": {
+    "lcsc": "C2937625",
+    "mpn": "PZ254V-11-03P",
+    "manufacturer": "XFCN(兴飞)",
+    "deviceUuid": "a7c65807c5894564893a45460053a26d",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "HDR-TH_3P-P2.54-V-M_PZ254V-11-03P",
+    "footprintUuid": "ae03d24f602c48fd89d4ef1ac9efc660",
+    "symbolUuid": "99c54fdd064b4a418408cbaadc979dc0",
+    "value": "PZ254V-11-03P",
+    "datasheet": "https://item.szlcsc.com/datasheet/PZ254V-11-03P/3293280.html",
+    "description": "插针结构:1x3P;间距:2.54mm;行距:-;圆针/方针:方针;安装方式:直插;排数:单排;总PIN位数:3P;额定电流:3A;额定电压:250V;配合针长度:6.1mm;塑高:2.5mm;端接针长度:3mm;触头材质:黄铜;触头镀层:金;工作温度:-40℃~+105℃;颜色:黑色;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C31850": {
+    "lcsc": "C31850",
+    "mpn": "0603WAF2202T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "dae1a5d4e3554561babbb6745e7d62d9",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "a5506dfc5fc94f838c2bbe21b0bce8f9",
+    "value": "22kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF2202T5E/32812.html",
+    "description": "电阻类型:厚膜电阻;阻值:22kΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C3215600": {
+    "lcsc": "C3215600",
+    "mpn": "LM74800QDRRRQ1",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "500849370cc74bf180bd89cadb556c77",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "WSON-12_L3.0-W3.0-P0.50-TL-EP-2",
+    "footprintUuid": "fa80ed743c79407c95879e490024bfd6",
+    "symbolUuid": "b76ce76d0c3d43598b42ed6230c2dc2b",
+    "value": "LM74800QDRRRQ1",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/lm7480-q1.pdf",
+    "description": "类型:理想二极管;通道数:2;工作电压:3V~65V;最大连续电流:2.6A;",
+    "pins": [
+      {
+        "number": "13",
+        "name": "RTN"
+      },
+      {
+        "number": "12",
+        "name": "C"
+      },
+      {
+        "number": "11",
+        "name": "CAP"
+      },
+      {
+        "number": "10",
+        "name": "VS"
+      },
+      {
+        "number": "9",
+        "name": "OUT"
+      },
+      {
+        "number": "8",
+        "name": "HGATE"
+      },
+      {
+        "number": "7",
+        "name": "GND"
+      },
+      {
+        "number": "6",
+        "name": "EN/UVLO"
+      },
+      {
+        "number": "5",
+        "name": "OV"
+      },
+      {
+        "number": "4",
+        "name": "SW"
+      },
+      {
+        "number": "3",
+        "name": "VSNS"
+      },
+      {
+        "number": "2",
+        "name": "A"
+      },
+      {
+        "number": "1",
+        "name": "DGATE"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C3235556": {
+    "lcsc": "C3235556",
+    "mpn": "LM66200DRLR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "423f61e390bc4a4a838a96ddb292c530",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SOT-583-8_L2.1-W1.2-P0.50-LS1.6-BL",
+    "footprintUuid": "2383d5b014fe4932864241bc7813e9ce",
+    "symbolUuid": "3bd926cffb4244bc93924b886135aae6",
+    "value": "LM66200DRLR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/lm66200.pdf",
+    "description": "LM66200 1.6V 至 5.5V、40mΩ、2.5A、低 IQ、双输入理想二极管",
+    "pins": [
+      {
+        "number": "1",
+        "name": "GND"
+      },
+      {
+        "number": "2",
+        "name": "VOUT"
+      },
+      {
+        "number": "3",
+        "name": "VIN1"
+      },
+      {
+        "number": "4",
+        "name": "ON#"
+      },
+      {
+        "number": "5",
+        "name": "GND"
+      },
+      {
+        "number": "6",
+        "name": "VIN2"
+      },
+      {
+        "number": "7",
+        "name": "VOUT"
+      },
+      {
+        "number": "8",
+        "name": "ST"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C374063": {
+    "lcsc": "C374063",
+    "mpn": "BQ25606RGER",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "b97f82fd4d1d483591839bd67005426c",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "VQFN-24_L4.0-W4.0-P0.50-TL-EP2.8",
+    "footprintUuid": "25f7b17bca144bd48d8f7a30ba15c58c",
+    "symbolUuid": "f4040ed4999748d39b8b955a9246f97d",
+    "value": "BQ25606RGER",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/bq25606.pdf",
+    "description": "工作电压:3.9V~13.5V;最大充电电流:3A;电池类型:锂电池;电池节数:1;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "VAC"
+      },
+      {
+        "number": "2",
+        "name": "NC"
+      },
+      {
+        "number": "3",
+        "name": "D+"
+      },
+      {
+        "number": "4",
+        "name": "D-"
+      },
+      {
+        "number": "5",
+        "name": "STAT"
+      },
+      {
+        "number": "6",
+        "name": "OTG"
+      },
+      {
+        "number": "7",
+        "name": "PG#"
+      },
+      {
+        "number": "8",
+        "name": "ILIM"
+      },
+      {
+        "number": "9",
+        "name": "CE#"
+      },
+      {
+        "number": "10",
+        "name": "ICHG"
+      },
+      {
+        "number": "11",
+        "name": "TS"
+      },
+      {
+        "number": "12",
+        "name": "VSET"
+      },
+      {
+        "number": "13",
+        "name": "BAT"
+      },
+      {
+        "number": "14",
+        "name": "BAT"
+      },
+      {
+        "number": "15",
+        "name": "SYS"
+      },
+      {
+        "number": "16",
+        "name": "SYS"
+      },
+      {
+        "number": "17",
+        "name": "GND"
+      },
+      {
+        "number": "18",
+        "name": "GND"
+      },
+      {
+        "number": "19",
+        "name": "SW"
+      },
+      {
+        "number": "20",
+        "name": "SW"
+      },
+      {
+        "number": "21",
+        "name": "BTST"
+      },
+      {
+        "number": "22",
+        "name": "REGN"
+      },
+      {
+        "number": "23",
+        "name": "PMID"
+      },
+      {
+        "number": "24",
+        "name": "VBUS"
+      },
+      {
+        "number": "25",
+        "name": "EP"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C3747031": {
+    "lcsc": "C3747031",
+    "mpn": "TPS7A0230PDBVR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "b976e13a4d6e47208affb35c01f899ff",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SOT-23-5_L2.9-W1.6-P0.95-LS2.8-BR",
+    "footprintUuid": "c65512e222f74539b9aedd26f1ca303e",
+    "symbolUuid": "7139ec8e52c947d29ab2d2ccedc28dca",
+    "value": "TPS7A0230PDBVR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/tps7a02.pdf",
+    "description": "输出极性:正极;工作电压:6V;输出电压:3V;输出电流:200mA;电源纹波抑制比(PSRR):55dB@(1kHz);输出类型:固定;",
+    "pins": [
+      {
+        "number": "5",
+        "name": "OUT"
+      },
+      {
+        "number": "4",
+        "name": "NC"
+      },
+      {
+        "number": "3",
+        "name": "EN"
+      },
+      {
+        "number": "2",
+        "name": "GND"
+      },
+      {
+        "number": "1",
+        "name": "IN"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C3911753": {
+    "lcsc": "C3911753",
+    "mpn": "XAL7070-682MEC",
+    "manufacturer": "Coilcraft(线艺)",
+    "deviceUuid": "74ed7a6dd8a9440887ac1ac039f93ae1",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "IND-SMD_L7.5-W7.2-1",
+    "footprintUuid": "609e29df9b0041c097e38054ed2962ca",
+    "symbolUuid": "ebbd4c53d6074c45bc87f709ab047af9",
+    "value": "6.8uH",
+    "datasheet": "https://www.coilcraft.com/getmedia/1ba55433-bcc8-4838-9b21-382f497e12e0/xal7070.pdf",
+    "description": "电感值:6.8uH;精度:±20%;额定电流:9.2A;饱和电流(Isat):12.8A;类型:磁胶屏蔽电感;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C394021": {
+    "lcsc": "C394021",
+    "mpn": "MF52B 103F3950-100",
+    "manufacturer": "时恒",
+    "deviceUuid": "5971fc4fc09d42f280205f005526082e",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "RES-TH_BD3.0-P2.00-D0.3",
+    "footprintUuid": "9599fbde4de64cb38439ed4f65cfa35d",
+    "symbolUuid": "deab5ab6a7a94c8dbe566bbafff2f9c2",
+    "value": "MF52B 103F3950-100",
+    "datasheet": "https://item.szlcsc.com/datasheet/MF52B%2520103F3950-100/372740.html",
+    "description": "功率:50mW;阻值:10kΩ;电阻精度:±1%;B值精度:±1%;B值(25℃/50℃):3950K;最大稳态电流(25℃):-;"
+  },
+  "C41425294": {
+    "lcsc": "C41425294",
+    "mpn": "PZ254V-11-04P-RD",
+    "manufacturer": "XFCN(兴飞)",
+    "deviceUuid": "3260ae80d47a4583a8f42d300cfc400b",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CONN-TH_4P-P2.54_PZ254V-11-04P-YL",
+    "footprintUuid": "a44c2e28156c497b8c616d88509da032",
+    "symbolUuid": "116a7f62630c426aacc1b28be2eb9942",
+    "value": "PZ254V-11-04P-RD",
+    "datasheet": "https://item.szlcsc.com/datasheet/PZ254V-11-04P-RD/43268211.html",
+    "description": "插针结构:1x4P;间距:2.54mm;圆针/方针:方针;安装方式:直插;排数:单排;总PIN位数:4P;额定电流:3A;配合针长度:6.1mm;塑高:2.5mm;端接针长度:3mm;触头材质:黄铜;工作温度:-40℃~+105℃;颜色:红色;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      },
+      {
+        "number": "4",
+        "name": "4"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C4172": {
+    "lcsc": "C4172",
+    "mpn": "0603WAF1504T5E",
+    "manufacturer": "UNI-ROYAL(厚声)",
+    "deviceUuid": "2772b9a602924fad82bbb4c1305ef274",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "e5722147d948488fb839e044a0ab2271",
+    "value": "1.5MΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603WAF1504T5E/4579.html",
+    "description": "电阻类型:厚膜电阻;阻值:1.5MΩ;精度:±1%;功率:100mW;工作电压:75V;温度系数:±100ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C440198": {
+    "lcsc": "C440198",
+    "mpn": "GRM21BR61H106KE43L",
+    "manufacturer": "muRata(村田)",
+    "deviceUuid": "6e5726223dd84f70bc3b626fc7d1f72c",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0805",
+    "footprintUuid": "ccb32feceadc4298b406326a506ce8e7",
+    "symbolUuid": "2e54d9f6ef024fd6a073cb020500c9e8",
+    "value": "10uF",
+    "datasheet": "https://item.szlcsc.com/datasheet/GRM21BR61H106KE43L/439567.html",
+    "description": "容值:10uF;精度:±10%;额定电压:50V;温度系数:X5R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C44479": {
+    "lcsc": "C44479",
+    "mpn": "0451010.MRL",
+    "manufacturer": "Littelfuse(美国力特)",
+    "deviceUuid": "a4d4b2fbdaab48c39453003e4037a599",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "FUSE-SMD_L6.1-W2.7",
+    "footprintUuid": "1350122e05e84d619724a0707a7112af",
+    "symbolUuid": "60528bf0b4754ec1881465bf778570b9",
+    "value": "0451010.MRL",
+    "datasheet": "https://item.szlcsc.com/datasheet/0451010.MRL/45481.html",
+    "description": "类型:贴片式保险丝;额定电流:10A;额定电压 (AC):125V;额定电压:125V;分断能力:35A；50A;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C461052": {
+    "lcsc": "C461052",
+    "mpn": "DMP2008UFG-7",
+    "manufacturer": "DIODES(美台)",
+    "deviceUuid": "cdd9416d20ee417ea245390b43b928b3",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "POWERDI3333-8_L3.3-W3.3-P0.65-BL",
+    "footprintUuid": "bce0a2046360427aaa9258d71cd7cfda",
+    "symbolUuid": "0595a218d7a8450798cf737a31473bf8",
+    "value": "DMP2008UFG-7",
+    "datasheet": "https://item.szlcsc.com/datasheet/DMP2008UFG-7/465481.html",
+    "description": "数量:1个P沟道;漏源电压(Vdss):20V;连续漏极电流(Id):14A;导通电阻(RDS(on)):8mΩ@4.5V;耗散功率(Pd):2.4W;阈值电压(Vgs(th)):400mV;",
+    "pins": [
+      {
+        "number": "3",
+        "name": "S"
+      },
+      {
+        "number": "2",
+        "name": "S"
+      },
+      {
+        "number": "1",
+        "name": "S"
+      },
+      {
+        "number": "4",
+        "name": "G"
+      },
+      {
+        "number": "5",
+        "name": "D"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C468238": {
+    "lcsc": "C468238",
+    "mpn": "TPS7A1650DGNR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "0780060eeff4428e956f7ce381789527",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "MSOP-8_L3.0-W3.0-P0.65-LS5.0-BL-EP",
+    "footprintUuid": "704d3b9b846a4c719bc7fdcd60fd3921",
+    "symbolUuid": "8993ec5b4f2245aa8ca829241aef1830",
+    "value": "TPS7A1650DGNR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/tps7a16.pdf",
+    "description": "输出极性:正极;工作电压:60V;输出电压:5V;输出电流:100mA;电源纹波抑制比(PSRR):50dB@(100Hz);输出类型:固定;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "OUT"
+      },
+      {
+        "number": "2",
+        "name": "FB/DNC"
+      },
+      {
+        "number": "3",
+        "name": "PG"
+      },
+      {
+        "number": "4",
+        "name": "GND"
+      },
+      {
+        "number": "5",
+        "name": "EN"
+      },
+      {
+        "number": "6",
+        "name": "NC"
+      },
+      {
+        "number": "7",
+        "name": "DELAY"
+      },
+      {
+        "number": "8",
+        "name": "IN"
+      },
+      {
+        "number": "9",
+        "name": "EP"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C471046": {
+    "lcsc": "C471046",
+    "mpn": "TPS22953DQCR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "63b9178626eb466f9920a27692e8ebf5",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "WSON-10_L3.0-W2.0-P0.50-BL-EP",
+    "footprintUuid": "df2cd803c6dd43808acf54f0afbeb61b",
+    "symbolUuid": "8ec282f16e6b48d5b03d425602d7872a",
+    "value": "TPS22953DQCR",
+    "datasheet": "https://www.ti.com/cn/lit/ds/symlink/tps22954.pdf",
+    "description": "类型:负载开关;通道数:1;输入控制逻辑:高电平有效;工作电压:700mV~5.7V;最大连续电流:5A;导通电阻:14mΩ;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "IN"
+      },
+      {
+        "number": "2",
+        "name": "IN"
+      },
+      {
+        "number": "3",
+        "name": "BIAS"
+      },
+      {
+        "number": "4",
+        "name": "EN"
+      },
+      {
+        "number": "5",
+        "name": "GND"
+      },
+      {
+        "number": "6",
+        "name": "CT"
+      },
+      {
+        "number": "7",
+        "name": "PG"
+      },
+      {
+        "number": "8",
+        "name": "SNS"
+      },
+      {
+        "number": "9",
+        "name": "OUT"
+      },
+      {
+        "number": "10",
+        "name": "OUT"
+      },
+      {
+        "number": "11",
+        "name": "EP"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C474881": {
+    "lcsc": "C474881",
+    "mpn": "KF301-5.0-2P",
+    "manufacturer": "KEFA(科发)",
+    "deviceUuid": "41ddecaaf01b4c1aa92ec4bfe22149b7",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CONN-TH_P5.00_KF301-5.0-2P",
+    "footprintUuid": "3bf49215139c4a13877b29c85b7e1bf7",
+    "symbolUuid": "f8af3025bd9c48c2993b504e3cae5447",
+    "value": "KF301-5.0-2P",
+    "datasheet": "https://item.szlcsc.com/datasheet/KF301-5.0-2P/481499.html",
+    "description": "结构:1x2P;间距:5mm;颜色:蓝色;安装类型:直插;排数:1;每排PIN数:2;额定电流:17A;额定电压:250V;线规 - AWG:14~22;线规 - 平方毫米:1.5;工作温度:-30℃~+120℃;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C474882": {
+    "lcsc": "C474882",
+    "mpn": "KF301-5.0-3P",
+    "manufacturer": "KEFA(科发)",
+    "deviceUuid": "7a0fae900741409391a016b8e696c69b",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CONN-TH_3P-P5.00_KF301-5.0-3P",
+    "footprintUuid": "ac86b84c6b7e418e84b6669208944058",
+    "symbolUuid": "8ff7aa49813b4f9b97732cf7834dfea9",
+    "value": "KF301-5.0-3P",
+    "datasheet": "https://item.szlcsc.com/datasheet/KF301-5.0-3P/481500.html",
+    "description": "结构:1x3P;间距:5mm;颜色:蓝色;安装类型:直插;排数:1;每排PIN数:3;额定电流:17A;额定电压:250V;线规 - AWG:14~22;线规 - 平方毫米:1.5;工作温度:-30℃~+120℃;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C48467": {
+    "lcsc": "C48467",
+    "mpn": "0451005.MRL",
+    "manufacturer": "Littelfuse(美国力特)",
+    "deviceUuid": "dd4e1d5a5eff4de383cd5330ca28ff12",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "FUSE-SMD_L6.1-W2.6",
+    "footprintUuid": "8093047793014f548801f455f1f4b727",
+    "symbolUuid": "848b96d20bee4eddb7af12bb5b30be59",
+    "value": "0451005.MRL",
+    "datasheet": "https://item.szlcsc.com/datasheet/0451005.MRL/49474.html",
+    "description": "类型:贴片式保险丝;额定电流:5A;额定电压:125V;分断能力:50A;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C492401": {
+    "lcsc": "C492401",
+    "mpn": "PZ254V-11-02P",
+    "manufacturer": "XFCN(兴飞)",
+    "deviceUuid": "99b1039acd624894acb0c01cac9f07f5",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "HDR-TH_2P-P2.54-V-M",
+    "footprintUuid": "dab68a6adbcd41feaaacbb580297e3ac",
+    "symbolUuid": "860516dfb92b42f28a4140f3cdc4b39c",
+    "value": "PZ254V-11-02P",
+    "datasheet": "https://item.szlcsc.com/datasheet/PZ254V-11-02P/502957.html",
+    "description": "插针结构:1x2P;间距:2.54mm;行距:-;圆针/方针:方针;安装方式:直插;排数:单排;总PIN位数:2P;额定电流:3A;额定电压:250V;配合针长度:6.1mm;塑高:2.5mm;端接针长度:3mm;触头材质:黄铜;触头镀层:金;工作温度:-40℃~+105℃;颜色:黑色;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C5186957": {
+    "lcsc": "C5186957",
+    "mpn": "TXU0202DCUR",
+    "manufacturer": "TI(德州仪器)",
+    "deviceUuid": "493798d782f842239c2500d2396f07aa",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "VSSOP-8_L2.3-W2.0-P0.50-LS3.1-BR",
+    "footprintUuid": "19ee177a7c6649589dfa568821c7fed2",
+    "symbolUuid": "0f6c7acd020c4dd2b2df64b7ec5ce793",
+    "value": "TXU0202DCUR",
+    "datasheet": "https://item.szlcsc.com/datasheet/TXU0202DCUR/5858466.html",
+    "description": "数据速率:200Mbps;工作电压(VCCA):1.08V~5.5V;工作电压(VCCB):1.08V~5.5V;元件数:1;每个电路通道数:2;",
+    "pins": [
+      {
+        "number": "6",
+        "name": "OE"
+      },
+      {
+        "number": "5",
+        "name": "A1"
+      },
+      {
+        "number": "4",
+        "name": "A2Y"
+      },
+      {
+        "number": "2",
+        "name": "GND"
+      },
+      {
+        "number": "1",
+        "name": "B2"
+      },
+      {
+        "number": "8",
+        "name": "B1Y"
+      },
+      {
+        "number": "7",
+        "name": "VCCB"
+      },
+      {
+        "number": "3",
+        "name": "VCCA"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C53373776": {
+    "lcsc": "C53373776",
+    "mpn": "XT30PW-M",
+    "manufacturer": "AMASS(艾迈斯)",
+    "deviceUuid": "2ad4954ab4e84d4b9669d81f058f0e9a",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CONN-TH_XT30PW-M",
+    "footprintUuid": "a5702a3dbdca4d359368e41755e32ad4",
+    "symbolUuid": "bbcab8072d1445ec9c6871e1e84819a1",
+    "value": "XT30PW-M",
+    "datasheet": "https://item.szlcsc.com/datasheet/XT30PW-M/56489943.html",
+    "description": "",
+    "pins": [
+      {
+        "number": "1",
+        "name": "-"
+      },
+      {
+        "number": "2",
+        "name": "+"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      },
+      {
+        "number": "4",
+        "name": "4"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C705725": {
+    "lcsc": "C705725",
+    "mpn": "RT0603BRD0714K7L",
+    "manufacturer": "YAGEO(国巨)",
+    "deviceUuid": "d41021dcb7784347a9ca84abb16baa79",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "eac98d1c39b240318a586dc672989035",
+    "value": "14.7kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/RT0603BRD0714K7L/742245.html",
+    "description": "电阻类型:薄膜电阻;阻值:14.7kΩ;精度:±0.1%;功率:100mW;工作电压:75V;温度系数:±25ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C720477": {
+    "lcsc": "C720477",
+    "mpn": "TS-1088-AR02016",
+    "manufacturer": "XUNPU(讯普)",
+    "deviceUuid": "cff07d923b95482c818b184e98b80db7",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SW-SMD_L3.9-W3.0-P4.45",
+    "footprintUuid": "9c6368306ce24298bf2ce130f6c4bcc6",
+    "symbolUuid": "723b3d91764742c3ad562eb3efe239b7",
+    "value": "TS-1088-AR02016",
+    "datasheet": "https://item.szlcsc.com/datasheet/TS-1088-AR02016/763484.html",
+    "description": "电路结构:单刀单掷;按钮形状:圆形按钮;作用力:1.6N;安装方式:立贴;开关长度:3.9mm;开关宽度:3mm;开关高度:2mm;带支架:不带支架;触点电流:50mA;额定电压:12V;带灯:-;工作寿命:10万次;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C728600": {
+    "lcsc": "C728600",
+    "mpn": "RT0603BRD0790K9L",
+    "manufacturer": "YAGEO(国巨)",
+    "deviceUuid": "f432dfe70f924fb1b644be42d6cf3c12",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "86f0ed00328448899f6ebf06e9bdaf14",
+    "value": "90.9kΩ",
+    "datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200814/C723483_9C38DBFE9BAEFED0FBB9716EAA9FF07C.pdf",
+    "description": "电阻类型:薄膜电阻;阻值:90.9kΩ;精度:±0.1%;功率:100mW;最大工作电压:75V;温度系数:±25ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C7434310": {
+    "lcsc": "C7434310",
+    "mpn": "HC-XH-4A-G-K",
+    "manufacturer": "HCTL(华灿天禄)",
+    "deviceUuid": "7e3599eccc0c4343874da90dcc77d70e",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "CONN-TH_4P-P2.50_HX25003-4A",
+    "footprintUuid": "f62e2dce92064edfb9eaa52de5200762",
+    "symbolUuid": "65fa06ce49864e9bba916dc2935ff098",
+    "value": "HC-XH-4A-G-K",
+    "datasheet": "https://item.szlcsc.com/datasheet/HC-XH-4A-G-K/8445547.html",
+    "description": "插针结构:1x4P;间距:2.5mm;安装方式:直插;参考系列:XH;总PIN数:4P;排数:1;每排PIN数:4;行距:-;额定电流:3A;触头材质:黄铜;触头镀层:锡;工作温度:-25℃~+85℃;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "3",
+        "name": "3"
+      },
+      {
+        "number": "4",
+        "name": "4"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C8545": {
+    "lcsc": "C8545",
+    "mpn": "2N7002",
+    "manufacturer": "CJ(江苏长电/长晶)",
+    "deviceUuid": "f8007837564a4f1fa0e6b57b81dccb0d",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "SOT-23-3_L2.9-W1.3-P1.90-LS2.4-BR",
+    "footprintUuid": "bdad16194d454cb292a50525f39c3ffd",
+    "symbolUuid": "65262e964a954b63a27fe858d18f82a0",
+    "value": "2N7002",
+    "datasheet": "https://item.szlcsc.com/datasheet/2N7002/9040.html",
+    "description": "数量:1个N沟道;漏源电压(Vdss):60V;连续漏极电流(Id):115mA;导通电阻(RDS(on)):5Ω@10V;耗散功率(Pd):225mW;阈值电压(Vgs(th)):2.5V;",
+    "pins": [
+      {
+        "number": "3",
+        "name": "D"
+      },
+      {
+        "number": "1",
+        "name": "G"
+      },
+      {
+        "number": "2",
+        "name": "S"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C86054": {
+    "lcsc": "C86054",
+    "mpn": "GRM32ER72A225KA35L",
+    "manufacturer": "muRata(村田)",
+    "deviceUuid": "473299184e304dbcbc91bd80e32e8514",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C1210",
+    "footprintUuid": "d98380dbde964cff944f829800b236c1",
+    "symbolUuid": "006ca00d3db34618acc4b638d8bb0ebd",
+    "value": "2.2uF",
+    "datasheet": "https://item.szlcsc.com/datasheet/GRM32ER72A225KA35L/87230.html",
+    "description": "容值:2.2uF;精度:±10%;额定电压:100V;温度系数:X7R;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C920280": {
+    "lcsc": "C920280",
+    "mpn": "XAL5030-222MEC",
+    "manufacturer": "Coilcraft(线艺)",
+    "deviceUuid": "28d5779b2b7f43d7a02475b9b52204d0",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "IND-SMD_L5.5-W5.3_XAL5030-102MEC",
+    "footprintUuid": "27b9d92f4d434638adfa52170d017d73",
+    "symbolUuid": "150015ff3be846db9a2e44bebd9a398f",
+    "value": "2.2uH",
+    "datasheet": "https://www.coilcraft.com/getmedia/49bc46c8-4b2c-45b9-9b6c-2eaa235ea698/xal50xx.pdf",
+    "description": "电感值:2.2uH;精度:±20%;额定电流:9.7A;饱和电流(Isat):9.2A;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C94085": {
+    "lcsc": "C94085",
+    "mpn": "STM32L031K6T6",
+    "manufacturer": "ST(意法半导体)",
+    "deviceUuid": "2062a26141404a13ad15ea980aed4435",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "LQFP-32_L7.0-W7.0-P0.80-LS9.0-BL",
+    "footprintUuid": "73c6961ceb5549f299e29c425151b180",
+    "symbolUuid": "fa219a30b7ac40a0b901f6922319b5f5",
+    "value": "STM32L031K6T6",
+    "datasheet": "https://item.szlcsc.com/datasheet/STM32L031K6T6/95283.html",
+    "description": "CPU内核:ARM Cortex-M0+;CPU最大主频:32MHz;CPU位数:32 Bit;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "VDD"
+      },
+      {
+        "number": "2",
+        "name": "PC14-OSC_IN"
+      },
+      {
+        "number": "3",
+        "name": "PC15-OSC32_OUT"
+      },
+      {
+        "number": "4",
+        "name": "NRST"
+      },
+      {
+        "number": "5",
+        "name": "VDDA"
+      },
+      {
+        "number": "6",
+        "name": "PA0-CK_IN"
+      },
+      {
+        "number": "7",
+        "name": "PA1"
+      },
+      {
+        "number": "8",
+        "name": "PA2"
+      },
+      {
+        "number": "9",
+        "name": "PA3"
+      },
+      {
+        "number": "10",
+        "name": "PA4"
+      },
+      {
+        "number": "11",
+        "name": "PA5"
+      },
+      {
+        "number": "12",
+        "name": "PA6"
+      },
+      {
+        "number": "13",
+        "name": "PA7"
+      },
+      {
+        "number": "14",
+        "name": "PB0"
+      },
+      {
+        "number": "15",
+        "name": "PB1"
+      },
+      {
+        "number": "16",
+        "name": "VSS"
+      },
+      {
+        "number": "17",
+        "name": "VDD"
+      },
+      {
+        "number": "18",
+        "name": "PA8"
+      },
+      {
+        "number": "19",
+        "name": "PA9"
+      },
+      {
+        "number": "20",
+        "name": "PA10"
+      },
+      {
+        "number": "21",
+        "name": "PA11"
+      },
+      {
+        "number": "22",
+        "name": "PA12"
+      },
+      {
+        "number": "23",
+        "name": "PA13"
+      },
+      {
+        "number": "24",
+        "name": "PA14"
+      },
+      {
+        "number": "25",
+        "name": "PA15"
+      },
+      {
+        "number": "26",
+        "name": "PB3"
+      },
+      {
+        "number": "27",
+        "name": "PB4"
+      },
+      {
+        "number": "28",
+        "name": "PB5"
+      },
+      {
+        "number": "29",
+        "name": "PB6"
+      },
+      {
+        "number": "30",
+        "name": "PB7"
+      },
+      {
+        "number": "31",
+        "name": "BOOT0"
+      },
+      {
+        "number": "32",
+        "name": "VSS"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Manufacturer Part}"
+  },
+  "C94904": {
+    "lcsc": "C94904",
+    "mpn": "0603CG470J500NT",
+    "manufacturer": "FH(风华)",
+    "deviceUuid": "20536babac204ca99f2515dbfb730604",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "C0603",
+    "footprintUuid": "76d6c29a47804db487f8a92b2621751b",
+    "symbolUuid": "c9c7c14c4ed34e569964171379bb7cb7",
+    "value": "47pF",
+    "datasheet": "https://item.szlcsc.com/datasheet/0603CG470J500NT/96104.html",
+    "description": "容值:47pF;精度:±5%;额定电压:50V;温度系数:C0G;",
+    "pins": [
+      {
+        "number": "1",
+        "name": "1"
+      },
+      {
+        "number": "2",
+        "name": "2"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  },
+  "C95204": {
+    "lcsc": "C95204",
+    "mpn": "RT0603BRD0710KL",
+    "manufacturer": "YAGEO(国巨)",
+    "deviceUuid": "3840b7e554aa441f90223c083eebd79a",
+    "libraryUuid": "0819f05c4eef4c71ace90d822a990e87",
+    "footprint": "R0603",
+    "footprintUuid": "50b4943912284dab97752312e589e9e2",
+    "symbolUuid": "f17789ddcff54c04bdd7627904b2daa3",
+    "value": "10kΩ",
+    "datasheet": "https://item.szlcsc.com/datasheet/RT0603BRD0710KL/96405.html",
+    "description": "电阻类型:薄膜电阻;阻值:10kΩ;精度:±0.1%;功率:100mW;工作电压:75V;温度系数:±25ppm/℃;",
+    "pins": [
+      {
+        "number": "2",
+        "name": "2"
+      },
+      {
+        "number": "1",
+        "name": "1"
+      }
+    ],
+    "pinEvidence": "official-placed-symbol-readback",
+    "edaName": "={Value}"
+  }
+}

@@ -1,0 +1,20 @@
+schema: 1
+id: vehicle-dual-power-module
+name: Vehicle Dual Power Module
+kind: project
+status: prototype
+summary: Independent vehicle 12 V and protected 1S battery power board; host 5 V and BAT 3.9 V outputs have unwired electrical source data, while an alternative VIN 5 V/2 A output is planned.
+owners:
+  - human-ai-lab
+toolchains:
+  - EasyEDA Pro 4.1.60
+  - easyeda-agent 1.8.0
+boards: []
+modules:
+  - ml307r-dl-tiny-at-carrier
+validation:
+  build: pending
+  hardware: pending
+# The electrical source tests pass, but the four EDA sheets are not wired or DRC-accepted.
+# AtomS3 Lite is a target host; exact host revision and GPIO assignment remain to be checked.
+# The optional VIN 5 V/2 A circuit has no placed EDA symbols or validated BOM yet.

@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "spacing": 10,
+  "maxCandidates": 40000,
+  "routing": {
+    "maxExpandedNodes": 2000000,
+    "maxReroutes": 8
+  },
+  "components": [
+    {
+      "id": "cmp-SW401",
+      "measurement": {
+        "x": 840,
+        "y": 700,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 860.5,
+          "maxY": 707.5,
+          "minX": 819.5,
+          "minY": 697.5
+        },
+        "designator": "SW401",
+        "value": "TS-1088-AR02016",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 870,
+            "y": 700,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "KEY_EXT",
+            "x": 810,
+            "y": 700,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 820,
+            "minY": 710,
+            "maxX": 842.955078125,
+            "maxY": 718
+          }
+        ]
+      },
+      "pinStates": {}
+    },
+    {
+      "id": "cmp-J403",
+      "measurement": {
+        "x": 2850,
+        "y": -100,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2860.5,
+          "maxY": -84.5,
+          "minX": 2839.5,
+          "minY": -115.5
+        },
+        "designator": "J403",
+        "value": "XH-2A",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "KEY_EXT",
+            "x": 2830,
+            "y": -95,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2830,
+            "y": -105,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2840,
+            "minY": -85,
+            "maxX": 2855.17919921875,
+            "maxY": -77
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R420",
+      "measurement": {
+        "x": 1600,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1610.5,
+          "maxY": -345.5,
+          "minX": 1589.5,
+          "minY": -354.5
+        },
+        "designator": "R420",
+        "value": "1k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "KEY_N",
+            "x": 1620,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "KEY_EXT",
+            "x": 1580,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1590,
+            "minY": -345,
+            "maxX": 1606.734375,
+            "maxY": -337
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-R421",
+      "measurement": {
+        "x": 1850,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 1860.5,
+          "maxY": -345.5,
+          "minX": 1839.5,
+          "minY": -354.5
+        },
+        "designator": "R421",
+        "value": "100k\u03a9",
+        "pins": [
+          {
+            "number": "2",
+            "name": "2",
+            "net": "KEY_N",
+            "x": 1870,
+            "y": -350,
+            "rotation": 0
+          },
+          {
+            "number": "1",
+            "name": "1",
+            "net": "3V0_AON",
+            "x": 1830,
+            "y": -350,
+            "rotation": 180
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 1840,
+            "minY": -345,
+            "maxX": 1856.734375,
+            "maxY": -337
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    },
+    {
+      "id": "cmp-C413",
+      "measurement": {
+        "x": 2100,
+        "y": -350,
+        "rotation": 0,
+        "mirror": false,
+        "bbox": {
+          "maxX": 2105.5,
+          "maxY": -341.5,
+          "minX": 2094.5,
+          "minY": -358.5
+        },
+        "designator": "C413",
+        "value": "10nF",
+        "pins": [
+          {
+            "number": "1",
+            "name": "1",
+            "net": "KEY_N",
+            "x": 2085,
+            "y": -350,
+            "rotation": 180
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "net": "GND",
+            "x": 2115,
+            "y": -350,
+            "rotation": 0
+          }
+        ],
+        "textBboxes": [
+          {
+            "minX": 2095,
+            "minY": -340,
+            "maxX": 2111.734375,
+            "maxY": -332
+          }
+        ]
+      },
+      "pinStates": {},
+      "allowedRotations": [
+        0,
+        90,
+        180,
+        270
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "componentId": "cmp-J403",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-SW401",
+        "pinNumber": "1"
+      }
+    },
+    {
+      "componentId": "cmp-R420",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-SW401",
+        "pinNumber": "1"
+      }
+    },
+    {
+      "componentId": "cmp-R421",
+      "pinNumber": "2",
+      "attachTo": {
+        "componentId": "cmp-R420",
+        "pinNumber": "2"
+      }
+    },
+    {
+      "componentId": "cmp-C413",
+      "pinNumber": "1",
+      "attachTo": {
+        "componentId": "cmp-R420",
+        "pinNumber": "2"
+      }
+    }
+  ],
+  "netPolicies": {
+    "GND": "local_ground",
+    "3V0_AON": "local_power",
+    "KEY_N": "module_port",
+    "KEY_EXT": "direct"
+  },
+  "zones": [
+    {
+      "id": "user-key",
+      "title": "POWER KEY / LOCAL AND EXTERNAL",
+      "coreComponentId": "cmp-SW401",
+      "componentIds": [
+        "cmp-SW401",
+        "cmp-J403",
+        "cmp-R420",
+        "cmp-R421",
+        "cmp-C413"
+      ]
+    }
+  ]
+}
