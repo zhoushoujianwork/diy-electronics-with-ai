@@ -135,7 +135,7 @@ sources:
 validation:
   level: cataloged
 notes:
-  - Repository-specific pin assignments and hardware evidence are maintained in the linked board profile.
+  - Official pin and power facts are documented in the linked board profile; this record claims cataloged validation only.
   - Display width_px and height_px use the official landscape example orientation, not an assertion about the panel's unrotated addressing axes. Both 240 by 320 and 320 by 240 describe the same pixel count.
   - Mechanical width and height describe the complete enclosure, not the LCD active area or PCB outline.
   - Enclosure depth is deliberately omitted from mechanical fields because the official product drawing says 15 mm while the documentation introduction says 14 mm. Exact revision and mechanical CAD must be checked before enclosure design.

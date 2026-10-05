@@ -1,7 +1,0 @@
-observation_order_not_pin_number,visible_label,source,provisional_role,unverified_items,atom_connection
-top-1,BAT,user-supplied product image,unknown power-related terminal,voltage range/direction/charger relationship,unassigned
-top-2,EN,user-supplied product image,enable-related terminal,active level/pull resistor/timing/voltage tolerance,unassigned
-top-3,RX,user-supplied product image,UART receive candidate,direction from board perspective/logic voltage/boot function,unassigned
-top-4,TX,user-supplied product image,UART transmit candidate,direction from board perspective/logic voltage/boot function,unassigned
-top-5,GND,user-supplied product image,ground candidate,continuity and current return path,unassigned
-top-6,VIN,user-supplied product image,external supply candidate,input range/regulator/peak current/BAT relationship,unassigned

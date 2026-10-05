@@ -1,4 +1,0 @@
-# Compatible geometry packages for the tested CAD skill workflow (Python 3.12).
-build123d==0.9.1
-cadquery-ocp==7.8.1.1.post1
-ocpsvg==0.4.0

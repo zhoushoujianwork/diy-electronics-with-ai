@@ -1,9 +1,0 @@
-build/
-raw/
-*.epro2
-*.epru
-__pycache__/
-# Full-page v2/v3 derivations duplicate retained per-zone experiment inputs.
-/source/p*-zones-v2.json
-/source/p*-zones-v3.json
-/source/layout-attempt-inputs/v1/

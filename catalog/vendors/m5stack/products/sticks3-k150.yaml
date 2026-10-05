@@ -74,7 +74,7 @@ sources:
 validation:
   level: cataloged
 notes:
-  - Repository-specific pin assignments and hardware evidence are maintained in the linked board profile.
+  - Official pin and power facts are documented in the linked board profile; this record claims cataloged validation only.
   - External 5 V interfaces default to input mode. In output mode, DC 5 V input is permitted only through USB or Hat2 5V_IN, not Grove or EXT_5V.
   - M5Unified initialization disables EXT_5V_EN; M5.Power.setExtOutput(true) enables external output mode.
   - Official dimensions are 48 x 24 x 15 mm, recorded here as height x width x depth; they do not define an adapter PCB outline.

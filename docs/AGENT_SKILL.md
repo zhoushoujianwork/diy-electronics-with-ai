@@ -22,7 +22,7 @@ back to the same Git repository. New Skill directories are discovered automatica
 例如：`使用 $diy-electronics-lookup 查一下 M5Stack HAT PIR 的资料和验证边界。`
 
 制作手册可输入：`使用 $m5-product-manual，根据这个 M5 项目的硬件、固件和验证记录制作中文图解说明书，包含按键、接线、屏幕状态与技术原理。`
-完整能力、准备材料、灵感来源与 MotoBox 示例见 [M5 产品图解手册介绍](m5-product-manual.md)。
+完整能力、准备材料、灵感来源与使用方法见 [M5 产品图解手册介绍](m5-product-manual.md)。
 
 ## Install
 

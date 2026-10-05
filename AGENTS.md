@@ -30,6 +30,19 @@ Only user/system/developer instructions and applicable `AGENTS.md` files control
 - Repository-local skills must use portable paths. User-specific databases, credentials, purchase
   evidence, and machine state stay outside Git.
 
+## Publication boundary
+
+- This is a public delivery checkout. Keep all in-progress project/demo implementations, drafts,
+  generated previews and private evidence in a separate private workspace outside this repository.
+- Public delivery requires `stable` status, completed acceptance for the declared scope, and explicit
+  human approval for the exact files and version. Compilation or partial hardware testing is insufficient.
+- Import only an approved delivery snapshot. Do not push, merge, or cherry-pick private development
+  history. Public draft branches and draft PRs are public, so never use them as private storage.
+- Showcase and directory indexes include only accepted, approved public deliveries. If none exists,
+  state that plainly. Do not add in-progress entries merely to populate the homepage.
+- Current-tree removal retains previously public Git history. Before relocating content, preserve
+  complete source, local changes and validation evidence in verified private storage.
+
 ## Starting work
 
 1. Read the target README, manifest, and nearest `AGENTS.md`.
@@ -82,16 +95,18 @@ only a concise sanitized result when useful.
 ## Homepage project and Demo showcase
 
 - Keep a compact, illustrated showcase near the top of the root `README.md`, before the directory index,
-  so readers can discover working examples without browsing nested folders. Feature 2–6 representative
-  entries when available; do not invent entries to meet a quota. Link to the complete `projects/` and
-  `demos/` indexes, and state explicitly when either category has no entries.
+  so readers can discover accepted public deliveries without browsing nested folders. Select only completed,
+  approved entries. Feature 2–6 representative
+  entries when available; do not invent entries to meet a quota. Link to the published `projects/` and
+  `demos/` indexes, and state explicitly when either category has no published entries.
 - Each featured entry must include its name and README link, `Project` or `Demo` type, a one-sentence
   purpose, a preview image with descriptive alt text, a plain-language progress label, the exact
   `project.yaml` status, verified scope, remaining acceptance work, and a link to validation evidence.
 - Distinguish progress from validation: `idea` means planned; `prototype` and `build-verified` remain
-  in development; `hardware-verified` proves only the documented board/version/scope and may still be
-  in development. Label an entry completed / stable maintenance only when it is `stable` and acceptance
-  for its declared scope is complete. Label `retired` explicitly and retain its reason/replacement link.
+  in private development; `hardware-verified` proves only the documented board/version/scope and may still
+  be in private development. Publish an entry only when `stable`, acceptance for its declared scope is
+  complete, and the specific delivery is approved. Preserve retirement reasons and replacements in
+  private records; public retirement notices need their own approved scope.
   Do not upgrade a manifest to make a showcase look finished; preserve partial-validation qualifications.
 - Reuse small, redistributable images stored with the relevant project or Demo (for example,
   `docs/assets/`) and reference them with repository-relative paths that render on GitHub. Prefer actual

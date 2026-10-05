@@ -12,13 +12,13 @@
 
 ## ESP32 板卡
 
-| 板卡 | 主控 | 项目验证 | 状态 |
+| 板卡 | 主控 | 已核验范围 | 实机验证 |
 | --- | --- | --- | --- |
-| [M5Stack StickS3 K150](m5stack-sticks3-k150/) | ESP32-S3-PICO-1-N8R8 | EV Engine Sound | hardware-verified |
-| [LCKFB 立创·实战派 ESP32-S3 VA](lckfb-szpi-esp32-s3-va/) | ESP32-S3-WROOM-1-N16R8 | EV Engine Sound | hardware-verified（部分交互仍待复核） |
+| [M5Stack StickS3 K150](m5stack-sticks3-k150/) | ESP32-S3-PICO-1-N8R8 | 官方型号、板载连接、Hat2 接口及供电资料 | 本索引不提供项目实机验收结论 |
+| [LCKFB 立创·实战派 ESP32-S3 VA](lckfb-szpi-esp32-s3-va/) | ESP32-S3-WROOM-1-N16R8 | 官方型号、外设、显示/触摸与尺寸资料 | 本索引不提供项目实机验收结论 |
 
-这里列的是仓库项目已经实际使用的板卡，不是个人购买清单。型号不明确的历史 ESP32-S3
-开发板暂不收录，等确认厂商、型号和修订后再补。
+这里记录有公开来源的板卡事实。项目实机结论需要具备版本、供电、时长和验收范围的独立证据。
+型号不明确的 ESP32-S3 开发板暂不收录，等确认厂商、型号和修订后再补。
 
 ## K230 板卡
 

@@ -1,9 +1,0 @@
-menu "ML307R-DL Tiny bring-up"
-config BRINGUP_TCP_HOST
-    string "TCP probe host"
-    default "example.com"
-config BRINGUP_TCP_PORT
-    int "TCP probe port"
-    default 80
-    range 1 65535
-endmenu

@@ -11,7 +11,7 @@ M5Stack 的紧凑型 ESP32-S3 开发套件，SKU 为 K150。仓库使用完整 I
 | 型号 / SKU | StickS3 / K150 |
 | 主控 | Espressif ESP32-S3-PICO-1-N8R8，双核 240 MHz |
 | 存储 | 8 MB Flash、8 MB Octal PSRAM |
-| 显示 | ST7789P3，原生 135×240，项目使用 240×135 横屏 |
+| 显示 | ST7789P3，原生 135×240；横屏逻辑画布为 240×135 |
 | 音频 | ES8311、MEMS 麦克风、AW8737 功放、板载扬声器 |
 | 输入 | A/B 可编程按键、侧面电源键 |
 | 供电 | USB Type-C 5 V 或板载电池 |
@@ -19,18 +19,16 @@ M5Stack 的紧凑型 ESP32-S3 开发套件，SKU 为 K150。仓库使用完整 I
 | 外壳标称尺寸 | 长 × 宽 × 厚：48 × 24 × 15 mm；不是 PCB 板框 |
 | 顶部扩展 | Hat2-Bus，2.54 mm、16P，官方针号分为奇/偶两列 |
 
-[EV Engine Sound](../../projects/ev-engine-sound/) 的 StickS3 固件使用内部 RAM；
-[GPS/4G 定位终端](../../projects/m5stack-sticks3-gps-motobox/) 则启用板载 PSRAM 供离线队列和 TLS 分配使用。
-USB 烧录前需确认目标为 8 MB Flash，不能加载立创板的 16 MB 配置。
+USB 烧录前需确认目标为 8 MB Flash，并按实际固件核对 PSRAM 配置。
 
-## 项目使用的板级连接
+## 板载连接
 
 | 功能 | GPIO / 地址 |
 | --- | --- |
 | 内部 I²C SDA / SCL | 47 / 48 |
 | ES8311 / M5PM1 | `0x18` / `0x6e` |
 | I²S MCLK / BCLK / WS | 18 / 17 / 15 |
-| I²S DOUT / DIN | 14 / 16；DIN 当前未使用 |
+| I²S DOUT / DIN | 14 / 16 |
 | LCD MOSI / SCLK | 39 / 40 |
 | LCD DC / CS / RESET / BL | 45 / 41 / 21 / 38 |
 | A / B 按键 | 11 / 12，低电平有效 |
@@ -71,23 +69,15 @@ UART 外设通常把主机 GPIO9 作为 TX、GPIO10 作为 RX，但仍须按外�
 顶部 Hat2 与旧 StickC 接口不能按针数或名称直接互换。官方明确说明 U156、U157、U080
 三款 Hat 存在结构不兼容。设计适配器时需核对官方结构文件与实际外壳、插入深度及受力固定。
 
-## 验证状态
+## 验证范围
 
-- 状态：`hardware-verified`。
-- 2026-09-17 已确认芯片和 Flash 身份，并完成固件烧录及逐段 Hash 校验。
-- 67 秒负载测试获得 66 个连续心跳；V12 达到 15999 RPM，未出现音频写错误、panic、
-  Guru Meditation、栈溢出、任务启动失败或重启循环。
-- 屏幕、声音、A 键给油/释放和 B 键换车型已有实体操作回读。
-- 设置页和 A+B 同时停机仍需要补充实体按键验收；未测量校色、声压或音色还原精度。
-- 上述实机范围不包含本次补录的 Hat2 外设、蜂窝负载、外部供电切换或新外壳装配。
+本页记录官方型号、连接和供电资料核验。具体固件、外设与负载的实机结论需要独立的
+验收记录，注明精确硬件版本、固件版本、供电、时长和范围。
 
-## 来源与实现
+## 来源
 
 - [M5Stack StickS3 官方文档](https://docs.m5stack.com/en/core/StickS3)
 - [M5Stack StickS3 中文文档](https://docs.m5stack.com/zh_CN/core/StickS3)（Hat2、尺寸与供电，2026-09-27 核验）
 - [M5Stack StickS3 官方结构文件](https://github.com/m5stack/M5_Hardware/tree/master/Products/K150_StickS3/Structures)
-- [项目适配与完整引脚依据](../../projects/ev-engine-sound/docs/sticks3.md)
-- [项目实机验证记录](../../projects/ev-engine-sound/docs/validation.md)
-- [固件板级配置](../../projects/ev-engine-sound/firmware/config/boards/m5_sticks3/board_config.h)
 
 实际接线前仍应核对手中板卡丝印、SKU 和官方原理图修订。
