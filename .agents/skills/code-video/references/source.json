@@ -1,7 +1,7 @@
 {
   "registry": "https://skillhub.patsnap.info",
   "coordinate": "@global/code-video",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "versionId": 371,
   "packageFingerprint": "sha256:41eec21985676ec265b52086086455841e29135692afb4dceb68189c9547d4d1",
   "upstreamFiles": {
@@ -12,6 +12,8 @@
     "Move version into supported frontmatter metadata and identify the source coordinate.",
     "Link repository integration guidance without changing the upstream workflow.",
     "Add bilingual picker metadata, private-development routing, and portable usage notes.",
-    "Exclude local SkillHub installation state from Git."
-  ]
+    "Exclude local SkillHub installation state from Git.",
+    "Add project-neutral templates/ starter (tooling, drawing/effects libraries, pixel pet, synthesizer, example scene) distilled from a 41s promo video, plus references/fast-paced-style.md."
+  ],
+  "upstreamVersion": "0.1.0"
 }

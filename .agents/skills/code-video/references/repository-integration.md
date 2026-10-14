@@ -1,9 +1,11 @@
 # Use code-video in DIY Electronics with AI
 
-This project vendors `@global/code-video` version `0.1.0` from the
-[PatSnap SkillHub registry](https://skillhub.patsnap.info). The package contains
-instructions only: it does not include scene modules or rendering scripts.
-Build those files in the target project when a media task needs them.
+This project vendors `@global/code-video` from the
+[PatSnap SkillHub registry](https://skillhub.patsnap.info). The upstream package
+(`0.1.0`) contains instructions only. Version `0.2.0` adds a local, project-neutral
+`templates/` starter (render/mux/score tooling, drawing and effects libraries, a
+pixel pet and an audio synthesizer) and `references/fast-paced-style.md`. Copy the
+templates into the target project's media directory when a media task needs them.
 
 Invoke `$code-video` for an animation explaining a project, feature or usage
 flow. The agent draws frames with Canvas2D, synthesizes audio, and renders MP4
@@ -64,8 +66,8 @@ Project-local discovery needs no global copy. Reload the agent if its skill
 list was captured before installation. See [source.json](source.json) for the
 registry version and original package digests. Local adaptations move the
 upstream version into supported frontmatter metadata, add the integration
-link, and supply picker metadata and destination routing. The original
-workflow remains intact.
+link, supply picker metadata and destination routing, and add the local
+`templates/` and fast-paced style notes. The original workflow remains intact.
 
 The upstream package contains no license file or redistribution grant.
 Its presence in this local checkout does not establish redistribution rights
