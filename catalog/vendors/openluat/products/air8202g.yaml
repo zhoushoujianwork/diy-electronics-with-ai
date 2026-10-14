@@ -1,0 +1,132 @@
+schema_version: 1
+id: air8202g
+vendor_id: openluat
+name: 合宙 Air8202G 定位器 PCBA
+family: Air8202
+model: Air8202G
+category: positioning-module
+lifecycle: active
+summary: 基于 Air780EGG 的 4G/GNSS 定位器 PCBA，带内置 G-Sensor、板载天线、Type-C、锂电池充电管理及光敏防拆。
+specifications:
+  processor:
+    manufacturer: 合宙通信
+    model: Air780EGG
+    source_refs: [product-manual]
+  wireless:
+    - type: cellular
+      standard: 4G LTE Cat.1
+      chipset: Air780EGG
+      source_refs: [product-manual, module-overview]
+  interfaces:
+    - type: USB
+      notes: 板上 Type-C 用于下载、LuaTools 调试及充电；下载模式操作按对应版本官方说明执行。
+      source_refs: [product-manual, hardware-circuit, download-debug]
+  connectors:
+    - type: USB-C
+      count: 1
+      notes: 使用 5 V USB 供电和充电；包含配套下载板使用的特殊信号安排，不推定 USB PD 能力。
+      source_refs: [hardware-circuit]
+    - type: battery connector
+      count: 1
+      notes: 官方说明为 1.25 mm 间距锂电池插座；针序及极性需按实物和原理图核对。
+      source_refs: [hardware-circuit]
+software:
+  toolchains: [Lua, LuaTools]
+  frameworks: [LuatOS]
+  source_refs: [module-overview, product-manual, factory-firmware, download-debug]
+sources:
+  - id: product-manual
+    type: documentation
+    title: Air8202 系列工业模组使用手册
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8202/product/
+    accessed_on: 2026-10-14
+    official: true
+    notes: 当前页面修改日期为 2026-10-12；软件章节指向新的 Air8202 factory 工程，产品介绍仍保留旧 iRTU 配置后台措辞。
+  - id: hardware-circuit
+    type: documentation
+    title: Air8202 电路和使用说明
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8202/hardware/circuit/
+    accessed_on: 2026-10-14
+    official: true
+    notes: 按 C/G 型号及原理图修订核对板载器件；历史预留 SIM 卡座不代表当前出货装配。
+  - id: factory-firmware
+    type: documentation
+    title: Air8202 默认出厂固件
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8202/software/default_factory_firmware/
+    accessed_on: 2026-10-14
+    official: true
+    notes: 当前公布应用 004.000.065、内核 LuatOS-SoC_V2052；这是文档中的下载版本，不证明任一实物已安装该版本。
+  - id: factory-source
+    type: repository
+    title: LuatOS Air8202 factory 出厂应用源码
+    publisher: 合宙通信
+    url: https://gitee.com/openLuat/LuatOS/tree/master/module/Air8202/project/factory
+    accessed_on: 2026-10-14
+    official: true
+    notes: 链接由官方产品页和出厂固件页核对；master 源码不等同于某个已打包固件的精确提交。
+  - id: download-debug
+    type: documentation
+    title: Air8202 下载和调试
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8202/software/debug/
+    accessed_on: 2026-10-14
+    official: true
+  - id: log-guide
+    type: documentation
+    title: 合宙模组日志总体介绍
+    publisher: 合宙通信
+    url: https://docs.openluat.com/common/howtouselog/
+    accessed_on: 2026-10-14
+    official: true
+  - id: module-overview
+    type: documentation
+    title: Air780EGH/Air780EGG/Air780EGP 总体介绍
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air780egh/product/
+    accessed_on: 2026-10-11
+    official: true
+  - id: hardware-schematic
+    type: schematic
+    title: Air8202 V1 2026-08-25 原理图
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8202/product/%E5%9B%BE%E7%89%87%E5%92%8C%E9%99%84%E4%BB%B6/Air8202_V1_20260825_2250.pdf
+    accessed_on: 2026-10-11
+    official: true
+    notes: 使用手册当前产品介绍链接；文件版本不等于每块实物的修订，接线前仍需核对实物。
+  - id: watchdog-guide
+    type: documentation
+    title: Air153D 硬件看门狗芯片使用说明
+    publisher: 合宙通信
+    url: https://docs.openluat.com/accessory/Air153D/
+    accessed_on: 2026-10-11
+    official: true
+  - id: watchdog-library
+    type: documentation
+    title: exair153x_wdt 硬件看门狗扩展库
+    publisher: 合宙通信
+    url: https://docs.openluat.com/osapi/ext/exair153x_wdt/
+    accessed_on: 2026-10-11
+    official: true
+validation:
+  level: cataloged
+notes:
+  - 二次开发语言为 Lua，运行于 LuatOS；当前官方源码入口为 module/Air8202/project/factory。按 Air8202 板级配置使用充电管理、看门狗、LED 等功能，不能直接套用基础模组示例的引脚配置。[product-manual, factory-source, hardware-circuit]
+  - 当前出厂固件以 iRTU 为基础修改，无需 iRTU 配置平台，默认使用 SIM2 贴片卡并向 AirCloud 上报；官方产品页仍有旧 iRTU 配置后台介绍，当前出厂行为以出厂固件专页及匹配版本源码为准。[product-manual, factory-firmware]
+  - 普通 USB 数据线可连接板载 Type-C 进行调试；正常开机进入打印调试模式，AirBurnUSB 方便切换 BOOT 下载/调试模式。USB 日志是虚拟串口，LuaTools 自动识别且无需设置波特率；官方 LuaTools 要求 Windows 10 或以上，不支持 macOS/Linux。[download-debug, hardware-circuit]
+  - 业务日志和底层日志分开核对；EPAT 解读底层日志需要与实际 core 对应的 comdb.txt，可从官方 core 的 .soc 包提取。文件名相似或能够读取串口字节不证明日志数据库匹配。[log-guide]
+  - Air780EGG 内置 G-Sensor，支持震动检测和运动状态功耗控制；官方资料未列陀螺仪或六轴 IMU，不登记为完整动态姿态方案。[product-manual, module-overview]
+  - 板载 18×18 mm 无源 GNSS 陶瓷天线和 4G 贴片天线；适配电池供电及塑料外壳。[product-manual, hardware-circuit]
+  - 官方重要说明称自 2026-08-27 起出货由 Air780EGP 换为 Air780EGG，默认贴片 SIM，后续不再提供 SIM 卡座；历史图片和预留焊盘不能证明当前装配了卡座。[product-manual]
+  - 充电管理采用 YHM2712A，支持软件配置 4.2 V/4.35 V 电池类型和船运模式；官方部分正文缩写为 YH2712A，应按器件资料核对完整型号。[hardware-circuit]
+  - 出厂固件文档以 2000 mAh 的 18500 电池配置 500 mA 充电电流；这是应用设定，不能套用于任意容量、化学体系或允许充电电流不同的电池。[factory-firmware]
+  - 除 USB 外还支持独立充电电源焊点；手册要求该焊点充电输入不超过 5.5 V，且不能与 USB 同时接入。此上限不是模组电池供电接口的额定值。[hardware-circuit]
+  - 无电池时可通过 USB 供电运行；官方给出的该路径最大输出电流为 0.8 A，不将其当作无电池全负载峰值供电保证。[product-manual, hardware-circuit]
+  - Air8202G 有独立硬件看门狗 Air153D，自定义应用需按板资料保留喂狗逻辑，避免周期性复位；官方推荐默认扩展库 exair153x_wdt，旧 air153C_wtd 已停止维护，不能用简单 GPIO 翻转代替器件所要求的喂狗时序。[hardware-circuit, watchdog-guide, watchdog-library]
+  - 尺寸待核对：产品定义写 22×50 mm，电路页整机结构段写 26×50 mm，参考样机段又有 22×50 mm 表述；按对应修订图与实物核对，暂不登记统一机械尺寸或硬件修订。[product-manual, hardware-circuit]
+  - 原理图公开，PCB 不公开；资料核对不代表拥有可修改 PCB 的源文件。[product-manual]
+  - 出厂固件文档存在 20 Hz/25 Hz G-Sensor 上报和静默 30 秒/180 秒的不同表述；实际采样率、上报周期及 GNSS 状态切换阈值需按匹配源码和固件版本确认，不登记为器件固定规格。[factory-firmware]
+  - 出厂文档中黄灯表示充电状态，绿灯按启动、服务端下行和 GNSS 状态切换等事件指示；灯常亮有不同含义，须核对颜色及实际固件逻辑。[factory-firmware]
+  - 此记录只完成官方资料核对；未进行该板的构建、烧录、服务器接入、功耗或硬件测试。

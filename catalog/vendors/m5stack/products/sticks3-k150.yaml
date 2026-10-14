@@ -71,11 +71,29 @@ sources:
     url: https://docs.m5stack.com/zh_CN/core/StickS3
     accessed_on: 2026-09-27
     official: true
+  - id: official-schematic-v06
+    type: schematic
+    title: StickS3 K150 schematic V0.6, dated 2025-11-11
+    publisher: M5Stack
+    url: https://m5stack-doc.oss-cn-shenzhen.aliyuncs.com/1207/K150_Stick_S3_PRJ_V0.6_20251111_2025_11_17_16_10_24.pdf
+    accessed_on: 2026-09-30
+    official: true
+    notes: Linked from the official StickS3 product page; drawing revision does not identify every shipped board revision.
+  - id: official-mechanical-drawing
+    type: documentation
+    title: StickS3 K150 model dimensions
+    publisher: M5Stack
+    url: https://m5stack-doc.oss-cn-shenzhen.aliyuncs.com/1207/K150-sticks3.pdf
+    accessed_on: 2026-09-30
+    official: true
 validation:
   level: cataloged
 notes:
-  - Official pin and power facts are documented in the linked board profile; this record claims cataloged validation only.
+  - Repository-specific pin assignments and hardware evidence are maintained in the linked board profile.
   - External 5 V interfaces default to input mode. In output mode, DC 5 V input is permitted only through USB or Hat2 5V_IN, not Grove or EXT_5V.
   - M5Unified initialization disables EXT_5V_EN; M5.Power.setExtOutput(true) enables external output mode.
   - Official dimensions are 48 x 24 x 15 mm, recorded here as height x width x depth; they do not define an adapter PCB outline.
   - M5Stack explicitly lists Hat Mini JoyC U156, Hat Mini EncoderC U157 and Hat 18650C U080 as mechanically incompatible.
+  - Official model drawing marks two M2 mounting points, 18 mm apart; these are enclosure mounting features, not a published bare-PCB drill pattern.
+  - The V0.6 schematic groups Type-C protection, charging, battery monitoring, switched power domains, Grove boost, and PMIC control separately. Schematic grouping does not establish physical PCB placement or layer count.
+  - The V0.6 schematic specifies LGS4056 charging at 190 mA and marks the SY7088 Grove boost output at Imax 0.6 A. The product page separately specifies Grove load capability of 4.88 V at 0.38 A; the schematic label is not a substitute for that connector rating.

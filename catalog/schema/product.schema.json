@@ -202,12 +202,24 @@
         "type": "object",
         "additionalProperties": false,
         "required": ["id", "type", "title", "publisher", "url", "accessed_on", "official"],
+        "allOf": [{
+          "if": {"properties": {"url": {"pattern": "^http://"}}, "required": ["url"]},
+          "then": {
+            "required": ["notes"],
+            "properties": {"notes": {"type": "string", "pattern": "\\S"}}
+          }
+        }],
         "properties": {
           "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
           "type": {"enum": ["product-page", "documentation", "datasheet", "schematic", "repository", "certification"]},
           "title": {"type": "string", "minLength": 1},
           "publisher": {"type": "string", "minLength": 1},
-          "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://(?:[^\\s/?#@]+@)?(?:\\[[0-9A-Fa-f:.]+\\]|[^\\s/?#@:\\[\\]]+)(?::[0-9]+)?(?:[/?#][^\\s]*)?(?![\\s\\S])",
+            "description": "Prefer HTTPS. Preserve an official HTTP URL only with notes explaining the original HTTP source and why HTTPS is unavailable; do not invent an HTTPS equivalent."
+          },
           "accessed_on": {"type": "string", "format": "date"},
           "official": {"const": true},
           "license": {"type": "string", "minLength": 1},

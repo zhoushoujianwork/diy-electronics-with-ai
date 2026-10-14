@@ -13,6 +13,7 @@
 | `docs/` | 全仓库知识、决策和协作规范 | 某个工程独有的详细实现 |
 | `templates/` | 新工程模板 | 正在运行的业务代码 |
 | `tests/` | 跨工程测试和硬件在环工具 | 项目内部单元测试 |
+| `publication/` | 跨项目文档、工具等独立发布单元的清单 | 默认公开授权或宽泛目录通配符 |
 | `.agents/` | 仓库内共享技能和 Agent 资源的规范源 | 个人数据库、凭证、机器专属状态 |
 
 ## `projects` 与 `demos` 的边界
@@ -75,9 +76,21 @@ modules: []
 validation:
   build: pending
   hardware: pending
+publication:
+  state: draft
+  acceptance: pending
+  rights: unknown
+  privacy: pending
+  targets: []
+  files: []
 ```
 
 字段必须描述当前事实；不能因为计划购买或代码已写好就把硬件状态标为通过。
+
+`status` 描述工程验证，`publication` 描述独立的发布资格。缺失字段默认禁止公开。
+所有新项目和 Demo 均保持 `draft`，直到声明范围完整验收。只允许显式批准的文件快照公开，
+正文、图片、代码和依赖不能通过目录通配符扩大范围。
+操作见[发布规则](PUBLICATION_POLICY.md)；跨项目发布清单从 `templates/publication.yaml` 创建。
 
 ## 本地产物与隐私
 

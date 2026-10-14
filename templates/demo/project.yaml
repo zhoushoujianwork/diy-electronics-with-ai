@@ -3,6 +3,13 @@ id: replace-me
 name: Replace me
 kind: demo
 status: idea
+publication:
+  state: draft
+  acceptance: pending
+  rights: unknown
+  privacy: pending
+  targets: []
+  files: []
 summary: Replace with one testable claim
 owners:
   - human-ai-lab

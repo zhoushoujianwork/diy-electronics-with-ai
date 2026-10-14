@@ -36,7 +36,7 @@
 
 ## 后续扩展队列
 
-首批目录优先建立了 12 家厂商和 24 个可验证条目。后续适合按真实 Demo 需求逐批补充，而不是一次性抓取营销目录：
+后续适合按明确的产品资料与 Demo 需求逐批补充，而不是一次性抓取营销目录：
 
 - M5Stack：CoreS3、Cardputer、Dial、NanoC6、LoRa/蜂窝通信 Module 和更多 GNSS Unit；
 - Espressif：ESP32-C、H、P 系列及对应 DevKit、模组和芯片级条目；

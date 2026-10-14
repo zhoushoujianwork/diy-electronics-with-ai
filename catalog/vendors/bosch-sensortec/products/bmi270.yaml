@@ -1,0 +1,51 @@
+schema_version: 1
+id: bmi270
+vendor_id: bosch-sensortec
+name: Bosch Sensortec BMI270
+family: BMI270
+model: BMI270
+sku: C2836813
+category: sensor-module
+lifecycle: unknown
+summary: Six-axis inertial sensor IC with motion-triggered features and separate accelerometer and gyroscope power modes.
+specifications:
+  interfaces:
+    - type: I2C and SPI host interfaces
+      count: 1
+      notes: Two programmable interrupt pins are available; the datasheet also describes a separate auxiliary sensor interface.
+      source_refs: [manufacturer-datasheet]
+  power:
+    input_voltage_min_v: 1.71
+    input_voltage_max_v: 3.6
+    source_refs: [manufacturer-datasheet]
+sources:
+  - id: manufacturer-product
+    type: product-page
+    title: BMI270 product page
+    publisher: Bosch Sensortec
+    url: https://www.bosch-sensortec.com/en/products/motion-sensors/imus/bmi270
+    accessed_on: 2026-09-28
+    official: true
+  - id: manufacturer-datasheet
+    type: datasheet
+    title: BMI270 Datasheet revision 1.6, BST-BMI270-DS000-08
+    publisher: Bosch Sensortec
+    url: https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi270-ds000.pdf
+    accessed_on: 2026-09-28
+    official: true
+  - id: lcsc-product
+    type: product-page
+    title: BMI270, C2836813
+    publisher: LCSC Electronics
+    url: https://www.lcsc.com/product-detail/C2836813.html
+    accessed_on: 2026-09-28
+    official: true
+    notes: Distributor listing binds this LCSC code to Bosch Sensortec BMI270 in an LGA-14 package; stock is time-dependent.
+validation:
+  level: cataloged
+notes:
+  - This is an IC record, grouped under sensor-module because the current catalog schema has no sensor-IC category. It does not describe a finished BMI270 breakout.
+  - The datasheet specifies VDD from 1.71 V to 3.6 V and VDDIO from 1.2 V to 3.6 V (Basic Description and Table 1). Power-sequencing and host logic compatibility still need design-specific checks.
+  - At VDD = 1.8 V and 25 C, Table 1 gives 10 microampere typical for accelerometer-only low-power mode at 25 Hz, plus approximately 3 microampere depending on enabled advanced features. Table 6 says accelerometer-only low-power mode can be as low as 4 microampere under other ODR settings. These are not complete board standby-current figures.
+  - The any-motion feature uses acceleration slope and configurable threshold and duration (section 4.8.2). After every power-on reset or soft reset, the host must upload an 8 kB initialization configuration before using the device (section 4.4).
+  - Manufacturer typical applications emphasize wearables and related devices. The cited datasheet does not establish automotive-grade qualification.

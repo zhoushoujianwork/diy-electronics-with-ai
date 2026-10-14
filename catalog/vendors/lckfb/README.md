@@ -1,7 +1,7 @@
 # LCKFB / 立创开发板 supplier knowledge
 
 本页记录查询立创开发板资料时可复用的厂商级入口、产品族命名和去标识化工程经验。具体型号、规格、
-来源与验证等级以 [`products/`](products/) 下的记录为准；原理图中的精确引脚和供电方向只有经过
+来源与验证等级以 `products/` 下的记录为准；原理图中的精确引脚和供电方向只有经过
 精确修订核对或实物验证后，才进入仓库根目录的 `boards/`。
 
 ## 官方入口与语言
@@ -15,6 +15,9 @@
 | 庐山派选型表 | [K230 与 Lite K230D](https://wiki.lckfb.com/zh-hans/lushan-pi-k230/k230vsk230d.html) | 两款主板的官方差异表 |
 | 原理图与 PCB | [开源硬件](https://wiki.lckfb.com/zh-hans/lushan-pi-k230/open-source-hardware/profile.html) | 从侧栏进入原理图、PCB、固件和扩展板资料 |
 | CanMV Web IDE | [在线工具](https://wiki.lckfb.com/zh-hans/web-tool/canmv-web-ide.html) | 立创提供的庐山派在线开发入口 |
+| 天巧星 MSPM0G3519 | [开发板介绍](https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/index.html) / [下载中心](https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/download-center.html) | 核心板、IO 扩展底板、无线串口模块与 XDS110 套件 |
+| 天巧星硬件资料 | [硬件设计](https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/hardware-design.html) | 核心板、底板、无线模块原理图及开源 PCB 入口 |
+| 天巧星开发环境 | [CCS 入门](https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/ccs-beginner/install.html) / [AI Skill](https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/ai-dev/skill-deploy.html) | 官方教程包含 Codex、Claude Code 和 Trae 的接入说明 |
 
 文档站部分页面声明了 `/en/` alternate URL，但截至 2026-09-21，庐山派 K230 的英文首页和
 选型页返回 404；不要仅替换语言段后记录为有效英文来源。以 `sitemap.xml` 和实际 HTTP 响应核对。
@@ -29,6 +32,29 @@
 两者采用相同的双核 RISC-V 架构和官方标称 6 TOPS INT8 KPU，但内存、连接器、音频输出和可用
 IO 不同。`K230` 与 `K230D` 不是可互换的板名；模型可运行不代表内存预算、FPIOA 或外设代码
 也能原样复用。
+
+## 天巧星：无线串口与下载调试
+
+2026-10-11 核对的官方名称为“立创·天巧星 MSPM0G3519”，文档目录为 `tqx-mspm0g3519`。
+产品参数见 [`tqx-mspm0g3519.yaml`](products/tqx-mspm0g3519.yaml)。不要与天猛星 MSPM0G3507
+或 TI LaunchPad 的封装、板载外设和引脚表混用。
+
+- **无线串口模块**：用于电脑与开发板的双向数据收发；见
+  [产品记录](products/tqx-wireless-uart.yaml)及
+  [操作指南](https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/wireless-serial-port-operation-guide.html)。
+- **XDS110 下载器**：通过 SWD 下载、断点和单步调试，另带串口功能。
+- **网页串口烧录**：官方首页给出的路径是 Type-C 数据线连接开发板，入口为
+  [MSPM0 串口烧录工具](https://wiki.lckfb.com/storage/html/mspm0-web-flasher/index.html)，
+  支持 HEX / TI-TXT。无线透传、串口烧录与 SWD 调试是不同能力，不能相互推定。
+
+无线操作指南提到 CH340 驱动，但该页 USB 端原理图标注 CH570Q，USB 数据线直接接 CH570Q。
+不能仅靠“WCH/CH340”USB 枚举判断就是配套模块。官方教程与操作指南对上电默认射频状态的
+描述也不一致；模块记录保留差异，实际使用时需核对固件与连接状态。
+
+官方 AI 教程入口列出 `mspm0kit-tianqiaoxing` 和依赖 `mspm0-ccs`，并链接
+[Gitee openkits-skills](https://gitee.com/lcsc/openkits-skills)；此处只登记资料入口。
+该页的 SDK 要求“≥ 2.10.00.04”与“基于 2.05.01.00 开发测试”相互矛盾，实际开发前应核对
+当前仓库与工具链版本。页面列出 macOS 路径不等于已经完成 macOS 编译和下载验证。
 
 ## 去标识化工程经验
 

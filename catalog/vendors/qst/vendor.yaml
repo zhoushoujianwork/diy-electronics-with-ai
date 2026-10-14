@@ -1,0 +1,10 @@
+schema_version: 1
+id: qst
+name: QST Corporation
+website: https://www.qstcorp.com/
+documentation: https://www.qstcorp.com/
+aliases:
+  - Shanghai QST
+last_reviewed: 2026-09-28
+notes:
+  - QMI8658A manufacturer specifications are in the QST datasheet; a distributor listing only identifies the sourceable part and package.

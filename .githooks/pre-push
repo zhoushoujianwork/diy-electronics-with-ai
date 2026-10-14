@@ -1,0 +1,9 @@
+#!/bin/sh
+# Fail closed if the publication guard is missing or cannot run.
+set -eu
+publication_root=$(git rev-parse --show-toplevel) || exit 1
+if [ ! -x "$publication_root/scripts/pub" ]; then
+    printf '%s\n' 'Publication guard missing; push denied.' >&2
+    exit 1
+fi
+exec "$publication_root/scripts/pub" --root "$publication_root" guard-push "$1" "$2"

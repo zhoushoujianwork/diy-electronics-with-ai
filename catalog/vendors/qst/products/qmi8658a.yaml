@@ -1,0 +1,44 @@
+schema_version: 1
+id: qmi8658a
+vendor_id: qst
+name: QST QMI8658A
+family: QMI8658
+model: QMI8658A
+sku: C3021082
+category: sensor-module
+lifecycle: unknown
+summary: Six-axis inertial sensor IC with three-axis accelerometer, three-axis gyroscope, and accelerometer-based motion detection.
+specifications:
+  interfaces:
+    - type: I2C, I3C, and 3- or 4-wire SPI host interfaces
+      count: 1
+      notes: Two interrupt outputs can report motion events; the selected interface and pin wiring require an exact schematic review.
+      source_refs: [manufacturer-datasheet]
+  power:
+    input_voltage_min_v: 1.71
+    input_voltage_max_v: 3.6
+    source_refs: [manufacturer-datasheet]
+sources:
+  - id: manufacturer-datasheet
+    type: datasheet
+    title: QMI8658A Datasheet Rev D, QST-PD-B002-22
+    publisher: QST
+    url: https://www.qstcorp.com/upload/pdf/202512/13-52-25%20QMI8658A%20Datasheet%20Rev%20D.pdf
+    accessed_on: 2026-09-28
+    official: true
+  - id: lcsc-product
+    type: product-page
+    title: QMI8658A, C3021082
+    publisher: LCSC Electronics
+    url: https://www.lcsc.com/product-detail/C3021082.html
+    accessed_on: 2026-09-28
+    official: true
+    notes: Distributor listing binds this LCSC code to QST QMI8658A in an LGA-14 package; stock is time-dependent.
+validation:
+  level: cataloged
+notes:
+  - This is an IC record, grouped under sensor-module because the current catalog schema has no sensor-IC category. It does not describe a finished QMI8658A breakout.
+  - The datasheet specifies VDD and VDDIO each from 1.71 V to 3.6 V (Table 6). It lists I2C addresses 0x6A and 0x6B selected by SDO/SA0. Interface voltage, pull-ups, and power sequencing need design-specific checks.
+  - At VDD = VDDIO = 1.8 V and 25 C, Table 16 gives typical accelerometer-only current of 30 microampere at 3 Hz and 42 microampere at 21 Hz. Table 18 gives 750 microampere at the lowest listed six-axis ODR. These values do not include a complete always-on power domain or a 3 V system measurement.
+  - Any-Motion is based on accelerometer samples, works in Non-Sync Sample mode, and can drive INT1 or INT2. Motion configuration is written while accelerometer and gyroscope are disabled (sections 9.1 and 9.4-9.6); verify a chosen low-power ODR and thresholds on hardware before relying on wake-up.
+  - The manufacturer lists automotive security systems as an application, but this datasheet alone does not establish automotive-grade qualification.

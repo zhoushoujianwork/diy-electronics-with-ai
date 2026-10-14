@@ -1,7 +1,11 @@
 # 已发布 Demos
 
-当前没有完成声明范围验收并获准发布的 Demo。
+当前没有完成验收并获准发布的 Demo。
 
-Demo 只证明一个明确结论；新实验从 [`templates/demo/`](../templates/demo/) 开始，
-保存在独立私有工作区。达到 `stable`、完成验收并批准具体范围与版本后才公开。
-此前公开的实验记录保留在 Git 历史中，本次不改写历史。
+Demo 只证明一个明确的硬件或协议结论。新实验从
+[`templates/demo/`](../templates/demo/) 创建，默认 `publication.state: draft`。
+进行中的实现和验证资料保留在私有开发工作区；通过声明范围的验收并获准公开后才加入这个索引。
+当前目录不保留进行中的实现。完整开发清单在本地配置 `publication.developmentRoot`
+指向的私有工作区查看，不得上传私有清单。
+
+参见[发布规则](../docs/PUBLICATION_POLICY.md)。

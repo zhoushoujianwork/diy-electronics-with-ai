@@ -20,6 +20,10 @@ from urllib.parse import urlparse
 
 
 ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+SOURCE_URL_RE = re.compile(
+    r"^https?://(?:[^\s/?#@]+@)?(?:\[[0-9A-Fa-f:.]+\]|[^\s/?#@:\[\]]+)"
+    r"(?::[0-9]+)?(?:[/?#][^\s]*)?(?![\s\S])"
+)
 CATEGORIES = {
     "development-board", "system-on-module", "single-board-computer", "microcontroller-module",
     "sensor-module", "communication-module", "display-module", "audio-module",
@@ -84,6 +88,15 @@ def _is_https(value: Any) -> bool:
         return False
     parsed = urlparse(value)
     return parsed.scheme == "https" and bool(parsed.netloc)
+
+
+def _is_source_url(value: Any) -> bool:
+    if not isinstance(value, str) or not SOURCE_URL_RE.fullmatch(value):
+        return False
+    try:
+        return bool(urlparse(value).hostname)
+    except ValueError:
+        return False
 
 
 def _is_repo_relative(value: Any) -> bool:
@@ -318,8 +331,16 @@ class Checker:
                     self.error(path, f"{location}.type", f"must be one of {sorted(SOURCE_TYPES)}")
                 if source.get("official") is not True:
                     self.error(path, f"{location}.official", "must be true; catalog facts require an official source")
-                if not _is_https(source.get("url")):
-                    self.error(path, f"{location}.url", "must be an absolute HTTPS URL")
+                source_url = source.get("url")
+                if not _is_source_url(source_url):
+                    self.error(path, f"{location}.url", "must be an absolute HTTP(S) URL with a host; prefer HTTPS")
+                elif source_url.startswith("http://"):
+                    notes = source.get("notes")
+                    if not isinstance(notes, str) or not notes.strip():
+                        self.error(
+                            path, f"{location}.notes",
+                            "HTTP sources require non-empty notes explaining the official HTTP source and why HTTPS is unavailable",
+                        )
                 if not _is_date(source.get("accessed_on")):
                     self.error(path, f"{location}.accessed_on", "must be an ISO 8601 calendar date")
                 for field in ("title", "publisher"):

@@ -3,7 +3,7 @@
 M5Stack 的紧凑型 ESP32-S3 开发套件，SKU 为 K150。仓库使用完整 ID
 `m5stack-sticks3-k150`，不要与 M5StickC、M5StickC Plus 或 Plus2 共用板级配置。
 
-## 已确认硬件
+## 官方规格
 
 | 项目 | 值 |
 | --- | --- |
@@ -11,7 +11,7 @@ M5Stack 的紧凑型 ESP32-S3 开发套件，SKU 为 K150。仓库使用完整 I
 | 型号 / SKU | StickS3 / K150 |
 | 主控 | Espressif ESP32-S3-PICO-1-N8R8，双核 240 MHz |
 | 存储 | 8 MB Flash、8 MB Octal PSRAM |
-| 显示 | ST7789P3，原生 135×240；横屏逻辑画布为 240×135 |
+| 显示 | ST7789P3，原生 135×240；软件旋转不改变面板像素矩阵 |
 | 音频 | ES8311、MEMS 麦克风、AW8737 功放、板载扬声器 |
 | 输入 | A/B 可编程按键、侧面电源键 |
 | 供电 | USB Type-C 5 V 或板载电池 |
@@ -19,9 +19,12 @@ M5Stack 的紧凑型 ESP32-S3 开发套件，SKU 为 K150。仓库使用完整 I
 | 外壳标称尺寸 | 长 × 宽 × 厚：48 × 24 × 15 mm；不是 PCB 板框 |
 | 顶部扩展 | Hat2-Bus，2.54 mm、16P，官方针号分为奇/偶两列 |
 
-USB 烧录前需确认目标为 8 MB Flash，并按实际固件核对 PSRAM 配置。
+Flash 与 PSRAM 是不同存储；驱动的 DMA 和任务栈分配仍须按 ESP-IDF 与具体软件版本核对。
+烧录配置应匹配 8 MB Flash，不根据外形相近的 ESP32-S3 开发板沿用配置。
 
-## 板载连接
+## 官方 PinMap 中的板载连接
+
+下表于 2026-10-14 对照 M5Stack 官方页面复核；不是某个项目的运行时配置。
 
 | 功能 | GPIO / 地址 |
 | --- | --- |
@@ -31,15 +34,12 @@ USB 烧录前需确认目标为 8 MB Flash，并按实际固件核对 PSRAM 配�
 | I²S DOUT / DIN | 14 / 16 |
 | LCD MOSI / SCLK | 39 / 40 |
 | LCD DC / CS / RESET / BL | 45 / 41 / 21 / 38 |
-| A / B 按键 | 11 / 12，低电平有效 |
+| A / B 按键 | 11 / 12 |
 | HY2.0-4P Grove | 黑 GND、红 5V、黄 GPIO9、白 GPIO10 |
 
-LCD 电源与扬声器使能由 M5PM1 的 GPIO2/GPIO3 控制，不是 ESP32 的 GPIO2/GPIO3。
-GPIO38 用于屏幕背光 PWM；不要再把上述引脚分配给外接模块。
-
-Grove 5V 默认处于输入/关闭状态。使用板载电池或 USB 给 Grove 外设供电时，固件必须先通过
-M5PM1 `POWER_CONFIG.BOOST_EN` 开启 5V 输出；开启后不得再从 Grove 红线反向输入 5V。
-UART 外设通常把主机 GPIO9 作为 TX、GPIO10 作为 RX，但仍须按外设连接器丝印确认交叉方向。
+LCD 电源与扬声器使能分别由 M5PM1 的 GPIO2/GPIO3 控制，不是 ESP32 的 GPIO2/GPIO3。
+GPIO38 是屏幕背光连接；添加外设前核对上述板载资源占用。
+UART 方向由应用配置决定，接外设时仍须按其连接器定义交叉 TX/RX，不能只按线色判断。
 
 ## 顶部 Hat2 接口与供电方向
 
@@ -69,15 +69,18 @@ UART 外设通常把主机 GPIO9 作为 TX、GPIO10 作为 RX，但仍须按外�
 顶部 Hat2 与旧 StickC 接口不能按针数或名称直接互换。官方明确说明 U156、U157、U080
 三款 Hat 存在结构不兼容。设计适配器时需核对官方结构文件与实际外壳、插入深度及受力固定。
 
-## 验证范围
+## 资料核验范围与未验证项
 
-本页记录官方型号、连接和供电资料核验。具体固件、外设与负载的实机结论需要独立的
-验收记录，注明精确硬件版本、固件版本、供电、时长和范围。
+本档案仅整理官方规格、PinMap、供电警告与结构入口；上述连接于 2026-10-14 在线复核。
+没有据此声明任何固件、Hat2 扩展、蜂窝负载、外部供电切换或外壳装配已通过实机验收。
+GPIO 电平、扩展口余量、启动配置和信号方向需在目标软硬件组合中检查。
 
-## 来源
+## 官方来源
 
 - [M5Stack StickS3 官方文档](https://docs.m5stack.com/en/core/StickS3)
-- [M5Stack StickS3 中文文档](https://docs.m5stack.com/zh_CN/core/StickS3)（Hat2、尺寸与供电，2026-09-27 核验）
+- [M5Stack StickS3 中文文档](https://docs.m5stack.com/zh_CN/core/StickS3)
 - [M5Stack StickS3 官方结构文件](https://github.com/m5stack/M5_Hardware/tree/master/Products/K150_StickS3/Structures)
+- [Espressif ESP32-S3 数据手册](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
 
-实际接线前仍应核对手中板卡丝印、SKU 和官方原理图修订。
+实际接线前仍应核对手中板卡丝印、SKU 和官方原理图修订。本仓库保存自主整理的事实与链接，
+不转载厂商结构文件、原理图、照片或数据手册；这些资料与商标的权利归原权利人。

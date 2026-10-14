@@ -8,31 +8,48 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 项目身份为 **DIY Electronics with AI**，也称 **DIY Lab**，GitHub 仓库名为 `diy-electronics-with-ai`。
 欢迎从一个项目的接线、运行步骤或验证记录开始体验，也把完成验收并获准公开的实验整理成别人能接着使用的资料。
 
+## 先从资料与技能开始
+
+无需连接硬件即可使用产品目录、官方文档索引和 Agent Skills：
+
+- [硬件产品目录](catalog/)：按厂商和精确型号查找规格与中英文官方资料；目录收录不代表实机验证。
+- [板卡资料](boards/)：查看官方硬件能力、接口、电源和接线前的核对事项。
+- [Agent Skills](docs/AGENT_SKILL.md)：查询知识、维护目录、开发项目、整理贡献、管理本机物料和制作 M5 图解手册。
+- [选型研究](docs/research/open-source-electronics-catalogs.md)：比较资料来源与许可边界，再按研究文档查阅通信、定位和音频方案。
+
+安装技能：`./scripts/install-agent-skill.sh`。查询技能直接读取公开资料；写入技能需要通过本地
+`publication.developmentRoot` 配置独立私有开发目录。个人物料库与购买证据始终保存在 Git 之外。
+本批资料与技能的审查范围及验证见[交付记录](docs/PUBLIC_KNOWLEDGE_RELEASE.md)。
+
 ## 项目与 Demo 展示
 
-当前没有完成声明范围验收并获准发布的 Project 或 Demo，展示区暂为空。
-公开目录只保留获准交付的内容；进行中的实现、设计稿和验证资料在独立私有工作区开发。
+当前没有通过验收并获准发布的 Project 或 Demo，展示区暂为空。
+进行中的实现与素材已经迁入仓库外的独立私有开发工作区；当前目录只保留公开交付准备资料。
+验收和批准后才导入公开快照。
 [已发布 Projects](projects/) · [已发布 Demos](demos/)。
 
-验收完成后仍需明确批准具体文件范围和版本，才导入公开交付仓库。
-此前公开的开发记录保留在 Git 历史中；当前文件树不再包含进行中的项目。
+工程验证进度与发布许可分别记录在 `project.yaml` 的 `status` 和 `publication` 中。
+本仓库的完整开发历史禁止直接公开推送；公开交付由
+[`scripts/pub`](scripts/pub) 按批准的文件范围导出，不附带 Git 历史。
+使用方法与边界见[发布规则](docs/PUBLICATION_POLICY.md)。开发位置仅保存在本地 Git 配置
+`publication.developmentRoot` 中；个人路径不进入 Git。
 
 ## 从项目代码到图解说明书
 
 仓库内置 **[`m5-product-manual` · M5 产品图解手册](docs/m5-product-manual.md)**：
-根据官方硬件资料、固件与实测记录整理接线、按键、屏幕状态与操作流程。
-项目手册、截图和配图遵守相同发布门槛，草稿不进入公开展示。
+根据官方硬件资料、当前固件和实测记录整理接线、按键、屏幕状态与操作流程。
+手册、截图与配图遵守同一发布门槛；草稿和未批准的项目样页不进入公开展示。
 
 ## 内容入口
 
 - [`projects/`](projects/)：可独立构建、具有明确用途的完整工程。
 - [`demos/`](demos/)：验证一种模块、接口或组合的最小可复现实验。
 - [`components/`](components/)：经过复用验证的驱动和公共组件。
-- [`boards/`](boards/)：开发板能力、引脚、电源和已验证配置。
+- [`boards/`](boards/)：开发板官方能力、接口、电源和接线核对资料。
 - [`catalog/`](catalog/)：主流厂商、产品系列、规格字段和官方资料入口。
 - [`hardware/`](hardware/)：原理图、PCB、线束、外壳和机械设计。
 - [`docs/`](docs/)：仓库约定、协作方法和开源发布检查表。
-- [`templates/`](templates/)：新建 Demo/项目时复制的模板。
+- [`templates/demo/`](templates/demo/)：新建 Demo 时复制的模板。
 - [`tests/`](tests/)：跨项目验证、硬件在环和日志检查工具。
 
 ## 基本原则
@@ -55,8 +72,8 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 复制厂商手册。目录内容用于选型和发现资料，实际接线前仍需核对具体 SKU、硬件修订版和原理图。
 
 仓库也提供一组职责明确的用户级 Agent Skills。克隆后运行 `./scripts/install-agent-skill.sh`，
-其他项目中的 Agent 就能查询知识、维护产品目录，并在私有工作区建设硬件项目和制作说明书。
-完成验收并获准公开的内容，通过独立交付版本贡献回公开仓库。显式调用使用 `$diy...` 或 `$m5-product-manual`，不是用于搜索文件的 `@`；
+其他项目中的 Agent 就能分别查询知识、维护产品目录、建设硬件项目和制作 M5 图解说明书。
+成果先在私有工作区提交，再由经过批准的公开快照贡献到公开仓库。显式调用使用 `$diy...` 或 `$m5-product-manual`，不是用于搜索文件的 `@`；
 中文速查、安装和跨项目流程见 [`docs/AGENT_SKILL.md`](docs/AGENT_SKILL.md)。
 
 这里把“AI-native”当作一种工程组织方式，而不是给传统仓库附加一个聊天入口：
@@ -89,6 +106,9 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 
 状态以各项目的 `project.yaml` 和验证记录为准。只有达到 `stable` 且声明范围的验收完成，
 才在展示区标为“已完成 / 稳定维护”；部分硬件验证不能代替项目完成验收。
+
+发布资格另外要求 `publication.acceptance: passed`，以及对应目标的当前内容批准；
+`stable` 本身不授权公开。
 
 ## 开源许可
 

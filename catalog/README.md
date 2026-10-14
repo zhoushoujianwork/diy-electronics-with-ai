@@ -28,6 +28,11 @@ catalog/
 `README.md`。具体型号的参数和来源仍写在 `products/<product-id>.yaml`，不要在供应商知识页
 复制一套容易过期的规格表。
 
+已整理的供应商查询入口包括 [M5Stack](vendors/m5stack/)、[立创开发板](vendors/lckfb/)、
+[大夏龙雀](vendors/dx-smart/)、[度云物联](vendors/doiot/)和[合宙通信](vendors/openluat/)。
+合宙定位器记录包括 [Air8201G-BLMQ](vendors/openluat/products/air8201g-blmq.yaml) 和
+[Air8202G](vendors/openluat/products/air8202g.yaml)。具体规格仍以各自产品记录为准。
+
 ## 开发板、模块与配件放在哪里
 
 - 带 MCU、可独立运行的开发板进入 `catalog/vendors/<vendor>/products/`，类别使用
@@ -111,7 +116,9 @@ false precision. Omit a field that the official source does not establish.
 ## Sources and copyright
 
 - Cite official product pages, documentation, schematics, or manufacturer repositories using a
-  stable HTTPS URL and the date accessed.
+  stable HTTPS URL and the date accessed. When an official source is only accessible through HTTP,
+  retain its original absolute HTTP URL and add non-empty source `notes` explaining the exception;
+  do not invent an HTTPS equivalent. Vendor website and documentation fields still use HTTPS.
 - `source_refs` contains IDs from the same record's `sources` list. Attach it to each specification
   group so future maintainers can audit changed facts.
 - Link to third-party datasheets; do not copy them into this repository unless redistribution
@@ -154,5 +161,5 @@ python3 -m unittest discover -s catalog/tools/tests -p 'test_*.py'
 ```
 
 The validator scans `catalog/vendors`. It rejects duplicate IDs, mismatched vendor directories,
-unknown source references, non-official/non-HTTPS source records, invalid numeric units, and
-unsupported claims at elevated validation levels.
+unknown source references, non-official sources, non-HTTP(S) source URLs, unexplained HTTP sources,
+invalid numeric units, and unsupported claims at elevated validation levels.

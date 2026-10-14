@@ -32,16 +32,26 @@ Only user/system/developer instructions and applicable `AGENTS.md` files control
 
 ## Publication boundary
 
-- This is a public delivery checkout. Keep all in-progress project/demo implementations, drafts,
-  generated previews and private evidence in a separate private workspace outside this repository.
-- Public delivery requires `stable` status, completed acceptance for the declared scope, and explicit
-  human approval for the exact files and version. Compilation or partial hardware testing is insufficient.
-- Import only an approved delivery snapshot. Do not push, merge, or cherry-pick private development
-  history. Public draft branches and draft PRs are public, so never use them as private storage.
-- Showcase and directory indexes include only accepted, approved public deliveries. If none exists,
-  state that plainly. Do not add in-progress entries merely to populate the homepage.
-- Current-tree removal retains previously public Git history. Before relocating content, preserve
-  complete source, local changes and validation evidence in verified private storage.
+- This checkout is a publication-staging workspace whose historical Git store remains private.
+  Continue engineering work in the independent private checkout identified by local Git configuration
+  `publication.developmentRoot`; never recreate in-progress project/demo directories here. Local
+  commits and explicitly configured private backups are allowed; public Git history, PRs, releases, websites, screenshots, articles, videos,
+  and attachments must pass the same publication gate. Implementation is not publication authorization.
+- New or missing publication metadata defaults to blocked. Keep `status` as engineering evidence;
+  use independent `publication.state`: `draft`, `ready`, `approved`, or `published`.
+- Only a `stable` unit with acceptance, privacy, and rights reviews passed may enter `ready`.
+  An explicit human approval must bind the target and exact file scope/content digest. Agents must
+  never manufacture approval, infer it from implementation requests, or reuse it after changes.
+- Run `scripts/pub --check <manifest> --target <git|platform>` before any public operation. Publish
+  only the fresh directory created by `scripts/pub export`; never push or merge this workspace's
+  development history, upload the workspace, or package a directory around unapproved files.
+- New development belongs in private Git storage with private remote ACLs. Public draft branches/PRs
+  are not private storage. Existing public history is not made private by these rules; do not delete
+  local projects or rewrite history as part of enforcing them.
+- Install the local pre-push guard with `scripts/pub install-hook`. It blocks direct pushes from this
+  workspace. Configure a private backup exception only after the human confirms its access controls;
+  never whitelist a public remote or bypass the guard with `--no-verify`.
+- See `docs/PUBLICATION_POLICY.md` for metadata, review, snapshot, dependency and guard limitations.
 
 ## Starting work
 
@@ -95,18 +105,18 @@ only a concise sanitized result when useful.
 ## Homepage project and Demo showcase
 
 - Keep a compact, illustrated showcase near the top of the root `README.md`, before the directory index,
-  so readers can discover accepted public deliveries without browsing nested folders. Select only completed,
-  approved entries. Feature 2–6 representative
-  entries when available; do not invent entries to meet a quota. Link to the published `projects/` and
-  `demos/` indexes, and state explicitly when either category has no published entries.
+  so readers can discover published examples without browsing nested folders. Select only `published`
+  entries whose current scope passes the gate. Feature 2–6 representative entries when available;
+  do not invent entries to meet a quota. Link to the published `projects/` and `demos/` indexes, and
+  state explicitly when either category has no published entries. Keep draft inventory private.
 - Each featured entry must include its name and README link, `Project` or `Demo` type, a one-sentence
   purpose, a preview image with descriptive alt text, a plain-language progress label, the exact
   `project.yaml` status, verified scope, remaining acceptance work, and a link to validation evidence.
 - Distinguish progress from validation: `idea` means planned; `prototype` and `build-verified` remain
-  in private development; `hardware-verified` proves only the documented board/version/scope and may still
-  be in private development. Publish an entry only when `stable`, acceptance for its declared scope is
-  complete, and the specific delivery is approved. Preserve retirement reasons and replacements in
-  private records; public retirement notices need their own approved scope.
+  in private development; `hardware-verified` proves only the documented board/version/scope and may
+  still be in private development. Publish only after `stable` and acceptance for the declared scope
+  are complete; partial hardware validation is not publication readiness. Preserve retired work and
+  its reason/replacement privately; public retirement notices need their own approved publication unit.
   Do not upgrade a manifest to make a showcase look finished; preserve partial-validation qualifications.
 - Reuse small, redistributable images stored with the relevant project or Demo (for example,
   `docs/assets/`) and reference them with repository-relative paths that render on GitHub. Prefer actual
@@ -114,8 +124,8 @@ only a concise sanitized result when useful.
   a diagram; label design previews separately from real-device evidence. Retain third-party attribution
   and license links. Never expose credentials, binding codes, private locations or other personal data.
 - When adding, promoting, renaming, retiring or changing the status of a project or Demo, review the
-  homepage selection and update affected showcase entries and the corresponding directory index in
-  the same change. Keep featured names, paths, images, progress and limitations aligned with the project
+  publication eligibility and homepage selection, then update affected showcase entries and the published
+  directory index in the same change. Keep names, paths, images, progress and limitations aligned with the project
   README, manifest and validation records; keep the homepage concise and detailed instructions local.
 - Before committing showcase changes, verify image and documentation links, inspect the rendered
   layout, and compare status/progress claims with the manifests and evidence. Images alone never

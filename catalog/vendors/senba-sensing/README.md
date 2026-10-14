@@ -1,7 +1,7 @@
 # Senba Sensing supplier knowledge
 
 This page records reusable selection boundaries for Senba PIR components. Exact product facts and sources remain
-in [`products/`](products/). Purchase intent, orders, and stock counts remain outside the public catalog.
+in `products/`. Purchase intent, orders, and stock counts remain outside the public catalog.
 
 ## AS312 identity
 

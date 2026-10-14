@@ -1,0 +1,14 @@
+schema_version: 1
+id: doiot
+name: 成都度云未来科技有限公司
+website: https://www.doiot.cn/
+documentation: https://dolua.cn/docs/get-started
+aliases:
+  - 度云
+  - 度云物联
+  - doiot
+last_reviewed: 2026-10-11
+notes:
+  - 公司全称和官网域名由官方 doRTU-6E1 硬件手册确认；硬件资料中心为 http://data.doiot.cn/index.html。
+  - 本次官网 HTTPS 证书校验失败，硬件资料域的 HTTPS 握手失败；保留官方域名，不把访问失败解释为产品停产。
+  - doLua 是厂商提供的设备端 Lua 运行环境；文档和 API 能力应与具体板型及固件版本分别核对。

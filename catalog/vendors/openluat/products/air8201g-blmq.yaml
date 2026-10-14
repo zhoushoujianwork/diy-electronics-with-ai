@@ -1,0 +1,84 @@
+schema_version: 1
+id: air8201g-blmq
+vendor_id: openluat
+name: 合宙 Air8201G-BLMQ 定位器 PCBA
+family: Air8201G
+model: Air8201G-BLMQ
+category: positioning-module
+lifecycle: active
+summary: 基于 Air780EGH 的 4G/GNSS 定位器 PCBA，带三轴加速度、蓝牙、气压计、音频、充电管理和 BTB 扩展。
+specifications:
+  processor:
+    manufacturer: 合宙通信
+    model: Air780EGH
+    source_refs: [hardware-schematic, factory-software]
+  wireless:
+    - type: cellular
+      standard: 4G LTE Cat.1
+      chipset: Air780EGH
+      source_refs: [hardware-guide, module-overview]
+    - type: bluetooth
+      standard: BLE
+      source_refs: [hardware-guide]
+  interfaces:
+    - type: USB
+      notes: 下载和调试使用配套调试板及 FPC；核心板引出 USB 信号，不能视为板上自带 Type-C 座。
+      source_refs: [hardware-guide, user-guide, hardware-schematic]
+  connectors:
+    - type: BTB
+      notes: BLMQ 配套使用 Air8201G 系列专用调试板及 FPC。
+      source_refs: [hardware-guide]
+    - type: SIM card slot
+      notes: SIM 卡座与具体卡型、机械版本需按原理图及实物核对。
+      source_refs: [hardware-schematic]
+software:
+  toolchains: [Lua, LuaTools]
+  frameworks: [LuatOS]
+  source_refs: [module-overview, user-guide, factory-software]
+sources:
+  - id: hardware-guide
+    type: documentation
+    title: Air8201G 硬件资料及子型号功能差异
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/hardware/
+    accessed_on: 2026-10-11
+    official: true
+  - id: hardware-schematic
+    type: schematic
+    title: Air8201G V1.5 原理图
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/hardware/image/Air8201G_V1.5.pdf
+    accessed_on: 2026-10-11
+    official: true
+    notes: 系列参考原理图，不把 V1.5 推定为所有出货 PCBA 的硬件修订。
+  - id: module-overview
+    type: documentation
+    title: Air780EGH/Air780EGG/Air780EGP 总体介绍
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air780egh/product/
+    accessed_on: 2026-10-11
+    official: true
+  - id: user-guide
+    type: documentation
+    title: Air8201G 使用指南、烧录演示及测试软件脚本源码入口
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/hardware/8201G_guide/
+    accessed_on: 2026-10-11
+    official: true
+  - id: factory-software
+    type: documentation
+    title: Air8201G 测试软件说明
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/hardware/8201G_software/
+    accessed_on: 2026-10-11
+    official: true
+validation:
+  level: cataloged
+notes:
+  - 二次开发语言为 Lua，运行于 LuatOS；可自行实现定位、运动触发、低功耗及网络上报，修改出厂应用以接自己的服务器。Air780EGH 不支持 C-SDK，EGH/EGG/EGP 不支持 AT 指令。[module-overview, factory-software]
+  - 硬件含 GNSS 接收和 G-Sensor；V1.5 原理图列 DA267 三轴加速度计。官方资料未列陀螺仪，不能据此登记为六轴 IMU。[hardware-guide, hardware-schematic]
+  - BLMQ 硬件支持 BLE、气压计和音频，但所引用出厂软件默认未启用 BLE；需区分硬件能力与当前应用配置。[hardware-guide, factory-software]
+  - 需另外配套 4G、GNSS、蓝牙天线及调试板/FPC；不能用核心板尺寸代表含天线、电池和外壳的整机尺寸。[hardware-guide]
+  - 官方出厂软件说明支持通过调试板 USB 供电；未确认该板无电池全负载供电的持续/峰值能力。[factory-software]
+  - 未确认实物硬件修订、精确尺寸及充电电流条件；不将店铺图片中的最大电流或耐压直接登记为工作额定值。
+  - 此记录只完成官方资料核对；未进行该板的构建、烧录、服务器接入、功耗或硬件测试。

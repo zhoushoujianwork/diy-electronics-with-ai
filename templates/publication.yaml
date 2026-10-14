@@ -1,0 +1,13 @@
+schema: 1
+id: replace-me
+name: Replace with an independently accepted publication unit
+kind: documentation
+status: idea
+summary: Declare the exact scope and acceptance criteria before publication
+publication:
+  state: draft
+  acceptance: pending
+  rights: unknown
+  privacy: pending
+  targets: []
+  files: []

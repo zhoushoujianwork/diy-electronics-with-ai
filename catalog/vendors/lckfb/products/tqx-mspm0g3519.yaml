@@ -1,0 +1,115 @@
+schema_version: 1
+id: tqx-mspm0g3519
+vendor_id: lckfb
+name: 立创·天巧星 MSPM0G3519 开发板套件
+family: Tian Qiao Xing MSPM0
+model: MSPM0G3519
+category: development-board
+lifecycle: active
+summary: 基于 TI MSPM0G3519 的核心板与 IO 扩展底板套件，官方配套无线串口模块和 XDS110 下载器。
+specifications:
+  processor:
+    manufacturer: Texas Instruments
+    model: MSPM0G3519
+    architecture: Arm Cortex-M0+
+    max_frequency_hz: 80000000
+    source_refs: [official-docs]
+  memory:
+    flash_bytes: 524288
+    ram_bytes: 131072
+    storage_notes: 数值为 MCU 片内 Flash/SRAM；官方首页还列出外部 Flash，本记录不推定其容量。
+    source_refs: [official-docs]
+  display:
+    technology: Monochrome OLED
+    width_px: 128
+    height_px: 64
+    controller: SSD1306
+    source_refs: [oled-tutorial, core-board-annotation]
+  interfaces:
+    - type: GPIO / ADC / PWM / UART / SPI / I2C
+      notes: 核心板可独立使用，IO 扩展底板引出接口并提供板载外设；引脚复用须按精确修订核对。
+      source_refs: [official-docs]
+    - type: Six-axis IMU
+      notes: 官方教程标注 ST LSM6DS3TRC，含三轴加速度计与三轴陀螺仪，经 I2C 通信。
+      source_refs: [imu-tutorial]
+    - type: SWD debug
+      notes: 配套独立 XDS110 用于程序下载、断点和单步调试，另带串口功能。
+      source_refs: [official-docs, ccs-setup]
+    - type: Wireless UART
+      notes: 配套无线串口模块提供双向数据通信；不据此推断无线烧录或无线 SWD 调试能力。
+      source_refs: [official-docs]
+  connectors:
+    - type: USB Type-C
+      notes: 官方首页说明可通过数据线连接开发板，使用 MSPM0 网页串口工具烧录；此处不推定连接器数量或电气限值。
+      source_refs: [official-docs]
+software:
+  toolchains: [TI Code Composer Studio, TI SysConfig, TI DSLite]
+  frameworks: [TI MSPM0 SDK]
+  source_refs: [ccs-setup, ai-skill-guide]
+sources:
+  - id: official-docs
+    type: documentation
+    title: 立创·天巧星 MSPM0G3519 开发板介绍
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/index.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: downloads
+    type: documentation
+    title: 天巧星下载中心（例程、软件与数据手册）
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/download-center.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: hardware-design
+    type: documentation
+    title: 天巧星核心板、底板、无线串口模块原理图与 PCB 入口
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/hardware-design.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: ccs-setup
+    type: documentation
+    title: 天巧星 CCS 环境搭建与 XDS110 下载
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/ccs-beginner/install.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: oled-tutorial
+    type: documentation
+    title: 天巧星 OLED 显示教程
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/ccs-beginner/oled.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: core-board-annotation
+    type: documentation
+    title: 天巧星官方首页核心板正面接口标注图
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/storage/images/zh-hans/tqx-mspm0g3519/index/index_20260720_174352.png
+    accessed_on: 2026-10-11
+    official: true
+  - id: imu-tutorial
+    type: documentation
+    title: 天巧星姿态传感器教程
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/ccs-beginner/imu.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: ai-skill-guide
+    type: documentation
+    title: 部署天巧星 Skill
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/ai-dev/skill-deploy.html
+    accessed_on: 2026-10-11
+    official: true
+validation:
+  level: cataloged
+notes:
+  - OLED 教程（oled-tutorial）写 0.96 英寸，官方首页核心板标注图（core-board-annotation）写 1.29 英寸；两份资料存在尺寸冲突，尚未确认适用修订或实物尺寸，故省略 diagonal_in，不据此推定面板或显示区物理尺寸。
+  - 官方主控封装为 LQFP-64；model 表示官方板名中的 MCU 型号，不代表厂商独立 SKU。精确 PCB 修订未确认。
+  - 本记录描述官方套件资源，不表示任何具体实物的配件齐全、型号匹配、编译或硬件验证通过。
+  - 供电范围、GPIO 电气限值、整板峰值电流、接口方向和尺寸未在本次核对中建立，故不填写 power、mechanical 或引脚表。
+  - 官方首页的网页烧录路径是 Type-C 有线连接，支持 HEX 与 TI-TXT；不能把无线串口透传能力写成已支持无线烧录。
+  - 官方 AI 教程提供 mspm0kit-tianqiaoxing 及其依赖 mspm0-ccs，并列出 Windows/macOS/Linux 配置路径；这不等于本机工具链已安装或可用。
+  - AI Skill 部署页同时写 MSPM0 SDK 至少 2.10.00.04 和基于 2.05.01.00 开发测试，存在版本矛盾；使用时须核对当前仓库和 SDK，不能据此固定兼容版本。

@@ -5,6 +5,9 @@ description: "用公开可核验资料维护厂商、产品、配件和中英文
 
 # Electronics Lab Catalog
 
+写入技能会遵循 checkout 本地 Git 配置 `publication.developmentRoot`；标记为 publication-staging 的公开克隆缺少配置时拒绝写入定位。
+始终先阅读解析后仓库的协作规则；公开克隆不包含未发布项目，缺少的目标不能视为已有实例。
+
 Resolve the checkout with `scripts/repo-root.sh`, read its `AGENTS.md`, `catalog/README.md`, schemas, target
 vendor knowledge page, and existing product records before editing.
 

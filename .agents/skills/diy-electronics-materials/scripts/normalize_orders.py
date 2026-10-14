@@ -134,13 +134,14 @@ def status(source, raw):
 def normalize_lcsc(raw_dir, observed):
     pages = []
     evidence_by_order = {}
-    for page_no in range(1, 5):
-        path = raw_dir / f"lcsc-page-{page_no}.json"
+    page_paths = sorted(raw_dir.glob("lcsc-page-*.json"))
+    for path in page_paths:
         for order in json.loads(path.read_text(encoding="utf-8")):
             pages.append(order)
             evidence_by_order[order["order_id"]] = str(path)
     details_path = raw_dir / "lcsc-order-details.json"
-    details = {x["order_id"]: x for x in json.loads(details_path.read_text(encoding="utf-8"))}
+    details = ({x["order_id"]: x for x in json.loads(details_path.read_text(encoding="utf-8"))}
+               if details_path.is_file() else {})
     output = []
     for order in pages:
         products = details.get(order["order_id"], order)["products"]
@@ -186,13 +187,16 @@ def normalize_lcsc(raw_dir, observed):
 
 
 def normalize_taobao(raw_dir, observed):
+    export_paths = sorted(raw_dir.glob("taobao-pages-*.xlsx"))
+    if not export_paths:
+        return []
     try:
         from openpyxl import load_workbook
     except ImportError as exc:
         raise SystemExit("openpyxl is required to read Taobao official exports") from exc
     output = []
     counters = {}
-    for path in sorted(raw_dir.glob("taobao-pages-*.xlsx")):
+    for path in export_paths:
         ws = load_workbook(path, read_only=True, data_only=True).active
         meta = [None, None, None, None]
         for values in ws.iter_rows(min_row=2, values_only=True):
@@ -209,7 +213,8 @@ def normalize_taobao(raw_dir, observed):
                 continue
             counters[order_id] = counters.get(order_id, 0) + 1
             a = aliases(f"{title} {spec}")
-            model = a[0] if a else ""
+            # Title tokens are search hints, not verified purchased models.
+            model = ""
             q, unit = quantity(raw_q)
             output.append({
                 "source": "taobao", "account": "default", "order_id": order_id,

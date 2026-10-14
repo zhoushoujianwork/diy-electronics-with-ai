@@ -1,0 +1,11 @@
+schema_version: 1
+id: openluat
+name: 合宙通信
+website: https://www.openluat.com/
+documentation: https://docs.openluat.com/
+aliases:
+  - 合宙
+  - AirM2M
+  - openLuat
+  - LuatOS
+last_reviewed: 2026-10-11

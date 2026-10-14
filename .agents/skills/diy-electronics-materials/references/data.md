@@ -15,3 +15,17 @@
 盘点与订单分离。盘点必须带与购买记录一致的单位；套件拆分时先建立清楚的组件来源，不直接把套改成颗。
 
 `--db PATH` 可以指定临时数据库进行验证；日常不传此参数，使用个人数据目录中的默认全局库。SQLite 的 purchase_history 和 stocktakes 保留修订与盘点历史。coverage 为平台最近同步范围，不表示不存在范围外订单。
+
+## 规范化脚本的输入与限制
+
+`normalize_orders.py` 读取 `RAW_DIR/lcsc-page-*.json`、可选的 `lcsc-order-details.json` 和
+`taobao-pages-*.xlsx`。目录只放本次要核对的证据；页面 JSON 使用订单对象数组，订单提供
+`order_id`、`date`、`status`、`products`。商品结构来自已读取的页面文本，仍须按真实购买规格
+逐行抽查，不声称支持未经验证的商城 API。没有淘宝 Excel 输入时无需 `openpyxl`。
+
+淘宝标题提取的 `aliases` 只用于检索，`model` 留空，核实所购型号后再填写。自动筛选不是
+全量历史覆盖证明；脚本目前会跳过淘宝取消、未付款和全额退款行，部分退款文字的分类也需复核，并按筛选后
+行序号建立 `line_id`。因此它适用于人工核对的初次整理，不能直接把重复运行结果视为可靠
+增量同步。状态变更与稳定行 ID 应在导入前依据订单详情人工确认；需要删除旧记录时，直接按
+上述数据契约提供相同稳定主键与明确的 cancelled、unpaid 或 refunded 状态给 `materials.py`。
+部分退款须明确保留原购买量并标记 `partial_refund`，不要依赖自动状态分类。

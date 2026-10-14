@@ -1,0 +1,79 @@
+schema_version: 1
+id: nt26-6e1-rs485
+vendor_id: doiot
+name: 度云 NT26 核心板 doRTU-6E1 RS485
+family: NT26 核心板 / doRTU-6E1
+model: NT26核心板（6E1-RS485）
+revision: V1.0
+category: communication-module
+lifecycle: unknown
+summary: 支持 Lua 脚本二次开发的 4G Cat.1 RTU 核心板，RS485 版本提供一路 RS485、两路 3.3 V TTL 串口和双卡单待。
+specifications:
+  wireless:
+    - type: cellular
+      standard: 4G LTE Cat.1 全网通
+      source_refs: [hardware-manual]
+  interfaces:
+    - type: RS485
+      count: 1
+      notes: 此版本的第二路串口为 RS485；接口共用及收发控制按具体硬件和固件核对。
+      source_refs: [hardware-manual]
+    - type: UART
+      count: 2
+      notes: 两路 TTL 电平为 3.3 V；厂商波特率范围为 1200–3000000 baud。
+      source_refs: [hardware-manual]
+    - type: GPIO
+      count: 9
+      notes: 存在与串口及指示灯复用；可同时使用的数量应按具体配置核对。
+      source_refs: [hardware-manual]
+    - type: ADC
+      count: 1
+      notes: 手册声明板载分压电阻（10K/310K），该 ADC 采集接口支持 0–36 V；这不是普通 GPIO 或 TTL 的容限。
+      source_refs: [hardware-manual]
+    - type: SIM
+      count: 2
+      notes: 双卡单待；一路厂商称为 eSIM 的贴片卡及一路外接 SIM 接口，不据此推定远程 eSIM 配置能力。
+      source_refs: [hardware-manual]
+  connectors:
+    - type: 2.0 mm 10×2 贴片接口
+      count: 1
+      notes: 厂商可定制连接器；具体配对件和装配方向应按实物及尺寸图核对。
+      source_refs: [hardware-manual]
+    - type: IPEX 一代天线接口
+      notes: 手册未在参数表中区分 LTE 与 GNSS 天线接口，不推定接口数量或 GPS 端子功能。
+      source_refs: [hardware-manual]
+  power:
+    input_voltage_min_v: 5
+    input_voltage_max_v: 18
+    logic_voltage_v: 3.3
+    source_refs: [hardware-manual]
+  mechanical:
+    width_mm: 26
+    height_mm: 27
+    source_refs: [hardware-manual]
+software:
+  frameworks: [度云RTU]
+  source_refs: [hardware-manual]
+sources:
+  - id: hardware-manual
+    type: documentation
+    title: NT26核心板（doRTU-6E1）硬件使用手册 V1.0
+    publisher: 成都度云未来科技有限公司
+    url: http://data.doiot.cn/docs/NT26-core/NT26-6E.html
+    accessed_on: 2026-10-11
+    official: true
+    notes: 使用厂商公开的原始 HTTP 硬件手册；本次 HTTP 返回 200，同路径 HTTPS 握手失败，未改写来源协议或使用第三方镜像。
+validation:
+  level: cataloged
+notes:
+  - revision 对应手册的硬件版本 V1.0 标识，未核对实物 PCB 修订；内部完整模组型号、芯片、存储及销售 SKU 尚未确认。
+  - power 的 5–18 V 字段仅指 VCC 输入；BAT 可接受 3.3–4.5 V 电池输入，手册明确要求 BAT 与 VCC 二选一，不能直接并接。
+  - logic_voltage_v 仅表示 TTL/GPIO 的 3.3 V 标称电平，不用于定义 RS485 差分总线电压，也不代表信号脚具有 5 V 容限。
+  - 厂商供电表写“电流能力要求>10W”；W 是功率单位，按供电功率能力大于 10 W 理解，不把它当作电流值。
+  - 5–36 V 仅为批量定制版本备注，不适用于本记录的标准板型。
+  - 手册标称关机 1 µA、休眠 100 µA、低功耗在网通信 1 mA、不休眠 15 mA、最大瞬间 700 mA；供电电压和完整测试条件未给出，不是实测整板功耗。
+  - 厂商工作温度范围为 −30～75 °C，未进行本地环境验证。
+  - 手册明确列出单基站、多基站和 Wi-Fi 定位；未声明标准板型板载 GNSS。定制备注的 GPS 上报不能作为 GNSS 支持证明，也不能据此断言不支持 GNSS。
+  - 手册未声明内置锂电充电、电池保护、负载共享或自动电源切换；BAT 输入不证明这些能力。
+  - 支持 Lua 脚本二次开发、AT 命令、网页参数配置、DTU 数据透传、设备间透传、GPIO 输入输出及 OTA；具体协议以对应 AT 手册和固件为准。
+  - 未建立 I²C、SPI、IMU 或深睡运动唤醒的板级支持；未进行构建、联网、定位或硬件测试。

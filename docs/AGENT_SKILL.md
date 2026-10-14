@@ -60,6 +60,21 @@ Restart or reload the Agent after installation. Automatic discovery is enabled, 
 | `$diy-electronics-contribute` | 校验并组织 Commit、分支、推送和 Pull Request |
 | `$diy-electronics-materials` | 查询本机购买与盘点数据库，不公开个人数据 |
 
+## Configure private development for write Skills
+
+The lookup Skill can read an ordinary public clone. Catalog, project, contribution and manual work should
+use an independent private development checkout. If the cloned repository is marked as publication staging
+in its `AGENTS.md`, configure that private checkout locally before using write Skills:
+
+```sh
+git config --local publication.developmentRoot /path/to/private-development-checkout
+```
+
+Use the absolute path of your own private checkout, read its `AGENTS.md`, and verify its remote access controls.
+The configuration stays in local Git settings; do not add personal paths or credentials to repository files.
+A staging checkout without this setting refuses write-Skill destination resolution. It does not create a
+private checkout or make a remote private automatically.
+
 ## Use from another project
 
 The installed Skills support a connected workflow:
@@ -67,11 +82,15 @@ The installed Skills support a connected workflow:
 1. Search the lab before rediscovering existing electronics knowledge.
 2. Research official sources or perform real hardware validation using the appropriate specialized Skill.
 3. Write reusable public facts and sanitized evidence back to the linked checkout.
-4. Validate and commit each coherent milestone, then create a focused pull request when requested.
+4. Validate and commit each coherent milestone in the private development workspace. Public delivery
+   requires a stable, accepted unit and explicit approval for its exact target and content digest.
+5. Read [the publication policy](PUBLICATION_POLICY.md), run `scripts/pub --check`, and export the approved
+   snapshot. Apply only that snapshot in a separate public repository before an authorized public PR.
 
-The source checkout remains an ordinary Git repository. Contributors can inspect changes, create branches,
-commit, push and open PRs with their Agent's normal Git/GitHub tools. The Skill never makes purchase history,
-credentials, personal inventory or private evidence public.
+The source checkout keeps local commits and explicitly configured private backups. Its development history
+must not be pushed or merged into a public repository; install `scripts/pub install-hook` in each checkout.
+Publication is a separate action governed by current snapshot approval. The Skill never makes purchase
+history, credentials, personal inventory or private evidence public.
 
 ## Update or move the checkout
 

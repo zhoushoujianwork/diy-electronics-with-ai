@@ -5,6 +5,9 @@ description: "创建或完善可复现的板卡档案、Demo、固件、完整�
 
 # Electronics Lab Project Engineering
 
+写入技能会遵循 checkout 本地 Git 配置 `publication.developmentRoot`；标记为 publication-staging 的公开克隆缺少配置时拒绝写入定位。
+始终先阅读解析后仓库的协作规则；公开克隆不包含未发布项目，缺少的目标不能视为已有实例。
+
 Resolve the checkout with `scripts/repo-root.sh`, then read the root and nearest `AGENTS.md`, target README,
 manifest, templates, and existing validation evidence.
 
@@ -17,7 +20,10 @@ Route work deliberately:
 - `hardware/` for repository-owned schematic, PCB, wiring, enclosure and manufacturing sources.
 
 Every demo or project needs its README, `project.yaml`, useful design notes, tests where practical, expected
-output and limitations. Confirm part number, voltage, peak current, logic level, connector orientation and pin
+output and limitations. Initialize `publication` as draft with pending acceptance/privacy, unknown rights,
+and empty targets/files. Do not infer publication permission from engineering status. WIP stays in private
+development storage; read `docs/PUBLICATION_POLICY.md` before preparing public content or contributions.
+Confirm part number, voltage, peak current, logic level, connector orientation and pin
 conflicts before wiring.
 
 For ESP-IDF/FreeRTOS changes, size task stacks for the largest call path, measure high-water marks under

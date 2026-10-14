@@ -1,7 +1,7 @@
 # Canaan / Kendryte / CanMV supplier knowledge
 
 本页记录查询 Canaan K230 与 CanMV 资料时可复用的供应商级知识，以及去标识化的工程经验。
-具体产品规格、来源和验证等级仍以 [`products/`](products/) 下的记录为准；
+具体产品规格、来源和验证等级仍以 `products/` 下的记录为准；
 引脚、供电和结构尺寸只有在精确板型证据完整后才进入仓库根目录的 `boards/`。
 
 ## 名称与产品层次

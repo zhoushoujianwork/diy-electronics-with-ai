@@ -1,5 +1,11 @@
 # 公开发布检查表
 
+- [ ] 开发历史保持私有；公开交付来自 `scripts/pub export` 创建的独立快照，不直接 push 开发仓库。
+- [ ] 发布单元达到 `stable`，`publication.acceptance: passed`，范围内无未完成验收项。
+- [ ] `publication.rights: cleared` 与 `publication.privacy: passed` 有实际审查依据。
+- [ ] `publication.files` 逐一列出正文、图片、代码、许可、验证记录和全部本地依赖。
+- [ ] 人类明确批准当前目标和 `pub review` 给出的摘要，`pub --check` 通过；修改后重新审核。
+- [ ] 公开首页、目录、附件和平台发布均来自同一获准范围，不混入开发清单或草稿。
 - [ ] 选择并加入软件许可证；硬件设计如需不同许可证，分别声明。
 - [ ] 确认仓库名称、GitHub 描述、Topics 和默认分支。
 - [ ] 执行密钥、Wi-Fi、Token、地址、手机号和订单信息扫描。
@@ -10,3 +16,5 @@
 - [ ] 编译验证与实机验证没有混写。
 - [ ] 增加贡献指南、Issue/PR 模板和行为准则。
 - [ ] 大文件、备份、构建产物、完整日志和本地物料数据库未进入 Git。
+
+操作与限制见[发布规则](PUBLICATION_POLICY.md)。自动扫描辅助审查，不代替验收、隐私与许可判断。

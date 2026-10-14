@@ -8,7 +8,7 @@
 | 参考 | 带来的启发 | 在本技能中的做法 |
 | --- | --- | --- |
 | GitHub 的 [product-design-three-views](https://github.com/zhoushoujianwork/product-design-three-views)，及其[上游项目](https://github.com/Gayaya999/product-design-three-views) | 明确产品身份、区分参考图作用、保持连续图稿的一致性 | 产品图约束外形，版式图帮助组织内容，每页明确用途。 |
-| M5 产品图解说明方式，尤其本次参考的 T-LITE 手册 | 在设备旁标注按钮与接口，再按步骤解释操作反馈 | 将硬件、屏幕、使用流程分成独立页面，按用户阅读顺序组织。 |
+| M5Stack 官方产品图解说明方式 | 在设备旁标注按钮与接口，再按步骤解释操作反馈 | 将硬件、屏幕、使用流程分成独立页面，按用户阅读顺序组织。 |
 | [StickS3](https://docs.m5stack.com/en/core/StickS3) 与 [Unit GPS v1.1](https://docs.m5stack.com/en/unit/Unit-GPS%20v1.1) 官方资料 | 精确型号、硬件外观、接口和供电条件 | 核对实际 SKU / 修订版，结合目标项目实现确定说明范围。 |
 
 在这些启发上，DIY Lab 增加了代码与验证核对：板子具备什么、固件实现什么、实物测过什么，分别记录。

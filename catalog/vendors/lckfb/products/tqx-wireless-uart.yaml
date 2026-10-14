@@ -1,0 +1,67 @@
+schema_version: 1
+id: tqx-wireless-uart
+vendor_id: lckfb
+name: 立创·天巧星 MSPM0G3519 配套无线串口模块
+family: Tian Qiao Xing wireless UART
+category: communication-module
+lifecycle: active
+summary: 天巧星套件的 2.4 GHz 双向无线串口链路，由电脑 USB 端和开发板端组成，用于日志与数据透传。
+specifications:
+  wireless:
+    - type: other
+      standard: 2.4 GHz ISM wireless UART
+      chipset: CH570Q
+      source_refs: [wireless-tutorial, usb-schematic, board-schematic]
+  interfaces:
+    - type: UART
+      notes: 官方指南规定开发板端 UART7 为固定 115200 baud、8 数据位、无校验、1 停止位；电气引脚表不在本记录中推定。
+      source_refs: [operation-guide]
+    - type: USB serial
+      notes: 官方 USB 端原理图的 D+/D- 直接接 CH570Q，未画出独立 CH340 USB-UART 芯片。
+      source_refs: [usb-schematic]
+sources:
+  - id: official-docs
+    type: documentation
+    title: 天巧星套件介绍中的无线串口模块
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/index.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: operation-guide
+    type: documentation
+    title: 天巧星无线串口模块配置与操作指南
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/wireless-serial-port-operation-guide.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: wireless-tutorial
+    type: documentation
+    title: 天巧星板载无线串口教程
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/zh-hans/tqx-mspm0g3519/ccs-beginner/wireless-uart.html
+    accessed_on: 2026-10-11
+    official: true
+  - id: usb-schematic
+    type: schematic
+    title: 无线串口模块 USB 端原理图（操作指南附图）
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/storage/images/zh-hans/tqx-mspm0g3519/wireless-serial-port-operation-guide/wireless-serial-port-operation-guide_20260722_212549.png
+    accessed_on: 2026-10-11
+    official: true
+  - id: board-schematic
+    type: schematic
+    title: 无线串口模块开发板端原理图（操作指南附图）
+    publisher: LCKFB
+    url: https://wiki.lckfb.com/storage/images/zh-hans/tqx-mspm0g3519/wireless-serial-port-operation-guide/wireless-serial-port-operation-guide_20260722_212702.png
+    accessed_on: 2026-10-11
+    official: true
+validation:
+  level: cataloged
+notes:
+  - 这是官方套件配套模块的描述性目录 ID，未查到独立销售型号、SKU、精确 PCB 修订或官方 USB VID/PID 表。
+  - 官方首页标称空旷环境约 10 米通信距离；不代表实测距离或所有环境的可靠性。
+  - 操作指南要求板端通过 UART7 发送 AT_RF=ON 命令并以 CRLF 结尾，USB 端 LED 常亮表示连接；完整配置与回显流程以原指南为准。
+  - 官方教程称上电默认开启射频，操作指南则要求发送 AT_RF=ON，并描述关闭状态周期输出 RDY；默认状态应按实际固件和批次核对。
+  - 操作指南提及安装 CH340 驱动，但其配套 USB 端原理图标 CH570Q；保留这一不一致，不把 CH340 驱动名称当作模块芯片型号或 USB 设备身份依据。
+  - 原理图显示开发板端 3V3 供电，USB 端经 VBUS/5V 供电；两端供电不同，未建立完整输入范围、信号容限或峰值电流，故不填写统一 power 字段。保险丝额定值不是模块工作电流。
+  - 本次资料只建立无线串口透传能力；未建立无线烧录或无线 SWD 调试支持，亦未进行串口、射频链路或 macOS 驱动实测。

@@ -47,39 +47,26 @@ JP1 是 2×20、2.54 mm 排针，**不能套用树莓派 40Pin 接线图**：本
 - 单颗 U089 只需要这一组 CLK/DAT；不要照抄示例额外配置 GPIO34/35/36，避免影响 I2S 等用途。
   TRM 中 GPIO26/27 的 PDM 路线可与内部 codec 播放模式组合；最终并发能力仍要核对固件和资源。
 
-### 与 ESP32 的 UART2 同时使用
+### 与另一块 3.3 V UART 设备同时使用
 
-如果 GPIO26/27 原先配置为连接 ESP32 的串口，应将串口恢复到 V3.0 排针标注的
-UART2 引脚，把 GPIO26/27 完整留给 PDM：
+若应用需要同时使用 UART2 和 PDM，可评估 V3.0 排针标注的 UART2 路线，
+把 GPIO26/27 留给 PDM；这是官方连线的可选分配，不代表组合运行已通过验证：
 
-| 信号 | K230 GPIO | JP1 **物理针号** | 连接 ESP32 |
+| 信号 | K230 GPIO | JP1 **物理针号** | 连接另一 UART 设备 |
 | --- | --- | --- | --- |
-| `UART2_TXD` | GPIO5 | **17** | 接 ESP32 RX |
-| `UART2_RXD` | GPIO6 | **20** | 接 ESP32 TX |
-| GND | — | **2、4 或 37** | 接 ESP32 GND |
+| `UART2_TXD` | GPIO5 | **17** | 接对端 RX |
+| `UART2_RXD` | GPIO6 | **20** | 接对端 TX |
+| GND | — | **2、4 或 37** | 接对端 GND |
 
 V3.0 PCB 中，`BANK0_GPIO5` 和 `BANK0_GPIO6` 都只连接 U22 与 JP1。U22 符号分别把它们定义为
 `GPIO5/.../UART2_TXD` 和 `GPIO6/.../UART2_RXD`。[CanMV v1.8 官方 UART 示例][uart-example]
 也使用 GPIO5/6 配置 UART2：
 
-```python
-from machine import FPIOA, UART
-
-fpioa = FPIOA()
-fpioa.set_function(5, fpioa.UART2_TXD)  # JP1 物理 17
-fpioa.set_function(6, fpioa.UART2_RXD)  # JP1 物理 20
-
-uart = UART(
-    UART.UART2,
-    baudrate=115200,
-    bits=UART.EIGHTBITS,
-    parity=UART.PARITY_NONE,
-    stop=UART.STOPBITS_ONE,
-)
-```
+通过 FPIOA 将 GPIO5/6 分别配置为 UART2_TXD/UART2_RXD，并按目标协议选择波特率、
+数据位、校验和停止位。API 用法见链接的官方示例；这里不转载厂商示例源码。
 
 TX/RX 必须交叉，并共地。两块板若分别供电，不因串口通信而把 5 V 或 3.3 V 电源并联。
-迁移需要同时修改 K230 的 FPIOA 配置和物理接线；ESP32 端可继续使用原来的 RX/TX GPIO。
+迁移需要同时修改 K230 的 FPIOA 配置和物理接线；对端也须核对实际 RX/TX 分配和 3.3 V 逻辑电平。
 GPIO5/6 还带 JTAG/PULSE_CNTR 复用，当前程序若在使用相应功能，应先处理冲突。
 
 这里的 **JP1 物理 19** 是 `PDM_CLK/GPIO26`；图中写作 `IO19` 的信号位于 **JP1 物理 6**，
@@ -123,7 +110,7 @@ GPIO5/6 还带 JTAG/PULSE_CNTR 复用，当前程序若在使用相应功能，�
 2. 用短的屏蔽线，或信号/地绞合线接回。可先试 **5–10 cm**，这是首轮试验建议，
    不是厂商规定的最大线长。用绝缘及应力固定避免拉扯焊盘。
 3. 把咪头声孔对准面板透声孔，留出透声通道，避免胶堵声孔；与扬声器尽量隔开并做隔振。
-   模拟线避开开关电源、继电器/锁驱动和扬声器大电流走线。
+   模拟线避开开关电源、感性负载和扬声器大电流走线。
 4. 复查极性、短路和对地通断后上电，用相同采样参数、位置和音量比较噪声、语音和削顶。
    先关闭或固定自动增益/降噪做原始录音比较，再调 AEC。
 
