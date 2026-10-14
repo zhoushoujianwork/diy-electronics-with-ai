@@ -8,49 +8,67 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 项目身份为 **DIY Electronics with AI**，也称 **DIY Lab**，GitHub 仓库名为 `diy-electronics-with-ai`。
 欢迎从一个项目的接线、运行步骤或验证记录开始体验，也把完成验收并获准公开的实验整理成别人能接着使用的资料。
 
+## 当前开源状态
+
+核对日期：**2026-10-15**。下表以[公开仓库main](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main)实际文件为准。
+最近公开更新为 **code-video 0.2.0**，对应提交
+[`75a45ea`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/commit/75a45ea36e6693677bbb41b9904111f25f9528bd)（2026-10-14）；
+后续更新可查看[main提交记录](https://github.com/zhoushoujianwork/diy-electronics-with-ai/commits/main)。
+
+| 已公开内容 | 当前范围 | 入口与使用边界 |
+| --- | --- | --- |
+| 厂商与产品目录 | 23家厂商、47条产品记录 | [产品目录](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/catalog/)；官方来源与型号索引，收录不代表实机验收 |
+| 板卡档案 | 3份：StickS3 K150、实战派ESP32-S3 VA、CanMV K230 V3.0 | [板卡资料](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/boards/)；官方能力、接口与接线核对事项 |
+| Agent Skills | 7个：6个电子工程技能与code-video | [技能使用说明](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/AGENT_SKILL.md) · [代码动画技能](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/.agents/skills/code-video/SKILL.md) |
+| 选型、工程方法与工具 | 选型研究、协作规范、模板、验证器和发布检查工具 | [资料索引](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/README.md) · [资料交付记录](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/PUBLIC_KNOWLEDGE_RELEASE.md) |
+| 完整硬件Project / Demo | 当前均为0个已发布条目 | [Projects](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/projects/) · [Demos](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/demos/)；通过完整验收并获准发布后才收录 |
+
+**目前可以直接使用的是资料与工具。** 产品目录、板卡档案、技能版本与完整硬件项目分别记录进度，
+不能用工具更新或部分实机结果代替硬件项目完成。进行中的工程不列入公开项目展示。
+
 ## 先从资料与技能开始
 
 无需连接硬件即可使用产品目录、官方文档索引和 Agent Skills：
 
-- [硬件产品目录](catalog/)：按厂商和精确型号查找规格与中英文官方资料；目录收录不代表实机验证。
-- [板卡资料](boards/)：查看官方硬件能力、接口、电源和接线前的核对事项。
-- [Agent Skills](docs/AGENT_SKILL.md)：查询知识、维护目录、开发项目、整理贡献、管理本机物料和制作 M5 图解手册。
-- [选型研究](docs/research/open-source-electronics-catalogs.md)：比较资料来源与许可边界，再按研究文档查阅通信、定位和音频方案。
+- [硬件产品目录](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/catalog/)：按厂商和精确型号查找规格与中英文官方资料；目录收录不代表实机验证。
+- [板卡资料](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/boards/)：查看官方硬件能力、接口、电源和接线前的核对事项。
+- [Agent Skills](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/AGENT_SKILL.md)：查询知识、维护目录、开发项目、整理贡献、管理本机物料和制作 M5 图解手册。
+- [代码动画](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/.agents/skills/code-video/SKILL.md)：用Canvas2D、代码音效及模板制作项目讲解视频，当前公开版本为0.2.0。
+- [选型研究](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/research/open-source-electronics-catalogs.md)：比较资料来源与许可边界，再按研究文档查阅通信、定位和音频方案。
 
-安装技能：`./scripts/install-agent-skill.sh`。查询技能直接读取公开资料；写入技能需要通过本地
-`publication.developmentRoot` 配置独立私有开发目录。个人物料库与购买证据始终保存在 Git 之外。
-本批资料与技能的审查范围及验证见[交付记录](docs/PUBLIC_KNOWLEDGE_RELEASE.md)。
+安装技能：`./scripts/install-agent-skill.sh`。查询技能直接读取公开资料；写入技能按检出的协作规则定位开发工作台，
+公开暂存检出的配置方法见[技能说明](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/AGENT_SKILL.md)。个人物料库与购买证据始终保存在Git之外。
+本批资料与技能的审查范围及验证见[交付记录](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/PUBLIC_KNOWLEDGE_RELEASE.md)。
 
 ## 项目与 Demo 展示
 
-当前没有通过验收并获准发布的 Project 或 Demo，展示区暂为空。
-进行中的实现与素材已经迁入仓库外的独立私有开发工作区；当前目录只保留公开交付准备资料。
-验收和批准后才导入公开快照。
-[已发布 Projects](projects/) · [已发布 Demos](demos/)。
+截至上述核对日期，公开main没有通过验收并获准发布的Project或Demo，展示区暂为空。
+进行中的工程继续开发、验证；声明范围验收和发布批准完成后，再导入公开快照并补充设计图、实物图及验证记录。
+[已发布 Projects](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/projects/) · [已发布 Demos](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/demos/)。
 
 工程验证进度与发布许可分别记录在 `project.yaml` 的 `status` 和 `publication` 中。
 本仓库的完整开发历史禁止直接公开推送；公开交付由
-[`scripts/pub`](scripts/pub) 按批准的文件范围导出，不附带 Git 历史。
-使用方法与边界见[发布规则](docs/PUBLICATION_POLICY.md)。开发位置仅保存在本地 Git 配置
-`publication.developmentRoot` 中；个人路径不进入 Git。
+[`scripts/pub`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/scripts/pub) 按批准的文件范围导出，不附带 Git 历史。
+使用方法与边界见[发布规则](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/PUBLICATION_POLICY.md)。AI协作约定见[AGENTS.md](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/AGENTS.md)；
+具体开发位置、私有仓库地址和工程清单保持在相应私有工作台内。
 
 ## 从项目代码到图解说明书
 
-仓库内置 **[`m5-product-manual` · M5 产品图解手册](docs/m5-product-manual.md)**：
+仓库内置 **[`m5-product-manual` · M5 产品图解手册](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/m5-product-manual.md)**：
 根据官方硬件资料、当前固件和实测记录整理接线、按键、屏幕状态与操作流程。
 手册、截图与配图遵守同一发布门槛；草稿和未批准的项目样页不进入公开展示。
 
 ## 内容入口
 
-- [`projects/`](projects/)：可独立构建、具有明确用途的完整工程。
-- [`demos/`](demos/)：验证一种模块、接口或组合的最小可复现实验。
-- [`components/`](components/)：经过复用验证的驱动和公共组件。
-- [`boards/`](boards/)：开发板官方能力、接口、电源和接线核对资料。
-- [`catalog/`](catalog/)：主流厂商、产品系列、规格字段和官方资料入口。
-- [`hardware/`](hardware/)：原理图、PCB、线束、外壳和机械设计。
-- [`docs/`](docs/)：仓库约定、协作方法和开源发布检查表。
-- [`templates/demo/`](templates/demo/)：新建 Demo 时复制的模板。
-- [`tests/`](tests/)：跨项目验证、硬件在环和日志检查工具。
+- [`projects/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/projects/)：可独立构建、具有明确用途的完整工程。
+- [`demos/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/demos/)：验证一种模块、接口或组合的最小可复现实验。
+- [`components/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/components/)：经过复用验证的驱动和公共组件。
+- [`boards/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/boards/)：开发板官方能力、接口、电源和接线核对资料。
+- [`catalog/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/catalog/)：主流厂商、产品系列、规格字段和官方资料入口。
+- [`hardware/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/hardware/)：原理图、PCB、线束、外壳和机械设计。
+- [`docs/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/docs/)：仓库约定、协作方法和开源发布检查表。
+- [`templates/demo/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/templates/demo/)：新建 Demo 时复制的模板。
+- [`tests/`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/tree/main/tests/)：跨项目验证、硬件在环和日志检查工具。
 
 ## 基本原则
 
@@ -72,9 +90,9 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 复制厂商手册。目录内容用于选型和发现资料，实际接线前仍需核对具体 SKU、硬件修订版和原理图。
 
 仓库也提供一组职责明确的用户级 Agent Skills。克隆后运行 `./scripts/install-agent-skill.sh`，
-其他项目中的 Agent 就能分别查询知识、维护产品目录、建设硬件项目和制作 M5 图解说明书。
+其他项目中的Agent就能查询知识、维护产品目录、建设硬件项目、制作M5图解说明书或代码动画。
 成果先在私有工作区提交，再由经过批准的公开快照贡献到公开仓库。显式调用使用 `$diy...` 或 `$m5-product-manual`，不是用于搜索文件的 `@`；
-中文速查、安装和跨项目流程见 [`docs/AGENT_SKILL.md`](docs/AGENT_SKILL.md)。
+中文速查、安装和跨项目流程见 [`docs/AGENT_SKILL.md`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/AGENT_SKILL.md)。
 
 这里把“AI-native”当作一种工程组织方式，而不是给传统仓库附加一个聊天入口：
 
@@ -87,9 +105,9 @@ AI Agent 负责检索、整理、实现、检查与协作编排。这里保存�
 因此，这个仓库也可作为一种开放范式：把电子工程知识、真实硬件验证和 Agent 工作流放在
 同一个可版本化、可审查、可复现的协作系统里。
 
-详细约定见 [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md) 和
-[`docs/AI_COLLABORATION.md`](docs/AI_COLLABORATION.md)。同类开源项目与许可证边界的调研见
-[`docs/research/open-source-electronics-catalogs.md`](docs/research/open-source-electronics-catalogs.md)。
+详细约定见 [`docs/PROJECT_STRUCTURE.md`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/PROJECT_STRUCTURE.md) 和
+[`docs/AI_COLLABORATION.md`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/AI_COLLABORATION.md)。同类开源项目与许可证边界的调研见
+[`docs/research/open-source-electronics-catalogs.md`](https://github.com/zhoushoujianwork/diy-electronics-with-ai/blob/main/docs/research/open-source-electronics-catalogs.md)。
 
 ## 状态词
 
