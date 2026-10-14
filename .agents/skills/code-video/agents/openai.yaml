@@ -1,0 +1,6 @@
+interface:
+  display_name: "代码动画与静帧 / Code Video"
+  short_description: "Create code-drawn videos and still images / 代码动画与静帧"
+  default_prompt: "Use $code-video to make a short animation and cover image explaining this project's verified behavior."
+policy:
+  allow_implicit_invocation: true

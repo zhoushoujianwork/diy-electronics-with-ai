@@ -1,0 +1,17 @@
+{
+  "registry": "https://skillhub.patsnap.info",
+  "coordinate": "@global/code-video",
+  "version": "0.1.0",
+  "versionId": 371,
+  "packageFingerprint": "sha256:41eec21985676ec265b52086086455841e29135692afb4dceb68189c9547d4d1",
+  "upstreamFiles": {
+    "SKILL.md": "sha256:65df48443fbc9b92396cdb9955a173c2e99400c776bd19cc9603c193bb14f843"
+  },
+  "redistributionLicense": "not supplied in the installed package",
+  "adaptations": [
+    "Move version into supported frontmatter metadata and identify the source coordinate.",
+    "Link repository integration guidance without changing the upstream workflow.",
+    "Add bilingual picker metadata, private-development routing, and portable usage notes.",
+    "Exclude local SkillHub installation state from Git."
+  ]
+}
