@@ -36,21 +36,52 @@ software:
   frameworks: [LuatOS]
   source_refs: [module-overview, user-guide, factory-software]
 sources:
+  - id: product-overview
+    type: product-page
+    title: Air8201系列产品介绍
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/product/8201_knwowhat/
+    accessed_on: 2026-11-04
+    official: true
   - id: hardware-guide
     type: documentation
     title: Air8201G 硬件资料及子型号功能差异
     publisher: 合宙通信
-    url: https://docs.openluat.com/air8201/hardware/
-    accessed_on: 2026-10-11
+    url: https://docs.openluat.com/air8201/hardware/8201G/
+    accessed_on: 2026-10-17
     official: true
   - id: hardware-schematic
     type: schematic
     title: Air8201G V1.5 原理图
     publisher: 合宙通信
-    url: https://docs.openluat.com/air8201/hardware/image/Air8201G_V1.5.pdf
-    accessed_on: 2026-10-11
+    url: https://docs.openluat.com/air8201/hardware/8201G/image/Air8201G_V1.5.pdf
+    accessed_on: 2026-10-17
     official: true
     notes: 系列参考原理图，不把 V1.5 推定为所有出货 PCBA 的硬件修订。
+  - id: official-pad-diagram
+    type: documentation
+    title: Air8201G 核心板焊盘示意图
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/hardware/8201G/image/8201g_pad.JPEG
+    accessed_on: 2026-10-17
+    official: true
+    notes: 官方图用于识别核心板焊盘；接线前仍须核对实际子型号与修订。
+  - id: official-control-btb-table
+    type: documentation
+    title: Air8201G 外设控制及 BTB 24 针定义表
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/hardware/8201G/image/8201G_allpin.png
+    accessed_on: 2026-10-17
+    official: true
+    notes: 表中未列 SPK，不据此推定调试底板音频接口与核心板连通。
+  - id: official-step-model
+    type: documentation
+    title: Air8201G V1.5 STEP 三维模型
+    publisher: 合宙通信
+    url: https://docs.openluat.com/air8201/hardware/8201G/image/3D_Air8201G_v1.5.step
+    accessed_on: 2026-10-17
+    official: true
+    notes: 官方硬件页提供的机械参考入口；不是 PCB 源工程。
   - id: module-overview
     type: documentation
     title: Air780EGH/Air780EGG/Air780EGP 总体介绍
@@ -62,19 +93,20 @@ sources:
     type: documentation
     title: Air8201G 使用指南、烧录演示及测试软件脚本源码入口
     publisher: 合宙通信
-    url: https://docs.openluat.com/air8201/hardware/8201G_guide/
+    url: https://docs.openluat.com/air8201/hardware/8201G/8201G_guide/
     accessed_on: 2026-10-11
     official: true
   - id: factory-software
     type: documentation
     title: Air8201G 测试软件说明
     publisher: 合宙通信
-    url: https://docs.openluat.com/air8201/hardware/8201G_software/
+    url: https://docs.openluat.com/air8201/hardware/8201G/8201G_software/
     accessed_on: 2026-10-11
     official: true
 validation:
   level: cataloged
 notes:
+  - 2026-11-04 经代理 HTTP GET 复核官方页面标题及附件类型，更新 Air8201G 硬件专页、图纸、使用指南和测试软件地址；保留各既有来源的历史 accessed_on，产品能力与 cataloged 验证等级不变。新增产品介绍仅作系列入口，不替代 G/H 对比表。
   - 二次开发语言为 Lua，运行于 LuatOS；可自行实现定位、运动触发、低功耗及网络上报，修改出厂应用以接自己的服务器。Air780EGH 不支持 C-SDK，EGH/EGG/EGP 不支持 AT 指令。[module-overview, factory-software]
   - 硬件含 GNSS 接收和 G-Sensor；V1.5 原理图列 DA267 三轴加速度计。官方资料未列陀螺仪，不能据此登记为六轴 IMU。[hardware-guide, hardware-schematic]
   - BLMQ 硬件支持 BLE、气压计和音频，但所引用出厂软件默认未启用 BLE；需区分硬件能力与当前应用配置。[hardware-guide, factory-software]

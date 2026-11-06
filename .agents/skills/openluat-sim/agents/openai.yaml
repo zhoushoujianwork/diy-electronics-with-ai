@@ -1,0 +1,4 @@
+interface:
+  display_name: "合宙流量卡 OpenLuat SIM"
+  short_description: "查询合宙流量卡用量、状态与套餐，准备桃源平台 API 接入方案"
+  default_prompt: "使用 $openluat-sim 查询流量卡接口资料，并准备本月用量的脱敏请求。"
